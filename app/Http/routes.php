@@ -12,6 +12,25 @@
 Route::get('/', function () {
     return view('home');
 });
+
+
+/*=====================================================*/
+    /**
+     * rutas temporales modulo atención al viajero
+     */
+
+    Route::resource('avi', 'Avi\AviController');
+
+    Route::get('avi/generar'      , 'AviController@generar');
+    Route::post('avi/generar'     , 'AviController@generar');
+    Route::post('avi/generarFinal', 'AviController@buscarCobertura');
+    Route::post('avi/procesar' , 'AviController@procesarGuardar');
+
+    Route::get('avi/{id}/destroy', [
+            'uses' => 'Avi\AviController@destroy',
+            'as'   => 'avi.destroy' 
+        ]);
+/*=====================================================*/
 /*
 |--------------------------------------------------------------------------
 | Application Routes

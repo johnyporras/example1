@@ -68,14 +68,14 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => 'localhost',
-            'port' => '5432',
-            'database' => 'brizer_atiempo',
-            'username' => 'postgres',
-            'password' => '17401182',
+            'host' => env('DB_HOST', 'localhost'),
+            'port' => env('DB_PORT', '5432'),
+            'database' => env('DB_DATABASE', 'brizer_atiempo'),
+            'username' => env('DB_USERNAME', 'postgres'),
+            'password' => env('DB_PASSWORD', '17401182'),
             'charset' => 'utf8',
             'prefix' => '',
-            'schema' => 'atiempo',
+            'schema' => env('DB_SCHEMA', 'atiempo'),
         ],
 
     ],

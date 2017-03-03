@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration {
                         $table->rememberToken();
                         $table->timestamps();
                         $table->softDeletes();
-                        $table->text('salt', 65535);
+                        $table->text('salt', 65535)->nullable();
 		});
 	}
 

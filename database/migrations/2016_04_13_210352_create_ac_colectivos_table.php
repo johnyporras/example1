@@ -17,7 +17,7 @@ class CreateAcColectivosTable extends Migration {
 			$table->integer('id', true);
 			$table->integer('codigo_colectivo')->unique('uac_codigo_colectivo');
 			$table->string('nombre', 100)->nullable();
-			$table->integer('codigo_aseguradora')->index('idxco_codigo_aseguradora');
+			$table->integer('codigo_aseguradora')->unsigned();
                         $table->timestamps();
                         $table->softDeletes();
 		});

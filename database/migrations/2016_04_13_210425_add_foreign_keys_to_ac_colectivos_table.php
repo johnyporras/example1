@@ -29,7 +29,7 @@ class AddForeignKeysToAcColectivosTable extends Migration {
 		Schema::table('ac_colectivos', function(Blueprint $table)
 		{
 			$table->dropForeign('ac_colectivos_ibfk_1');
-			$table->dropForeign('ac_colectivos_ibfk_2');
+			//$table->dropForeign('ac_colectivos_ibfk_2');
 		});
 	}
 

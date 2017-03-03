@@ -12,15 +12,17 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('users')->delete();
-        User::create([
-          'name' => 'gegonzalez',
-          'email' => 'gegonzalez@gmail.com',
-          'password' => bcrypt('1234'),
+        DB::table('users')->delete();
+        $user = [
+          'name' => 'gContreras',
+          'email' => 'germansango@gmail.com',
+          'password' => bcrypt('usuario'),
           'department' => 'Sistemas',
           'type' => '0',
-          'user' => 'gegonzalez',
+          'user' => 'germansango',
           'proveedor' => '0'
-        ]);
+        ];
+
+        DB::table('users')->insert($user);
     }
 }

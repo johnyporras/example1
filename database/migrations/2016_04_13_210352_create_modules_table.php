@@ -18,7 +18,7 @@ class CreateModulesTable extends Migration {
 			$table->string('description', 100);
 			$table->string('url', 100);
 			$table->integer('order');
-			$table->string('icon', 20);
+			$table->string('icon', 60);
                         $table->timestamps();
                         $table->softDeletes();
 		});
