@@ -19,8 +19,8 @@ class CreateSubmodulesTable extends Migration {
 			$table->integer('modules_id');
 			$table->string('url', 100);
 			$table->integer('order');
-                        $table->timestamps();
-                        $table->softDeletes();
+                $table->timestamps();
+                $table->softDeletes();
 		});
 	}
 

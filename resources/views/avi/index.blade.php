@@ -3,6 +3,7 @@
 @section('content')
 <hr/>
     {!! Form::open(['url' => 'avi/generar', 'class' => 'form-horizontal', 'name' => 'buscar', 'lang' => 'es']) !!}
+        
         <div class="form-group {{ $errors->has('cedula') ? 'has-error' : ''}}">
             {!! Form::label('cedula', 'Cédula Afiliado: ', ['class' => 'col-sm-2 control-label']) !!}
             <div class="col-sm-2">
@@ -13,15 +14,21 @@
                 {!! Form::submit('Buscar', ['class' => 'btn btn-primary form-control']) !!}
             </div>
         </div>
+
     @if (Session::has('respuesta'))
         <div id="result" class="alert alert-warning">
-            <p> {{Session::get('respuesta')}}<a href="crearAfiliadosTemporales" class="alert-link">Agregar Afiliado Temporal</a></p>
+            <p> {{Session::get('respuesta')}}</p>
         </div>
     @endif
+
+
+
+
+
     {!! Form::close() !!}
     @if (isset($contratos))
         @if (count($contratos) > 0)
-            {!! Form::open(['url' => 'claves/generarFinal', 'class' => 'form-horizontal', 'name' => 'beneficiario']) !!}
+            {!! Form::open(['url' => 'avi/generate', 'class' => 'form-horizontal', 'name' => 'beneficiario']) !!}
             <div class="table">
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
