@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e4825ad7210f68fdf87478e51877cb42",
-    "content-hash": "2057061b4dfbd0dbbeba086ae0a228a5",
+    "hash": "56c582d13c10c6c2bd5d22b30497981a",
+    "content-hash": "4e0fe3b370dbcdad1724f84cbcf19e68",
     "packages": [
         {
             "name": "anchu/ftp",
@@ -337,6 +337,50 @@
             "description": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
             "homepage": "https://github.com/dompdf/dompdf",
             "time": "2015-12-07 04:07:13"
+        },
+        {
+            "name": "grimthorr/laravel-toast",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Grimthorr/laravel-toast.git",
+                "reference": "2c433a6ce6c978aa15820887b3769b36d4ff9e8d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Grimthorr/laravel-toast/zipball/2c433a6ce6c978aa15820887b3769b36d4ff9e8d",
+                "reference": "2c433a6ce6c978aa15820887b3769b36d4ff9e8d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "5.*",
+                "illuminate/database": "5.*",
+                "illuminate/support": "5.*",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Grimthorr\\LaravelToast\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grimthorr",
+                    "email": "phil@hughesbox.co.uk",
+                    "homepage": "http://hughesbox.co.uk"
+                }
+            ],
+            "description": "Simple toast messages for Laravel 5.",
+            "homepage": "https://github.com/Grimthorr/laravel-toast",
+            "time": "2015-03-24 11:18:05"
         },
         {
             "name": "guzzlehttp/psr7",

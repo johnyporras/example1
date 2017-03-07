@@ -1,8 +1,9 @@
 @extends('layouts.app')
-@section('title','Generar Clave')
+@section('title','Sistema Avi')
 @section('content')
+
 <hr/>
-    {!! Form::open(['url' => 'avi/generar', 'class' => 'form-horizontal', 'name' => 'buscar', 'lang' => 'es']) !!}
+    {!! Form::open(['url' => 'avi', 'class' => 'form-horizontal', 'name' => 'buscar', 'lang' => 'es']) !!}
         
         <div class="form-group {{ $errors->has('cedula') ? 'has-error' : ''}}">
             {!! Form::label('cedula', 'Cédula Afiliado: ', ['class' => 'col-sm-2 control-label']) !!}
@@ -15,20 +16,17 @@
             </div>
         </div>
 
+    {!! Form::close() !!}
+
     @if (Session::has('respuesta'))
         <div id="result" class="alert alert-warning">
             <p> {{Session::get('respuesta')}}</p>
         </div>
     @endif
 
-
-
-
-
-    {!! Form::close() !!}
     @if (isset($contratos))
         @if (count($contratos) > 0)
-            {!! Form::open(['url' => 'avi/generate', 'class' => 'form-horizontal', 'name' => 'beneficiario']) !!}
+            {!! Form::open(['url' => 'avi/seleccionar', 'class' => 'form-horizontal', 'name' => 'beneficiario']) !!}
             <div class="table">
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
@@ -71,6 +69,11 @@
     @endif
 @endsection
 @section('script')
+<!-- Incluye las alertas start -->
+<!-- ================ -->
+@include('partials.alert-toast')
+<!-- Incluye las alertas end -->
+
     <script>
         $(function(){
             $("#seleccionar").click(function(e){

@@ -13,16 +13,14 @@ use Carbon\Carbon;
 use App\User;
 use App\Models\AcAfiliado;
 
-
 class AviController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      * @param Request
      * @return Response
      */
-    public function generar(Request $request){
+    public function index(Request $request){
        
         if(isset($request->cedula)){
             if(empty($request->cedula)){
@@ -35,6 +33,7 @@ class AviController extends Controller
                 
                 }catch(ModelNotFoundException $e){  // catch(Exception $e) catch any exception
                     
+                    toast()->error( 'No existe el Afiliado!!!', 'Alerta:');
                     return back()->with('respuesta', 'No existe el Afiliado ');
                 }
 
@@ -54,6 +53,7 @@ class AviController extends Controller
                     return view('avi.index', compact('contratos'));
 
                 }else{
+                    toast()->warning( 'No tiene contrato vigente!!!', 'Mensaje:');
                     return back()->with('mensaje', 'No tiene contrato vigente');
                 }
             }
@@ -67,40 +67,29 @@ class AviController extends Controller
      * @param  Request $request
      * @return Response
      */
-    public function buscarCobertura(Request $request){
+    public function selected(Request $request){
         
         if(empty($request->icedula)){
             return back()->with('message', 'Debe seleccionar un beneficiario.');
         }
 
         $id = $request->input('icedula');
-        $beneficiario['contrato'] = $request->input(['contrato'.$id]);
-        $beneficiario['cedula_afiliado'] = $request->input('cedula_afiliado'.$id);
-        $beneficiario['nombre_afiliado'] = $request->input('nombre_afiliado'.$id);
-        $beneficiario['plan'] = $request->input('plan'.$id);
-        $beneficiario['colectivo'] = $request->input('colectivo'.$id);
-        $beneficiario['aseguradora'] = $request->input('aseguradora'.$id);
-        $beneficiario['tipo_afiliado'] = $request->input('tipo_afiliado'.$id);
+        $servicio['contrato'] = $request->input(['contrato'.$id]);
+        $servicio['cedula_afiliado'] = $request->input('cedula_afiliado'.$id);
+        $servicio['nombre_afiliado'] = $request->input('nombre_afiliado'.$id);
+        $servicio['plan'] = $request->input('plan'.$id);
+        $servicio['colectivo'] = $request->input('colectivo'.$id);
+        $servicio['aseguradora'] = $request->input('aseguradora'.$id);
+        $servicio['tipo_afiliado'] = $request->input('tipo_afiliado'.$id);
 
 
         /* Seleciono todos los beneficiaros */
-        $afiliados = AcAfiliado::where('cedula_titular', '=', $beneficiario['cedula_afiliado'])
+        $afiliados = AcAfiliado::where('cedula_titular', '=', $servicio['cedula_afiliado'])
                     ->orderBy('tipo_afiliado')
                     ->orderBy('fecha_nacimiento')
                     ->get();
 
-        return view('avi.generate', compact('beneficiario', 'afiliados'));
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-
-        return view('avi.index');
+        return view('avi.selected', compact('servicio', 'afiliados'));
     }
 
     /**
@@ -108,9 +97,17 @@ class AviController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function generate(Request $request)
     {
-        //
+        $servicio = $request->servicio;
+
+        $afiliado = AcAfiliado::findOrFail($request->id);
+
+        $paises = DB::table('countries')
+                        ->orderBy('name_es', 'ASC')
+                        ->pluck('name_es', 'id'); 
+
+        return view('avi.generate', compact('servicio', 'afiliado', 'paises'));
     }
 
     /**

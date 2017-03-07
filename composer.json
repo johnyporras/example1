@@ -12,7 +12,8 @@
         "zofe/rapyd": "2.2.*",
         "maatwebsite/excel": "~2.1.0",
         "barryvdh/laravel-dompdf": "0.6.*",
-        "anchu/ftp": "~2.0"
+        "anchu/ftp": "~2.0",
+        "grimthorr/laravel-toast": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

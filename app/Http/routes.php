@@ -18,13 +18,12 @@ Route::get('/', function () {
     /**
      * rutas modulo atención al viajero
      */
-
     Route::resource('avi', 'AviController'); 
- 
-    Route::get('avi/generar'      , 'AviController@generar');
-    Route::post('avi/generar'     , 'AviController@generar');
-    Route::post('avi/generate', 'AviController@buscarCobertura');
-    Route::post('avi/procesar' , 'AviController@procesarGuardar');
+    Route::post('avi', 'AviController@index');
+    Route::post('avi/seleccionar', 'AviController@selected');
+    Route::post('avi/generar', 'AviController@generate');
+    
+    /*Route::post('avi/procesar' , 'AviController@procesarGuardar'); */
 
     Route::get('avi/{id}/destroy', [
             'uses' => 'AviController@destroy',

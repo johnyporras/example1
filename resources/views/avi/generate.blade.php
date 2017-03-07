@@ -1,96 +1,187 @@
 @extends('layouts.app')
-@section('title','Generar Clave')
+@section('title','Sistema Avi')
 @section('content')
+
+@push('styles')
+    <link rel="stylesheet" href="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ url('plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ url('plugins/select2/css/select2-bootstrap.min.css') }}">
+@endpush
+
+@push('scripts')
+    <script src="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.es.min.js') }}"></script>
+    <script src="{{ url('plugins/select2/js/select2.min.js') }}"></script>
+    <script src="{{ url('plugins/select2/js/es.js') }}"></script>
+@endpush
 <hr/>
 
 <div class="col-xs-12">
-<h4>Datos del Beneficiario</h4>
-@if (isset($beneficiario))
-    <div class="table">
-        <table class="table table-bordered table-striped table-hover table-responsive">
-            <thead>
-                <tr>
-                    <th>Cédula</th><th>Nombre</th><th>Tipo</th><th>Cobertura del Plan</th><th>Colectivo</th><th>Aseguradora</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{ $beneficiario['cedula_afiliado'] }}</td>
-                    <td>{{ $beneficiario['nombre_afiliado'] }}</td>
-                    <td>{{ $beneficiario['tipo_afiliado'] }}</td>
-                    <td>{{ $beneficiario['plan'] }}</td>
-                    <td>{{ $beneficiario['colectivo'] }}</td>
-                    <td>{{ $beneficiario['aseguradora'] }}</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="row">
 
-    </div>
-@endif 
-</div>
+        <div class="col-xs-12">
+            <p><a href="{{ url('/avi') }}" title="Buscar otro beneficiario" class="btn btn-info"><span class="pr5"><i class="fa fa-search"></i></span> Beneficiario</a></p>
+        </div>
 
-@if (isset($afiliados))
-    @if (count($afiliados) > 0)
-    
-    <div class="col-xs-12">
-        <h4>Afiliados</h4>
-    </div>
-
-    @foreach ($afiliados as $afiliado)
-        <div class="col-md-4">
+        <div class="col-md-6 col-lg-5">
+        @if (isset($servicio))
             <div class="panel panel-primary">
+                <!-- Default panel contents -->
                 <div class="panel-heading">
-                    <h4 class="panel-title">{{ $afiliado->acTipoAfiliado->nombre }}</h4>
+                    <span class="pr-1"><i class="fa fa-plane"></i></span> Servicio
                 </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-3 col-lg-3 hidden-xs hidden-sm">
-                            <img class="img-circle img-responsive"
-                                     src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100"
-                                     alt="User Pic">
-                        </div>
+                 <!-- List group -->
+                <ul class="list-group">
+                    <li class="list-group-item"><span class="text-primary"><b>Cédula:</b></span> {{ $servicio['cedula_afiliado'] }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Nombre:</b></span> {{ $servicio['nombre_afiliado'] }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Tipo:</b></span> {{ $servicio['tipo_afiliado'] }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Cobertura del Plan:</b></span> {{ $servicio['plan'] }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Colectivo:</b></span> {{ $servicio['colectivo'] }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Aseguradora:</b></span> {{ $servicio['aseguradora'] }}</li>
+                </ul>
+            </div>
+            @endif 
+        </div>
 
-                        <div class=" col-md-9 col-lg-9 hidden-xs hidden-sm">
-                            <p><strong>{{ $afiliado->nombre }} {{ $afiliado->apellido }}</strong></p>
-                            <table class="table table-responsive">
-                                <tbody>
-                                    <tr>
-                                        <td>User level:</td>
-                                        <td>Administrator</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Registered since:</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Topics</td>
-                                        <td>15</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Warnings</td>
-                                        <td>0</td>
-                                    </tr>
-                                    </tbody>
-                            </table>
+        <div class="col-md-6 col-lg-5 col-lg-offset-2">
+            @if (isset($afiliado))
+            <div class="panel panel-warning">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <span class="pr-1"><i class="fa fa-user"></i></span> Afiliado
+                </div>
+                 <!-- List group -->
+                <ul class="list-group">
+                    <li class="list-group-item"><span class="text-warning"><b>Cédula:</b></span> {{ $afiliado->cedula }}</li>
+                    <li class="list-group-item"><span class="text-warning"><b>Nombre:</b></span> {{ $afiliado->nombre }} {{ $afiliado->apellido }} </li>
+                    <li class="list-group-item"><span class="text-warning"><b>Edad:</b></span> {{ $afiliado->fecha_nacimiento->age }}</li>
+                    <li class="list-group-item"><span class="text-warning"><b>Sexo:</b></span> {{ ($afiliado->sexo == 'M')?'Masculino':'Femenino' }}</li>
+                    <li class="list-group-item"><span class="text-warning"><b>Correo:</b></span> {{ $afiliado->email }}</li>
+                    <li class="list-group-item"><span class="text-warning"><b>Teléfono:</b></span> {{ $afiliado->telefono }}</li>
+                </ul>
+            </div>
+            @endif
+        </div>
+
+    </div> <!-- .row -->
+</div> <!-- .col-12 -->
+
+{!! Form::open(['url' => 'avi/generar', 'class' => 'form-horizontal', 'name' => 'afiliado']) !!}
+<div class="col-xs-12">
+    
+    <div class="pb25">
+        <h3>Intinerario de viajes</h3>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="form-group {{ $errors->has('fecha_desde') ? ' has-error' : '' }}">
+                {{ Form::label('fecha_desde', 'Fecha Salida', ['class' => 'col-md-3 control-label']) }}
+                <div class="col-md-9">
+                    <div class="input-group">
+                        {{ Form::text('fecha_desde', null , ['class' => 'form-control required', 'placeholder' => 'Ingrese Fecha Salida', 'id' => 'ini-date']) }}
+                        <div class="input-group-addon">
+                            <span class="fa fa-calendar"></span>
                         </div>
                     </div>
-                </div>
-                <div class="panel-footer">
-                    <button class="btn btn-sm btn-success" type="button"
-                            data-toggle="tooltip"
-                            data-original-title="Seleccionar"><i class="glyphicon glyphicon-ok"></i>
-                    </button>
-                        
+                    @if ($errors->has('fecha_desde'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('fecha_desde') }}</strong>
+                        </span>
+                    @endif
                 </div>
             </div>
-
+            <!-- End .form-group  -->
         </div>
-    @endforeach
-    @endif
-@endif
 
+        <div class="col-md-6">
+            <div class="form-group {{ $errors->has('pais_destino') ? ' has-error' : '' }}">
+                {{ Form::label('pais_destino', 'Destino', ['class' => 'col-md-3 control-label']) }}
+                <div class="col-md-9">
+                {{ Form::select('pais_destino', $paises, null, ['class' => 'form-control select2 destino', 'placeholder'=>'Seleccione Pais Destino']) }}
+                @if ($errors->has('pais_destino'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('pais_destino') }}</strong>
+                    </span>
+                @endif
+                </div>
+            </div>
+            <!-- End .form-group  -->
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group {{ $errors->has('fecha_hasta') ? ' has-error' : '' }}">
+                {{ Form::label('fecha_hasta', 'Fecha Retono', ['class' => 'col-md-3 control-label']) }}
+                <div class="col-md-9">
+                    <div class="input-group">
+                        {{ Form::text('fecha_hasta', null , ['class' => 'form-control required', 'placeholder' => 'Ingrese Fecha Retorno', 'id' => 'fin-date']) }}
+                        <div class="input-group-addon">
+                            <span class="fa fa-calendar"></span>
+                        </div>
+                    </div>
+                    @if ($errors->has('fecha_hasta'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('fecha_hasta') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+            <!-- End .form-group  -->
+        </div>
+
+    </div> <!-- row -->
+    <hr>
+    <div class="row">
+       <div class="col-sm-2 pt10 pb15">
+            <button type="button" class="btn btn-info" title="Agragar otro destino"><span><i class="fa fa-plus"></i></span> Destino</button>
+        </div>
+    </div>
+
+    <hr>
+    <div class="row">
+       <div class="col-sm-2">
+            {!! Form::submit('Generar', ['class' => 'btn btn-primary btn-block', 'id' => 'generar']) !!}
+        </div>
+    </div>
+    
+</div> <!-- .col-12 -->
+{!! Form::close() !!}
 @endsection
+
 @section('script')
     <script>
 
+    $(document).ready(function() {
+
+        $("#ini-date").datepicker({
+            language: "es",
+            startDate: '0',
+            format: 'yyyy-mm-dd',
+        }).on('changeDate', function (selected) {
+            var startDate = new Date(selected.date.valueOf());
+            $('#fin-date').datepicker('setStartDate', startDate);
+        }).on('clearDate', function (selected) {
+            $('#fin-date').datepicker('setStartDate', null);
+        });
+
+        $("#fin-date").datepicker({
+            language: "es",
+            startDate: '0',
+            format: 'yyyy-mm-dd',
+        }).on('changeDate', function (selected) {
+            var endDate = new Date(selected.date.valueOf());
+            $('#ini-date').datepicker('setEndDate', endDate);
+        }).on('clearDate', function (selected) {
+            $('#ini-date').datepicker('setEndDate', null);
+        });
+
+        /*Para selet2*/
+        $(".destino").select2({
+            language: "es",
+            placeholder: "Seleccione Usuario",
+            theme: "bootstrap",
+        });
+    });    
+    </script>
 @endsection

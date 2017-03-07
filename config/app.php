@@ -153,6 +153,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Anchu\Ftp\FtpServiceProvider::class,
+        Grimthorr\LaravelToast\ServiceProvider::class,
        
         /*
          * Application Service Providers...
@@ -207,11 +208,11 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Form'      => Collective\Html\FormFacade::class,
-        'HTML'      => Collective\Html\HtmlFacade::class,
-        'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
-        'PDF' => 'Barryvdh\DomPDF\Facade',
-        
+        'Form'  => Collective\Html\FormFacade::class,
+        'HTML'  => Collective\Html\HtmlFacade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'PDF'   => Barryvdh\DomPDF\Facade::class,
+        'Toast' => Grimthorr\LaravelToast\Facade::class,
     ],
 
 ];

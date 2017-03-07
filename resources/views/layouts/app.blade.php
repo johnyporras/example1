@@ -33,6 +33,9 @@
     <noscript><link rel="stylesheet" href="{{url('/')}}/css/jquery.fileupload-noscript.css"></noscript>
     <noscript><link rel="stylesheet" href="{{url('/')}}/css/jquery.fileupload-ui-noscript.css"></noscript>
 
+    <!-- Custom default Styles for plugins -->
+    @stack('styles')
+    <link rel="stylesheet" href="{{url('/')}}/css/styles.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -159,6 +162,9 @@ date_default_timezone_set('America/Caracas');
     <script src="{{url('/')}}/js/typeahead.bundle.js"></script>
 
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    <!-- Custom default scripts for plugins -->
+    @stack('scripts')
+    <!-- Custom scripts -->
     @yield('script')
 </body>
 </html>
