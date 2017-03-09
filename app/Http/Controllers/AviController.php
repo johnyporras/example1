@@ -12,6 +12,8 @@ use Session;
 use Carbon\Carbon;
 use App\User;
 use App\Models\AcAfiliado;
+use App\Models\Avi;
+use App\Models\AviDestino;
 
 class AviController extends Controller
 {
@@ -67,7 +69,7 @@ class AviController extends Controller
      * @param  Request $request
      * @return Response
      */
-    public function selected(Request $request){
+    public function select(Request $request){
         
         if(empty($request->icedula)){
             return back()->with('message', 'Debe seleccionar un beneficiario.');
@@ -116,9 +118,20 @@ class AviController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function process(Request $request)
+    {
+        dd($request);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**

@@ -18,17 +18,32 @@ Route::get('/', function () {
     /**
      * rutas modulo atención al viajero
      */
-    Route::resource('avi', 'AviController'); 
-    Route::post('avi', 'AviController@index');
-    Route::post('avi/seleccionar', 'AviController@selected');
-    Route::post('avi/generar', 'AviController@generate');
     
-    /*Route::post('avi/procesar' , 'AviController@procesarGuardar'); */
+    Route::resource('avi', 'AviController'); 
+    
+    Route::post('avi', 'AviController@index');
+   
+    Route::post('avi/seleccionar', [
+            'uses' => 'AviController@select',
+            'as'   => 'avi.seleccionar' 
+        ]);
 
+    Route::post('avi/generar', [
+            'uses' => 'AviController@generate',
+            'as'   => 'avi.generar' 
+        ]);
+
+    Route::post('avi/procesar', [
+            'uses' => 'AviController@process',
+            'as'   => 'avi.procesar' 
+        ]);
+    
     Route::get('avi/{id}/destroy', [
             'uses' => 'AviController@destroy',
             'as'   => 'avi.destroy' 
         ]);
+
+    
 /*=====================================================*/
 /*
 |--------------------------------------------------------------------------
