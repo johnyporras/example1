@@ -95,7 +95,11 @@
         <div class="col-sm-3 col-sm-offset-2">
             <button type="button" class="btn btn-sm btn-info btn-add-procedimiento">Agregar Procedimiento</button>
         </div>
+
+        
+
     </div>
+    <div id="resultproc"></div>
     <table id="procedimientos" class='table table-bordered table-striped table-hover table-responsive'>
         <thead>
             <tr>
@@ -246,14 +250,26 @@
 //                    b = false;
 //                }
                 $('#max').val($('#max').val()-1);
+                x--;
                 if($('#max').val() == 0){
                     proveedorX = '';
                     $('#codigo_proveedor').prop('disabled', false);
+                    $('#codigo_especialidad').prop('disabled', false);
                     $('#enviar_clave').prop('disabled', true);
                 }
+                $("#resultproc").html("");
+                $("#resultproc").removeClass("alert alert-danger");
             });;
             var x = 0, a = false, b = false, proveedorX = '';
+
             $('.btn-add-procedimiento').on('click',function(){
+
+                if(x==3)
+                {
+                    $("#resultproc").addClass("alert alert-danger");
+                    $("#resultproc").html("No puede agregar más de  tres procedimientos.");
+                    return false;
+                }
                 if($('#codigo_especialidad').val() !== "" && $('#codigo_servicio').val() !== "" && $('#procedimiento_medico').val() !== "" && $('#codigo_proveedor_creador').val() !== ""){
                     var especialidad = "<input type='hidden' value='"+ $('#codigo_especialidad').val() +"' name='id_especialidad" + x +"' id='id_especialidad" + x +"'>";
                     var servicio     = "<input type='hidden' value='"+ $('#codigo_servicio').val() +"' name='id_servicio" + x +"' id='id_servicio" + x +"'>";
@@ -282,13 +298,16 @@
                     $('#procedimiento_medico').val("");
                     //$('#codigo_proveedor').val("");
                     $('#codigo_proveedor').prop('disabled', true);
+                    $('#codigo_especialidad').prop('disabled', true);
                     //$('#codigo_proveedor_creador').val("");
                     //$('#detalle_servicio').val("");
                     $('#max').val(x);
+                    $("#resultproc").html("");
+                    $("#resultproc").removeClass("alert alert-danger");
                     $('#enviar_clave').prop('disabled', false);
                 }else{
-                    $("#result").addClass("alert alert-danger");
-                    $("#result").html("Debe seleccionar todos los campos para agregar un Procedimiento.");
+                    $("#resultproc").addClass("alert alert-danger");
+                    $("#resultproc").html("Debe seleccionar todos los campos para agregar un Procedimiento.");
                 }
             });
         });
