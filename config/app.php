@@ -153,8 +153,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Anchu\Ftp\FtpServiceProvider::class,
-        Grimthorr\LaravelToast\ServiceProvider::class,
-       
+         
         /*
          * Application Service Providers...
          */
