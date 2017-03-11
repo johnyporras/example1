@@ -2,6 +2,11 @@
 /* -----------------------------------------
    Template helpers
 ----------------------------------------- */
+
+.borde{
+  border: 1px solid #000 !important;
+}
+
 /* ------------------ Sizes --------------------*/
 .s8 {
   font-size: 8px !important;
@@ -782,4 +787,7 @@ a.text-dark:hover {
   -ms-transform: rotate(-180deg);
   transform: rotate(-180deg);
 }
+
+
+
 /*** ===================================================== ***/

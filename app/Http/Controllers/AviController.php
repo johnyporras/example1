@@ -105,7 +105,7 @@ class AviController extends Controller
 
         $afiliado = AcAfiliado::findOrFail($request->id);
 
-        $paises = DB::table('countries')
+        $paises = DB::table('paises')
                         ->orderBy('name_es', 'ASC')
                         ->pluck('name_es', 'id'); 
 

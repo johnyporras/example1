@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Generar Clave')
+@section('title','Asistencia al Viajero Internacional')
 @section('content')
 <hr/>
 <h4>Datos del Beneficiario</h4>
