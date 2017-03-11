@@ -172,9 +172,38 @@ class ClaveController extends Controller{
                             ->join('ac_colectivos', 'ac_colectivos.codigo_colectivo',"=", 'ac_contratos.codigo_colectivo')
                             ->join('ac_aseguradora', 'ac_colectivos.codigo_aseguradora',"=", 'ac_aseguradora.codigo_aseguradora')
                             ->select('codigo_contrato','cedula_afiliado','ac_afiliados.nombre as nombre_afiliado','ac_afiliados.apellido as apellido_afiliado',
-                                    'ac_planes_extranet.nombre as plan','ac_colectivos.nombre as colectivo','ac_aseguradora.nombre as aseguradora','ac_tipo_afiliado.nombre as tipo_afiliado')
+                                    'ac_planes_extranet.nombre as plan','ac_colectivos.nombre as colectivo','ac_aseguradora.nombre as aseguradora','ac_tipo_afiliado.nombre as tipo_afiliado','ac_contratos.fecha_inicio')
                             ->get();
+
+
+                
+
                 if(!empty($contratos)){
+
+                foreach ($contratos as $contrato)
+                {
+                   $fecha = $contrato->fecha_inicio;
+                   $nuevafecha = strtotime ( '+30 day' , strtotime ( $fecha ) ) ;
+                   $hoy = strtotime(date("d-m-Y H:i:00",time()));
+                   /*if($contrato->codigo_contrato=='1784872')
+                   {
+                    //   echo $hoy."<br>";
+                     //  dd($nuevafecha);
+                   }*/
+                   if($hoy<$nuevafecha)
+                   {
+
+                        $contrato->activo=false;
+                   }
+                   else
+                   {
+                        $contrato->activo=true;    
+                   } 
+
+                }
+
+
+
                     return view('claves.generar', compact('contratos'));
                 }else{
                     Session::flash('flash_message', 'No tiene contrato vigente');
