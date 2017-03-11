@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://190.202.55.42/altocentro/public/'),
+    'url' => env('APP_URL', 'http://http://35.164.247.216/'),
 
     /*
     |--------------------------------------------------------------------------
@@ -154,7 +154,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Anchu\Ftp\FtpServiceProvider::class,
         Grimthorr\LaravelToast\ServiceProvider::class,
-       
+
         /*
          * Application Service Providers...
          */
