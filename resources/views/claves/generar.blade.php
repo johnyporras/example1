@@ -34,7 +34,6 @@
                         {{-- */$x=0;/* --}}
                         @foreach ($contratos as $contrato)
                             {{-- */$x++;/* --}}
-
                             <tr>
                                 {!! Form::hidden('contrato'.$x, $contrato->codigo_contrato) !!}
                                 <td>{{ $contrato->cedula_afiliado }}</td>
@@ -49,15 +48,8 @@
                                 {!! Form::hidden('aseguradora'.$x, $contrato->aseguradora) !!}
                                 <td>{{ $contrato->tipo_afiliado }}</td>
                                 {!! Form::hidden('tipo_afiliado'.$x, $contrato->tipo_afiliado) !!}
-                                <td>
-                                   @if($contrato->activo==true) 
-                                    {!! Form::radio('icedula', $x,null, ['id' => 'icedula']) !!}
-                                    {!! $errors->first('icedula', '<p class="help-block">:message</p>') !!}
-                                   @else
-                                        El contrato se encuentra inactivo
-                                   @endif
-
-                                </td>
+                                <td>{!! Form::radio('icedula', $x,null, ['id' => 'icedula']) !!}
+                                    {!! $errors->first('icedula', '<p class="help-block">:message</p>') !!}</td>
                             </tr>
                         @endforeach
                         {!! Form::hidden('max', $x) !!}
