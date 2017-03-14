@@ -13,8 +13,7 @@
     <script src="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.es.min.js') }}"></script>
     <script src="{{ url('plugins/select2/js/select2.min.js') }}"></script>
     <script src="{{ url('plugins/select2/js/es.js') }}"></script>
-    <script src="{{ url('plugins/parsley-js/parsley.min.js') }}"></script>
-    <script src="{{ url('plugins/parsley-js/i18n/es.js') }}"></script>
+    <script src="{{ url('plugins/jquery-validation/jquery.validate.min.js') }}"></script>
 @endpush
 <hr/>
 
@@ -90,7 +89,7 @@
                         {{ Form::label('desde', 'Fecha Salida', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
                             <div class="input-group">
-                                {{ Form::text('desde[]', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Salida', 'id' => 'iniDate', 'required']) }}
+                                {{ Form::text('desde[]', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Salida', 'id' => 'iniDate']) }}
                                 <div class="input-group-addon">
                                     <span class="fa fa-calendar"></span>
                                 </div>
@@ -110,7 +109,7 @@
                         {{ Form::label('hasta', 'Fecha Retono', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
                             <div class="input-group">
-                                {{ Form::text('hasta[]', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Retorno', 'id' => 'finDate', 'required']) }}
+                                {{ Form::text('hasta[]', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Retorno', 'id' => 'finDate']) }}
                                 <div class="input-group-addon">
                                     <span class="fa fa-calendar"></span>
                                 </div>
@@ -134,7 +133,7 @@
                     <div class="form-group {{ $errors->has('destino') ? ' has-error' : '' }}">
                         {{ Form::label('destino', 'Destino', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
-                        {{ Form::select('destino[]', $paises, null, ['class' => 'form-control', 'id' => 'destino', 'placeholder'=>'Seleccione Pais Destino', 'required']) }}
+                        {{ Form::select('destino[]', $paises, null, ['class' => 'form-control', 'id' => 'destino', 'placeholder'=>'Seleccione Pais Destino']) }}
                         @if ($errors->has('destino'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('destino') }}</strong>
@@ -168,7 +167,7 @@
                         {{ Form::label('fecha_desde', 'Fecha Salida', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
                             <div class="input-group">
-                                {{ Form::text('fecha_desde', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Salida', 'required']) }}
+                                {{ Form::text('fecha_desde', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Salida']) }}
                                 <div class="input-group-addon">
                                     <span class="fa fa-calendar"></span>
                                 </div>
@@ -188,7 +187,7 @@
                         {{ Form::label('fecha_hasta', 'Fecha Retono', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
                             <div class="input-group">
-                                {{ Form::text('fecha_hasta', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Retorno', 'required']) }}
+                                {{ Form::text('fecha_hasta', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Retorno']) }}
                                 <div class="input-group-addon">
                                     <span class="fa fa-calendar"></span>
                                 </div>
@@ -212,7 +211,7 @@
                     <div class="form-group {{ $errors->has('pais_destino') ? ' has-error' : '' }}">
                         {{ Form::label('pais_destino', 'Destino', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
-                        {{ Form::select('pais_destino', $paises, null, ['class' => 'form-control', 'placeholder'=>'Seleccione Pais Destino', 'required']) }}
+                        {{ Form::select('pais_destino', $paises, null, ['class' => 'form-control', 'placeholder'=>'Seleccione Pais Destino']) }}
                         @if ($errors->has('pais_destino'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('pais_destino') }}</strong>
@@ -255,7 +254,7 @@
                     <div class="form-group {{ $errors->has('cronograma') ? ' has-error' : '' }}">
                         {{ Form::label('cronograma', 'Número de cronograma ', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
-                        {{ Form::text('cronograma', null, ['class' => 'form-control', 'placeholder' => 'Ingrese número de cronograma', 'required']) }}
+                        {{ Form::text('cronograma', null, ['class' => 'form-control', 'placeholder' => 'Ingrese número de cronograma']) }}
                         @if ($errors->has('cronograma'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('cronograma') }}</strong>
@@ -274,7 +273,7 @@
                     <div class="form-group {{ $errors->has('observaciones') ? ' has-error' : '' }}">
                         {{ Form::label('observaciones', 'Observaciones', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
-                        {{ Form::textArea('observaciones', null, ['class' => 'form-control', 'placeholder' => 'Ingrese sus observaciones', 'rows' => 4 ]) }}
+                        {{ Form::textArea('observaciones', null, ['class' => 'form-control', 'placeholder' => 'Ingrese sus observaciones', 'rows' => 4]) }}
                         @if ($errors->has('observaciones'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('observaciones') }}</strong>
@@ -439,22 +438,45 @@ $(document).ready(function() {
         };
 
         /** Validar formulario **/
-        var parsleyOptions = {
-
-            errorClass: 'has-error',
-            successClass: 'has-success',
-            classHandler: function(ParsleyField) {
-                return ParsleyField.$element.parents('.form-group');
+        $('#destinoForm').validate({
+            rules: {
+                observaciones: {
+                    minlength: 15,
+                    maxlength: 250,
+                },
+                cronograma: {
+                    minlength: 2,
+                    maxlength: 12,
+                    required: true,
+                },
+                'desde[]': {
+                    required: true,
+                },
+                'hasta[]': {
+                    required: true,
+                },
+                'destino[]': {
+                    required: true,
+                },
             },
-            errorsContainer: function(ParsleyField) {
-                return ParsleyField.$element.parents('.form-group');
+            highlight: function(element) {
+
+                $(element).closest('.form-group').addClass('has-error');
             },
-            errorsWrapper: '<span class="help-block">',
-            errorTemplate: '<span></span>'
-        };
+            unhighlight: function(element) {
 
-        $('#destinoForm').parsley( parsleyOptions );
-
+                $(element).closest('.form-group').removeClass('has-error');
+            },
+            errorElement: 'span',
+            errorClass: 'help-block',
+            errorPlacement: function(error, element) {
+                if (element.parent('.input-group').length) {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
 
 });    
 </script>

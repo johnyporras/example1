@@ -20,7 +20,11 @@
 
     @if (Session::has('respuesta'))
         <div id="result" class="alert alert-warning">
-            <p> {{Session::get('respuesta')}}</p>
+            <p><i class="fa fa-exclamation-triangle"></i> <span> {{ Session::get('respuesta') }} </span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                </button>
+            </p>
         </div>
     @endif
 
@@ -83,7 +87,7 @@
                 });
                 if(entro === false){
                     $("#result").addClass("alert alert-danger");
-                    $("#result").html("Debe seleccionar un Beneficiario");
+                    $("#result").html('<p><i class="fa fa-exclamation-circle"></i> ¡Debe seleccionar un Beneficiario!</p>');
                     return false;
                 }else{
                     return true;

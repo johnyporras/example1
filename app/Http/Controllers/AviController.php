@@ -26,17 +26,17 @@ class AviController extends Controller
        
         if(isset($request->cedula)){
             if(empty($request->cedula)){
-                return redirect()->back()->withInput()->with('message', 'El campo cédula es obligatorio.');
+                return back()->with('message', 'El campo cédula es obligatorio.');
             }else{
                 try{
 
-                    $this->validate($request,['cedula' => 'required|numeric|']);                    
+                    $this->validate($request,['cedula' => 'required|numeric']);                    
                     $afiliadoIni = AcAfiliado::where('cedula', '=', $request->cedula)->firstOrFail();
                 
                 }catch(ModelNotFoundException $e){  // catch(Exception $e) catch any exception
                     
                     toast()->error( 'No existe el Afiliado!!!', 'Alerta:');
-                    return back()->with('respuesta', 'No existe el Afiliado ');
+                    return back()->with('respuesta', '¡No existe el Afiliado!');
                 }
 
                 $contratos = DB::table('ac_contratos')
@@ -55,8 +55,8 @@ class AviController extends Controller
                     return view('avi.index', compact('contratos'));
 
                 }else{
-                    toast()->warning( 'No tiene contrato vigente!!!', 'Mensaje:');
-                    return back()->with('mensaje', 'No tiene contrato vigente');
+                    toast()->warning( '¡No tiene contrato vigente!', 'Mensaje:');
+                    return back()->with('respuesta', '¡No tiene contrato vigente!');
                 }
             }
         }else{
@@ -72,7 +72,7 @@ class AviController extends Controller
     public function select(Request $request){
         
         if(empty($request->icedula)){
-            return back()->with('message', 'Debe seleccionar un beneficiario.');
+            return back()->with('message', '¡Debe seleccionar un beneficiario.!');
         }
 
         $id = $request->input('icedula');
