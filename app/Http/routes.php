@@ -94,6 +94,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('claves/confirmar'          ,'ConfirmarClaveController@getFilter');
     Route::get('claves/verificarClave'     ,'ConfirmarClaveController@show');
     Route::post('claves/procesarConfirmar' ,'ConfirmarClaveController@confirmar');
+
+
+    // Seguridad
+    Route::get('Seguridad/permisos'          ,'PermisosController@index');
+    Route::get('Seguridad/leerModulos'       ,'PermisosController@leerModulos');
+    Route::get('Seguridad/leerTipoUsuarios'   ,'PermisosController@leerTipoUsuarios');
+    Route::get('Seguridad/leerPermisos'   ,'PermisosController@leerPermisos');
+    Route::get('Seguridad/incPermiso'   ,'PermisosController@incPermiso');
+    Route::get('Seguridad/evalPermiso'   ,'PermisosController@evalPermiso');
+ 
     
         
     // CONFIRMACION DE CLAVES DE ATENCION ESPECIAL

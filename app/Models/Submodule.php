@@ -14,9 +14,8 @@ class Submodule extends Model {
     protected $fillable = ['id', 'description', 'modules_id', 'url', 'order', 'deleted_at'];
 
 
-    public function module() {
+    public function module()
+    {
         return $this->belongsTo(\App\Models\Module::class, 'modules_id', 'id');
     }
-
-
 }

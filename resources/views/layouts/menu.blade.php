@@ -17,6 +17,7 @@
                     ->orderBy('modules.order','asc')
                     ->orderBy('submodules.order','asc')
                     ->get();
+                    //dd($opciones_perfil);
                 foreach($opciones_perfil as $opcion_perfil):
                     if($opcion_perfil->id != $id_module){
                         $id_module = $opcion_perfil->id;
@@ -26,6 +27,7 @@
                             </li>");
                         }
                         $cont++;
+                       // echo $id_module;
             ?>
             <li>
                 <a href="#"><i class="<?php echo $opcion_perfil->icon; ?>"></i>&nbsp;<?php echo $opcion_perfil->mdescription; ?><span class="fa arrow"></span></a>
