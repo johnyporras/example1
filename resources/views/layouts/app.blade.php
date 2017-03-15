@@ -17,6 +17,10 @@
     <!-- Jquery UI CSS -->
     <link href="{{url('/')}}/css/jquery-ui.min.css" rel="stylesheet">
     <link href="{{url('/')}}/css/jquery-ui.theme.min.css" rel="stylesheet">
+
+    <link href="{{url('/')}}/css/bootstrap-treeview.css" rel="stylesheet">
+
+
     <!-- MetisMenu CSS -->
     <link href="{{url('/')}}/css/metisMenu.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -148,7 +152,7 @@ date_default_timezone_set('America/Caracas');
     <!-- /#wrapper -->
     <!-- JavaScripts -->
     <script src="{{url('/')}}/bootstrap/js/jquery-1.12.3.min.js"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
+   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
     <!-- BOOTSTRAP -->
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
     <script src="{{url('/')}}/bootstrap/js/bootstrap.min.js"></script>
@@ -160,6 +164,7 @@ date_default_timezone_set('America/Caracas');
     <script src="{{url('/')}}/js/parsley.min.js"></script>
     <script src="{{url('/')}}/js/i18n/es.js"></script>
     <script src="{{url('/')}}/js/typeahead.bundle.js"></script>
+    <script src="{{url('/')}}/js/bootstrap-treeview.js"></script>
 
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     <!-- Custom default scripts for plugins -->

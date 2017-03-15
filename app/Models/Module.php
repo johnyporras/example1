@@ -18,7 +18,7 @@ class Module extends Model {
      */
     public function submodules()
     {
-        return $this->hasMany(\App\Models\Submodule::class,'modules_id','id');
+        return $this->hasMany(\App\Models\Submodule::class,'modules_id','id')->get();
     }
 
 }
