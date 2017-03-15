@@ -168,7 +168,7 @@
                         {{ Form::label('fecha_desde', 'Fecha Salida', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
                             <div class="input-group">
-                                {{ Form::text('fecha_desde', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Salida', 'required']) }}
+                                {{ Form::text('fecha_desde', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Salida']) }}
                                 <div class="input-group-addon">
                                     <span class="fa fa-calendar"></span>
                                 </div>
@@ -188,7 +188,7 @@
                         {{ Form::label('fecha_hasta', 'Fecha Retono', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
                             <div class="input-group">
-                                {{ Form::text('fecha_hasta', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Retorno', 'required']) }}
+                                {{ Form::text('fecha_hasta', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Retorno']) }}
                                 <div class="input-group-addon">
                                     <span class="fa fa-calendar"></span>
                                 </div>
@@ -212,7 +212,7 @@
                     <div class="form-group {{ $errors->has('pais_destino') ? ' has-error' : '' }}">
                         {{ Form::label('pais_destino', 'Destino', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
-                        {{ Form::select('pais_destino', $paises, null, ['class' => 'form-control', 'placeholder'=>'Seleccione Pais Destino', 'required']) }}
+                        {{ Form::select('pais_destino', $paises, null, ['class' => 'form-control', 'placeholder'=>'Seleccione Pais Destino']) }}
                         @if ($errors->has('pais_destino'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('pais_destino') }}</strong>
@@ -274,7 +274,7 @@
                     <div class="form-group {{ $errors->has('observaciones') ? ' has-error' : '' }}">
                         {{ Form::label('observaciones', 'Observaciones', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
-                        {{ Form::textArea('observaciones', null, ['class' => 'form-control', 'placeholder' => 'Ingrese sus observaciones', 'rows' => 4 ]) }}
+                        {{ Form::textArea('observaciones', null, ['class' => 'form-control', 'placeholder' => 'Ingrese sus observaciones', 'rows' => 4,'minlength' => "10" ]) }}
                         @if ($errors->has('observaciones'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('observaciones') }}</strong>
@@ -283,6 +283,11 @@
                         </div>
                     </div>
                     <!-- End .form-group  -->
+
+                    <!-- Campos ocultos necesarios para cargar la solicitud -->
+                    {{ Form::hidden('cedula', $afiliado->cedula) }}
+                    {{ Form::hidden('edad', $afiliado->fecha_nacimiento->age) }}
+                    {{ Form::hidden('contrato', $servicio['contrato']) }}
                 </div>
             </div>
         </div>
@@ -310,6 +315,23 @@ $(document).ready(function() {
 
     var index = 0;
 
+    /** Validar formulario **/
+    var parsleyOptions = {
+        errorClass: 'has-error',
+        successClass: 'has-success',
+        classHandler: function(el) {
+            return el.$element.parents('.form-group');
+        },
+        errorsContainer: function(el) {
+            return el.$element.closest('.form-group');
+        },
+        errorsWrapper: '<span class="help-block">',
+        errorTemplate: '<div class=" col-md-offset-3 col-md-9"></div>',
+    };
+
+    // Genero la validacion del formulario...
+    $('#destinoForm').parsley(parsleyOptions);
+
     // Add button click handler
     $('#destinoForm').on('click', '.addButton', function() {
         index++;
@@ -324,17 +346,17 @@ $(document).ready(function() {
             // Update the name attributes
             $clone
                 .find('[name="fecha_desde"]').attr('name', 'desde[]')
-                                             .attr('id', 'iniDate' + index).end()
-
-                .find('[name="fecha_hasta"]').attr('name', 'hasta[]' + index)
-                                             .attr('id', 'finDate' + index ).end()
-
-                .find('[name="pais_destino"]').attr('name', 'destino[]' + index )
-                                             .attr('id', 'destino' + index ).end()
-
+                                            .attr('id', 'iniDate' + index).end()
+                .find('[name="fecha_hasta"]').attr('name', 'hasta[]')
+                                            .attr('id', 'finDate' + index).end()
+                .find('[name="pais_destino"]').attr('name', 'destino[]')
+                                            .attr('id', 'destino' + index).end()
                 .find('#dia').attr('id', 'dias' + index ).end();
 
-            /* Para fecha de salida y retorno*/
+            // adicionar campo requerido
+            $('#iniDate'+index).parsley(parsleyOptions).addConstraint("required", "true");
+
+            // adicionar campo datepicker fecha Salida...
             $('#iniDate'+index).datepicker({
                 language: "es",
                 startDate: '0',
@@ -349,12 +371,19 @@ $(document).ready(function() {
                 if (diff > 0)
                 {
                   $("#dias"+index).text(diff + ' días');
-                }
+                } 
+
+                //valida el campo al cambiar
+                $('#iniDate'+index).parsley(parsleyOptions).validate();
 
             }).on('clearDate', function (selected) {
                 $('#finDate'+index).datepicker('setStartDate', null);
             });
 
+            // adicionar campo requerido
+            $("#finDate"+index).parsley(parsleyOptions).addConstraint("required", "true");
+
+            // adicionar campo datepicker fecha Retorno...
             $("#finDate"+index).datepicker({
                 language: "es",
                 startDate: '0',
@@ -368,20 +397,34 @@ $(document).ready(function() {
 
                 if (diff > 0)
                 {
-                  $("#dias"+index).text(diff + ' días');
+                  $('#dias'+index).text(diff + ' días');
                 }
+
+                //valida el campo al cambiar
+                $('#finDate'+index).parsley(parsleyOptions).validate();
 
             }).on('clearDate', function (selected) {
                 $('#iniDate'+index).datepicker('setEndDate', null);
             });
 
+            // adicionar campo requerido
+            $("#destino"+index).parsley(parsleyOptions).addConstraint("required", "true");
+
+            /*Para selet2*/
+            $("#destino"+index).select2({
+                language: "es",
+                placeholder: "Seleccione pais destino",
+                theme: "bootstrap",
+            }).on("change", function (e) { 
+                // Valida campo al cambiar valor
+                $("#destino"+index).parsley(parsleyOptions).validate();
+            });
         });
 
         // Remove button click handler
         $('#destinoForm').on('click', '.removeButton', function() {
             var $row  = $(this).parents('.padre'),
                 index = $row.attr('data-index');
-
             // Remove element containing the fields
             $row.remove();
         });
@@ -400,10 +443,13 @@ $(document).ready(function() {
             /* Diferencias de dias*/
             var diff = diffDates($("#iniDate").val(), $("#finDate").val());
 
-            if (diff > 0)
+            if(diff > 0)
             {
               $("#dias").text(diff + ' días');
             }
+
+            // Valida campo al cambiar valor
+            $("#iniDate").parsley(parsleyOptions).validate();
 
         }).on('clearDate', function (selected) {
             $('#finDate').datepicker('setStartDate', null);
@@ -425,8 +471,21 @@ $(document).ready(function() {
               $("#dias").text(diff + ' días');
             }
 
+            // Valida campo al cambiar valor
+            $("#finDate").parsley(parsleyOptions).validate();
+
         }).on('clearDate', function (selected) {
             $('#iniDate').datepicker('setEndDate', null);
+        });
+
+        /*Para Destino select2*/
+        $("#destino").select2({
+            language: "es",
+            placeholder: "Seleccione pais destino",
+            theme: "bootstrap",
+        }).on("change", function (e) { 
+            // Valida campo al cambiar valor
+            $("#destino").parsley(parsleyOptions).validate();
         });
 
         /**** Funcion recupera diferencias de dias ***/
@@ -437,24 +496,6 @@ $(document).ready(function() {
 
             return diff;
         };
-
-        /** Validar formulario **/
-        var parsleyOptions = {
-
-            errorClass: 'has-error',
-            successClass: 'has-success',
-            classHandler: function(ParsleyField) {
-                return ParsleyField.$element.parents('.form-group');
-            },
-            errorsContainer: function(ParsleyField) {
-                return ParsleyField.$element.parents('.form-group');
-            },
-            errorsWrapper: '<span class="help-block">',
-            errorTemplate: '<span></span>'
-        };
-
-        $('#destinoForm').parsley( parsleyOptions );
-
 
 });    
 </script>

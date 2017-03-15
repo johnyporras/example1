@@ -19,10 +19,18 @@ Route::get('/', function () {
      * rutas modulo atención al viajero
      */
     
-    Route::resource('avi', 'AviController'); 
+    Route::get('avi/lista', [
+            'uses' => 'AviController@lista',
+            'as'   => 'avi.lista' 
+        ]);
     
+    Route::get('avi', [
+            'uses' => 'AviController@index',
+            'as'   => 'avi.index' 
+        ]);
+
     Route::post('avi', 'AviController@index');
-   
+
     Route::post('avi/seleccionar', [
             'uses' => 'AviController@select',
             'as'   => 'avi.seleccionar' 
@@ -43,7 +51,6 @@ Route::get('/', function () {
             'as'   => 'avi.destroy' 
         ]);
 
-    
 /*=====================================================*/
 /*
 |--------------------------------------------------------------------------

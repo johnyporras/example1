@@ -14,6 +14,7 @@ use App\User;
 use App\Models\AcAfiliado;
 use App\Models\Avi;
 use App\Models\AviDestino;
+use Auth;
 
 class AviController extends Controller
 {
@@ -84,7 +85,6 @@ class AviController extends Controller
         $servicio['aseguradora'] = $request->input('aseguradora'.$id);
         $servicio['tipo_afiliado'] = $request->input('tipo_afiliado'.$id);
 
-
         /* Seleciono todos los beneficiaros */
         $afiliados = AcAfiliado::where('cedula_titular', '=', $servicio['cedula_afiliado'])
                     ->orderBy('tipo_afiliado')
@@ -120,7 +120,44 @@ class AviController extends Controller
      */
     public function process(Request $request)
     {
-        dd($request);
+        /**valida los campos del formulario **/
+        $this->validate($request, [
+            'hasta'         => 'required',
+            'destino'       => 'required',
+            'cronograma'    => 'required',
+            'observaciones' => 'min:10'
+        ]);
+
+        // Genero codigo unico
+        $codigo =  'av'.substr(uniqid(),7,13);
+
+        // crea nueva solicitud
+        $avi = Avi::create([
+            'codigo_solicitud' => $codigo,
+            'cedula_afiliado'  => $request->cedula,
+            'codigo_contrato'  => $request->contrato,
+            'cobertura_monto'  => 50000,
+            'edad_afiliado'    => $request->edad,  
+            'nro_cronograma'   => $request->cronograma,  
+            'observaciones'    => $request->observaciones,     
+            'creador'          => Auth::user()->id
+        ]);
+
+        // Total de destinos para realizar bucle
+        $total = count($request->desde);
+
+        // Aqui se guardan todos los destinos da la solicitud
+        for ($i = 0; $i < $total; $i++) {
+
+            $avi->destinos()->create([
+                'pais_destino' => $request['destino'][$i], 
+                'fecha_desde'  => $request['desde'][$i], 
+                'fecha_hasta'  => $request['hasta'][$i]
+            ]);
+        }
+
+        toast()->info(' Solicitud generada sastifactoriamente', 'Información:');
+        return redirect()->route('avi.lista');
     }
 
     /**
@@ -129,9 +166,9 @@ class AviController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function lista()
     {
-
+        return view('avi.lista');
     }
 
     /**

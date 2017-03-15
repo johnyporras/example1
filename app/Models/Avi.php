@@ -32,15 +32,30 @@ class Avi extends Model
      * @var array
      */
     protected $fillable = [
-    	'id', 'name', 'modules', 'active', 'deleted_at'
+    	'codigo_solicitud',
+        'cedula_afiliado', 
+        'codigo_contrato', 
+        'cobertura_monto',
+        'edad_afiliado',  
+        'nro_cronograma',  
+        'observaciones',     
+        'creador',
+        'deleted_at',
     ];
 
+    /**
+     * Relación can tabla de destinos
+     * @return [type] [description]
+     */
     public function destinos()
     {
-        return $this->hasMany(\App\Models\AviDestino::class,'avi_id','id');
+        return $this->hasMany(\App\Models\AviDestino::class);
     }
 
-
+    /**
+     * Relación con los modulos
+     * @return [type] [description]
+     */
     public function module() {
         return $this->belongsTo(\App\Models\Avi::class, 'modules_id', 'id');
     }

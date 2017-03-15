@@ -61,6 +61,7 @@
                 {!! Form::hidden('servicio[plan]', $servicio['plan'] ) !!}
                 {!! Form::hidden('servicio[colectivo]', $servicio['colectivo'] ) !!}
                 {!! Form::hidden('servicio[aseguradora]', $servicio['aseguradora'] ) !!}
+                {!! Form::hidden('servicio[contrato]', $servicio['contrato'] ) !!}
 
                     @foreach ($afiliados as $afiliado)
                         <div class="col-md-6 col-lg-4">
