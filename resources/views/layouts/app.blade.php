@@ -19,7 +19,7 @@
     <link href="{{url('/')}}/css/jquery-ui.theme.min.css" rel="stylesheet">
 
     <link href="{{url('/')}}/css/bootstrap-treeview.css" rel="stylesheet">
-
+    <script src="{{url('/')}}/bootstrap/js/jquery-1.12.3.min.js"></script>
 
     <!-- MetisMenu CSS -->
     <link href="{{url('/')}}/css/metisMenu.min.css" rel="stylesheet">
@@ -47,6 +47,34 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
+<script>
+var rutaInicio="";
+var url = location.pathname;
+var id_type='<?php echo Auth::user()->type; ?>'
+var ruta = "/Seguridad/evalPermiso";
+//alert(url);
+//alert(rutaInicio);
+if(url!=rutaInicio)
+{
+
+    var params =
+    {
+      'url':url,
+      'id_type':id_type
+    }
+    //alert(params);
+    $.getJSON(ruta,params,function(data)
+    {
+        if(data.permiso==false)
+        {
+            alert("accesso denegado a este módulo");
+            location.href=rutaInicio;              
+        }
+  
+    });
+}
+</script>
+
 <body id="app-layout">
     <div id="wrapper">
     <!-- START OF HEADER -->
@@ -151,7 +179,7 @@ date_default_timezone_set('America/Caracas');
     </div>
     <!-- /#wrapper -->
     <!-- JavaScripts -->
-    <script src="{{url('/')}}/bootstrap/js/jquery-1.12.3.min.js"></script>
+    
    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
     <!-- BOOTSTRAP -->
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->

@@ -95,6 +95,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('Seguridad/leerTipoUsuarios'   ,'PermisosController@leerTipoUsuarios');
     Route::get('Seguridad/leerPermisos'   ,'PermisosController@leerPermisos');
     Route::get('Seguridad/incPermiso'   ,'PermisosController@incPermiso');
+    Route::get('Seguridad/evalPermiso'   ,'PermisosController@evalPermiso');
  
     
         

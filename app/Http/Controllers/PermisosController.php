@@ -69,6 +69,20 @@ class PermisosController extends Controller
         }
     }
 
+    public function evalPermiso(Request $request)
+    {
+        if($request->url!="" && $request->id_type)
+        {
+
+            $tipo = new TypesProfile();
+            $tipo->url= $request->url;
+            $tipo->id_type= $request->id_type;
+            $rest = $tipo->checkPermiso();
+            $arr1["permiso"] = $rest;
+            return json_encode($arr1);
+        }
+    }
+
     public function incPermiso(Request $request)
     {
         if($request->modulo!="" && $request->perfil && $request->permiso)

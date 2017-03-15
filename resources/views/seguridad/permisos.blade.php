@@ -74,6 +74,9 @@ $(document).ready(function(){
         onNodeSelected: function(event, data) {
           moduloActual=data.id;
           $('#txtmodulo').html(data.text);
+          location.href="#wrapper";
+          $("#result").removeClass("alert alert-danger");
+          $("#result").html("");
         }
 
         });

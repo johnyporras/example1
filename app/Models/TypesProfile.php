@@ -5,7 +5,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TypesProfile extends Model {
 
-    use SoftDeletes;
+    
+
     /**
      * Generated
      */
@@ -51,6 +52,26 @@ class TypesProfile extends Model {
 
         $results=$this->select("id")
                 ->where("id_module","=",$this->id_module)
+                ->where("id_type","=",$this->id_type)->get();
+//dd()
+        if($results->count()>0)
+        {
+            //dd("aqui");
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+    public function checkPermiso()
+    {
+
+        $results=$this->select("types_profile.id")
+                ->join("submodules","types_profile.id_module","=","submodules.id")
+                ->whereRaw("'{$this->url}' like '%'||url")
                 ->where("id_type","=",$this->id_type)->get();
 //dd()
         if($results->count()>0)
