@@ -53,7 +53,7 @@ if(is_object(Auth::user()))
 {
 ?>
     <script>
-    var rutaInicio="";
+    var rutaInicio="/";
     var url = location.pathname;
     var id_type='<?php echo Auth::user()->type; ?>'
     var ruta = "/Seguridad/evalPermiso";
