@@ -26,8 +26,9 @@
 
 </div>
 
-<div class="row">
-  <input type="checkbox" id="datapermiso" class="form-control">
+<div class="row" style="text-align:center">
+  
+  <input type="checkbox" id="datapermiso" class="checkbox pull-left">
   Tiene Permiso
   <input type="button" id="btnactpermiso" value="actualizar" class="form-control">
 </div>
