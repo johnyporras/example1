@@ -47,34 +47,41 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<script>
-var rutaInicio="";
-var url = location.pathname;
-var id_type='<?php echo Auth::user()->type; ?>'
-var ruta = "/Seguridad/evalPermiso";
-//alert(url);
-//alert(rutaInicio);
-if(url!=rutaInicio)
+
+<?php 
+if(is_object(Auth::user()))
 {
+?>
+    <script>
+    var rutaInicio="";
+    var url = location.pathname;
+    var id_type='<?php echo Auth::user()->type; ?>'
+    var ruta = "/Seguridad/evalPermiso";
+    //alert(url);
+    //alert(rutaInicio);
+    if(url!=rutaInicio)
+    {
 
-    var params =
-    {
-      'url':url,
-      'id_type':id_type
-    }
-    //alert(params);
-    $.getJSON(ruta,params,function(data)
-    {
-        if(data.permiso==false)
+        var params =
         {
-            alert("accesso denegado a este módulo");
-            location.href=rutaInicio;              
+          'url':url,
+          'id_type':id_type
         }
-  
-    });
+        //alert(params);
+        $.getJSON(ruta,params,function(data)
+        {
+            if(data.permiso==false)
+            {
+                alert("accesso denegado a este módulo");
+                location.href=rutaInicio;              
+            }
+      
+        });
+    }
+    </script>
+<?php
 }
-</script>
-
+?>
 <body id="app-layout">
     <div id="wrapper">
     <!-- START OF HEADER -->
