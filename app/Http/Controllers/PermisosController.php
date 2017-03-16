@@ -19,14 +19,15 @@ class PermisosController extends Controller
     public function leerModulos()
     {
         $modulos = Module::get();
-        $arrModulo=$arrayName = array();
-        $arrSubmodulo=$arrayName = array();
+        $arrModulo=array();
+        
         foreach ($modulos as $modulo)
         {
         	$Auxarr["text"]=$modulo->description;
         	$Auxarr["href"]="#";
         	$sumodulos = $modulo->submodules();
         	$i=0;
+            $arrSubmodulo=array();
         	foreach ($sumodulos as $submodulo)
         	{
         		$i++;
