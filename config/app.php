@@ -154,6 +154,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Anchu\Ftp\FtpServiceProvider::class,
         Grimthorr\LaravelToast\ServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -213,6 +214,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF'   => Barryvdh\DomPDF\Facade::class,
         'Toast' => Grimthorr\LaravelToast\Facade::class,
+        'Datatables' => Yajra\Datatables\Facades\Datatables::class,
     ],
 
 ];

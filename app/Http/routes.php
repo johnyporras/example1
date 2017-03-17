@@ -19,6 +19,8 @@ Route::get('/', function () {
      * rutas modulo atención al viajero
      */
     
+    Route::get('api/solicitudes', 'AviController@solicitudes');
+    
     Route::get('avi/lista', [
             'uses' => 'AviController@lista',
             'as'   => 'avi.lista' 
@@ -44,6 +46,11 @@ Route::get('/', function () {
     Route::post('avi/procesar', [
             'uses' => 'AviController@process',
             'as'   => 'avi.procesar' 
+        ]);
+
+    Route::get('avi/{id}', [
+            'uses' => 'AviController@show',
+            'as'   => 'avi.show' 
         ]);
     
     Route::get('avi/{id}/destroy', [

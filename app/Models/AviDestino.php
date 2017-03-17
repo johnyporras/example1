@@ -31,7 +31,7 @@ class AviDestino extends Model
      * @var array
      */
     protected $fillable = [
-		'pais_destino',	'fecha_desde', 'fecha_hasta', 'deleted_at'
+		'pais_id',	'fecha_desde', 'fecha_hasta', 'deleted_at'
 	];
 
 	/**
@@ -40,5 +40,13 @@ class AviDestino extends Model
 	 */
 	public function avi() {
         return $this->belongsTo(\App\Models\Avi::class);
+    }
+
+    /**
+     * Relación con la tabla paises
+     * @return [type] [description]
+     */
+    public function pais() {
+        return $this->belongsTo(\App\Models\Pais::class);
     }
 }

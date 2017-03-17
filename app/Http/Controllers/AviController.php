@@ -11,9 +11,10 @@ use DB;
 use Session;
 use Carbon\Carbon;
 use App\User;
-use App\Models\AcAfiliado;
 use App\Models\Avi;
 use App\Models\AviDestino;
+use App\Models\AcAfiliado;
+use Yajra\Datatables\Datatables;
 use Auth;
 
 class AviController extends Controller
@@ -136,7 +137,7 @@ class AviController extends Controller
             'codigo_solicitud' => $codigo,
             'cedula_afiliado'  => $request->cedula,
             'codigo_contrato'  => $request->contrato,
-            'cobertura_monto'  => 50000,
+            'cobertura_monto'  => 0,
             'edad_afiliado'    => $request->edad,  
             'nro_cronograma'   => $request->cronograma,  
             'observaciones'    => $request->observaciones,     
@@ -150,7 +151,7 @@ class AviController extends Controller
         for ($i = 0; $i < $total; $i++) {
 
             $avi->destinos()->create([
-                'pais_destino' => $request['destino'][$i], 
+                'pais_id' => $request['destino'][$i], 
                 'fecha_desde'  => $request['desde'][$i], 
                 'fecha_hasta'  => $request['hasta'][$i]
             ]);
@@ -171,6 +172,25 @@ class AviController extends Controller
         return view('avi.lista');
     }
 
+
+    public function solicitudes(){
+
+        $solicitudes = Avi::all();
+
+        return Datatables::of($solicitudes)
+        ->addColumn('action', function ($solicitud) {
+                return '
+                <a href="/avi/'.$solicitud->id.'" class="btn btn-warning btn-sm"> <i class="fa fa-eye"> </i></a>
+                <a href="/avi/'.$solicitud->id.'/edit" class="btn btn-info btn-sm"> <i class="fa fa-edit"> </i></a>
+                <a href="/avi/'.$solicitud->id.'" class="btn btn-danger btn-sm sweet-danger"> <i class="fa fa-trash"> </i></a>';
+            })
+        ->editColumn('created_at', function ($solicitud) {
+                return $solicitud->created_at->format('d/m/Y');
+            })
+        ->make(true);
+    }
+
+
     /**
      * Display the specified resource.
      *
@@ -179,7 +199,9 @@ class AviController extends Controller
      */
     public function show($id)
     {
-        //
+        $solicitud = Avi::findOrFail($id);
+
+        return view('avi.show',compact('solicitud'));
     }
 
     /**
