@@ -78,10 +78,11 @@ $(document).ready(function(){
           location.href="#wrapper";
           $("#result").removeClass("alert alert-danger");
           $("#result").html("");
+          //$('#treeview5').treeview('expandAll', { levels: 2, silent: true });
         }
 
         });
-    $('#treeview5').treeview('collapseAll', { silent: true });
+    $('#treeview5').treeview('expandAll', { silent: true });
   });
 
   

@@ -16,6 +16,11 @@ class PermisosController extends Controller
         return view('seguridad.permisos');
     }
 
+    public function nopermiso()
+    {
+        return view('seguridad.nopermiso');
+    }
+
     public function leerModulos()
     {
         $modulos = Module::get();
