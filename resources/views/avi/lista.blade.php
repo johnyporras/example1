@@ -36,7 +36,7 @@
 <div class="col-xs-12">
     <div class="row">
         <div class="col-xs-12">
-            <table id="tsolicitud" class="table table-hover table-striped table-bordered nowrap" cellspacing="0" width="100%">
+            <table id="tsolicitud" class="table table-hover table-striped table-bordered table-colored nowrap" cellspacing="0" width="100%">
                 <thead>
                     <tr>
                         <th width="20">Id</th>
