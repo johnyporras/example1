@@ -789,13 +789,10 @@ a.text-dark:hover {
 }
 /*** ===================================================== ***/
 
-
-/** Color de tablas */
-
+/** Color de tablas **/
 .table.table-colored {
     border-bottom-color: #F48228;
 }
-
 .table-colored > thead > tr > th {
     border-color: #F48228 !important;
     background-color: #F48228 !important;

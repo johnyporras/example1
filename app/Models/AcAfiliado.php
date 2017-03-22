@@ -36,5 +36,5 @@ class AcAfiliado extends Model {
     {
         return $this->hasMany(\App\Models\AcContrato::class,'cedula_afiliado','cedula');
     }
-
+    
 }

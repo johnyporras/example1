@@ -18,6 +18,7 @@ Route::get('/', function () {
     /**
      * rutas modulo atención al viajero
      */
+Route::group(['middleware' => ['auth']], function () {
     
     Route::get('api/solicitudes', 'AviController@solicitudes');
     
@@ -52,12 +53,22 @@ Route::get('/', function () {
             'uses' => 'AviController@show',
             'as'   => 'avi.show' 
         ]);
+
+    Route::get('avi/{id}/edit', [
+            'uses' => 'AviController@edit',
+            'as'   => 'avi.edit' 
+        ]);
+
+    Route::post('avi/update/{id}', [
+            'uses' => 'AviController@update',
+            'as'   => 'avi.update' 
+        ]);
     
     Route::get('avi/{id}/destroy', [
             'uses' => 'AviController@destroy',
             'as'   => 'avi.destroy' 
         ]);
-
+});
 /*=====================================================*/
 /*
 |--------------------------------------------------------------------------
