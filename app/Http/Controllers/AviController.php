@@ -212,9 +212,9 @@ class AviController extends Controller
      */
     public function edit($id)
     {
-        $avi = Avi::findOrFail($id);
+        $solicitud = Avi::findOrFail($id);
 
-        $afiliado = AcAfiliado::where('cedula', '=', $avi->cedula_afiliado)->first();
+        $afiliado = AcAfiliado::where('cedula', '=', $solicitud->cedula_afiliado)->first();
 
         $paises = DB::table('paises')
                         ->orderBy('name_es', 'ASC')
@@ -222,7 +222,7 @@ class AviController extends Controller
 
        // dd($afiliado);
 
-        return view('avi.editar', compact('avi', 'paises', 'afiliado'));
+        return view('avi.editar', compact('solicitud', 'paises', 'afiliado'));
     }
 
     /**
@@ -237,37 +237,32 @@ class AviController extends Controller
         // Se vailida que posee al menos un destino ya que no puede estar vacio...
         if ($request->destino) {
         
-        //dd($request);
+            $solicitud = Avi::findOrFail($id);
 
-        $solicitud = Avi::findOrFail($id);
+            $solicitud->update([
+                'nro_cronograma' => $request->cronograma,
+                'observaciones' => $request->observaciones,
+                ]);
 
-        //dd($solicitud);
+            // Forzo el borrado para poder actualizar
+            $solicitud->destinos()->forceDelete();
+            $solicitud->save();
 
-        $solicitud->update([
-            'nro_cronograma' => $request->cronograma,
-            'observaciones' => $request->observaciones,
-            ]);
+            // Total de destinos para realizar bucle
+            $total = count($request->desde);
 
-        // $solicitud->destinos()->delete();
-        // Forzo el borrado para poder actualizar
-        $solicitud->destinos()->forceDelete();
-        $solicitud->save();
+            // Aqui se guardan todos los destinos da la solicitud
+            for ($i = 0; $i < $total; $i++) {
 
-        // Total de destinos para realizar bucle
-        $total = count($request->desde);
+                $solicitud->destinos()->create([
+                    'pais_id' => $request['destino'][$i], 
+                    'fecha_desde'  => $request['desde'][$i], 
+                    'fecha_hasta'  => $request['hasta'][$i]
+                ]);
+            }
 
-        // Aqui se guardan todos los destinos da la solicitud
-        for ($i = 0; $i < $total; $i++) {
-
-            $solicitud->destinos()->create([
-                'pais_id' => $request['destino'][$i], 
-                'fecha_desde'  => $request['desde'][$i], 
-                'fecha_hasta'  => $request['hasta'][$i]
-            ]);
-        }
-
-        toast()->info(' Solicitud: '.$solicitud->codigo_solicitud.' modificada Correctamente', 'Alerta:');
-        return redirect()->route('avi.lista');
+            toast()->info(' Solicitud: '.$solicitud->codigo_solicitud.' modificada Correctamente', 'Alerta:');
+            return redirect()->route('avi.lista');
 
         } else {
             toast()->error(' Solicitud debe poseer al menos un destino', 'Alerta:');
@@ -284,6 +279,14 @@ class AviController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $solicitud = Avi::findOrFail($id);
+
+        // Elimino la solicitud y sus relaciones
+        $solicitud->destinos()->delete();
+        $solicitud->delete();
+
+        toast()->error(' Solicitud: '.$solicitud->codigo_solicitud.' Eliminada Correctamente', 'Alerta:');
+        // Retorno a la lista de solicitudes
+        return redirect()->route('avi.lista');
     }
 }

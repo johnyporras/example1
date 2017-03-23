@@ -26,6 +26,12 @@
     </div> <!-- row -->
 
     <div class="row">
+        <div class="col-xs-12">
+            <h2 class="pt10 pb10 m0">Solicitud: {{ strtoupper($solicitud->codigo_solicitud) }}</h2>
+        </div>
+    </div> <!-- row -->
+
+    <div class="row">
 
         <div class="col-md-6">
             @if (isset($afiliado))
@@ -52,7 +58,7 @@
 
 
 <div class="col-xs-12">
-    {!! Form::open(['route'=>['avi.update', $avi->id], 'id' => 'destinoForm', 'class' => 'form-horizontal', 'name' => 'destinos']) !!}
+    {!! Form::open(['route'=>['avi.update', $solicitud->id], 'id' => 'destinoForm', 'class' => 'form-horizontal', 'name' => 'destinos']) !!}
     <div class="row">
         <div class="col-xs-12">
             <div class="pb25">
@@ -163,7 +169,7 @@
                     <div class="form-group {{ $errors->has('cronograma') ? ' has-error' : '' }}">
                         {{ Form::label('cronograma', 'Número de cronograma ', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
-                        {{ Form::text('cronograma', $avi->nro_cronograma, ['class' => 'form-control', 'placeholder' => 'Ingrese número de cronograma', 'required']) }}
+                        {{ Form::text('cronograma', $solicitud->nro_cronograma, ['class' => 'form-control', 'placeholder' => 'Ingrese número de cronograma', 'required']) }}
                         @if ($errors->has('cronograma'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('cronograma') }}</strong>
@@ -182,7 +188,7 @@
                     <div class="form-group {{ $errors->has('observaciones') ? ' has-error' : '' }}">
                         {{ Form::label('observaciones', 'Observaciones', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
-                        {{ Form::textArea('observaciones', $avi->observaciones, ['class' => 'form-control', 'placeholder' => 'Ingrese sus observaciones', 'rows' => 4,'minlength' => "10" ]) }}
+                        {{ Form::textArea('observaciones', $solicitud->observaciones, ['class' => 'form-control', 'placeholder' => 'Ingrese sus observaciones', 'rows' => 4,'minlength' => "10" ]) }}
                         @if ($errors->has('observaciones'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('observaciones') }}</strong>
@@ -218,8 +224,6 @@
 <!-- Incluye las alertas end -->
 <script>
 $(document).ready(function() {
-
-    var index = 1;
     /** Validar formulario **/
     var parsleyOptions = {
         errorClass: 'has-error',
@@ -238,19 +242,31 @@ $(document).ready(function() {
     $('#destinoForm').parsley(parsleyOptions);
 
     /****** Bucle total de destinos cargados ******/
-    @foreach ($avi->destinos as $destino)
-        var fecha1 = "{{ $destino->fecha_desde->format('Y-m-d') }}",
-            fecha2 = "{{ $destino->fecha_hasta->format('Y-m-d') }}",
-            destino = {{ $destino->pais_id }}; 
+    // variables para configurar funcion
+    var fecha1 = new Array(),
+        fecha2 = new Array(),
+        destino = new Array(),
+        limit = {{ count($solicitud->destinos) }},
+        contador = 1;
 
-        setDestino(fecha1,fecha2,destino);
-        //actualizar indice
+    // Lleno el array con los datos que vienen de BD...
+    @foreach ($solicitud->destinos as $destino)
+        fecha1.push("{{ $destino->fecha_desde->format('Y-m-d') }}");
+        fecha2.push("{{ $destino->fecha_hasta->format('Y-m-d') }}");
+        destino.push({{ $destino->pais_id }}); 
     @endforeach
+
+    // Realizo el bucle con jquery para cargar los campos defaults
+    for (var i = 0; i < limit; i++) {
+        //Ejecuto la funcion para generar los campos
+        setDestino(contador,fecha1[i],fecha2[i],destino[i]);
+        contador++;
+    }
     /****** Bucle total de destinos generados ******/
  
-    /*funcion para colocar valores iniciales*/
-    function setDestino(fecha1,fecha2,destino) {
-        index++;
+    /*funcion para colocar valores Dinamicos*/
+    function setDestino(index,fecha1 = null, fecha2 = null, destino = null) {
+        
         var $template = $('#template'),
             $clone    = $template
                             .clone()
@@ -340,120 +356,38 @@ $(document).ready(function() {
                 $("#destino"+index).parsley(parsleyOptions).validate();
             });
 
-            $("#destino"+index).val(destino).trigger("change");
+            // Valido que le pase parametro para cargarlo automaticamente
+            if (destino != null) {
+                $("#destino"+index).val(destino).trigger("change");
+            } 
     }
 
     /*************************************************************************/
     // Add button click handler
     $('#destinoForm').on('click', '.addButton', function() {
-        index++;
-        var $template = $('#template'),
-            $clone    = $template
-                            .clone()
-                            .removeClass('hide')
-                            .removeAttr('id')
-                            .attr('data-index', index)
-                            .insertBefore($template);
+        setDestino(contador++);
+    });
 
-            // Update the name attributes
-            $clone
-                .find('[name="fecha_desde"]').attr('name', 'desde[]')
-                                            .attr('id', 'iniDate' + index).end()
-                .find('[name="fecha_hasta"]').attr('name', 'hasta[]')
-                                            .attr('id', 'finDate' + index).end()
-                .find('[name="pais_destino"]').attr('name', 'destino[]')
-                                            .attr('id', 'destino' + index).end()
-                .find('#dia').attr('id', 'dias' + index ).end();
+    // Remove button click handler
+    $('#destinoForm').on('click', '.removeButton', function() {
 
-            // adicionar campo requerido
-            $('#iniDate'+index).parsley(parsleyOptions).addConstraint("required", "true");
+        var $row  = $(this).parents('.padre'),
+            index = $row.attr('data-index');
 
-            // adicionar campo datepicker fecha Salida...
-            $('#iniDate'+index).datepicker({
-                language: "es",
-                startDate: '0',
-                format: 'yyyy-mm-dd',
-            }).on('changeDate', function (selected) {
-                var startDate = new Date(selected.date.valueOf());
-                $('#finDate'+index).datepicker('setStartDate', startDate);
-
-                /* Diferencias de dias*/
-                var diff = diffDates($("#iniDate"+index).val(), $("#finDate"+index).val());
-
-                if (diff > 0)
-                {
-                  $("#dias"+index).text(diff + ' días');
-                } 
-
-                //valida el campo al cambiar
-                $('#iniDate'+index).parsley(parsleyOptions).validate();
-
-            }).on('clearDate', function (selected) {
-                $('#finDate'+index).datepicker('setStartDate', null);
-            });
-
-            // adicionar campo requerido
-            $("#finDate"+index).parsley(parsleyOptions).addConstraint("required", "true");
-
-            // adicionar campo datepicker fecha Retorno...
-            $("#finDate"+index).datepicker({
-                language: "es",
-                startDate: '0',
-                format: 'yyyy-mm-dd',
-            }).on('changeDate', function (selected) {
-                var endDate = new Date(selected.date.valueOf());
-                $('#iniDate'+index).datepicker('setEndDate', endDate);
-
-                /* Diferencias de dias*/
-                var diff = diffDates($("#iniDate"+index).val(), $("#finDate"+index).val());
-
-                if (diff > 0)
-                {
-                  $('#dias'+index).text(diff + ' días');
-                }
-
-                //valida el campo al cambiar
-                $('#finDate'+index).parsley(parsleyOptions).validate();
-
-            }).on('clearDate', function (selected) {
-                $('#iniDate'+index).datepicker('setEndDate', null);
-            });
-
-            // adicionar campo requerido
-            $("#destino"+index).parsley(parsleyOptions).addConstraint("required", "true");
-
-            /*Para selet2*/
-            $("#destino"+index).select2({
-                language: "es",
-                placeholder: "Seleccione pais destino",
-                theme: "bootstrap",
-            }).on("change", function (e) { 
-                // Valida campo al cambiar valor
-                $("#destino"+index).parsley(parsleyOptions).validate();
-            });
-        });
-
-        // Remove button click handler
-        $('#destinoForm').on('click', '.removeButton', function() {
-
-            var $row  = $(this).parents('.padre'),
-                index = $row.attr('data-index');
-
-                // Remove element containing the fields
-                $row.remove();
-                alert(count);
-        });
-
+            // Remove element containing the fields
+            $row.remove();
+            alert(count);
+    });
     /*************************************************************************/
 
-        /**** Funcion recupera diferencias de dias ***/
-        function diffDates(dateIni,dateEnd){
-            var start = new Date(dateIni);
-            var end = new Date(dateEnd);
-            var diff = parseInt((end.getTime()-start.getTime())/(24*3600*1000));
-
-            return diff;
-        };
+    /**** Funcion recupera diferencias de dias ***/
+    function diffDates(dateIni,dateEnd){
+        var start = new Date(dateIni);
+        var end = new Date(dateEnd);
+        var diff = parseInt((end.getTime()-start.getTime())/(24*3600*1000));
+        // retorna los dias de diferencia
+        return diff;
+    };
 
 });    
 </script>

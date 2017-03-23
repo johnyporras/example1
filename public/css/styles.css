@@ -798,3 +798,13 @@ a.text-dark:hover {
     background-color: #F48228 !important;
     color: #fff !important;
 }
+
+tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+
+.non_searchable input {
+        display: none;
+}
