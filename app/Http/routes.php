@@ -70,6 +70,70 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 });
 /*=====================================================*/
+
+/*=====================================================*/
+/**
+ * rutas modulo funerario
+ */
+Route::group(['middleware' => ['auth']], function () {
+    
+    Route::get('api/funerarios', 'FunerarioController@funerarios');
+    
+    Route::get('funerario/lista', [
+            'uses' => 'FunerarioController@lista',
+            'as'   => 'funerario.lista' 
+        ]);
+
+    Route::get('funerario/create', [
+            'uses' => 'FunerarioController@create',
+            'as'   => 'funerario.create' 
+        ]);
+
+    Route::get('funerario', [
+            'uses' => 'FunerarioController@index',
+            'as'   => 'funerario.index' 
+        ]);
+
+    Route::post('funerario', 'FunerarioController@index');
+
+    Route::post('avi/seleccionar', [
+            'uses' => 'FunerarioController@select',
+            'as'   => 'funerario.seleccionar' 
+        ]);
+
+    Route::post('funerario/generar', [
+            'uses' => 'FunerarioController@generate',
+            'as'   => 'funerario.generar' 
+        ]);
+
+    Route::post('funerario/procesar', [
+            'uses' => 'FunerarioController@process',
+            'as'   => 'funerario.procesar' 
+        ]);
+
+    Route::get('funerario/{id}', [
+            'uses' => 'FunerarioController@show',
+            'as'   => 'funerario.show' 
+        ]);
+
+    Route::get('funerario/{id}/edit', [
+            'uses' => 'FunerarioController@edit',
+            'as'   => 'funerario.edit' 
+        ]);
+
+    Route::post('funerario/update/{id}', [
+            'uses' => 'FunerarioController@update',
+            'as'   => 'funerario.update' 
+        ]);
+    
+    Route::get('funerario/{id}/destroy', [
+            'uses' => 'FunerarioController@destroy',
+            'as'   => 'funerario.destroy' 
+        ]);
+});
+/*=====================================================*/
+
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes

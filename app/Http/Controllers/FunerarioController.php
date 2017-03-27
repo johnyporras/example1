@@ -11,13 +11,14 @@ use DB;
 use Session;
 use Carbon\Carbon;
 use App\User;
-use App\Models\Avi;
-use App\Models\AviDestino;
+use App\Models\Funerario;
+use App\Models\FunerarioDetalle;
+use App\Models\AcEstado;
 use App\Models\AcAfiliado;
 use Yajra\Datatables\Datatables;
-use Auth; 
+use Auth;
 
-class AviController extends Controller
+class FunerarioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -54,7 +55,7 @@ class AviController extends Controller
 
                 if(!empty($contratos)){
                     
-                    return view('avi.index', compact('contratos'));
+                    return view('funerario.index', compact('contratos'));
 
                 }else{
                     toast()->warning( '¡No tiene contrato vigente!', 'Mensaje:');
@@ -62,7 +63,7 @@ class AviController extends Controller
                 }
             }
         }else{
-            return view('avi.index');
+            return view('funerario.index');
         }
     }
 
@@ -92,7 +93,7 @@ class AviController extends Controller
                     ->orderBy('fecha_nacimiento')
                     ->get();
 
-        return view('avi.selected', compact('servicio', 'afiliados'));
+        return view('funerario.selected', compact('servicio', 'afiliados'));
     }
 
     /**
@@ -110,7 +111,7 @@ class AviController extends Controller
                         ->orderBy('name_es', 'ASC')
                         ->pluck('name_es', 'id'); 
 
-        return view('avi.generate', compact('servicio', 'afiliado', 'paises'));
+        return view('funerario.generate', compact('servicio', 'afiliado', 'paises'));
     }
 
     /**
@@ -133,7 +134,7 @@ class AviController extends Controller
         $codigo =  'av'.substr(uniqid(),7,13);
 
         // crea nueva solicitud
-        $avi = Avi::create([
+        $funerario = funerario::create([
             'codigo_solicitud' => $codigo,
             'cedula_afiliado'  => $request->cedula,
             'codigo_contrato'  => $request->contrato,
@@ -150,7 +151,7 @@ class AviController extends Controller
         // Aqui se guardan todos los destinos da la solicitud
         for ($i = 0; $i < $total; $i++) {
 
-            $avi->destinos()->create([
+            $funerario->destinos()->create([
                 'pais_id' => $request['destino'][$i], 
                 'fecha_desde'  => $request['desde'][$i], 
                 'fecha_hasta'  => $request['hasta'][$i]
@@ -158,7 +159,7 @@ class AviController extends Controller
         }
 
         toast()->info(' Solicitud generada sastifactoriamente', 'Información:');
-        return redirect()->route('avi.lista');
+        return redirect()->route('funerario.lista');
     }
 
     /**
@@ -169,20 +170,19 @@ class AviController extends Controller
      */
     public function lista()
     {
-        return view('avi.lista');
+        return view('funerario.lista');
     }
 
+    public function funerarios(){
 
-    public function solicitudes(){
-
-        $solicitudes = Avi::all();
+        $solicitudes = Funerario::all();
 
         return Datatables::of($solicitudes)
         ->addColumn('action', function ($solicitud) {
                 return '
-                <a href="/avi/'.$solicitud->id.'" class="btn btn-warning btn-sm"> <i class="fa fa-eye"> </i></a>
-                <a href="/avi/'.$solicitud->id.'/edit" class="btn btn-info btn-sm"> <i class="fa fa-edit"> </i></a>
-                <a href="/avi/'.$solicitud->id.'" class="btn btn-danger btn-sm sweet-danger"> <i class="fa fa-trash"> </i></a>';
+                <a href="/funerario/'.$solicitud->id.'" class="btn btn-warning btn-sm"> <i class="fa fa-eye"> </i></a>
+                <a href="/funerario/'.$solicitud->id.'/edit" class="btn btn-info btn-sm"> <i class="fa fa-edit"> </i></a>
+                <a href="/funerario/'.$solicitud->id.'" class="btn btn-danger btn-sm sweet-danger"> <i class="fa fa-trash"> </i></a>';
             })
         ->editColumn('created_at', function ($solicitud) {
                 return $solicitud->created_at->format('d/m/Y');
@@ -190,6 +190,15 @@ class AviController extends Controller
         ->make(true);
     }
 
+    public function create()
+    {
+        $estados = AcEstado::orderBy('es_desc', 'ASC')
+                        ->pluck('es_desc', 'es_id');
+
+        //dd($estados);
+
+        return view('funerario.create',compact('estados'));
+    }
 
     /**
      * Display the specified resource.
@@ -199,9 +208,9 @@ class AviController extends Controller
      */
     public function show($id)
     {
-        $solicitud = Avi::findOrFail($id);
+        $solicitud = Funerario::findOrFail($id);
 
-        return view('avi.show',compact('solicitud'));
+        return view('funerario.show',compact('solicitud'));
     }
 
     /**
@@ -212,7 +221,7 @@ class AviController extends Controller
      */
     public function edit($id)
     {
-        $solicitud = Avi::findOrFail($id);
+        $solicitud = Funerario::findOrFail($id);
 
         $afiliado = AcAfiliado::where('cedula', '=', $solicitud->cedula_afiliado)->first();
 
@@ -222,7 +231,7 @@ class AviController extends Controller
 
        // dd($afiliado);
 
-        return view('avi.editar', compact('solicitud', 'paises', 'afiliado'));
+        return view('funerario.editar', compact('solicitud', 'paises', 'afiliado'));
     }
 
     /**
@@ -237,7 +246,7 @@ class AviController extends Controller
         // Se vailida que posee al menos un destino ya que no puede estar vacio...
         if ($request->destino) {
         
-            $solicitud = Avi::findOrFail($id);
+            $solicitud = funerario::findOrFail($id);
 
             $solicitud->update([
                 'nro_cronograma' => $request->cronograma,
@@ -262,7 +271,7 @@ class AviController extends Controller
             }
 
             toast()->info(' Solicitud: '.$solicitud->codigo_solicitud.' modificada Correctamente', 'Alerta:');
-            return redirect()->route('avi.lista');
+            return redirect()->route('funerario.lista');
 
         } else {
             toast()->error(' Solicitud debe poseer al menos un destino', 'Alerta:');
@@ -279,7 +288,7 @@ class AviController extends Controller
      */
     public function destroy($id)
     {
-        $solicitud = Avi::findOrFail($id);
+        $solicitud = funerario::findOrFail($id);
 
         // Elimino la solicitud y sus relaciones
         $solicitud->destinos()->delete();
@@ -287,6 +296,6 @@ class AviController extends Controller
 
         toast()->error(' Solicitud: '.$solicitud->codigo_solicitud.' Eliminada Correctamente', 'Alerta:');
         // Retorno a la lista de solicitudes
-        return redirect()->route('avi.lista');
+        return redirect()->route('funerario.lista');
     }
 }

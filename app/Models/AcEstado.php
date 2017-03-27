@@ -13,6 +13,4 @@ class AcEstado extends Model {
     protected $table = 'ac_estados';
     protected $fillable = ['es_id', 'es_desc', 'deleted_at'];
 
-
-
 }
