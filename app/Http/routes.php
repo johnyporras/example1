@@ -130,6 +130,12 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => 'FunerarioController@destroy',
             'as'   => 'funerario.destroy' 
         ]);
+
+    Route::post('funerario/prueba', [
+            'uses' => 'FunerarioController@prueba',
+            'as'   => 'funerario.prueba' 
+        ]);
+
 });
 /*=====================================================*/
 

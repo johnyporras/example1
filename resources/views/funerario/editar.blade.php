@@ -148,6 +148,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="col-xs-12">
             <hr>
         </div>
@@ -376,7 +377,6 @@ $(document).ready(function() {
 
             // Remove element containing the fields
             $row.remove();
-            alert(count);
     });
     /*************************************************************************/
 

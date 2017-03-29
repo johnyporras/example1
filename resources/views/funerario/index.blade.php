@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Asistencia al Viajero Internacional')
+@section('title','Modulo Funerario')
 @section('content')
 
 <hr/>

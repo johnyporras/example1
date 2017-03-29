@@ -15,6 +15,7 @@ use App\Models\Funerario;
 use App\Models\FunerarioDetalle;
 use App\Models\AcEstado;
 use App\Models\AcAfiliado;
+use App\Models\MetodoPago;
 use Yajra\Datatables\Datatables;
 use Auth;
 
@@ -192,12 +193,35 @@ class FunerarioController extends Controller
 
     public function create()
     {
+        //Creo array de dias
+        $dias = [];
+        // leno el arra de dias
+        for ($i = 1; $i <= 30 ; $i++) {
+            
+            $dias[$i] = $i;
+        }
+
+        // Cargo los estados
         $estados = AcEstado::orderBy('es_desc', 'ASC')
                         ->pluck('es_desc', 'es_id');
-
+        //cargo los metodos de pago
+        $metodos = MetodoPago::orderBy('metodo', 'ASC')
+                        ->pluck('metodo', 'id');
         //dd($estados);
+        
+        //retorno la vista para el formulario
+        return view('funerario.create',compact('estados','metodos','dias'));
+    }
 
-        return view('funerario.create',compact('estados'));
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function prueba(request $request)
+    {
+        dd($request);
     }
 
     /**
