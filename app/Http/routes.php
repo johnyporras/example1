@@ -131,9 +131,9 @@ Route::group(['middleware' => ['auth']], function () {
             'as'   => 'funerario.destroy' 
         ]);
 
-    Route::post('funerario/prueba', [
-            'uses' => 'FunerarioController@prueba',
-            'as'   => 'funerario.prueba' 
+    Route::post('funerario/store', [
+            'uses' => 'FunerarioController@store',
+            'as'   => 'funerario.store' 
         ]);
 
 });

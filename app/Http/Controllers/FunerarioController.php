@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use DB;
+use Auth;
+use File;
+use Storage;
 use Session;
 use Carbon\Carbon;
 use App\User;
@@ -17,7 +20,6 @@ use App\Models\AcEstado;
 use App\Models\AcAfiliado;
 use App\Models\MetodoPago;
 use Yajra\Datatables\Datatables;
-use Auth;
 
 class FunerarioController extends Controller
 {
@@ -219,9 +221,22 @@ class FunerarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function prueba(request $request)
+    public function store(request $request)
     {
+        
+        /**valida los campos del formulario **/
+        $this->validate($request, [
+            'estado_id' => 'required',
+            'contacto'  => 'required',
+            'ciudad'    => 'required',
+            'metodo_id' => 'required'
+        ]);
+
+        // Genero codigo unico
+        $codigo = 'fn'.substr(uniqid(),7,13);
+
         dd($request);
+
     }
 
     /**
