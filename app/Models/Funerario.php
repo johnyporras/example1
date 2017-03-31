@@ -32,18 +32,15 @@ class Funerario extends Model
      */
     protected $fillable = [
     	'codigo_solicitud',
-        'fecha_solicitud', 
         'estado_id', 
-        'ciudad',
-        'nombre_fallecido',  
-        'cedula_fallecido',  
-        'telefono_titular',
+        'afiliado_id',
+        'ciudad',  
+        'contacto',
         'cobertura',
-        'excedente',
         'metodo_id',
         'plazo',
-    	'aseguradora_id',
-        'colectivo_id',
+    	'doc_cedula',
+        'doc_acta',
         'creador',
         'deleted_at'
     ];
@@ -52,9 +49,9 @@ class Funerario extends Model
      * Relación can tabla de funerario_detalle
      * @return [type] [description]
      */
-    public function detalles()
+    public function presupuestos()
     {
-        return $this->hasMany(\App\Models\FuneraioDetalle::class);
+        return $this->hasMany(\App\Models\FunerarioDetalle::class);
     }
 
     /**
@@ -74,19 +71,12 @@ class Funerario extends Model
     }
 
     /**
-     * Relación con la tabla ac_aseguradora
+     * Relación con la tabla contratos
      * @return [type] [description]
      */
-    public function aseguradora() {
-        return $this->belongsTo(\App\Models\AcAseguradora::class);
-    }
+    public function contratos() {
 
-    /**
-     * Relación con la tabla ac_colectivo
-     * @return [type] [description]
-     */
-    public function colectivo() {
-        return $this->belongsTo(\App\Models\AcColectivo::class);
+        return $this->belongsToMany(\App\Models\AcContrato::class, 'contrato_funeraio', 'funerario_id', 'contrato_id');
     }
 
     /**

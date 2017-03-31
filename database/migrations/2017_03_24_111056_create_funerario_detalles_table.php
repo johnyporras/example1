@@ -13,9 +13,14 @@ class CreateFunerarioDetallesTable extends Migration
     public function up()
     {
         Schema::create('funerario_detalle', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('funerario_id')->unsigned();
             $table->integer('proveedor_id')->unsigned();
+            $table->string('factura');
+            $table->date('fecha');
             $table->integer('monto');
+            $table->text('detalles')->nullable();
+            $table->text('doc_factura')->nullable();
             $table->timestamps();
             $table->softDeletes();
                 $table->foreign('funerario_id')

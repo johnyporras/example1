@@ -41,5 +41,9 @@ class AcContrato extends Model {
         return $this->belongsTo(\App\Models\AcPlanesExtranet::class, 'codigo_plan', 'codigo_plan');
     }
 
+    // Relación con la tabla funerario
+    public function funerarios() {
+        return $this->belongsToMany(\App\Models\Funerario::class, 'contrato_funeraio', 'funerario_id', 'contrato_id');
+    }
 
 }

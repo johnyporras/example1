@@ -19,6 +19,7 @@ use App\Models\FunerarioDetalle;
 use App\Models\AcEstado;
 use App\Models\AcAfiliado;
 use App\Models\MetodoPago;
+use App\Models\ProveedorFunerario;
 use Yajra\Datatables\Datatables;
 
 class FunerarioController extends Controller
@@ -137,7 +138,7 @@ class FunerarioController extends Controller
         $codigo =  'av'.substr(uniqid(),7,13);
 
         // crea nueva solicitud
-        $funerario = funerario::create([
+        $funerario = Funerario::create([
             'codigo_solicitud' => $codigo,
             'cedula_afiliado'  => $request->cedula,
             'codigo_contrato'  => $request->contrato,
@@ -199,7 +200,6 @@ class FunerarioController extends Controller
         $dias = [];
         // leno el arra de dias
         for ($i = 1; $i <= 30 ; $i++) {
-            
             $dias[$i] = $i;
         }
 
@@ -209,10 +209,12 @@ class FunerarioController extends Controller
         //cargo los metodos de pago
         $metodos = MetodoPago::orderBy('metodo', 'ASC')
                         ->pluck('metodo', 'id');
-        //dd($estados);
+        //cargo los proveedores funerarios
+        $proveedores = ProveedorFunerario::orderBy('razon_social', 'ASC')
+                        ->pluck('razon_social', 'id');
         
         //retorno la vista para el formulario
-        return view('funerario.create',compact('estados','metodos','dias'));
+        return view('funerario.create',compact('estados','metodos','dias','proveedores'));
     }
 
     /**
@@ -223,8 +225,8 @@ class FunerarioController extends Controller
      */
     public function store(request $request)
     {
-        
-        /**valida los campos del formulario **/
+
+        // valida los campos del formulario
         $this->validate($request, [
             'estado_id' => 'required',
             'contacto'  => 'required',
@@ -235,7 +237,91 @@ class FunerarioController extends Controller
         // Genero codigo unico
         $codigo = 'fn'.substr(uniqid(),7,13);
 
-        dd($request);
+       // dd($request);
+       // 
+        $plazo = ($request->plazo != '') ? $request->plazo : NULL;
+
+         // crea nueva solicitud
+        $funerario = Funerario::create([
+            'codigo_solicitud' => $codigo,
+            'estado_id'        => $request->estado_id,
+            'afiliado_id'      => $request->afiliado_id,
+            'ciudad'           => $request->ciudad,
+            'contacto'         => $request->contacto,  
+            'metodo_id'        => $request->metodo_id,  
+            'plazo'            => $plazo,     
+            'creador'          => Auth::user()->id
+        ]);
+
+        // Guardo Cedula fallecido
+        if ($request->hasFile('cedula')) 
+        {
+            // guardo en una variable la imagen
+            $file = $request->file('cedula');
+            // Cambio nombre de la imagen
+            $filename = 'dni'.'_'.$codigo.'.'.$file->getClientOriginalExtension();
+            //Directorio
+            //$cedula = $codigo.'/'.$filename;
+            $cedula = $codigo.'/'.$filename;
+            // Guardo la imagen en el directorio 
+            Storage::disk('funerario')->put($cedula, file_get_contents($file));
+            // Guardo el registro en la base de datos
+            $funerario->doc_cedula = $cedula;
+            $funerario->save();
+        }
+ 
+        // Guardo carta de defuncion
+        if ($request->hasFile('acta')) 
+        {
+            // guardo en una variable la imagen
+            $file = $request->file('acta');
+            // Cambio nombre de la imagen
+            $filename = 'acta'.'_'.$codigo.'.'.$file->getClientOriginalExtension();
+            //Directorio
+            $acta = $codigo.'/'.$filename;
+            // Guardo la imagen en el directorio 
+            Storage::disk('funerario')->put($acta, file_get_contents($file));
+            // Guardo el registro en la base de datos
+            $funerario->doc_acta = $acta;
+            $funerario->save();
+        }
+
+        // Total de facturas para realizar bucle
+        $total = count($request->factura);
+
+        // Aqui se guardan todos los presupuestos da la solicitud
+        for ($i = 0; $i < $total; $i++) {
+
+            $presupuesto = $funerario->presupuestos()->create([
+                'proveedor_id' => $request['proveedor'][$i],
+                'factura'      => $request['factura'][$i],
+                'fecha'        => $request['fsolicitud'][$i], 
+                'monto'        => $request['monto'][$i],
+                'detalles'     => $request['detalle'][$i],
+            ]);
+
+            // Guardo carta de defuncion
+            if ($request->hasFile('envoice')) 
+            {
+                // guardo en una variable la imagen
+                $file = $file = $request['envoice'][$i];
+                // Cambio nombre de la imagen
+                $filename = 'fact'.'_'.$codigo.'_'.$i.'.'.$file->getClientOriginalExtension();
+                //Directorio
+                $acta = $codigo.'/'.$filename;
+                // Guardo la imagen en el directorio 
+                Storage::disk('funerario')->put($acta, file_get_contents($file));
+                // Guardo el registro en la base de datos
+                $presupuesto->doc_factura = $acta;
+                $presupuesto->save();
+            }
+
+        }
+
+        dd($codigo);
+
+        //toast()->info(' Solicitud generada sastifactoriamente', 'Información:');
+       // return redirect()->route('funerario.lista');
 
     }
 

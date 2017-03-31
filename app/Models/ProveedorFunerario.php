@@ -33,10 +33,9 @@ class ProveedorFunerario extends Model
     protected $fillable = [
     	'codigo',
         'razon_social', 
-        'gif', 
+        'rif', 
         'direccion',
         'telefono',
-        'movil',
         'deleted_at'
     ];
 

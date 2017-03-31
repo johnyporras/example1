@@ -86,7 +86,10 @@
                     <div class="form-group {{ $errors->has('contacto') ? ' has-error' : '' }}">
                         {{ Form::label('contacto', 'Teléfono Contacto', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
-                        {{ Form::text('contacto', null, ['class' => 'form-control', 'placeholder' => 'Ingrese teléfono contacto']) }}
+                        {{ Form::text('contacto', null, ['class' => 'form-control', 'placeholder' => 'Ingrese teléfono contacto','pattern' => '^[0][24][1-9][0-9]+$', 'minlength' => "11", 'maxlength' => '11', 'required']) }}
+                        <span class="help-block">
+                            <strong>Ejemplo: 02121231122</strong>
+                        </span>
                         @if ($errors->has('contacto'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('contacto') }}</strong>
@@ -121,13 +124,13 @@
         </div>
 
         <div class="col-md-6 hidden" id="cdia">
-            <div class="form-group {{ $errors->has('dias') ? ' has-error' : '' }}">
-                {{ Form::label('dias', 'Plazo de Pago', ['class' => 'col-md-3 control-label']) }}
+            <div class="form-group {{ $errors->has('plazo') ? ' has-error' : '' }}">
+                {{ Form::label('plazo', 'Plazo de Pago', ['class' => 'col-md-3 control-label']) }}
                 <div class="col-md-9">
-                {{ Form::select('dias', $dias, null, ['class' => 'form-control', 'placeholder'=>'Seleccione días', 'id' => 'dia']) }}
-                @if ($errors->has('dias'))
+                {{ Form::select('plazo', $dias, null, ['class' => 'form-control', 'placeholder'=>'Seleccione plazo', 'id' => 'dia']) }}
+                @if ($errors->has('plazo'))
                     <span class="help-block">
-                        <strong>{{ $errors->first('dias') }}</strong>
+                        <strong>{{ $errors->first('plazo') }}</strong>
                     </span>
                 @endif
                 </div>
@@ -155,7 +158,7 @@
                     <div class="form-group {{ $errors->has('proveedor') ? ' has-error' : '' }}">
                         {{ Form::label('proveedor', 'Proveedor', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
-                        {{ Form::select('proveedor[]', $estados, null, ['class' => 'form-control', 'placeholder'=>'Seleccione proveedor']) }}
+                        {{ Form::select('proveedor[]', $proveedores, null, ['class' => 'form-control', 'placeholder'=>'Seleccione proveedor', 'required']) }}
                         @if ($errors->has('proveedor'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('proveedor') }}</strong>
@@ -190,7 +193,7 @@
                     <div class="form-group {{ $errors->has('monto') ? ' has-error' : '' }}">
                         {{ Form::label('monto', 'Monto', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
-                        {{ Form::text('monto[]', null, ['class' => 'form-control', 'placeholder' => 'Ingrese monto factura', 'required']) }}
+                        {{ Form::text('monto[]', null, ['class' => 'form-control', 'placeholder' => 'Ingrese monto factura', 'pattern' => '[1-9][0-9]{1,10}', 'maxlength' => '10', 'required']) }}
                         @if ($errors->has('monto'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('monto') }}</strong>
@@ -277,7 +280,7 @@
                     <div class="form-group {{ $errors->has('proveedores') ? ' has-error' : '' }}">
                         {{ Form::label('proveedores', 'Proveedor', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
-                        {{ Form::select('proveedores', $estados, null, ['class' => 'form-control', 'placeholder'=>'Seleccione proveedor']) }}
+                        {{ Form::select('proveedores', $proveedores, null, ['class' => 'form-control', 'placeholder'=>'Seleccione proveedor']) }}
                         @if ($errors->has('proveedores'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('proveedores') }}</strong>
@@ -312,7 +315,7 @@
                     <div class="form-group {{ $errors->has('montos') ? ' has-error' : '' }}">
                         {{ Form::label('montos', 'Monto', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
-                        {{ Form::text('montos', null, ['class' => 'form-control', 'placeholder' => 'Ingrese monto factura']) }}
+                        {{ Form::text('montos', null, ['class' => 'form-control', 'pattern' => '[1-9][0-9]{1,10}', 'maxlength' => '10', 'placeholder' => 'Ingrese monto factura']) }}
                         @if ($errors->has('montos'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('montos') }}</strong>
@@ -440,6 +443,8 @@
         </div>
 
         <div class="col-xs-12">
+            <!-- Campos ocultos necesarios para cargar la solicitud -->
+            {{ Form::hidden('afiliado_id', 1) }}
             <hr>
         </div>
 

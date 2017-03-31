@@ -16,10 +16,9 @@ class CreateProveedorFunerariosTable extends Migration
             $table->increments('id');
             $table->string('codigo')->unique();
             $table->string('razon_social')->nullable();
-            $table->string('gif')->nullable();
+            $table->string('rif')->nullable();
             $table->text('direccion')->nullable();
-            $table->string('telefono', 20)->nullable();
-            $table->string('movil', 20)->nullable();         
+            $table->string('telefono', 20)->nullable();        
             $table->timestamps();
             $table->softDeletes();
         });

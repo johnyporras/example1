@@ -31,7 +31,14 @@ class FunerarioDetalle extends Model
      * @var array
      */
     protected $fillable = [
-		'funerario_id',	'proveedor_id', 'monto', 'deleted_at'
+		'funerario_id',	
+        'proveedor_id',
+        'factura',
+        'fecha', 
+        'monto',
+        'detalles',
+        'doc_factura', 
+        'deleted_at'
 	];
 
 	/**
