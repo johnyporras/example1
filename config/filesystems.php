@@ -51,6 +51,7 @@ return [
         'funerario' => [
             'driver' => 'local',
             'root' => storage_path('app/funerario'),
+            'visibility' => 'public',
         ],
 
         'public' => [

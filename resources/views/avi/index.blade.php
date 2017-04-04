@@ -1,5 +1,14 @@
 @extends('layouts.app')
 @section('title','Asistencia al Viajero Internacional')
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('plugins/stacktable/stacktable.css') }}">
+@endpush
+
+@push('scripts')
+<script src="{{ asset('plugins/stacktable/stacktable.js') }}"></script>
+@endpush
+
 @section('content')
 
 <hr/>
@@ -30,9 +39,9 @@
 
     @if (isset($contratos))
         @if (count($contratos) > 0)
-            {!! Form::open(['url' => 'avi/seleccionar', 'class' => 'form-horizontal', 'name' => 'beneficiario']) !!}
-            <div class="table">
-                <table class="table table-bordered table-striped table-hover">
+            {!! Form::open(['url' => 'avi/seleccion', 'class' => 'form-horizontal', 'name' => 'beneficiario']) !!}
+            <div id="col-xs-12">
+                <table class="card table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
                             <th>Cédula Afiliado</th><th>Nombre</th><th>Cobertura del Plan</th><th>Colectivo</th>
@@ -94,5 +103,9 @@
                 }
             });
         });
+
+        //Inicializo tabla responsive
+        $('.card').cardtable();
+        
     </script>
 @endsection

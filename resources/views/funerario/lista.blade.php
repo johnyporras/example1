@@ -36,12 +36,12 @@
                     <tr>
                         <th width="20">Id</th>
                         <th width="50">Solicitud</th>
-                        <th>Cédula</th>
-                        <th>Edad</th>
-                        <th>Contrato</th>
+                        <th>Afiliado</th>
+                        <th>Estado</th>
+                        <th>Ciudad</th>
+                        <th>Telefono</th>
                         <th>Cobertura</th>
-                        <th>Cronograma</th>
-                        <th>Observaciones</th>
+                        <th>Metodo</th>
                         <th>Creado</th>
                         <th width="110">Acciones</th>
                     </tr>
@@ -82,16 +82,16 @@ $(document).ready(function() {
             url: '/plugins/datatables/language/Spanish.json',
         },
         columns: [
-            {data: 'id'},
-            {data: 'codigo_solicitud'},
-            {data: 'cedula_afiliado' },
-            {data: 'edad_afiliado' },
-            {data: 'codigo_contrato' },
-            {data: 'cobertura_monto' },
-            {data: 'nro_cronograma' },
-            {data: 'observaciones' },
-            {data: 'created_at'},
-            {data: 'action', orderable: false, searchable: false}
+            {data: 'id', name: 'id'},
+            {data: 'codigo_solicitud', name: 'codigo_solicitud'},
+            {data: 'afiliado.nombre', name: 'afiliado.nombre'},
+            {data: 'estado.es_desc'},
+            {data: 'ciudad', name: 'ciudad' },
+            {data: 'contacto', name: 'contacto' },
+            {data: 'cobertura', name: 'cobertura' },
+            {data: 'pago.metodo', name: 'pago.metodo' },
+            {data: 'created_at', name: 'created_at'},
+            {data: 'action', name: 'action', orderable: false, searchable: false}
         ],
         initComplete: function () {
             this.api().columns().every(function () {

@@ -13,6 +13,11 @@ Route::get('/', function () {
     return view('home');
 });
 
+//prueba para descargar archivos en storage
+Route::get('/files/{file}', function ($file) {
+    return response()->download(storage_path('notes/' . $id . 'pdf'));
+});
+
 
 /*=====================================================*/
     /**
@@ -34,9 +39,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('avi', 'AviController@index');
 
-    Route::post('avi/seleccionar', [
+    Route::post('avi/seleccion', [
             'uses' => 'AviController@select',
-            'as'   => 'avi.seleccionar' 
+            'as'   => 'avi.seleccion' 
         ]);
 
     Route::post('avi/generar', [
@@ -78,7 +83,7 @@ Route::group(['middleware' => ['auth']], function () {
 Route::group(['middleware' => ['auth']], function () {
     
     Route::get('api/funerarios', 'FunerarioController@funerarios');
-    
+
     Route::get('funerario/lista', [
             'uses' => 'FunerarioController@lista',
             'as'   => 'funerario.lista' 

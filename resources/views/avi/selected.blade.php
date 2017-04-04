@@ -1,6 +1,14 @@
 @extends('layouts.app')
-@section('title','Asistencia al Viajero Internacional')
-@section('content')
+@section('title','Asistencia al Viajero Internacionalmnb')
+@push('styles')
+<link rel="stylesheet" href="{{ asset('plugins/stacktable/stacktable.css') }}">
+@endpush
+
+@push('scripts')
+<script src="{{ asset('plugins/stacktable/stacktable.js') }}"></script>
+@endpush
+
+@section('content') 
 <hr/>
 
 <div class="col-xs-12">
@@ -15,26 +23,23 @@
         <div class="col-md-12">
             <h4>Datos de Servicio</h4>
             @if (isset($servicio))
-                <div class="table">
-                    <table class="table table-bordered table-striped table-hover table-responsive">
-                        <thead>
-                            <tr>
-                                <th>Cédula</th><th>Nombre</th><th>Tipo</th><th>Cobertura del Plan</th><th>Colectivo</th><th>Aseguradora</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{{ $servicio['cedula_afiliado'] }}</td>
-                                <td>{{ $servicio['nombre_afiliado'] }}</td>
-                                <td>{{ $servicio['tipo_afiliado'] }}</td>
-                                <td>{{ $servicio['plan'] }}</td>
-                                <td>{{ $servicio['colectivo'] }}</td>
-                                <td>{{ $servicio['aseguradora'] }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
+                <table class="card table table-bordered table-striped table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Cédula</th><th>Nombre</th><th>Tipo</th><th>Cobertura del Plan</th><th>Colectivo</th><th>Aseguradora</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ $servicio['cedula_afiliado'] }}</td>
+                            <td>{{ $servicio['nombre_afiliado'] }}</td>
+                            <td>{{ $servicio['tipo_afiliado'] }}</td>
+                            <td>{{ $servicio['plan'] }}</td>
+                            <td>{{ $servicio['colectivo'] }}</td>
+                            <td>{{ $servicio['aseguradora'] }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             @endif 
         </div> <!-- .col -->
     </div><!-- .row -->
@@ -89,7 +94,7 @@
                                         </div>
 
                                         <div class=" col-xs-12">
-                                            <table class="table table-responsive">
+                                            <table class="table table-responsive table-hover">
                                                 <tbody>
                                                     <tr>
                                                         <td width="90">Cédula:</td>
@@ -107,7 +112,7 @@
                                                         <td width="90">Correo:</td>
                                                         <td>{{ $afiliado->email }} </td>
                                                     </tr>
-                                                    <tr>
+                                                        <tr>
                                                         <td width="90">Teléfono:</td>
                                                         <td>{{ $afiliado->telefono }} </td>
                                                     </tr>
@@ -139,11 +144,16 @@
 
 @section('script')
 <script>
-    $(document).ready(function() {   
-       $('input[name=id]').change(function(){  
-            $('form').submit();  
-       });  
-  }); 
+$(document).ready(function() {   
+    
+    $('input[name=id]').change(function(){  
+        $('form').submit();  
+    });
+
+    //Inicializo tabla responsive
+    $('.card').cardtable();  
+
+}); 
 
 </script>
 

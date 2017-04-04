@@ -86,7 +86,7 @@ class AviController extends Controller
         $servicio['aseguradora'] = $request->input('aseguradora'.$id);
         $servicio['tipo_afiliado'] = $request->input('tipo_afiliado'.$id);
 
-        /* Seleciono todos los beneficiaros */
+        // Seleciono todos los beneficiaros 
         $afiliados = AcAfiliado::where('cedula_titular', '=', $servicio['cedula_afiliado'])
                     ->orderBy('tipo_afiliado')
                     ->orderBy('fecha_nacimiento')

@@ -13,17 +13,19 @@ class AcAfiliado extends Model {
 
     protected $table = 'ac_afiliados';
     protected $fillable = ['id', 'cedula', 'nombre', 'apellido', 'fecha_nacimiento', 'email', 'sexo', 'val_user', 'tipo_afiliado', 'telefono', 'cedula_titular', 'deleted_at'];
-    protected $dates = ['fecha_nacimiento'];
+    protected $dates = ['fecha_nacimiento','deleted_at'];
 
      /**
      * The storage format of the model's date columns.
      * @var string
      */
-    protected $dateFormat = 'Y-m-d';
+   /* protected $dateFormat = 'Y-m-d';
     
     function setFechaNacimientoAttribute($date) {
         $this->attributes['fecha_nacimiento'] = new Carbon($date);
-    }
+    } 
+        */
+    
     
     public function acTipoAfiliado() {
         return $this->belongsTo(\App\Models\AcTipoAfiliado::class, 'tipo_afiliado', 'id');

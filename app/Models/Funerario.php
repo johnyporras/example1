@@ -49,6 +49,15 @@ class Funerario extends Model
      * Relación can tabla de funerario_detalle
      * @return [type] [description]
      */
+    public function afiliado()
+    {
+        return $this->belongsTo(\App\Models\AcAfiliado::class, 'afiliado_id');
+    }
+
+    /**
+     * Relación can tabla de funerario_detalle
+     * @return [type] [description]
+     */
     public function presupuestos()
     {
         return $this->hasMany(\App\Models\FunerarioDetalle::class);
@@ -59,15 +68,15 @@ class Funerario extends Model
      * @return [type] [description]
      */
     public function estado() {
-        return $this->belongsTo(\App\Models\AcEstado::class);
+        return $this->belongsTo(\App\Models\AcEstado::class, 'estado_id', 'es_id');
     }
 
     /**
      * Relación con la tabla metodo_pago
      * @return [type] [description]
      */
-    public function metodoPago() {
-        return $this->belongsTo(\App\Models\MetodoPago::class);
+    public function pago() {
+        return $this->belongsTo(\App\Models\MetodoPago::class, 'metodo_id'); 
     }
 
     /**
@@ -84,6 +93,6 @@ class Funerario extends Model
      * @return [type] [description]
      */
     public function creador() {
-        return $this->belongsTo(\App\Models\Avi::class);
+        return $this->belongsTo(\App\User::class, 'creador');
     }
 }

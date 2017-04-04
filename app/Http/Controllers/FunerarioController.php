@@ -174,12 +174,17 @@ class FunerarioController extends Controller
      */
     public function lista()
     {
+
         return view('funerario.lista');
     }
 
     public function funerarios(){
 
-        $solicitudes = Funerario::all();
+
+        $solicitudes = Funerario::with('pago')
+                                ->with('estado')
+                                ->with('afiliado')
+                                ->select('funerario.*');
 
         return Datatables::of($solicitudes)
         ->addColumn('action', function ($solicitud) {
@@ -188,6 +193,7 @@ class FunerarioController extends Controller
                 <a href="/funerario/'.$solicitud->id.'/edit" class="btn btn-info btn-sm"> <i class="fa fa-edit"> </i></a>
                 <a href="/funerario/'.$solicitud->id.'" class="btn btn-danger btn-sm sweet-danger"> <i class="fa fa-trash"> </i></a>';
             })
+        
         ->editColumn('created_at', function ($solicitud) {
                 return $solicitud->created_at->format('d/m/Y');
             })
@@ -236,9 +242,9 @@ class FunerarioController extends Controller
 
         // Genero codigo unico
         $codigo = 'fn'.substr(uniqid(),7,13);
+        //Inicio valor de cobertura
+        $cobertura = 0;
 
-       // dd($request);
-       // 
         $plazo = ($request->plazo != '') ? $request->plazo : NULL;
 
          // crea nueva solicitud
@@ -300,6 +306,9 @@ class FunerarioController extends Controller
                 'detalles'     => $request['detalle'][$i],
             ]);
 
+            //Suma de la cobertura
+            $cobertura += $request['monto'][$i];
+
             // Guardo carta de defuncion
             if ($request->hasFile('envoice')) 
             {
@@ -314,14 +323,16 @@ class FunerarioController extends Controller
                 // Guardo el registro en la base de datos
                 $presupuesto->doc_factura = $acta;
                 $presupuesto->save();
+
             }
 
         }
+        // Guardo Total de lcfirst(str)a cobertura 
+        $funerario->cobertura = $cobertura;
+        $funerario->save();
 
-        dd($codigo);
-
-        //toast()->info(' Solicitud generada sastifactoriamente', 'Información:');
-       // return redirect()->route('funerario.lista');
+        toast()->info(' Solicitud generada sastifactoriamente', 'Información:');
+        return redirect()->route('funerario.lista');
 
     }
 

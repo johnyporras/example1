@@ -5,11 +5,6 @@
 <link rel="stylesheet" href="{{ url('css/timeline.css') }}">
 @endpush
 
-@push('scripts')
-<script src="{{ asset('plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
-
-@endpush
-
 @section('content')
 <hr/>
 <div class="col-xs-12">
