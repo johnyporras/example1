@@ -430,7 +430,7 @@
                 <div class="col-md-9">
                 {{ Form::file('acta', ['id'=>'acta']) }}
                 <span class="help-block">
-                    <strong>Permitido: PDF, Imagen, Word</strong>
+                    <strong>Permitido: PDF, Imagen</strong>
                 </span>
                 @if ($errors->has('acta'))
                     <span class="help-block">
@@ -590,7 +590,7 @@ $(document).ready(function() {
         language: 'es',
         showUpload: false,
         removeClass: 'btn btn-danger',
-        allowedFileExtensions : ['jpg', 'jpeg', 'png','pdf','doc','docx'],
+        allowedFileExtensions : ['jpg', 'jpeg', 'png','pdf'],
     });
 
     /*Para subir factura*/

@@ -109,41 +109,37 @@
 
          	@foreach ($solicitud->presupuestos as $presupuesto)
 	          <tr>
+	          
+					<li class="list-group-item">
+                	<a class="xtext btn btn-succes" 
+                	data-type="text"
+                	data-pk="{{ $presupuesto->id }}"
+                	data_url="{{ route('funerario.modify', ['id' => $presupuesto->id]) }}" 
+                	data-id="13" 
+                	data-name="type" 
+                	data-value="valor"
+                	data-title="Ingrese Fecha"
+                	></a>
+               </li>
+               <li><button class="btn btn-danger cantidad" data-id="{{ $presupuesto->id }}">Ver valores</button></li>
+               <!-- 
+					<li class="list-group-item"><a class="xdate" data-type="date"  data-id="13" data-title="Ingrese Fecha">valor</a></li>
+               <li class="list-group-item"><a class="xselect" data-type="select" data-id="13" data-value="1"></a></li>
+               <li class="list-group-item"><a class="xnumber" data-type="text" data-id="13" data-value="35000"></a></li> 
+                -->
+					<td>{{ $presupuesto->proveedor->razon_social }}</td>
 					<td><a class="xselect" 
                 	data-type="select"
                 	data-pk="{{ $presupuesto->id }}"
+                	data_url="{{ route('funerario.modify', ['id' => $presupuesto->id]) }}" 
                 	data-name="proveedor_id" 
                 	data-value="{{ $presupuesto->proveedor_id }}"
                 	data-title="Ingrese Proveedor"
                 	></a></td>
-               <td><a class="xtext" 
-                  data-type="text"
-                  data-pk="{{ $presupuesto->id }}" 
-                  data-name="factura"
-                  data-value="{{ $presupuesto->factura }}"
-                  data-title="Ingrese No Factura"
-                  ></a></td>
-               <td><a class="xdate" 
-                  data-type="date"
-                  data-pk="{{ $presupuesto->id }}"
-                  data-name="fecha" 
-                  data-value="{{ $presupuesto->fecha->format('Y-m-d') }}"
-                  data-title="Ingrese Fecha"
-                  ></a></td>
-               <td><a class="xnumber" 
-                  data-type="text"
-                  data-pk="{{ $presupuesto->id }}"
-                  data-name="monto"
-                  data-value="{{ $presupuesto->monto  }}"
-                  data-title="Ingrese Monto Factura"
-                  ></a></td>
-               <td><a class="xtext" 
-                  data-type="textarea"
-                  data-pk="{{ $presupuesto->id }}"
-                  data-name="detalles"
-                  data-value="{{ $presupuesto->detalles  }}"
-                  data-title="Ingrese Detalles"
-                  ></a></td>
+					<td>{{ $presupuesto->factura }}</td>	
+					<td>{{ $presupuesto->fecha->format('d/m/Y') }}</td>
+					<td>{{ $presupuesto->monto }}</td>
+					<td>{{ $presupuesto->detalles }}</td>
 					<td class="text-center">
 						<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" 
 							data-target="#modal" 
@@ -158,6 +154,7 @@
 							title="Descargar"><i class="fa fa-download"></i>
 						</a>
 					</td>
+
 				</tr>
          	@endforeach
          	</tbody>
@@ -184,6 +181,7 @@
 		    </div>
 		</div>
 	</div>
+	
 
 @endsection
 @section('script')
@@ -196,6 +194,12 @@
 <script>
 $(document).ready(function() {
 	
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+
    // x-editable
    $('.xdate').editable({
    	validate: function(value) {
@@ -207,7 +211,10 @@ $(document).ready(function() {
       datepicker: {
          language: 'es'
       },
-      url:'{{ route('funerario.modify') }}',
+      ajaxOptions: {
+         dataType: 'json',
+         type: 'post'
+      }
    });
 
    $('.xselect').editable({
@@ -216,29 +223,56 @@ $(document).ready(function() {
               return 'Valor es requerido.';
         	}
       },
-      source: {!! $valores !!}, 
-      url:'{{ route('funerario.modify') }}',
+      source: {!! $valores !!},
+      ajaxOptions: {
+         dataType: 'json',
+         type: 'post'
+      } 
    });
+
+	$('.xtext').editable({
+      validate: function(value) {
+         if($.trim(value) == '') {
+              return 'Valor es requerido.';
+        	}
+      },
+      ajaxOptions: {
+         dataType: 'json',
+         type: 'post'
+      }
+	});
 
 	$('.xnumber').editable({
       validate: function(value) {
          if($.trim(value) == '') {
               return 'Valor es requerido.';
         	}
+      },
+      validate: function(value) {
          if($.isNumeric(value) == '') {
               return 'Solo se permiten numeros.';
-         }
+        	}
       },
-      url:'{{ route('funerario.modify') }}',
+      ajaxOptions: {
+         dataType: 'json',
+         type: 'post'
+      }
 	});
 
-   $('.xtext').editable({
-      validate: function(value) {
-         if($.trim(value) == '') 
-             return 'Valor es requerido.';
-      },
-      url:'{{ route('funerario.modify') }}',
-   })
+	// Prueba valores ajax
+	$('.cantidad').on('click', function() {
+
+		var id = $(this).attr('data-id');
+
+      $.ajax({
+         type: 'POST',
+         url: '/funerario/'+ id +'/modify',
+         success: function(valores) {
+            console.log(valores);
+         }
+     });
+
+    });
 
   //Inicializo tabla responsive
   $('.card').cardtable();

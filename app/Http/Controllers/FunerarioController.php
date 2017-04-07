@@ -29,7 +29,8 @@ class FunerarioController extends Controller
      * @param Request
      * @return Response
      */
-    public function index(Request $request){
+    public function index(Request $request)
+    {
        
         if(isset($request->cedula)){
             if(empty($request->cedula)){
@@ -76,9 +77,11 @@ class FunerarioController extends Controller
      * @param  Request $request
      * @return Response
      */
-    public function select(Request $request){
+    public function select(Request $request)
+    {
         
-        if(empty($request->icedula)){
+        if(empty($request->icedula))
+        {
             return back()->with('message', '¡Debe seleccionar un beneficiario.!');
         }
 
@@ -174,13 +177,12 @@ class FunerarioController extends Controller
      */
     public function lista()
     {
-
         return view('funerario.lista');
     }
 
-    public function funerarios(){
-
-
+    public function funerarios()
+    {
+        //Listo las solicitudes para la tabla
         $solicitudes = Funerario::with('pago')
                                 ->with('estado')
                                 ->with('afiliado')
@@ -231,7 +233,6 @@ class FunerarioController extends Controller
      */
     public function store(request $request)
     {
-
         // valida los campos del formulario
         $this->validate($request, [
             'estado_id' => 'required',
@@ -244,10 +245,10 @@ class FunerarioController extends Controller
         $codigo = 'fn'.substr(uniqid(),7,13);
         //Inicio valor de cobertura
         $cobertura = 0;
-
+        //Verifico si tiene plazo o no
         $plazo = ($request->plazo != '') ? $request->plazo : NULL;
 
-         // crea nueva solicitud
+        // crea nueva solicitud
         $funerario = Funerario::create([
             'codigo_solicitud' => $codigo,
             'estado_id'        => $request->estado_id,
@@ -267,12 +268,11 @@ class FunerarioController extends Controller
             // Cambio nombre de la imagen
             $filename = 'dni'.'_'.$codigo.'.'.$file->getClientOriginalExtension();
             //Directorio
-            //$cedula = $codigo.'/'.$filename;
             $cedula = $codigo.'/'.$filename;
             // Guardo la imagen en el directorio 
             Storage::disk('funerario')->put($cedula, file_get_contents($file));
             // Guardo el registro en la base de datos
-            $funerario->doc_cedula = $cedula;
+            $funerario->doc_cedula = $filename;
             $funerario->save();
         }
  
@@ -288,7 +288,7 @@ class FunerarioController extends Controller
             // Guardo la imagen en el directorio 
             Storage::disk('funerario')->put($acta, file_get_contents($file));
             // Guardo el registro en la base de datos
-            $funerario->doc_acta = $acta;
+            $funerario->doc_acta = $filename;
             $funerario->save();
         }
 
@@ -317,13 +317,12 @@ class FunerarioController extends Controller
                 // Cambio nombre de la imagen
                 $filename = 'fact'.'_'.$codigo.'_'.$i.'.'.$file->getClientOriginalExtension();
                 //Directorio
-                $acta = $codigo.'/'.$filename;
+                $documento = $codigo.'/'.$filename;
                 // Guardo la imagen en el directorio 
-                Storage::disk('funerario')->put($acta, file_get_contents($file));
+                Storage::disk('funerario')->put($documento, file_get_contents($file));
                 // Guardo el registro en la base de datos
-                $presupuesto->doc_factura = $acta;
+                $presupuesto->doc_factura = $filename;
                 $presupuesto->save();
-
             }
 
         }
@@ -346,7 +345,41 @@ class FunerarioController extends Controller
     {
         $solicitud = Funerario::findOrFail($id);
 
-        return view('funerario.show',compact('solicitud'));
+         // Cargo los proveedores
+        $data = ProveedorFunerario::orderBy('razon_social', 'ASC')
+                        ->pluck('razon_social', 'id');
+
+        foreach ($data as $key => $value) {
+            //paso a un array con nuevos indices
+            $valores[] = ["value" => $key , "text" => $value];
+        }
+        // Paso los valores a formato json
+        $valores = json_encode($valores);
+
+        // Retorno la vista con la solicitud y los proveedores
+        return view('funerario.show',compact('solicitud', 'valores'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function files($path,$file)
+    {
+        $ruta = $path.'/'.$file;
+        
+        if (Storage::disk('funerario')->exists($ruta)) 
+        {
+            // Obtengo el archivo a mostrar
+            $file = Storage::disk('funerario')->get($ruta);
+            // Obtengo el tipo de archivo 
+            $mime = Storage::disk('funerario')->mimeType($ruta);
+            
+            //retorno el archivo
+            return response($file, 200)->header('Content-Type', $mime);
+        }
     }
 
     /**
@@ -414,6 +447,31 @@ class FunerarioController extends Controller
             return back();
         }
         
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function modify(Request $request)
+    {
+        if ($request->ajax())
+        {
+
+            $edit = FunerarioDetalle::findOrFail($request->pk)
+                            ->update([
+                                $request->name => $request->value
+                            ]);
+
+            if ($edit){
+                return response()->json(['status'=> true ]);
+            } else {
+                return response()->json(['status'=> false ]);
+            } 
+        }
     }
 
     /**
