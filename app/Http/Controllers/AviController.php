@@ -15,7 +15,7 @@ use App\Models\Avi;
 use App\Models\AviDestino;
 use App\Models\AcAfiliado;
 use Yajra\Datatables\Datatables;
-use Auth; 
+use Auth;
 
 class AviController extends Controller
 {
@@ -212,17 +212,7 @@ class AviController extends Controller
      */
     public function edit($id)
     {
-        $solicitud = Avi::findOrFail($id);
-
-        $afiliado = AcAfiliado::where('cedula', '=', $solicitud->cedula_afiliado)->first();
-
-        $paises = DB::table('paises')
-                        ->orderBy('name_es', 'ASC')
-                        ->pluck('name_es', 'id');
-
-       // dd($afiliado);
-
-        return view('avi.editar', compact('solicitud', 'paises', 'afiliado'));
+        //
     }
 
     /**
@@ -234,41 +224,7 @@ class AviController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Se vailida que posee al menos un destino ya que no puede estar vacio...
-        if ($request->destino) {
-        
-            $solicitud = Avi::findOrFail($id);
-
-            $solicitud->update([
-                'nro_cronograma' => $request->cronograma,
-                'observaciones' => $request->observaciones,
-                ]);
-
-            // Forzo el borrado para poder actualizar
-            $solicitud->destinos()->forceDelete();
-            $solicitud->save();
-
-            // Total de destinos para realizar bucle
-            $total = count($request->desde);
-
-            // Aqui se guardan todos los destinos da la solicitud
-            for ($i = 0; $i < $total; $i++) {
-
-                $solicitud->destinos()->create([
-                    'pais_id' => $request['destino'][$i], 
-                    'fecha_desde'  => $request['desde'][$i], 
-                    'fecha_hasta'  => $request['hasta'][$i]
-                ]);
-            }
-
-            toast()->info(' Solicitud: '.$solicitud->codigo_solicitud.' modificada Correctamente', 'Alerta:');
-            return redirect()->route('avi.lista');
-
-        } else {
-            toast()->error(' Solicitud debe poseer al menos un destino', 'Alerta:');
-            return back();
-        }
-        
+        //
     }
 
     /**
@@ -279,14 +235,6 @@ class AviController extends Controller
      */
     public function destroy($id)
     {
-        $solicitud = Avi::findOrFail($id);
-
-        // Elimino la solicitud y sus relaciones
-        $solicitud->destinos()->delete();
-        $solicitud->delete();
-
-        toast()->error(' Solicitud: '.$solicitud->codigo_solicitud.' Eliminada Correctamente', 'Alerta:');
-        // Retorno a la lista de solicitudes
-        return redirect()->route('avi.lista');
+        //
     }
 }

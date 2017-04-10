@@ -59,5 +59,4 @@ class Avi extends Model
     public function module() {
         return $this->belongsTo(\App\Models\Avi::class, 'modules_id', 'id');
     }
-
 }

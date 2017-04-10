@@ -295,6 +295,7 @@ Route::group(['middleware' => ['auth']], function () {
     
     // PAGOS
     Route::get('pagos/consultar'            , 'PagosController@getFilter');
+    Route::get('pagos/propago'            , 'PagosController@getFilter2');
 
     
     // GESTIONAR CLAVE ODONTOLOGICA dontologica\GenerarController@getProveedores');
