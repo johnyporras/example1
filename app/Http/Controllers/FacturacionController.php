@@ -1,10 +1,10 @@
 <?php namespace App\Http\Controllers;
 
-//use Carbon\Carbon;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\AcFactura;
 use App\Models\AcClave;
-use App\Lib\functions;
+
 use Session;
 use Input;
 use Illuminate\Http\RedirectResponse;
@@ -91,39 +91,22 @@ class FacturacionController extends Controller
     public function store(Request $request)
     {
         $user = \Auth::user();
-        
         $proveedor = $user->proveedor;
         $request = array_add($request, 'codigo_proveedor_creador', $proveedor);
-        $request->fecha_factura = functions::uf_convertirdatetobd($request->fecha_factura);
-       // dd($request->fecha_factura);
-        $oFactura = new AcFactura();
-        $oFactura->numero_factura=$request->numero_factura;
-        $oFactura->numero_control=$request->numero_control;
-        $oFactura->fecha_factura=$request->fecha_factura;
-        $oFactura->monto=$request->monto;
-        $oFactura->observaciones=$request->observaciones;
-        $oFactura->codigo_estatus=$request->codigo_estatus;
-        $oFactura->codigo_proveedor_creador=$request->codigo_proveedor_creador;
-        $res =$oFactura->save();
-        //echo "1121";die();
-        return $oFactura;
+        $factura = AcFactura::create($request->all());
+        
+        return $factura;
     }
     
  public function procesar(Request $request)
  {   
-    //dd($request->fileid);
      /* Validacion de Archivos, que sean menor o igual a 5, y de tipo jpg,pdf,png,doc */
-     if ($request->hasFile('file1')){
-        if (true){   
+     if (count($request->fileid) > 0) {
+        if (($this->validarArchivos($request->fileid, $request ))){   
             $request = array_add($request, 'codigo_estatus', 5) /* Pendiente por Aprobacion */; 
-            //$request = array_add($request, 'documento', $request->fileid[0]) /* Pendiente por Aprobacion */; 
-            //echo "this is";die();
-            $insertFactura = $this->store($request);
-
-             $imageName = $insertFactura->id .'.'.$request->file('file1')->getClientOriginalExtension();
-            //if ($this->subirArchivo($insertFactura->id, $request->codigo_proveedor_creador,$request->fileid[0])) {
-
-            if ($request->file('file1')->move(base_path().'/public/archivo/', $imageName)){               
+            $request = array_add($request, 'documento', $request->fileid[0]) /* Pendiente por Aprobacion */; 
+            $insertFactura = $this->store($request);         
+            if ($this->subirArchivo($insertFactura->id, $request->codigo_proveedor_creador,$request->fileid[0])) {               
                 if($insertFactura){
                     if(is_array(Input::get('id_clave')) || is_array(Input::get('id_aval'))){
                         if(!empty(Input::get('id_clave'))){
@@ -196,38 +179,6 @@ class FacturacionController extends Controller
                 return true;
               }   
     }  
-
-
-   /* public function grabarArchivo()
-    {
-
-             $files = Input::file('files');
-             $json = array(
-                'files' => array()
-                );
-
-        foreach( $files as $file )
-        {
-            $filename = $file->getClientOriginalName().".".$file->getClientOriginalExtension();
-            $json['files'][] = array(
-                'name' => $filename,
-                'size' => $file->getSize(),
-                'type' => $file->getMimeType(),
-                'url' => '/uploads/files/'.$filename,
-                'deleteType' => 'DELETE',
-                'deleteUrl' => self::$route.'/deleteFile/'.$filename,
-                );
-
-            $upload = $file->move( public_path().'/uploads/files', $filename );
-
-
-        }
-        return Response::json($json);
-    }*/
-
-
-
-
     public function generarPago(Request $request)
     {
     $xml = new DomDocument('1.0', 'UTF-8');

@@ -59,8 +59,8 @@ if(is_object(Auth::user()))
     var rutaInicio="/";
     var url = location.pathname;
     var id_type='<?php echo Auth::user()->type; ?>'
-    var ruta = "/atiempon/public/Seguridad/evalPermiso";
-    var rutanoper="/atiempon/public/Seguridad/nopermiso";
+    var ruta = "/Seguridad/evalPermiso";
+    var rutanoper="/Seguridad/nopermiso";
     //alert(url);
     //alert(rutaInicio);
     if(url!=rutaInicio && url!=rutanoper)
@@ -77,7 +77,7 @@ if(is_object(Auth::user()))
             if(data.permiso==false)
             {
                 //alert("accesso denegado a este módulo");
-                //location.href="/atiempon/public/Seguridad/nopermiso";              
+                location.href="/atiempon/public/Seguridad/nopermiso";              
             }
       
         });

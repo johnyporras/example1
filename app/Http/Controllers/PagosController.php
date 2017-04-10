@@ -20,13 +20,10 @@ use Session;
 
 class PagosController extends Controller
 {  
- public function getFilter()
- {
- 	
- 	//dd("asssas");
+ public function getFilter(){
      $user = \Auth::user();  
      $query = DB::table('ac_facturas')
-            ->where('ac_facturas.codigo_estatus','=','3') // Pago aprobado
+            ->where('ac_facturas.codigo_estatus','=','3') // FACTURAS RECHAZADAS
             ->join('ac_proveedores_extranet', 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_facturas.codigo_proveedor_creador')
             ->join('ac_estatus', 'ac_estatus.id',"=", 'ac_facturas.codigo_estatus')             
             ->select('ac_facturas.id as id',
@@ -65,28 +62,5 @@ class PagosController extends Controller
             $grid->paginate(10);
             return  view('pagos.consultar', compact('filter','grid'));
         }
-    }    
-    
-    
-    public function getFilter2()
-    {
-    
-    	/*
-    	$user = \Auth::user();*/
-    	$query = DB::table('ac_facturas')
-    	->where('ac_facturas.codigo_estatus','=','3') // Pago aprobado
-    	->join('ac_proveedores_extranet', 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_facturas.codigo_proveedor_creador')
-    	->join('ac_estatus', 'ac_estatus.id',"=", 'ac_facturas.codigo_estatus')
-    	->select('ac_facturas.id as id',
-    			'ac_facturas.codigo_proveedor_creador as idProveedor',
-    			'ac_facturas.numero_factura as numero_factura',
-    			'ac_facturas.numero_control as numero_control',
-    			'ac_facturas.fecha_factura  as fecha_factura',
-    			'ac_facturas.monto as monto',
-    			'ac_proveedores_extranet.nombre as proveedor',
-    			'ac_estatus.nombre as nombre_estatus')->get();
-    	return  view('pagos.progpago',compact('query'));
-    	
-    
     }    
 }

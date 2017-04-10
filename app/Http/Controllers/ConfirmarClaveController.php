@@ -20,7 +20,6 @@ class ConfirmarClaveController extends Controller
 
  public function getFilter()
  {      
-  
    $user = \Auth::user();
    // Analista Proveedor   
    if ($user->type == 3){
@@ -73,7 +72,6 @@ class ConfirmarClaveController extends Controller
   public function show(Request $request, $id_clave='')
     {       
       
-      
     if (empty($clave)){
        $id['clave'] = $request->input('show'); 
     }else{
@@ -112,10 +110,9 @@ class ConfirmarClaveController extends Controller
      }    
     public function confirmar(Request $request){
         try {
-          //dd($request->clave);
-            $clave = DB::table('ac_claves')->where('clave',"=",$request->clave)
+            $clave = DB::table('ac_claves')
+            ->where('clave', $request->clave)
             ->update(['estatus_clave' => 3]);
-            //dd($clave);
             if ($clave == 0){
                Session::flash('message', 'Clave No Encontrada !'); 
             }else{

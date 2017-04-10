@@ -46,9 +46,7 @@ class ClaveController extends Controller{
         $costo       = 0;
         $monto       = array();
         $ValidarFecha = new ValidarFechaController();
-        //if (!($ValidarFecha->validarFecha($request)) ){
-        if (false)
-        {
+        if (!($ValidarFecha->validarFecha($request)) ){
            Session::flash('result', 'No se encuentra dentro del las Fecha Autorizada.');
                       // return redirect('home')->with('message', );
            return redirect::to('claves/generarFinal')->with('result', 'Debe agregar al menu un procedimiento');

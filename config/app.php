@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'localhost'),
+    'url' => env('APP_URL', 'http://http://35.164.247.216/'),
 
     /*
     |--------------------------------------------------------------------------
@@ -153,7 +153,8 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Anchu\Ftp\FtpServiceProvider::class,
-        
+        Grimthorr\LaravelToast\ServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
 
         /*
          * Application Service Providers...

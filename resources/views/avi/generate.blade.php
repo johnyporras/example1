@@ -313,7 +313,8 @@
 
 $(document).ready(function() {
 
-    var index = 0;
+    // Contador
+    var contador = 1;
 
     /** Validar formulario **/
     var parsleyOptions = {
@@ -332,9 +333,10 @@ $(document).ready(function() {
     // Genero la validacion del formulario...
     $('#destinoForm').parsley(parsleyOptions);
 
-    // Add button click handler
-    $('#destinoForm').on('click', '.addButton', function() {
-        index++;
+    /************************************************************************/
+    //funcion para colocar valores Dinamicos
+    function setIntinerario(index) {
+
         var $template = $('#template'),
             $clone    = $template
                             .clone()
@@ -419,15 +421,24 @@ $(document).ready(function() {
                 // Valida campo al cambiar valor
                 $("#destino"+index).parsley(parsleyOptions).validate();
             });
-        });
 
-        // Remove button click handler
-        $('#destinoForm').on('click', '.removeButton', function() {
-            var $row  = $(this).parents('.padre'),
-                index = $row.attr('data-index');
+    }
+
+    /*************************************************************************/
+
+    // Add button click handler
+    $('#destinoForm').on('click', '.addButton', function() {
+        setIntinerario(contador++);
+    });
+
+    // Remove button click handler
+    $('#destinoForm').on('click', '.removeButton', function() {
+
+        var $row  = $(this).parents('.padre'),
+            index = $row.attr('data-index');
             // Remove element containing the fields
             $row.remove();
-        });
+    });
 
     /*************************************************************************/
 
