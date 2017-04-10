@@ -19,7 +19,7 @@
 <div class="col-xs-12">
     <div class="row">
         <div class="col-xs-12">
-            <p><a href="{{ url('/avi') }}" title="Generar otra Solicitud" class="btn btn-success"><span class="pr5"><i class="fa fa-plus"></i></span> Generar</a></p>
+            <p><a href="{{ url('/avi') }}" title="Generar otra Solicitud" class="btn btn-success btn-sm"><span class="pr5"><i class="fa fa-plus"></i></span> Generar</a></p>
         </div>
     </div> <!-- row -->
     <div class="row">
@@ -43,7 +43,7 @@
                         <th>Cronograma</th>
                         <th>Observaciones</th>
                         <th>Creado</th>
-                        <th width="110">Acciones</th>
+                        <th width="80">Acciones</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -115,8 +115,9 @@ $(document).ready(function() {
             text: "¿Esta seguro de continuar?",         
             type: "warning",   
             showCancelButton: true,   
-            confirmButtonClass: "btn-danger",
+            confirmButtonClass: "btn-danger btn-sm",
             confirmButtonText: "Eliminar",
+            cancelButtonClass: "btn-sm",
             cancelButtonText: "Cancelar", 
             closeOnConfirm: false 
             }, 

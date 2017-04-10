@@ -1,11 +1,12 @@
 @extends('layouts.app')
-@section('title','Asistencia al Viajero Internacional')
+@section('title','Modulo Funerario')
 @section('content')
 
 @push('styles')
     <link rel="stylesheet" href="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ url('plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ url('plugins/select2/css/select2-bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url('plugins/bootstrap-fileinput/css/fileinput.min.css') }}">
 @endpush
 
 @push('scripts')
@@ -15,217 +16,213 @@
     <script src="{{ url('plugins/select2/js/es.js') }}"></script>
     <script src="{{ url('plugins/parsley-js/parsley.min.js') }}"></script>
     <script src="{{ url('plugins/parsley-js/i18n/es.js') }}"></script>
+    <script src="{{ url('plugins/bootstrap-fileinput/js/fileinput.min.js') }}"></script>
+    <script src="{{ url('plugins/bootstrap-fileinput/js/fileinput_locale_es.js') }}"></script>
 @endpush
 <hr/>
 
 <div class="col-xs-12">
     <div class="row">
         <div class="col-xs-12">
-            <p><a href="{{ url('/avi/lista') }}" title="Listado Solicitudes" class="btn btn-success"><span class="pr5"><i class="fa fa-table"></i></span> Listado</a></p>
+            <p><a href="{{ url('/funerario/lista') }}" title="Listado solicitudes" class="btn btn-success"><span class="pr5"><i class="fa fa-table"></i></span> Solicitudes</a></p>
         </div>
     </div> <!-- row -->
-
-    <div class="row">
-        <div class="col-xs-12">
-            <h2 class="pt10 pb10 m0">Solicitud: {{ strtoupper($solicitud->codigo_solicitud) }}</h2>
-        </div>
-    </div> <!-- row -->
-
-    <div class="row">
-
-        <div class="col-md-6">
-            @if (isset($afiliado))
-            <div class="panel panel-warning">
-                <!-- Default panel contents -->
-                <div class="panel-heading">
-                    <span class="pr-1"><i class="fa fa-user"></i></span> Afiliado
-                </div>
-                 <!-- List group -->
-                <ul class="list-group">
-                    <li class="list-group-item"><span class="text-warning"><b>Cédula:</b></span> {{ $afiliado->cedula }}</li>
-                    <li class="list-group-item"><span class="text-warning"><b>Nombre:</b></span> {{ $afiliado->nombre }} {{ $afiliado->apellido }} </li>
-                    <li class="list-group-item"><span class="text-warning"><b>Edad:</b></span> {{ $afiliado->fecha_nacimiento->age }}</li>
-                    <li class="list-group-item"><span class="text-warning"><b>Sexo:</b></span> {{ ($afiliado->sexo == 'M')?'Masculino':'Femenino' }}</li>
-                    <li class="list-group-item"><span class="text-warning"><b>Correo:</b></span> {{ $afiliado->email }}</li>
-                    <li class="list-group-item"><span class="text-warning"><b>Teléfono:</b></span> {{ $afiliado->telefono }}</li>
-                </ul>
-            </div>
-            @endif
-        </div>
-    </div> <!-- .row -->
 
 </div> <!-- .col-12 -->
 
-
 <div class="col-xs-12">
-    {!! Form::open(['route'=>['avi.update', $solicitud->id], 'id' => 'destinoForm', 'class' => 'form-horizontal', 'name' => 'destinos']) !!}
+    {{ Form::model($solicitud, ['route'=> ['funerario.update', $solicitud->id], 'method' =>'PUT', 'files' => true, 'id' => 'funerarioForm', 'class' => 'form-horizontal', 'role' => 'form']) }}
     <div class="row">
         <div class="col-xs-12">
             <div class="pb25">
-                <h3>Intinerario de viajes</h3>
+                <h3>Actualizar Solicitud: {{ $solicitud->codigo_solicitud }}</h3>
             </div>
         </div>
-    </div> <!-- row -->
-
-    <div class="row">
-        <div class="col-xs-12">
-            <hr>
-        </div>
-    </div> <!-- row -->
-
-<!-- ============== Template para campos dinamicos ============== -->
-    <div class="row padre hide" id="template">
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group {{ $errors->has('fecha_desde') ? ' has-error' : '' }}">
-                        {{ Form::label('fecha_desde', 'Fecha Salida', ['class' => 'col-md-3 control-label']) }}
-                        <div class="col-md-9">
-                            <div class="input-group">
-                                {{ Form::text('fecha_desde', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Salida']) }}
-                                <div class="input-group-addon">
-                                    <span class="fa fa-calendar"></span>
-                                </div>
-                            </div>
-                            @if ($errors->has('fecha_desde'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('fecha_desde') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-                    <!-- End .form-group  -->
-                </div>
-                
-                <div class="col-xs-12">
-                    <div class="form-group {{ $errors->has('fecha_hasta') ? ' has-error' : '' }}">
-                        {{ Form::label('fecha_hasta', 'Fecha Retono', ['class' => 'col-md-3 control-label']) }}
-                        <div class="col-md-9">
-                            <div class="input-group">
-                                {{ Form::text('fecha_hasta', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Retorno']) }}
-                                <div class="input-group-addon">
-                                    <span class="fa fa-calendar"></span>
-                                </div>
-                            </div>
-                            @if ($errors->has('fecha_hasta'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('fecha_hasta') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-                    <!-- End .form-group  -->
-                </div> 
-
-            </div>
-        </div>
-        
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group {{ $errors->has('pais_destino') ? ' has-error' : '' }}">
-                        {{ Form::label('pais_destino', 'Destino', ['class' => 'col-md-3 control-label']) }}
-                        <div class="col-md-9">
-                        {{ Form::select('pais_destino', $paises, null, ['class' => 'form-control', 'placeholder'=>'Seleccione Pais Destino']) }}
-                        @if ($errors->has('pais_destino'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('pais_destino') }}</strong>
-                            </span>
-                        @endif
-                        </div>
-                    </div>
-                    <!-- End .form-group  -->
-                </div>
-                <div class="col-xs-12">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <h4><span id="dia" class="label label-info"></span></h4>
-                        </div>
-                        <div class="col-xs-6">
-                            <button type="button" class="btn btn-sm btn-danger removeButton pull-right" title="Quitar destino"><span><i class="fa fa-close"></i></span></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-xs-12">
-            <hr>
-        </div>
-
-    </div> <!-- row -->
-<!-- ============== Template para campos dinamicos ============== -->
-
-    <div class="row">
-       <div class="col-xs-12 col-md-2 pb15">
-            <button type="button" class="btn btn-info btn-sm addButton" title="Agragar otro destino"><span><i class="fa fa-plus"></i></span> Destino</button>
-        </div>
-    </div> <!-- row -->
-
-    <div class="row">
-
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group {{ $errors->has('cronograma') ? ' has-error' : '' }}">
-                        {{ Form::label('cronograma', 'Número de cronograma ', ['class' => 'col-md-3 control-label']) }}
-                        <div class="col-md-9">
-                        {{ Form::text('cronograma', $solicitud->nro_cronograma, ['class' => 'form-control', 'placeholder' => 'Ingrese número de cronograma', 'required']) }}
-                        @if ($errors->has('cronograma'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('cronograma') }}</strong>
-                            </span>
-                        @endif
-                        </div>
-                    </div>
-                    <!-- End .form-group  -->
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group {{ $errors->has('observaciones') ? ' has-error' : '' }}">
-                        {{ Form::label('observaciones', 'Observaciones', ['class' => 'col-md-3 control-label']) }}
-                        <div class="col-md-9">
-                        {{ Form::textArea('observaciones', $solicitud->observaciones, ['class' => 'form-control', 'placeholder' => 'Ingrese sus observaciones', 'rows' => 4,'minlength' => "10" ]) }}
-                        @if ($errors->has('observaciones'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('observaciones') }}</strong>
-                            </span>
-                        @endif
-                        </div>
-                    </div>
-                    <!-- End .form-group  -->
-                </div>
-            </div>
-        </div>
-
     </div> <!-- row -->
     
+    <!-- Estado - Ciudad - Telefono -->
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <div class="form-group {{ $errors->has('estado_id') ? ' has-error' : '' }}">
+                        {{ Form::label('estado_id', 'Estado', ['class' => 'col-md-3 control-label']) }}
+                        <div class="col-md-9">
+                        {!! Form::select('estado_id', $estados, null, ['class' => 'form-control', 'placeholder'=>'Seleccione Estado', 'required']) !!}
+                        @if ($errors->has('estado_id'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('estado_id') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
+                    <!-- End .form-group  -->
+                </div>
+
+                <div class="col-xs-12">
+                    <div class="form-group {{ $errors->has('ciudad') ? ' has-error' : '' }}">
+                        {{ Form::label('ciudad', 'Ciudad', ['class' => 'col-md-3 control-label']) }}
+                        <div class="col-md-9">
+                        {{ Form::text('ciudad', null, ['class' => 'form-control', 'placeholder' => 'Ingrese Ciudad', 'required']) }}
+                        @if ($errors->has('ciudad'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('ciudad') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
+                    <!-- End .form-group  -->
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <div class="form-group {{ $errors->has('contacto') ? ' has-error' : '' }}">
+                        {{ Form::label('contacto', 'Teléfono Contacto', ['class' => 'col-md-3 control-label']) }}
+                        <div class="col-md-9">
+                        {{ Form::text('contacto', null, ['class' => 'form-control', 'placeholder' => 'Ingrese teléfono contacto','pattern' => '^[0][24][1-9][0-9]+$', 'minlength' => "11", 'maxlength' => '11', 'required']) }}
+                        <span class="help-block">
+                            <strong>Ejemplo: 02121231122</strong>
+                        </span>
+                        @if ($errors->has('contacto'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('contacto') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
+                    <!-- End .form-group  -->
+                </div>
+
+            </div>
+        </div>
+        
+    </div> <!-- row -->
+    
+    <!-- Medoto de pago - Plazo de pago -->
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="form-group {{ $errors->has('metodo_id') ? ' has-error' : '' }}">
+                {{ Form::label('metodo_id', 'Metodo Pago', ['class' => 'col-md-3 control-label']) }}
+                <div class="col-md-9">
+                {{ Form::select('metodo_id', $metodos, null, ['class' => 'form-control', 'placeholder'=>'Seleccione metodo pago', 'id' => 'metodo', 'required']) }}
+                @if ($errors->has('metodo_id'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('metodo_id') }}</strong>
+                    </span>
+                @endif
+                </div>
+            </div>
+            <!-- End .form-group  -->
+        </div>
+
+        <div class="col-md-6 hidden" id="cdia">
+            <div class="form-group {{ $errors->has('plazo') ? ' has-error' : '' }}">
+                {{ Form::label('plazo', 'Plazo de Pago', ['class' => 'col-md-3 control-label']) }}
+                <div class="col-md-9">
+                {{ Form::select('plazo', $dias, null, ['class' => 'form-control', 'placeholder'=>'Seleccione plazo', 'id' => 'dia']) }}
+                @if ($errors->has('plazo'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('plazo') }}</strong>
+                    </span>
+                @endif
+                </div>
+            </div>
+            <!-- End .form-group  -->
+        </div>
+        
+    </div> <!-- row -->
+    
+    <div class="row">
+        <div class="col-xs-12">
+            <hr>
+        </div>
+    </div> <!-- row -->
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Documentos</h3>
+            <hr>
+        </div>
+    </div> <!-- row -->
+
+    <!-- Documentos Cedula - Acta defuncion -->
+    <div class="row">
+
+        <div class="col-md-6">
+           <div class="form-group {{ $errors->has('cedula') ? ' has-error' : '' }}">
+                {{ Form::label('cedula', 'Cédula Fallecido', ['class' => 'col-md-3 control-label']) }}
+                <div class="col-md-9">
+                {{ Form::file('cedula', ['id' => 'cedula']) }}
+                <span class="help-block">
+                    <strong>Permitido: PDF, Imagen</strong>
+                </span>
+                @if ($errors->has('cedula'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('cedula') }}</strong>
+                    </span>
+                @endif
+                </div>
+            </div>
+            <!-- End .form-group  --> 
+        </div>
+
+        <div class="col-md-6">
+           <div class="form-group {{ $errors->has('acta') ? ' has-error' : '' }}">
+                {{ Form::label('acta', 'Acta Defunción', ['class' => 'col-md-3 control-label']) }}
+                <div class="col-md-9">
+                {{ Form::file('acta', ['id'=>'acta']) }}
+                <span class="help-block">
+                    <strong>Permitido: PDF, Imagen</strong>
+                </span>
+                @if ($errors->has('acta'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('acta') }}</strong>
+                    </span>
+                @endif
+                </div>
+            </div>
+            <!-- End .form-group  --> 
+        </div>
+
+        <div class="col-xs-12">
+            <!-- Campos ocultos necesarios para cargar la solicitud -->
+            {{ Form::hidden('afiliado_id', 1) }}
+            <hr>
+        </div>
+
+    </div> <!-- row -->
+
     <div class="row">
        <div class="col-xs-12 col-md-2">
             <p>
-                {!! Form::submit('Editar', ['class' => 'btn btn-warning btn-block', 'id' => 'editar']) !!}
+                {{ Form::submit('editar', ['class' => 'btn btn-info btn-block', 'id' => 'generar']) }}
             </p>
         </div>
-    
     </div> <!-- row -->
- {!! Form::close() !!}   
+ {{ Form::close() }}   
 
 </div> <!-- .col-12 -->
+<?php 
+    $cedula = explode('.', $solicitud->doc_cedula);
+    $acta = explode('.', $solicitud->doc_acta);
+?>
 
 @endsection
 
 @section('script')
-<!-- Incluye las alertas start -->
-<!-- ================ -->
-@include('partials.alert-toast')
-<!-- Incluye las alertas end -->
 <script>
 $(document).ready(function() {
-    /** Validar formulario **/
+    // Contador
+    var contador = 1;
+    // Validar formulario
     var parsleyOptions = {
         errorClass: 'has-error',
         successClass: 'has-success',
@@ -240,154 +237,72 @@ $(document).ready(function() {
     };
 
     // Genero la validacion del formulario...
-    $('#destinoForm').parsley(parsleyOptions);
+    $('#funerarioForm').parsley(parsleyOptions);
 
-    /****** Bucle total de destinos cargados ******/
-    // variables para configurar funcion
-    var fecha1 = new Array(),
-        fecha2 = new Array(),
-        destino = new Array(),
-        limit = {{ count($solicitud->destinos) }},
-        contador = 1;
-
-    // Lleno el array con los datos que vienen de BD...
-    @foreach ($solicitud->destinos as $destino)
-        fecha1.push("{{ $destino->fecha_desde->format('Y-m-d') }}");
-        fecha2.push("{{ $destino->fecha_hasta->format('Y-m-d') }}");
-        destino.push({{ $destino->pais_id }}); 
-    @endforeach
-
-    // Realizo el bucle con jquery para cargar los campos defaults
-    for (var i = 0; i < limit; i++) {
-        //Ejecuto la funcion para generar los campos
-        setDestino(contador,fecha1[i],fecha2[i],destino[i]);
-        contador++;
-    }
-    /****** Bucle total de destinos generados ******/
- 
-    /*funcion para colocar valores Dinamicos*/
-    function setDestino(index,fecha1 = null, fecha2 = null, destino = null) {
-        
-        var $template = $('#template'),
-            $clone    = $template
-                            .clone()
-                            .removeClass('hide')
-                            .removeAttr('id')
-                            .attr('data-index', index)
-                            .insertBefore($template);
-
-            // Update the name attributes
-            $clone
-                .find('[name="fecha_desde"]').attr('name', 'desde[]')
-                                            .attr('id', 'iniDate' + index).end()
-                .find('[name="fecha_hasta"]').attr('name', 'hasta[]')
-                                            .attr('id', 'finDate' + index).end()
-                .find('[name="pais_destino"]').attr('name', 'destino[]')
-                                            .attr('id', 'destino' + index).end()
-                .find('#dia').attr('id', 'dias' + index ).end();
-
-            // adicionar campo requerido
-            $('#iniDate'+index).parsley(parsleyOptions).addConstraint("required", "true");
-
-            // adicionar campo datepicker fecha Salida...
-            $('#iniDate'+index).datepicker({
-                language: "es",
-                startDate: '0',
-                format: 'yyyy-mm-dd',
-            }).on('changeDate', function (selected) {
-                var startDate = new Date(selected.date.valueOf());
-                $('#finDate'+index).datepicker('setStartDate', startDate);
-
-                /* Diferencias de dias*/
-                var diff = diffDates($("#iniDate"+index).val(), $("#finDate"+index).val());
-
-                if (diff > 0)
-                {
-                  $("#dias"+index).text(diff + ' días');
-                } 
-
-                //valida el campo al cambiar
-                $('#iniDate'+index).parsley(parsleyOptions).validate();
-
-            }).on('clearDate', function (selected) {
-                $('#finDate'+index).datepicker('setStartDate', null);
-            });
-
-            $('#iniDate'+index).val(fecha1).trigger("change");
-
-            // adicionar campo requerido
-            $("#finDate"+index).parsley(parsleyOptions).addConstraint("required", "true");
-
-            // adicionar campo datepicker fecha Retorno...
-            $("#finDate"+index).datepicker({
-                language: "es",
-                startDate: '0',
-                format: 'yyyy-mm-dd',
-            }).on('changeDate', function (selected) {
-                var endDate = new Date(selected.date.valueOf());
-                $('#iniDate'+index).datepicker('setEndDate', endDate);
-
-                /* Diferencias de dias*/
-                var diff = diffDates($("#iniDate"+index).val(), $("#finDate"+index).val());
-
-                if (diff > 0)
-                {
-                  $('#dias'+index).text(diff + ' días');
-                }
-
-                //valida el campo al cambiar
-                $('#finDate'+index).parsley(parsleyOptions).validate();
-
-            }).on('clearDate', function (selected) {
-                $('#iniDate'+index).datepicker('setEndDate', null);
-            });
-
-            $('#finDate'+index).val(fecha2).trigger("change");
-
-            // adicionar campo requerido
-            $("#destino"+index).parsley(parsleyOptions).addConstraint("required", "true");
-
-            /*Para selet2*/
-            $("#destino"+index).select2({
-                language: "es",
-                placeholder: "Seleccione pais destino",
-                theme: "bootstrap",
-            }).on("change", function (e) { 
-                // Valida campo al cambiar valor
-                $("#destino"+index).parsley(parsleyOptions).validate();
-            });
-
-            // Valido que le pase parametro para cargarlo automaticamente
-            if (destino != null) {
-                $("#destino"+index).val(destino).trigger("change");
-            } 
-    }
-
-    /*************************************************************************/
-    // Add button click handler
-    $('#destinoForm').on('click', '.addButton', function() {
-        setDestino(contador++);
+    /*Para subir Cedula*/
+    $('#cedula').fileinput({
+        language: 'es',
+        showUpload: false,
+        removeClass: 'btn btn-danger',
+        allowedFileExtensions : ['jpg', 'jpeg', 'png','pdf'],
+        @if (isset($solicitud->doc_cedula))
+            initialPreview: [
+                '{{ route('furnerario.files', ['path' => $solicitud->codigo_solicitud, 'file' => $solicitud->doc_cedula]) }}',
+            ],
+            initialPreviewAsData: true,
+            initialPreviewFileType: 'image',
+            initialPreviewConfig: [
+            @if ($cedula[1] == 'pdf')
+                {type: "pdf", caption: "{{$solicitud->doc_cedula }}", key: 1},
+            @else
+                {caption: "{{ $solicitud->doc_cedula }}",  key: 1},
+            @endif
+            ]
+        @endif
     });
 
-    // Remove button click handler
-    $('#destinoForm').on('click', '.removeButton', function() {
-
-        var $row  = $(this).parents('.padre'),
-            index = $row.attr('data-index');
-
-            // Remove element containing the fields
-            $row.remove();
+    /*Para subir acta defuncion*/
+    $('#acta').fileinput({
+        language: 'es',
+        showUpload: false,
+        removeClass: 'btn btn-danger',
+        allowedFileExtensions : ['jpg', 'jpeg', 'png','pdf'],
+        @if (isset($solicitud->doc_acta))
+            initialPreview: [
+                "{{ route('furnerario.files', ['path' => $solicitud->codigo_solicitud, 'file' => $solicitud->doc_acta]) }}",
+            ],
+            initialPreviewAsData: true,
+            initialPreviewFileType: 'image',
+            initialPreviewConfig: [
+            @if ($acta[1] == 'pdf')
+                {type: "pdf", caption: "{{$solicitud->doc_acta }}", key: 1},
+            @else
+                {caption: "{{ $solicitud->doc_acta }}",  key: 1},
+            @endif
+            ]
+        @endif
     });
-    /*************************************************************************/
 
-    /**** Funcion recupera diferencias de dias ***/
-    function diffDates(dateIni,dateEnd){
-        var start = new Date(dateIni);
-        var end = new Date(dateEnd);
-        var diff = parseInt((end.getTime()-start.getTime())/(24*3600*1000));
-        // retorna los dias de diferencia
-        return diff;
-    };
+    @if (isset($solicitud->plazo))
+        // Remuevo el valor oculto si tiene tiene un plazo
+        $("#cdia").removeClass("hidden");
+    @endif
+
+    //Valida cambio del metodo de pago
+    $("#metodo").on('change', function() {
+        // valido metodo para mostrar dias
+        dia = this.value;
+
+        if(dia == 2){
+            $("#cdia").removeClass("hidden");
+            $("#dia").parsley(parsleyOptions).addConstraint("required", "true");
+            $("#dia").attr("required");
+        }else{
+            $("#cdia").addClass("hidden");
+            $("#dia").parsley(parsleyOptions).removeConstraint("required");
+            $("#dia").val(null);
+        }
+    });
 
 });    
 </script>
