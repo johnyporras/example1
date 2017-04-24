@@ -393,7 +393,6 @@ $(document).ready(function() {
         $('#fechaSl').parsley(parsleyOptions).validate();
     });
 
-	
     // x-editable
     $('.xdate').editable({
    	validate: function(value) {

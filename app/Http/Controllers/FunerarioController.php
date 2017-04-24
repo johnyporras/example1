@@ -60,7 +60,6 @@ class FunerarioController extends Controller
                 <a href="/funerario/'.$solicitud->id.'/edit" title="Editar Solicitud" class="btn btn-info btn-xs"> <i class="fa fa-edit"> </i></a>
                 <a href="/funerario/'.$solicitud->id.'" title="Eliminar Solicitud" class="btn btn-danger btn-xs sweet-danger"> <i class="fa fa-trash"> </i></a>';
             })
-        
         ->editColumn('created_at', function ($solicitud) {
                 return $solicitud->created_at->format('d/m/Y');
             })
@@ -209,20 +208,16 @@ class FunerarioController extends Controller
     {
         $solicitud = Funerario::findOrFail($id);
 
-         // Cargo los proveedores
-        $data = ProveedorFunerario::orderBy('razon_social', 'ASC')
+        //cargo los proveedores funerarios
+        $proveedores = ProveedorFunerario::orderBy('razon_social', 'ASC')
                         ->pluck('razon_social', 'id');
 
-        foreach ($data as $key => $value) {
+        foreach ($proveedores as $key => $value) {
             //paso a un array con nuevos indices
             $valores[] = ["value" => $key , "text" => $value];
         }
         // Paso los valores a formato json
         $valores = json_encode($valores);
-
-        //cargo los proveedores funerarios
-        $proveedores = ProveedorFunerario::orderBy('razon_social', 'ASC')
-                        ->pluck('razon_social', 'id');
 
         // Retorno la vista con la solicitud y los proveedores
         return view('funerario.show',compact('solicitud', 'valores','proveedores'));
@@ -416,12 +411,27 @@ class FunerarioController extends Controller
         if ($request->ajax())
         {
 
-            $edit = FunerarioDetalle::findOrFail($request->pk)
-                            ->update([
-                                $request->name => $request->value
-                            ]);
+            $detalle = FunerarioDetalle::findOrFail($request->pk);
+            
+            $detalle->update([$request->name => $request->value]);
 
-            if ($edit){
+            if ($request->name == 'monto')
+            {
+                $cobertura = 0;
+
+                $funerario = Funerario::findOrFail($detalle->funerario_id);
+
+                // Actualizo monto de cobertura de la solicitud
+                foreach ($funerario->presupuestos as $value) {
+                    $cobertura += $value->monto;
+                }
+
+                //actualizo cobertura
+                $funerario->cobertura = $cobertura;
+                $funerario->save();
+            }
+
+            if ($detalle){
                 return response()->json(['status'=> true ]);
             } else {
                 return response()->json(['status'=> false ]);

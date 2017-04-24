@@ -11,7 +11,7 @@
 <script src="{{ asset('plugins/datatables/js/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables/js/dataTables.fixedHeader.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ asset('plugins/datatables/js//responsive.bootstrap.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables/js/responsive.bootstrap.min.js') }}"></script>
 <script src="{{ url('plugins/bootstrap-sweetalert/sweetalert.min.js')}}"></script>
 @endpush
 @section('content')
