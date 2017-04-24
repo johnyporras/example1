@@ -180,9 +180,9 @@ class AviController extends Controller
         return Datatables::of($solicitudes)
         ->addColumn('action', function ($solicitud) {
                 return '
-                <a href="/avi/'.$solicitud->id.'" class="btn btn-warning btn-sm"> <i class="fa fa-eye"> </i></a>
-                <a href="/avi/'.$solicitud->id.'/edit" class="btn btn-info btn-sm"> <i class="fa fa-edit"> </i></a>
-                <a href="/avi/'.$solicitud->id.'" class="btn btn-danger btn-sm sweet-danger"> <i class="fa fa-trash"> </i></a>';
+                <a href="/avi/'.$solicitud->id.'" title="Ver Detalles" class="btn btn-warning btn-xs"> <i class="fa fa-eye"> </i></a>
+                <a href="/avi/'.$solicitud->id.'/edit" title="Editar Solicitud" class="btn btn-info btn-xs"> <i class="fa fa-edit"> </i></a>
+                <a href="/avi/'.$solicitud->id.'" title="Eliminar Solicitud" class="btn btn-danger btn-xs sweet-danger"> <i class="fa fa-trash"> </i></a>';
             })
         ->editColumn('created_at', function ($solicitud) {
                 return $solicitud->created_at->format('d/m/Y');

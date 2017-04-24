@@ -31,142 +31,7 @@ class FunerarioController extends Controller
      */
     public function index(Request $request)
     {
-       
-        if(isset($request->cedula)){
-            if(empty($request->cedula)){
-                return back()->with('message', 'El campo cédula es obligatorio.');
-            }else{
-                try{
-
-                    $this->validate($request,['cedula' => 'required|numeric']);                    
-                    $afiliadoIni = AcAfiliado::where('cedula', '=', $request->cedula)->firstOrFail();
-                
-                }catch(ModelNotFoundException $e){  // catch(Exception $e) catch any exception
-                    
-                    toast()->error( 'No existe el Afiliado!!!', 'Alerta:');
-                    return back()->with('respuesta', '¡No existe el Afiliado!');
-                }
-
-                $contratos = DB::table('ac_contratos')
-                            ->where([['cedula_titular', '=', $afiliadoIni->cedula_titular],['fecha_inicio','<=',date('Y-m-d').' 00:00:00'],['fecha_fin','>=',date('Y-m-d').' 00:00:00']])
-                            ->join('ac_afiliados', 'ac_afiliados.cedula',"=", 'ac_contratos.cedula_afiliado')
-                            ->join('ac_tipo_afiliado', 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
-                            ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_contratos.codigo_plan')
-                            ->join('ac_colectivos', 'ac_colectivos.codigo_colectivo',"=", 'ac_contratos.codigo_colectivo')
-                            ->join('ac_aseguradora', 'ac_colectivos.codigo_aseguradora',"=", 'ac_aseguradora.codigo_aseguradora')
-                            ->select('codigo_contrato','cedula_afiliado','ac_afiliados.nombre as nombre_afiliado','ac_afiliados.apellido as apellido_afiliado',
-                                    'ac_planes_extranet.nombre as plan','ac_colectivos.nombre as colectivo','ac_aseguradora.nombre as aseguradora','ac_tipo_afiliado.nombre as tipo_afiliado')
-                            ->get();
-
-                if(!empty($contratos)){
-                    
-                    return view('funerario.index', compact('contratos'));
-
-                }else{
-                    toast()->warning( '¡No tiene contrato vigente!', 'Mensaje:');
-                    return back()->with('respuesta', '¡No tiene contrato vigente!');
-                }
-            }
-        }else{
-            return view('funerario.index');
-        }
-    }
-
-    /**
-     * Display a listing of the resource.
-     * @param  Request $request
-     * @return Response
-     */
-    public function select(Request $request)
-    {
-        
-        if(empty($request->icedula))
-        {
-            return back()->with('message', '¡Debe seleccionar un beneficiario.!');
-        }
-
-        $id = $request->input('icedula');
-        $servicio['contrato'] = $request->input(['contrato'.$id]);
-        $servicio['cedula_afiliado'] = $request->input('cedula_afiliado'.$id);
-        $servicio['nombre_afiliado'] = $request->input('nombre_afiliado'.$id);
-        $servicio['plan'] = $request->input('plan'.$id);
-        $servicio['colectivo'] = $request->input('colectivo'.$id);
-        $servicio['aseguradora'] = $request->input('aseguradora'.$id);
-        $servicio['tipo_afiliado'] = $request->input('tipo_afiliado'.$id);
-
-        /* Seleciono todos los beneficiaros */
-        $afiliados = AcAfiliado::where('cedula_titular', '=', $servicio['cedula_afiliado'])
-                    ->orderBy('tipo_afiliado')
-                    ->orderBy('fecha_nacimiento')
-                    ->get();
-
-        return view('funerario.selected', compact('servicio', 'afiliados'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function generate(Request $request)
-    {
-        $servicio = $request->servicio;
-
-        $afiliado = AcAfiliado::findOrFail($request->id);
-
-        $paises = DB::table('paises')
-                        ->orderBy('name_es', 'ASC')
-                        ->pluck('name_es', 'id'); 
-
-        return view('funerario.generate', compact('servicio', 'afiliado', 'paises'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function process(Request $request)
-    {
-        /**valida los campos del formulario **/
-        $this->validate($request, [
-            'hasta'         => 'required',
-            'destino'       => 'required',
-            'cronograma'    => 'required',
-            'observaciones' => 'min:10'
-        ]);
-
-        // Genero codigo unico
-        $codigo =  'av'.substr(uniqid(),7,13);
-
-        // crea nueva solicitud
-        $funerario = Funerario::create([
-            'codigo_solicitud' => $codigo,
-            'cedula_afiliado'  => $request->cedula,
-            'codigo_contrato'  => $request->contrato,
-            'cobertura_monto'  => 0,
-            'edad_afiliado'    => $request->edad,  
-            'nro_cronograma'   => $request->cronograma,  
-            'observaciones'    => $request->observaciones,     
-            'creador'          => Auth::user()->id
-        ]);
-
-        // Total de destinos para realizar bucle
-        $total = count($request->desde);
-
-        // Aqui se guardan todos los destinos da la solicitud
-        for ($i = 0; $i < $total; $i++) {
-
-            $funerario->destinos()->create([
-                'pais_id' => $request['destino'][$i], 
-                'fecha_desde'  => $request['desde'][$i], 
-                'fecha_hasta'  => $request['hasta'][$i]
-            ]);
-        }
-
-        toast()->info(' Solicitud generada sastifactoriamente', 'Información:');
-        return redirect()->route('funerario.lista');
+        return 'Por realizar';
     }
 
     /**
@@ -191,11 +56,10 @@ class FunerarioController extends Controller
         return Datatables::of($solicitudes)
         ->addColumn('action', function ($solicitud) {
                 return '
-                <a href="/funerario/'.$solicitud->id.'" class="btn btn-warning btn-sm"> <i class="fa fa-eye"> </i></a>
-                <a href="/funerario/'.$solicitud->id.'/edit" class="btn btn-info btn-sm"> <i class="fa fa-edit"> </i></a>
-                <a href="/funerario/'.$solicitud->id.'" class="btn btn-danger btn-sm sweet-danger"> <i class="fa fa-trash"> </i></a>';
+                <a href="/funerario/'.$solicitud->id.'" title="Ver Detalles" class="btn btn-warning btn-xs"> <i class="fa fa-eye"> </i></a>
+                <a href="/funerario/'.$solicitud->id.'/edit" title="Editar Solicitud" class="btn btn-info btn-xs"> <i class="fa fa-edit"> </i></a>
+                <a href="/funerario/'.$solicitud->id.'" title="Eliminar Solicitud" class="btn btn-danger btn-xs sweet-danger"> <i class="fa fa-trash"> </i></a>';
             })
-        
         ->editColumn('created_at', function ($solicitud) {
                 return $solicitud->created_at->format('d/m/Y');
             })
@@ -222,7 +86,7 @@ class FunerarioController extends Controller
                         ->pluck('razon_social', 'id');
         
         //retorno la vista para el formulario
-        return view('funerario.create',compact('estados','metodos','dias','proveedores'));
+        return view('funerario.create', compact('estados','metodos','dias','proveedores'));
     }
 
     /**
@@ -309,7 +173,7 @@ class FunerarioController extends Controller
             //Suma de la cobertura
             $cobertura += $request['monto'][$i];
 
-            // Guardo carta de defuncion
+            // Guardo facturas asociadas
             if ($request->hasFile('envoice')) 
             {
                 // guardo en una variable la imagen
@@ -330,9 +194,8 @@ class FunerarioController extends Controller
         $funerario->cobertura = $cobertura;
         $funerario->save();
 
-        toast()->info(' Solicitud generada sastifactoriamente', 'Información:');
+        toast()->success(' Solicitud generada sastifactoriamente', 'Información:');
         return redirect()->route('funerario.lista');
-
     }
 
     /**
@@ -345,11 +208,11 @@ class FunerarioController extends Controller
     {
         $solicitud = Funerario::findOrFail($id);
 
-         // Cargo los proveedores
-        $data = ProveedorFunerario::orderBy('razon_social', 'ASC')
+        //cargo los proveedores funerarios
+        $proveedores = ProveedorFunerario::orderBy('razon_social', 'ASC')
                         ->pluck('razon_social', 'id');
 
-        foreach ($data as $key => $value) {
+        foreach ($proveedores as $key => $value) {
             //paso a un array con nuevos indices
             $valores[] = ["value" => $key , "text" => $value];
         }
@@ -357,7 +220,50 @@ class FunerarioController extends Controller
         $valores = json_encode($valores);
 
         // Retorno la vista con la solicitud y los proveedores
-        return view('funerario.show',compact('solicitud', 'valores'));
+        return view('funerario.show',compact('solicitud', 'valores','proveedores'));
+    }
+
+    public function save(Request $request)
+    {
+        $funerario = Funerario::findOrFail($request->id);
+        $cobertura = 0;
+        $codigo = $funerario->codigo_solicitud;
+
+        $presupuesto = $funerario->presupuestos()->create([
+                'proveedor_id' => $request->proveedor,
+                'factura'      => $request->factura,
+                'fecha'        => $request->fsolicitud, 
+                'monto'        => $request->monto,
+                'detalles'     => $request->detalle,
+            ]);
+
+        // Guardo facturas asociadas
+        if ($request->hasFile('envoice')) 
+        {
+            // guardo en una variable la imagen
+            $file = $file = $request->envoice;
+            // Cambio nombre de la imagen
+            $filename = 'fact'.'_'.$codigo.'_'.$presupuesto->id.'.'.$file->getClientOriginalExtension();
+            //Directorio
+            $documento = $codigo.'/'.$filename;
+            // Guardo la imagen en el directorio 
+            Storage::disk('funerario')->put($documento, file_get_contents($file));
+            // Guardo el registro en la base de datos
+            $presupuesto->doc_factura = $filename;
+            $presupuesto->save();
+        }
+
+        // Actualizo monto de cobertura de la solicitud
+        foreach ($funerario->presupuestos as $value) {
+            $cobertura += $value->monto;
+        }
+
+        //actualizo cobertura
+        $funerario->cobertura = $cobertura;
+        $funerario->save();
+
+        toast()->success(' Presupuesto generado sastifactoriamente', 'Información:');
+        return redirect()->route('funerario.show',$funerario->id);
     }
 
     /**
@@ -390,17 +296,25 @@ class FunerarioController extends Controller
      */
     public function edit($id)
     {
+        //Creo array de dias
+        $dias = [];
+        // leno el arra de dias
+        for ($i = 1; $i <= 30 ; $i++) {
+            $dias[$i] = $i;
+        }
+
+        // mando los datos de la solicitud
         $solicitud = Funerario::findOrFail($id);
 
-        $afiliado = AcAfiliado::where('cedula', '=', $solicitud->cedula_afiliado)->first();
-
-        $paises = DB::table('paises')
-                        ->orderBy('name_es', 'ASC')
-                        ->pluck('name_es', 'id');
-
-       // dd($afiliado);
-
-        return view('funerario.editar', compact('solicitud', 'paises', 'afiliado'));
+        // Cargo los estados
+        $estados = AcEstado::orderBy('es_desc', 'ASC')
+                        ->pluck('es_desc', 'es_id');
+        //cargo los metodos de pago
+        $metodos = MetodoPago::orderBy('metodo', 'ASC')
+                        ->pluck('metodo', 'id');
+        
+        //retorno la vista para el formulario
+        return view('funerario.editar', compact('solicitud','estados','metodos','dias'));
     }
 
     /**
@@ -412,41 +326,77 @@ class FunerarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Se vailida que posee al menos un destino ya que no puede estar vacio...
-        if ($request->destino) {
+        // valida los campos del formulario
+        $this->validate($request, [
+            'estado_id' => 'required',
+            'contacto'  => 'required',
+            'ciudad'    => 'required',
+            'metodo_id' => 'required'
+        ]);
+
+        //Verifico si tiene plazo o no
+        $plazo = ($request->plazo != '') ? $request->plazo : NULL;
         
-            $solicitud = funerario::findOrFail($id);
+        // Selecciono la solicitud 
+        $solicitud = funerario::findOrFail($id);
 
-            $solicitud->update([
-                'nro_cronograma' => $request->cronograma,
-                'observaciones' => $request->observaciones,
-                ]);
+        // Guardo el codigo de la solicitud en una variable
+        $codigo = $solicitud->codigo_solicitud;
+        
+        //actualizo la solicitud
+        $solicitud->update([
+            'estado_id'        => $request->estado_id,
+            'ciudad'           => $request->ciudad,
+            'contacto'         => $request->contacto,  
+            'metodo_id'        => $request->metodo_id,  
+            'plazo'            => $plazo
+        ]);
 
-            // Forzo el borrado para poder actualizar
-            $solicitud->destinos()->forceDelete();
+        // Valido y Guardo Cedula fallecido
+        if ($request->hasFile('cedula')) 
+        {
+            //borro archivo para subirlo otra vez
+            Storage::disk('funerario')->delete($codigo.'/'.$solicitud->doc_cedula);
+
+            // guardo en una variable la imagen
+            $file = $request->file('cedula');
+            // Cambio nombre de la imagen
+            $filename = 'dni'.'_'.$codigo.'.'.$file->getClientOriginalExtension();
+            //Directorio
+            $cedula = $codigo.'/'.$filename;
+
+            // Guardo la imagen en el directorio 
+            Storage::disk('funerario')->put($cedula, file_get_contents($file));
+
+            // Guardo el registro en la base de datos
+            $solicitud->doc_cedula = $filename;
             $solicitud->save();
-
-            // Total de destinos para realizar bucle
-            $total = count($request->desde);
-
-            // Aqui se guardan todos los destinos da la solicitud
-            for ($i = 0; $i < $total; $i++) {
-
-                $solicitud->destinos()->create([
-                    'pais_id' => $request['destino'][$i], 
-                    'fecha_desde'  => $request['desde'][$i], 
-                    'fecha_hasta'  => $request['hasta'][$i]
-                ]);
-            }
-
-            toast()->info(' Solicitud: '.$solicitud->codigo_solicitud.' modificada Correctamente', 'Alerta:');
-            return redirect()->route('funerario.lista');
-
-        } else {
-            toast()->error(' Solicitud debe poseer al menos un destino', 'Alerta:');
-            return back();
         }
-        
+ 
+        // valido y Guardo carta de defunción
+        if ($request->hasFile('acta')) 
+        {
+            //borro archivo para subirlo otra vez
+            Storage::disk('funerario')->delete($codigo.'/'.$solicitud->doc_acta);
+
+            // guardo en una variable la imagen
+            $file = $request->file('acta');
+            // Cambio nombre de la imagen
+            $filename = 'acta'.'_'.$codigo.'.'.$file->getClientOriginalExtension();
+            //Directorio
+            $acta = $codigo.'/'.$filename;
+
+            // Guardo la imagen en el directorio 
+            Storage::disk('funerario')->put($acta, file_get_contents($file));
+            // Guardo el registro en la base de datos
+            $solicitud->doc_acta = $filename;
+            $solicitud->save();
+        }
+
+        //genero mensaje de alerta
+        toast()->info(' Solicitud: '.$solicitud->codigo_solicitud.' modificada Correctamente', 'Alerta:');
+        // redireccionao a la lista de solicitudes
+        return redirect()->route('funerario.lista');
     }
 
     /**
@@ -461,12 +411,27 @@ class FunerarioController extends Controller
         if ($request->ajax())
         {
 
-            $edit = FunerarioDetalle::findOrFail($request->pk)
-                            ->update([
-                                $request->name => $request->value
-                            ]);
+            $detalle = FunerarioDetalle::findOrFail($request->pk);
+            
+            $detalle->update([$request->name => $request->value]);
 
-            if ($edit){
+            if ($request->name == 'monto')
+            {
+                $cobertura = 0;
+
+                $funerario = Funerario::findOrFail($detalle->funerario_id);
+
+                // Actualizo monto de cobertura de la solicitud
+                foreach ($funerario->presupuestos as $value) {
+                    $cobertura += $value->monto;
+                }
+
+                //actualizo cobertura
+                $funerario->cobertura = $cobertura;
+                $funerario->save();
+            }
+
+            if ($detalle){
                 return response()->json(['status'=> true ]);
             } else {
                 return response()->json(['status'=> false ]);
@@ -485,11 +450,32 @@ class FunerarioController extends Controller
         $solicitud = funerario::findOrFail($id);
 
         // Elimino la solicitud y sus relaciones
-        $solicitud->destinos()->delete();
+        $solicitud->presupuestos()->delete();
         $solicitud->delete();
 
         toast()->error(' Solicitud: '.$solicitud->codigo_solicitud.' Eliminada Correctamente', 'Alerta:');
         // Retorno a la lista de solicitudes
         return redirect()->route('funerario.lista');
+    }
+
+    public function delete($id)
+    {
+        //Selecciono el presupuesto   
+        $presupuesto = FunerarioDetalle::findOrFail($id);
+
+        // Actualizo el monto de la cobertura
+        $cobertura = $presupuesto->funerario->cobertura - $presupuesto->monto;
+
+        // Actualizo el monto de la cobertura
+        $presupuesto->funerario()->update([
+                'cobertura' => $cobertura
+            ]);
+        
+        //Elimino el presupuesto
+        $presupuesto->delete();
+
+        toast()->error(' Presupuesto Eliminado Correctamente', 'Alerta:');
+        // Retorno a la lista de solicitudes
+        return redirect()->route('funerario.show',$presupuesto->funerario->id);
     }
 }
