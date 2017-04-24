@@ -295,6 +295,17 @@ Route::group(['middleware' => ['auth']], function () {
     
     // PAGOS
     Route::get('pagos/consultar'            , 'PagosController@getFilter');
+    Route::get('pagos/propago'            , 'PagosController@getFilter2');
+    Route::get('pagos/actpropago'            , 'ActuaizarProgPagoCotroller@leerProgPago');
+    Route::get('pagos/apropago'            , 'AprobarProgPagoCotroller@leerProgPago');
+    Route::post('pagos/guardarProg'           , 'PagosController@guardarProg');
+    Route::get('pagos/getDetalleProgPago'       , 'ActuaizarProgPagoCotroller@getDetalleProgPago');
+    Route::get('pagos/elimDetalleProgPago'       , 'ActuaizarProgPagoCotroller@elimDetalleProgPago');
+    Route::get('pagos/getFacturas'       , 'ActuaizarProgPagoCotroller@getFacturas');
+    Route::post('pagos/guardarDetProg'       , 'ActuaizarProgPagoCotroller@incDetalleProgPago');
+    Route::post('pagos/aprobarProg'       , 'AprobarProgPagoCotroller@aprobarProg');
+    
+    
 
     
     // GESTIONAR CLAVE ODONTOLOGICA dontologica\GenerarController@getProveedores');
