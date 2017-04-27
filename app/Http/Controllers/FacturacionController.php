@@ -1,98 +1,34 @@
 <?php namespace App\Http\Controllers;
 
+//use Carbon\Carbon;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\AcFactura;
 use App\Models\AcClave;
+use App\Lib\functions;
 
 use Session;
 use Input;
 use Illuminate\Http\RedirectResponse;
-
-#use Zofe;
-use DB;
-
-class FacturacionController extends Controller
-{  
-    public function gestionar(Request $request)
-    {
-        $user = \Auth::user();
-        $proveedor = $user->proveedor;
-        if( (isset($request->clave_buscar) || isset($request->fecha)) ||
-            (!empty($request->fecha_desde) && !empty($request->fecha_hasta)) 
-        ){
-            if( (!empty($request->clave_buscar) || !empty($request->fecha)) ||
-                (!empty($request->fecha_desde) && !empty($request->fecha_hasta)) 
-              ){
-                $tipo = 'individual';
-                $query = DB::table('ac_proveedores_extranet')
-                    ->where([
-                        ['ac_proveedores_extranet.codigo_proveedor', '=', $proveedor],
-                        ['ac_claves.estatus_clave', '=', 3 ]                   
-                     ])
-                    ->join('ac_claves_detalle', 'ac_claves_detalle.codigo_proveedor', '=', 'ac_proveedores_extranet.codigo_proveedor')
-                    ->join('ac_claves', 'ac_claves.id', '=', 'ac_claves_detalle.id_clave')
-                    ->join('ac_afiliados', 'ac_afiliados.cedula', '=', 'ac_claves.cedula_afiliado')
-                    ->join('ac_procedimientos_medicos', 'ac_procedimientos_medicos.id', '=', 'ac_claves_detalle.id_procedimiento')
-                    ->join('ac_estatus', 'ac_estatus.id', '=', 'ac_claves.estatus_clave')
-                    ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.id', '=', 'ac_proveedores_extranet.codigo_especialidad')
-                    ->select('ac_claves.clave', 'ac_claves.id', 'ac_claves.fecha_cita',
-                             'ac_claves.cedula_afiliado', 'ac_afiliados.nombre','ac_afiliados.apellido', 
-                             'ac_procedimientos_medicos.tipo_examen', 'ac_estatus.nombre as estatus',
-                             'ac_especialidades_extranet.descripcion as especialidad');
-                if(!empty($request->clave_buscar)){
-                    $query->where('ac_claves.clave', '=', $request->clave_buscar);
-                }
-                if(!empty($request->fecha)){
-                    $query->where('ac_claves.fecha_cita', '=', $request->fecha);
-                }
-                if(!empty($request->fecha_desde) && !empty($request->fecha_hasta)){
-                    $tipo = 'global';
-                    $query->where('ac_claves.fecha_cita', '>=', $request->fecha_desde);
-                    $query->where('ac_claves.fecha_cita', '<=', $request->fecha_hasta);
-
-                    
-                }
-                $claves = $query->get();
-
-                $query1 = DB::table('ac_proveedores_extranet')
-                    ->where([['ac_proveedores_extranet.codigo_proveedor', '=', $proveedor]
-                            ,['ac_carta_aval.estatus', '=', 3 ]
-                            ])
-                    ->join('ac_carta_aval_detalle', 'ac_carta_aval_detalle.codigo_proveedor', '=', 'ac_proveedores_extranet.codigo_proveedor')
-                    ->join('ac_carta_aval', 'ac_carta_aval.id', '=', 'ac_carta_aval_detalle.id_carta')
-                    ->join('ac_afiliados', 'ac_afiliados.cedula', '=', 'ac_carta_aval.cedula_afiliado')
-                    ->join('ac_procedimientos_medicos', 'ac_procedimientos_medicos.id', '=', 'ac_carta_aval_detalle.id_procedimiento')
-                    ->join('ac_estatus', 'ac_estatus.id', '=', 'ac_carta_aval.estatus')
-                    ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.id', '=', 'ac_proveedores_extranet.codigo_especialidad')
-                    ->select('ac_carta_aval.clave', 'ac_carta_aval.id', 'ac_carta_aval.fecha_solicitud','ac_carta_aval.cedula_afiliado'
-                            , 'ac_afiliados.nombre', 'ac_afiliados.apellido', 'ac_procedimientos_medicos.tipo_examen', 'ac_estatus.nombre as estatus',
-                            'ac_especialidades_extranet.descripcion as especialidad');
-                if(!empty($request->clave_buscar)){
-                    $query->where('ac_carta_aval.clave', '=', $request->clave_buscar);
-                }
-                if(!empty($request->fecha)){
-                    $query->where('ac_carta_aval.fecha_solicitud', '=', $request->fecha);
-                }
-                if(!empty($request->fecha_desde) && !empty($request->fecha_hasta)){
-                    $query->where('ac_claves.fecha_cita', '>', $request->fecha_desde);
-                    $query->where('ac_claves.fecha_cita', '<', $request->fecha_hasta);
-                    $tipo = 'global';
-
-                }
-                return view('facturacion.gestionar', compact('claves', 'cartas', 'tipo'));
-            }
-        }
-        //return Response()->json($cartas);
-        return view('facturacion.gestionar');
-
-    }
-    
     public function store(Request $request)
     {
         $user = \Auth::user();
+        
         $proveedor = $user->proveedor;
         $request = array_add($request, 'codigo_proveedor_creador', $proveedor);
+        $request->fecha_factura = functions::uf_convertirdatetobd($request->fecha_factura);
+       // dd($request->fecha_factura);
+        $oFactura = new AcFactura();
+        $oFactura->numero_factura=$request->numero_factura;
+        $oFactura->numero_control=$request->numero_control;
+        $oFactura->fecha_factura=$request->fecha_factura;
+        $oFactura->monto=$request->monto;
+        $oFactura->observaciones=$request->observaciones;
+        $oFactura->codigo_estatus=$request->codigo_estatus;
+        $oFactura->codigo_proveedor_creador=$request->codigo_proveedor_creador;
+        $res =$oFactura->save();
+        //echo "1121";die();
+        return $oFactura;
         $factura = AcFactura::create($request->all());
         
         return $factura;
@@ -100,10 +36,21 @@ class FacturacionController extends Controller
     
  public function procesar(Request $request)
  {   
+    //dd($request->fileid);
      /* Validacion de Archivos, que sean menor o igual a 5, y de tipo jpg,pdf,png,doc */
+     if ($request->hasFile('file1')){
+        if (true){   
      if (count($request->fileid) > 0) {
         if (($this->validarArchivos($request->fileid, $request ))){   
             $request = array_add($request, 'codigo_estatus', 5) /* Pendiente por Aprobacion */; 
+            //$request = array_add($request, 'documento', $request->fileid[0]) /* Pendiente por Aprobacion */; 
+            //echo "this is";die();
+            $insertFactura = $this->store($request);
+
+             $imageName = $insertFactura->id .'.'.$request->file('file1')->getClientOriginalExtension();
+            //if ($this->subirArchivo($insertFactura->id, $request->codigo_proveedor_creador,$request->fileid[0])) {
+
+            if ($request->file('file1')->move(base_path().'/public/archivo/', $imageName)){               
             $request = array_add($request, 'documento', $request->fileid[0]) /* Pendiente por Aprobacion */; 
             $insertFactura = $this->store($request);         
             if ($this->subirArchivo($insertFactura->id, $request->codigo_proveedor_creador,$request->fileid[0])) {               
@@ -142,11 +89,11 @@ class FacturacionController extends Controller
                     Session::flash('status', 'Factura Nro '.$insertFactura->numero_factura.' cargada correctamente');
                     return view('facturacion.gestionar');
                 }else{
-                        Session::flash('respuesta', 'OcurriÃ³ un error en la creacion de la factura '.$request->fileid[0]);
+                        Session::flash('respuesta', 'Ocurrió un error en la creacion de la factura '.$request->fileid[0]);
                         return redirect()->to($this->getRedirectUrl())->withInput($request->input());     
                       }
             }else{
-                Session::flash('respuesta', 'OcurriÃ³ un error al subir el Archivo '.$request->fileid[0]);
+                Session::flash('respuesta', 'Ocurrió un error al subir el Archivo '.$request->fileid[0]);
                 return redirect()->to($this->getRedirectUrl())->withInput($request->input()); 
             }
         }else{
@@ -166,7 +113,7 @@ class FacturacionController extends Controller
   
     public function validarArchivos($archivos,$request ){ 
         if (count($archivos) > 1){
-            Session::flash('message', 'Cantidad MÃ¡xima de Archivo deben ser uno(1).');
+            Session::flash('message', 'Cantidad Máxima de Archivo deben ser uno(1).');
              return false;
         } else{
                 for($i = 0; $i < count($archivos); $i++):    
@@ -179,6 +126,38 @@ class FacturacionController extends Controller
                 return true;
               }   
     }  
+
+
+   /* public function grabarArchivo()
+    {
+
+             $files = Input::file('files');
+             $json = array(
+                'files' => array()
+                );
+
+        foreach( $files as $file )
+        {
+            $filename = $file->getClientOriginalName().".".$file->getClientOriginalExtension();
+            $json['files'][] = array(
+                'name' => $filename,
+                'size' => $file->getSize(),
+                'type' => $file->getMimeType(),
+                'url' => '/uploads/files/'.$filename,
+                'deleteType' => 'DELETE',
+                'deleteUrl' => self::$route.'/deleteFile/'.$filename,
+                );
+
+            $upload = $file->move( public_path().'/uploads/files', $filename );
+
+
+        }
+        return Response::json($json);
+    }*/
+
+
+
+
     public function generarPago(Request $request)
     {
     $xml = new DomDocument('1.0', 'UTF-8');

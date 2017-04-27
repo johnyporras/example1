@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Facturación y Cierres de Caso')
+@section('title','Facturaci�n y Cierres de Caso')
 @section('content')
 <hr/>
 
@@ -153,8 +153,51 @@
             <noscript><input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>
             <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
             <div class="row fileupload-buttonbar">
+
+
                 <div class="col-lg-7">
                     <!-- The fileinput-button span is used to style the file input field as button -->
+
+
+                    <div class="image-upload">
+                        <label for="file1">
+                            <img src="{{url('/')}}/images/uploadfile.png"/>
+                        </label>
+                        <input id="file1" type="file" name="file1" onchange="loadFile('te1','file1')"/>
+                        <p id="te1"></p>
+                    </div>
+
+                    <style>
+
+                    .image-upload > input
+                    {
+                        display: none;
+                    }
+                    .image-upload img
+                    {
+                        width:100px;
+                        height:100px;
+                        cursor: pointer;
+                    }
+                    .image-upload p
+                    {
+                        font-size: 13px;
+                        font-weight:bold;
+                    }
+                    </style>
+
+                    
+                    <script>
+                      var loadFile = function(id,id2) {
+//alert(id);
+                       // alert($("#file1").val());
+                        //var output = document.getElementById('output');
+                        $("#"+id).html($("#"+id2).val());
+                      };
+                    </script>
+
+
+
                     <span class="btn btn-success fileinput-button">
                         <i class="glyphicon glyphicon-plus"></i>
                         <span>Agregar Archivos...</span>
@@ -176,85 +219,26 @@
                     <!-- The global file processing state -->
                     <span class="fileupload-process"></span>
                 </div>
+
+
                 <!-- The global progress state -->
                 <div class="col-lg-5 fileupload-progress fade">
                     <!-- The global progress bar -->
-                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar progress-bar-success" style="width:0%;"></div>
-                    </div>
-                    <!-- The extended global progress state -->
-                    <div class="progress-extended">&nbsp;</div>
-                </div>
-            </div>
-            <!-- The table listing the files available for upload/download -->
-            <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
-<!--        </form>-->
-        <br>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Consideraciones</h3>
-            </div>
-            <div class="panel-body">
-                <ul>
-                    <li>El tamaño máximo del archivo para subir es <strong>999 KB</strong>.</li>
-                    <li>Sólo archivos (<strong> ZIP </strong>) están permitidos.</li>
-                    <li>Puede usar <strong>arrastrar &amp; soltar</strong> en esta página.</li>
-                </ul>
-            </div>
-        </div>
-        <a class="upload-field-ids"></a>
-    <!-- The blueimp Gallery widget -->
-    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
-        <div class="slides"></div>
-        <h3 class="title"></h3>
-        <a class="prev">‹</a>
-        <a class="next">›</a>
-        <a class="close">×</a>
-        <a class="play-pause"></a>
-        <ol class="indicator"></ol>
-    </div>      
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-4"><!--   -->
-                            {!! Form::submit('Generar facturación', ['class' => 'btn btn-primary form-control', 'id' => 'enviar_clave']) !!}
-                        </div>
-                    </div>
-                </div>
-        @endif          
-    </div>
-</div>
-{!! Form::close() !!}   
-@endsection
-
-@section('script')
-<!-- The File Upload user interface plugin -->
-<script src="{{url('/')}}/js/main.js"></script>
-<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->  
-    <!-- The Templates plugin is included to render the upload/download listings -->
-    <script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
-    <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
-    <script src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
-    <!-- The Canvas to Blob plugin is included for image resizing functionality -->
-    <script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>    
-    <!-- blueimp Gallery script -->
-    <!--<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>-->
     <script src="{{url('/')}}/js/blueimp-gallery.min.js"></script>
     <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
     <script src="{{url('/')}}/js/jquery.iframe-transport.js"></script>
+
+     <script src="{{url('/')}}/js/jquery.fileupload.js"></script>
     <!-- The basic File Upload plugin -->
     <script src="{{url('/')}}/js/jquery.fileupload.js"></script>
     <!-- The File Upload processing plugin -->
     <script src="{{url('/')}}/js/jquery.fileupload-process.js"></script>
     <!-- The File Upload image preview & resize plugin -->
-    <script src="{{url('/')}}/js/jquery.fileupload-image.js"></script>
-    <!-- The File Upload audio preview plugin -->
-    <script src="{{url('/')}}/js/jquery.fileupload-audio.js"></script>
-    <!-- The File Upload video preview plugin -->
-    <script src="{{url('/')}}/js/jquery.fileupload-video.js"></script>
-    <!-- The File Upload validation plugin -->
-    <script src="{{url('/')}}/js/jquery.fileupload-validate.js"></script>
     <!-- The File Upload user interface plugin -->
     <script src="{{url('/')}}/js/jquery.fileupload-ui.js"></script>    
     <!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
+   
+    <!-- The basic File Upload plugin -->
     <!--[if (gte IE 8)&(lt IE 10)]>
     <script src="{{url('/')}}/js/cors/jquery.xdr-transport.js"></script>
     <![endif]-->
@@ -359,5 +343,3 @@
         });
 </script>
 @endsection
-
-
