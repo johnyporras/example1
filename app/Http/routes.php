@@ -301,6 +301,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('pagos/getFacturas'       , 'ActuaizarProgPagoCotroller@getFacturas');
     Route::post('pagos/guardarDetProg'       , 'ActuaizarProgPagoCotroller@incDetalleProgPago');
     Route::post('pagos/aprobarProg'       , 'AprobarProgPagoCotroller@aprobarProg');
+    Route::post('pagos/aprobarProg'       , 'AprobarProgPagoCotroller@aprobarProg');
     
 
     
