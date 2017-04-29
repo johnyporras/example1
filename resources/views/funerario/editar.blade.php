@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('title','Modulo Funerario')
-@section('content')
 
 @push('styles')
     <link rel="stylesheet" href="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
@@ -19,7 +18,20 @@
     <script src="{{ url('plugins/bootstrap-fileinput/js/fileinput.min.js') }}"></script>
     <script src="{{ url('plugins/bootstrap-fileinput/js/fileinput_locale_es.js') }}"></script>
 @endpush
-<hr/>
+
+@section('breadcrumb')
+    <div class="content-header">
+        <div class="header-section">
+            <h1><i class="gi gi-brush"></i>Page Title<br><small>Subtitle</small></h1>
+        </div>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Category</li>
+        <li><a href="">Page</a></li>
+    </ul>
+@endsection
+
+@section('content')
 
 <div class="col-xs-12">
     <div class="row">

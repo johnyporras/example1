@@ -1,11 +1,13 @@
 @extends('layouts.app')
 @section('title','Asistencia al Viajero Internacional')
+
 @push('styles')
 <link rel="stylesheet" href="{{ url('plugins/datatables/css/dataTables.bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ url('plugins/datatables/css/fixedHeader.bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ url('plugins/datatables/css/responsive.bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ url('plugins/bootstrap-sweetalert/sweetalert.css')}}" >
 @endpush
+
 @push('scripts')
 <script src="{{ asset('plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables/js/dataTables.bootstrap.min.js') }}"></script>
@@ -14,8 +16,21 @@
 <script src="{{ asset('plugins/datatables/js/responsive.bootstrap.min.js') }}"></script>
 <script src="{{ url('plugins/bootstrap-sweetalert/sweetalert.min.js')}}"></script>
 @endpush
+
+@section('breadcrumb')
+    <div class="content-header">
+        <div class="header-section">
+            <h1><i class="gi gi-brush"></i>Page Title<br><small>Subtitle</small></h1>
+        </div>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Category</li>
+        <li><a href="">Page</a></li>
+    </ul>
+@endsection
+
 @section('content')
-<hr/>
+
 <div class="col-xs-12">
     <div class="row">
         <div class="col-xs-12">
@@ -28,6 +43,7 @@
         </div>
     </div> <!-- row -->
 </div>
+
 <div class="col-xs-12">
     <div class="row">
         <div class="col-xs-12">
@@ -61,9 +77,12 @@
                     </tr>
                 </tfoot>
             </table>
+
         </div>
     </div> <!-- row -->
+    <br>
 </div>
+
 @endsection
 @section('script')
 <!-- Incluye las alertas start -->

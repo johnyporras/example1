@@ -2,16 +2,28 @@
 @section('title','Asistencia al Viajero Internacional')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('plugins/stacktable/stacktable.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/stacktable/stacktable.css') }}">
 @endpush
 
 @push('scripts')
-<script src="{{ asset('plugins/stacktable/stacktable.js') }}"></script>
+    <script src="{{ asset('plugins/stacktable/stacktable.js') }}"></script>
 @endpush
+
+@section('breadcrumb')
+    <div class="content-header">
+        <div class="header-section">
+            <h1><i class="gi gi-brush"></i>Page Title<br><small>Subtitle</small></h1>
+        </div>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Category</li>
+        <li><a href="">Page</a></li>
+    </ul>
+@endsection
 
 @section('content')
 
-<hr/>
+    <div class="col-xs-12">
     {!! Form::open(['url' => 'avi', 'class' => 'form-horizontal', 'name' => 'buscar', 'lang' => 'es']) !!}
         
         <div class="form-group {{ $errors->has('cedula') ? 'has-error' : ''}}">
@@ -21,12 +33,14 @@
                 {!! $errors->first('cedula', '<p class="help-block">:message</p>') !!}
             </div>
             <div class="col-sm-2">
-                {!! Form::submit('Buscar', ['class' => 'btn btn-primary form-control']) !!}
+                {!! Form::submit('Buscar', ['class' => 'btn btn-primary btn-block']) !!}
             </div>
         </div>
 
-    {!! Form::close() !!}
-
+    {!! Form::close() !!}  
+    </div>
+    
+    <div class="col-xs-12">
     @if (Session::has('respuesta'))
         <div id="result" class="alert alert-warning">
             <p><i class="fa fa-exclamation-triangle"></i> <span> {{ Session::get('respuesta') }} </span>
@@ -36,11 +50,14 @@
             </p>
         </div>
     @endif
+    </div>
+
+    <div class="col-xs-12">
 
     @if (isset($contratos))
         @if (count($contratos) > 0)
             {!! Form::open(['url' => 'avi/seleccion', 'class' => 'form-horizontal', 'name' => 'beneficiario']) !!}
-            <div id="col-xs-12">
+            
                 <table class="card table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
@@ -73,13 +90,16 @@
                         {!! Form::hidden('max', $x) !!}
                     </tbody>
                 </table>
-                <div class="col-sm-2 pull-right">
-                    {!! Form::submit('Seleccionar', ['class' => 'btn btn-primary form-control', 'id' => 'seleccionar']) !!}
+                <div class="form-group">
+                   <div class="col-sm-2 pull-right">
+                    {!! Form::submit('Seleccionar', ['class' => 'btn btn-primary btn-block', 'id' => 'seleccionar']) !!}
+                    </div> 
                 </div>
-            </div>
+                
             {!! Form::close() !!}
         @endif
     @endif
+    </div>
 @endsection
 @section('script')
 <!-- Incluye las alertas start -->

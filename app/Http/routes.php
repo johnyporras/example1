@@ -9,9 +9,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::get('/', function () {
-    return view('home');
-});
 
 /*=====================================================*/
     /**
@@ -172,6 +169,8 @@ Route::auth();
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index');
+
+    Route::get('/', 'HomeController@index');
    // ++++++++++++++++++++ MENU +++++++++++++++++++++++++++++++++    
     //CONSULTAR CLAVE ODONTOLOGICA
     Route::get('clavesOdonto/consultar'       , 'ClaveOdontologica\ConsultarController@getFilter');

@@ -1,16 +1,27 @@
 @extends('layouts.app')
-@section('title','Asistencia al Viajero Internacionalmnb')
+@section('title','Asistencia al Viajero Internacional')
+
 @push('styles')
-<link rel="stylesheet" href="{{ asset('plugins/stacktable/stacktable.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/stacktable/stacktable.css') }}">
 @endpush
 
 @push('scripts')
-<script src="{{ asset('plugins/stacktable/stacktable.js') }}"></script>
+    <script src="{{ asset('plugins/stacktable/stacktable.js') }}"></script>
 @endpush
 
-@section('content') 
-<hr/>
+@section('breadcrumb')
+    <div class="content-header">
+        <div class="header-section">
+            <h1><i class="gi gi-brush"></i>Page Title<br><small>Subtitle</small></h1>
+        </div>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Category</li>
+        <li><a href="">Page</a></li>
+    </ul>
+@endsection
 
+@section('content') 
 <div class="col-xs-12">
 
     <div class="row">

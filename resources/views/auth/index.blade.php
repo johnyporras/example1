@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title','Usuarios')
+
 @section('content')
     <div class="pull-right">
     <a href="{{ url('/register') }}" class="btn btn-primary pull-right btn-sm">Agregar Nuevo Usuario</a>

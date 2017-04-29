@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('title','Asistencia al Viajero Internacional')
-@section('content')
 
 @push('styles')
     <link rel="stylesheet" href="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
@@ -16,8 +15,20 @@
     <script src="{{ url('plugins/parsley-js/parsley.min.js') }}"></script>
     <script src="{{ url('plugins/parsley-js/i18n/es.js') }}"></script>
 @endpush
-<hr/>
 
+@section('breadcrumb')
+    <div class="content-header">
+        <div class="header-section">
+            <h1><i class="gi gi-brush"></i>Page Title<br><small>Subtitle</small></h1>
+        </div>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Category</li>
+        <li><a href="">Page</a></li>
+    </ul>
+@endsection
+
+@section('content')
 <div class="col-xs-12">
     <div class="row">
         <div class="col-xs-12">

@@ -26,8 +26,19 @@
 <script src="{{ url('plugins/bootstrap-fileinput/js/fileinput_locale_es.js') }}"></script>
 @endpush
 
+@section('breadcrumb')
+    <div class="content-header">
+        <div class="header-section">
+            <h1><i class="gi gi-brush"></i>Page Title<br><small>Subtitle</small></h1>
+        </div>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Category</li>
+        <li><a href="">Page</a></li>
+    </ul>
+@endsection
+
 @section('content')
-<hr/>
 <div class="col-xs-12">
     <div class="row">
         <div class="col-xs-12">
