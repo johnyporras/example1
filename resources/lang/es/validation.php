@@ -132,5 +132,6 @@ return [
         'time'                  => 'hora',
         'subject'               => 'asunto',
         'message'               => 'mensaje',
+        'user'                  => 'usuario'
     ],
 ];

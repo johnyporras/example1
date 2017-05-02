@@ -10,6 +10,10 @@ use App\Lib\functions;
 use Session;
 use Input;
 use Illuminate\Http\RedirectResponse;
+
+class FacturacionController extends Controller
+{
+
     public function store(Request $request)
     {
         $user = \Auth::user();
@@ -34,16 +38,17 @@ use Illuminate\Http\RedirectResponse;
         return $factura;
     }
     
- public function procesar(Request $request)
- {   
+    public function procesar(Request $request)
+    {   
+   /*
     //dd($request->fileid);
-     /* Validacion de Archivos, que sean menor o igual a 5, y de tipo jpg,pdf,png,doc */
+     // Validacion de Archivos, que sean menor o igual a 5, y de tipo jpg,pdf,png,doc 
      if ($request->hasFile('file1')){
         if (true){   
      if (count($request->fileid) > 0) {
         if (($this->validarArchivos($request->fileid, $request ))){   
-            $request = array_add($request, 'codigo_estatus', 5) /* Pendiente por Aprobacion */; 
-            //$request = array_add($request, 'documento', $request->fileid[0]) /* Pendiente por Aprobacion */; 
+            $request = array_add($request, 'codigo_estatus', 5) /* Pendiente por Aprobacion ; 
+            //$request = array_add($request, 'documento', $request->fileid[0]) /* Pendiente por Aprobacion ; 
             //echo "this is";die();
             $insertFactura = $this->store($request);
 
@@ -51,7 +56,7 @@ use Illuminate\Http\RedirectResponse;
             //if ($this->subirArchivo($insertFactura->id, $request->codigo_proveedor_creador,$request->fileid[0])) {
 
             if ($request->file('file1')->move(base_path().'/public/archivo/', $imageName)){               
-            $request = array_add($request, 'documento', $request->fileid[0]) /* Pendiente por Aprobacion */; 
+            $request = array_add($request, 'documento', $request->fileid[0]) // Pendiente por Aprobacion; 
             $insertFactura = $this->store($request);         
             if ($this->subirArchivo($insertFactura->id, $request->codigo_proveedor_creador,$request->fileid[0])) {               
                 if($insertFactura){
@@ -60,7 +65,7 @@ use Illuminate\Http\RedirectResponse;
                             foreach(Input::get('id_clave') as $id){
                                 $acClave = AcClave::findOrFail($id);
                                 $acClave->id_factura        = $insertFactura->id;       
-                                $acClave->estatus_clave     = 6; /* Conciliada*/
+                                $acClave->estatus_clave     = 6; // Conciliada
                                 $acClave->save(); 
                             }
                         }
@@ -68,7 +73,7 @@ use Illuminate\Http\RedirectResponse;
                             foreach($claves as $id){
                                 $acAval = AcAval::findOrFail($id);
                                 $acAval->id_factura  = $insertFactura->id;      
-                                $acAval->estatus     = 6; /* conciliada */; 
+                                $acAval->estatus     = 6; // conciliada ; 
                                 $acAval->save(); 
                             }
                         }
@@ -76,13 +81,13 @@ use Illuminate\Http\RedirectResponse;
                         if(!empty(Input::get('id_clave'))){
                             $acClave = AcClave::findOrFail(Input::get('id_clave'));
                             $acClave->id_factura        = $insertFactura->id;                          
-                            $acClave->estatus_clave     = 6; /* Conciliada*/
+                            $acClave->estatus_clave     = 6; // Conciliada
                             $acClave->save(); 
                         }
                         if(!empty(Input::get('id_aval'))){
                             $acAval = AcAval::findOrFail(Input::get('id_clave'));
                             $acAval->id_factura        = $insertFactura->id;                          
-                            $acAval->estatus     = 6; /* conciliada */; 
+                            $acAval->estatus     = 6; // conciliada ; 
                             $acAval->save(); 
                         }
                     }
@@ -100,16 +105,17 @@ use Illuminate\Http\RedirectResponse;
            return redirect()->to($this->getRedirectUrl())->withInput($request->input());
         }        
      }
-  }        
+     */
+    }        
   
-   public  function subirArchivo($idFactura, $idProveedor,$nombre_archivo){ 
-    $path_definitivo = $idProveedor.'/'.$idFactura.'/';
-    \Storage::disk('local')->put($nombre_archivo,\File::get('/opt/lampp/htdocs/server/php/files/'.$nombre_archivo));
-    \Storage::makeDirectory($path_definitivo);
-    \Storage::move($nombre_archivo, $path_definitivo.$nombre_archivo);
-    \Storage::delete($nombre_archivo);
-    return true;        
-  } 
+    public function subirArchivo($idFactura, $idProveedor,$nombre_archivo){ 
+        $path_definitivo = $idProveedor.'/'.$idFactura.'/';
+        \Storage::disk('local')->put($nombre_archivo,\File::get('/opt/lampp/htdocs/server/php/files/'.$nombre_archivo));
+        \Storage::makeDirectory($path_definitivo);
+        \Storage::move($nombre_archivo, $path_definitivo.$nombre_archivo);
+        \Storage::delete($nombre_archivo);
+        return true;        
+    } 
   
     public function validarArchivos($archivos,$request ){ 
         if (count($archivos) > 1){
@@ -154,8 +160,6 @@ use Illuminate\Http\RedirectResponse;
         }
         return Response::json($json);
     }*/
-
-
 
 
     public function generarPago(Request $request)

@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use Auth;
 use Session;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -32,6 +33,9 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/';
 
+    // Cambiar Email por nobre de usuario login 
+     protected $username = 'user';
+
     /**
      * Create a new authentication controller instance.
      *
@@ -39,7 +43,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        
     }
     
     /**
@@ -104,38 +108,38 @@ class AuthController extends Controller
 
         return redirect('usuarios');
     }
-    
+
+
     /**
      * Handle an authentication attempt.
      *
      * @return Response
      */
-    public function handleLogin(Request $request){
-        /*$this->validate($request, User::$login_validation_rules);
-        $data = $request->only('user', 'password');
-        if(\Auth::attempt($data)){
-            return redirect()->intended('home');
-        }
-        return back()->withInput()->withErrors(['user' => ' xUsername or password is invalid']);*/
-        if (\Auth::attempt(
-            [
-                'user' => $request->user,
-                'password' => $request->password
-            ]
-            , $request->has('remember')
-            )){
+    public function handleLogin(Request $request)
+    {
+        
+        if(Auth::attempt(['user' => $request->user,'password' => $request->password]))
+        {
             return redirect()->intended($this->redirectPath());
+        
         }else{
+
             $rules = [
                 'user' => 'required',
                 'password' => 'required',
             ];
+
             $messages = [
                 'user.required' => 'El campo usuario es requerido',
                 'password.required' => 'El campo password es requerido',
             ];
+
             $validator = Validator::make($request->all(), $rules, $messages);
-            return back()->withErrors($validator)->withInput()->with('message', 'Error al iniciar sesión. Usuario o clave inválido.');
+
+            Session::flash('message', 'Error al iniciar sesión. Usuario o clave inválido.!');
+
+            return  back()->withErrors($validator)->withInput();
+
         }
     }
     

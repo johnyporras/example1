@@ -41,7 +41,7 @@
         <!-- END Stylesheets -->
 
         <!-- Modernizr (browser feature detection library) -->
-        <script src="{{ asset('js/vendor/modernizr.min.js') }}"></script>
+        <script src="{{ asset('plugins/modernizr/modernizr.min.js') }}"></script>
     </head>
     <?php 
 if(is_object(Auth::user()))
@@ -165,7 +165,7 @@ if(is_object(Auth::user()))
         <a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
 
         <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
-        <script src="{{ asset('js/vendor/jquery.min.js') }}"></script>
+        <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/plugins.js') }}"></script>
         <script src="{{ asset('js/app.js') }}"></script>

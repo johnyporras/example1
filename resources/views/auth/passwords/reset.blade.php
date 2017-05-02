@@ -1,66 +1,69 @@
-@extends('layouts.app')
+@extends('layouts.auth')
+
+@section('title','Reiniciar Clave')
 
 @section('content')
-<div class="col-md-8 col-md-offset-2">
-    <div class="panel panel-default">
-        <div class="panel-heading">Reiniciar Clave</div>
 
-        <div class="panel-body">
-            <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset') }}">
-                {!! csrf_field() !!}
+<div class="block push-bit">
 
-                <input type="hidden" name="token" value="{{ $token }}">
+    {!! Form::open(['url' => '/password/reset', 'class' => 'form-horizontal form-bordered form-control-borderless' ]) !!}
 
-                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                    <label class="col-md-4 control-label">E-Mail</label>
+        <input type="hidden" name="token" value="{{ $token }}">
 
-                    <div class="col-md-6">
-                        <input type="email" class="form-control" name="email" value="{{ $email or old('email') }}">
-
-                        @if ($errors->has('email'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('email') }}</strong>
-                            </span>
-                        @endif
-                    </div>
+        <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+            <div class="col-xs-12">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                    <input type="email" class="form-control input-lg" name="user" value="{{ old('email') }}" placeholder="Email" >
                 </div>
-
-                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                    <label class="col-md-4 control-label">Clave</label>
-
-                    <div class="col-md-6">
-                        <input type="password" class="form-control" name="password">
-
-                        @if ($errors->has('password'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('password') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-                </div>
-
-                <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                    <label class="col-md-4 control-label">Confirmar Clave</label>
-                    <div class="col-md-6">
-                        <input type="password" class="form-control" name="password_confirmation">
-
-                        @if ($errors->has('password_confirmation'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('password_confirmation') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-6 col-md-offset-4">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-btn fa-refresh"></i>Reiniciar Clave
-                        </button>
-                    </div>
-                </div>
-            </form>
+                @if ($errors->has('email'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                @endif
+            </div>
         </div>
-    </div>
+
+        <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
+            <div class="col-xs-12">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                    <input type="password" class="form-control input-lg" name="password" placeholder="Clave" >
+                </div>
+                @if ($errors->has('password'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('password') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+
+        <div class="form-group {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+            <div class="col-xs-12">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                    <input type="password" class="form-control input-lg" name="password_confirmation" placeholder="Confirmar Clave" >
+                </div>
+                @if ($errors->has('password_confirmation'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+
+        <div class="form-group form-actions">
+            <div class="col-xs-12 text-center">
+                <button type="submit" class="btn btn-primary btn-md"><i class="fa fa-refresh fa-fw"></i> Reiniciar Clave</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-12 text-center">
+                <a href="{{ url('/login') }}"><small>Iniciar Sesión</small></a>
+            </div>
+        </div>
+
+    {!! Form::close() !!}           
 </div>
 @endsection

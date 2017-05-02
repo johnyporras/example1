@@ -442,7 +442,7 @@ header.navbar-inverse.navbar-fixed-bottom {
     font-size: 18px;
     display: block;
     color: #ffffff;
-    /*background: rgba(0, 0, 0, 0.15);*/
+    background: rgba(0, 0, 0, 0.15);
 }
 
 a.sidebar-brand:hover,

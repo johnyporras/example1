@@ -549,10 +549,11 @@ var App = function() {
         });
     };
 
-    // Template Options, change features functionality 
+    /* Template Options, change features functionality */
     var templateOptions = function() {
-        // Color Themes
-         
+        /*
+         * Color Themes
+         */
         var colorList   = $('.sidebar-themes');
         var themeLink   = $('#theme-link');
 
@@ -623,9 +624,7 @@ var App = function() {
         // Prevent template options dropdown from closing on clicking options
         $('.dropdown-options a').click(function(e){ e.stopPropagation(); });
 
-        
-
-        // Page Style 
+        /* Page Style */
         var optMainStyle        = $('#options-main-style');
         var optMainStyleAlt     = $('#options-main-style-alt');
 
@@ -669,7 +668,6 @@ var App = function() {
             optHeaderDefault.removeClass('active');
         });
     };
-
 
     /* Datatables basic Bootstrap integration (pagination integration included under the Datatables plugin in plugins.js) */
     var dtIntegration = function() {
