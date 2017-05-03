@@ -44,7 +44,7 @@ class PacienteAtendidoController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * 
+     *
     * @return Response
      */
     public function store(Request $request)
@@ -119,7 +119,7 @@ class PacienteAtendidoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  
+     * @param
      *
      * @return Response
      */
@@ -140,24 +140,24 @@ class PacienteAtendidoController extends Controller
                $servicio['cedula_afiliado'] = $request->cedula;
            }else{
                   Session::flash('message', 'Debe introducir un numero de cedula del afiliado!');
-                  return  view('servicios.buscarServiciosPaciente');                      
+                  return  view('servicios.buscarServiciosPaciente');
            }
            $user = \Auth::user();
-           // Analista Proveedor 
+           // Analista Proveedor
            if ($user->type == 3){
                 $query = DB::table('ac_claves')
                         ->where([['users.id','=',$user->id],
                                  ['ac_claves.cedula_afiliado','=',$servicio['cedula_afiliado']],
                                  ['ac_claves_detalle.estatus','=',1]])
-                        ->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')                
-                        ->join('ac_afiliados'              , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')         
+                        ->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')
+                        ->join('ac_afiliados'              , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
                         ->join('ac_tipo_afiliado'          , 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
-                        ->join('ac_contratos'              , 'ac_afiliados.cedula',"=", 'ac_contratos.cedula_afiliado') 
-                        ->join('ac_colectivos'             , 'ac_colectivos.codigo_colectivo',"=",'ac_contratos.codigo_colectivo')                  
+                        ->join('ac_contratos'              , 'ac_afiliados.cedula',"=", 'ac_contratos.cedula_afiliado')
+                        ->join('ac_colectivos'             , 'ac_colectivos.codigo_colectivo',"=",'ac_contratos.codigo_colectivo')
                         ->join('ac_aseguradora'            , 'ac_colectivos.codigo_aseguradora',"=",'ac_aseguradora.codigo_aseguradora')
-                        ->join('ac_proveedores_extranet'   , 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')  
-                        ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_claves_detalle.codigo_especialidad')                            
-                        ->join('ac_servicios_extranet'      ,'ac_servicios_extranet.codigo_servicio',"=", 'ac_claves_detalle.codigo_servicio')                    
+                        ->join('ac_proveedores_extranet'   , 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')
+                        ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_claves_detalle.codigo_especialidad')
+                        ->join('ac_servicios_extranet'      ,'ac_servicios_extranet.codigo_servicio',"=", 'ac_claves_detalle.codigo_servicio')
                         ->join('users'                     , 'users.proveedor' ,'=','ac_proveedores_extranet.codigo_proveedor')
                         ->join('user_types'                , 'users.type','=','user_types.id')
                         ->select('ac_claves_detalle.id as id',
@@ -171,23 +171,23 @@ class PacienteAtendidoController extends Controller
                                  'ac_especialidades_extranet.descripcion as especialidad',
                                  'ac_servicios_extranet.descripcion as servicio'
                                 );
-           }elseif ($user->type == 4) // Analista Aseguradora  
+           }elseif ($user->type == 4) // Analista Aseguradora
              {
                 $query = DB::table('ac_claves')
                         ->where([['users.id','=',$user->id],
                                  ['ac_claves.cedula_afiliado','=',$servicio['cedula_afiliado']],
                                  ['ac_claves_detalle.estatus','=',1]])
-                        ->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')                
-                        ->join('ac_afiliados'              , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')         
+                        ->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')
+                        ->join('ac_afiliados'              , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
                         ->join('ac_tipo_afiliado'          , 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
-                        ->join('ac_contratos'              , 'ac_afiliados.cedula',"=", 'ac_contratos.cedula_afiliado') 
-                        ->join('ac_colectivos'             , 'ac_colectivos.codigo_colectivo',"=",'ac_contratos.codigo_colectivo')                  
+                        ->join('ac_contratos'              , 'ac_afiliados.cedula',"=", 'ac_contratos.cedula_afiliado')
+                        ->join('ac_colectivos'             , 'ac_colectivos.codigo_colectivo',"=",'ac_contratos.codigo_colectivo')
                         ->join('ac_aseguradora'            , 'ac_colectivos.codigo_aseguradora',"=",'ac_aseguradora.codigo_aseguradora')
-                        ->join('ac_proveedores_extranet'   , 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')  
-                        ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_claves_detalle.codigo_especialidad')                            
-                        ->join('ac_servicios_extranet'      ,'ac_servicios_extranet.codigo_servicio',"=", 'ac_claves_detalle.codigo_servicio')                    
+                        ->join('ac_proveedores_extranet'   , 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')
+                        ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_claves_detalle.codigo_especialidad')
+                        ->join('ac_servicios_extranet'      ,'ac_servicios_extranet.codigo_servicio',"=", 'ac_claves_detalle.codigo_servicio')
                         ->join('users'                     , 'users.proveedor' ,'=','ac_aseguradora.codigo_aseguradora')
-                        ->join('user_types'                , 'users.type','=','user_types.id')                
+                        ->join('user_types'                , 'users.type','=','user_types.id')
                         ->select('ac_claves_detalle.id as id',
                                  'ac_claves.fecha_cita as fecha_cita',
                                  'ac_claves.cedula_afiliado',
@@ -198,20 +198,20 @@ class PacienteAtendidoController extends Controller
                                  'ac_tipo_afiliado.nombre as tipo_afiliado',
                                  'ac_especialidades_extranet.descripcion as especialidad',
                                  'ac_servicios_extranet.descripcion as servicio'
-                                );               
-           }else{        
+                                );
+           }else{
                 $query = DB::table('ac_claves')
                         ->where([['ac_claves.cedula_afiliado','=',$servicio['cedula_afiliado']],
-                                 ['ac_claves_detalle.estatus','=',1],])                        
-                        ->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')                
-                        ->join('ac_afiliados'              , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')         
+                                 ['ac_claves_detalle.estatus','=',1],])
+                        ->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')
+                        ->join('ac_afiliados'              , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
                         ->join('ac_tipo_afiliado'          , 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
-                        ->join('ac_contratos'              , 'ac_afiliados.cedula',"=", 'ac_contratos.cedula_afiliado') 
-                        ->join('ac_colectivos'             , 'ac_colectivos.codigo_colectivo',"=",'ac_contratos.codigo_colectivo')                  
+                        ->join('ac_contratos'              , 'ac_afiliados.cedula',"=", 'ac_contratos.cedula_afiliado')
+                        ->join('ac_colectivos'             , 'ac_colectivos.codigo_colectivo',"=",'ac_contratos.codigo_colectivo')
                         ->join('ac_aseguradora'            , 'ac_colectivos.codigo_aseguradora',"=",'ac_aseguradora.codigo_aseguradora')
-                        ->join('ac_proveedores_extranet'   , 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')  
-                        ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_claves_detalle.codigo_especialidad')                            
-                        ->join('ac_servicios_extranet'      ,'ac_servicios_extranet.codigo_servicio',"=", 'ac_claves_detalle.codigo_servicio')                    
+                        ->join('ac_proveedores_extranet'   , 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')
+                        ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_claves_detalle.codigo_especialidad')
+                        ->join('ac_servicios_extranet'      ,'ac_servicios_extranet.codigo_servicio',"=", 'ac_claves_detalle.codigo_servicio')
                         ->select('ac_claves_detalle.id as id',
                                  'ac_claves.fecha_cita as fecha_cita',
                                  'ac_claves.cedula_afiliado',
@@ -222,48 +222,48 @@ class PacienteAtendidoController extends Controller
                                  'ac_tipo_afiliado.nombre as tipo_afiliado',
                                  'ac_especialidades_extranet.descripcion as especialidad',
                                  'ac_servicios_extranet.descripcion as servicio'
-                                );               
+                                );
                 }
 
                $grid = \DataGrid::source($query);
                $grid->attributes(array("class"=>"table table-grid"));
                $grid->add('id','ID', false);
                $grid->add('fecha_cita||strtotime|date[d/m/Y]','Fecha Cita', false);
-               $grid->add('clave','Clave', false);   
-               $grid->add('servicio','Servicio', false);              
+               $grid->add('clave','Clave', false);
+               $grid->add('servicio','Servicio', false);
                $grid->add('cedula_afiliado','Cédula', false);
                $grid->add('nombre_afiliado','Paciente', false);
                $grid->add('proveedor','Proveedor', false);
                $grid->add('aseguradora','Aseguradora', false);
                $grid->add('especialidad','Especialidad', false);
-               $grid->addActions('/altocentro/public/servicios/registrarAtencion', 'Ver','show','id');
+               $grid->addActions('/public/servicios/registrarAtencion', 'Ver','show','id');
                $grid->paginate(10);
 
                 return  view('servicios.buscarServiciosPaciente' , compact('grid'));
-    }    
-    
+    }
 
-    
+
+
       public function show(Request $request)
-    {       
-      $id['clave'] = $request->input('show'); 
+    {
+      $id['clave'] = $request->input('show');
       if (isset($id['clave'])){
             $clave  = DB::table('ac_claves_detalle')
                     ->where([['ac_claves_detalle.id', '=', $id['clave']]])
-                     ->join('ac_claves'        , 'ac_claves.id',"=", 'ac_claves_detalle.id_clave')                    
+                     ->join('ac_claves'        , 'ac_claves.id',"=", 'ac_claves_detalle.id_clave')
                      ->join('ac_afiliados'     , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
                      ->join('ac_tipo_afiliado' , 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
                      ->join('ac_contratos'     , 'ac_contratos.cedula_afiliado',"=",'ac_claves.cedula_afiliado')
-                     ->join('ac_colectivos'    , 'ac_colectivos.codigo_colectivo',"=", 'ac_contratos.codigo_colectivo') 
+                     ->join('ac_colectivos'    , 'ac_colectivos.codigo_colectivo',"=", 'ac_contratos.codigo_colectivo')
                      ->join('ac_aseguradora'   , 'ac_aseguradora.codigo_aseguradora',"=", 'ac_colectivos.codigo_aseguradora')
                      ->join('ac_estatus'       , 'ac_estatus.id',"=", 'ac_claves.estatus_clave')
-                    ->select('ac_claves.cedula_afiliado as cedula_afiliado', 
+                    ->select('ac_claves.cedula_afiliado as cedula_afiliado',
                              'ac_claves_detalle.id as id_clave_detalle',
                              'ac_tipo_afiliado.nombre as tipo_afiliado',
                              'ac_afiliados.nombre as nombre' ,
-                             'ac_afiliados.apellido as apellido', 
+                             'ac_afiliados.apellido as apellido',
                              'ac_afiliados.fecha_nacimiento as fecha_nacimiento',
-                             'ac_afiliados.email as email', 
+                             'ac_afiliados.email as email',
                              'ac_afiliados.sexo as sexo',
                              'ac_claves.telefono as telefono',
                              'ac_afiliados.cedula_titular as cedula_titular',
@@ -278,33 +278,33 @@ class PacienteAtendidoController extends Controller
                              'ac_estatus.nombre as estatus'
                             )
                     ->get(); // +++++++ array(StdClass)
-  
+
             $clave_detalle  = DB::table('ac_claves')
                     ->where([['ac_claves.id', '=', $id['clave']]])
                      ->join('ac_claves_detalle', 'ac_claves_detalle.id_clave',"=", 'ac_claves.id')
-                     ->join('ac_servicios_extranet', 'ac_servicios_extranet.codigo_servicio',"=", 'ac_claves_detalle.codigo_servicio')               
-                     ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_claves_detalle.codigo_especialidad')               
-                     ->join('ac_procedimientos_medicos', 'ac_procedimientos_medicos.id',"=", 'ac_claves_detalle.id_procedimiento')               
-                     ->join('ac_proveedores_extranet', 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')                              
+                     ->join('ac_servicios_extranet', 'ac_servicios_extranet.codigo_servicio',"=", 'ac_claves_detalle.codigo_servicio')
+                     ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_claves_detalle.codigo_especialidad')
+                     ->join('ac_procedimientos_medicos', 'ac_procedimientos_medicos.id',"=", 'ac_claves_detalle.id_procedimiento')
+                     ->join('ac_proveedores_extranet', 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')
                     ->select('ac_servicios_extranet.descripcion as servicio',
-                             'ac_especialidades_extranet.descripcion as especialidad', 
+                             'ac_especialidades_extranet.descripcion as especialidad',
                              'ac_procedimientos_medicos.tipo_examen as procedimiento',
                              'ac_proveedores_extranet.nombre as proveedor',
                              'ac_claves_detalle.costo as costo',
                              'ac_claves_detalle.detalle as detalle'
                             )
                     ->get(); // +++++++ array(StdClass)
-            
-            $tipo_documentos = \App\Models\AcTipoDocumento::pluck('descripcion', 'id')->toArray();   
-            
+
+            $tipo_documentos = \App\Models\AcTipoDocumento::pluck('descripcion', 'id')->toArray();
+
              return view('servicios.registrarPacientesAtencion', compact('clave','clave_detalle','tipo_documentos'));
          }
     }
-    
+
  /**
   * Procesar Atencion al Paciente
-  * 
-  * @return Response 
+  *
+  * @return Response
   */
  public function procesarRegistrar(Request $request)
  {
@@ -312,10 +312,10 @@ class PacienteAtendidoController extends Controller
      $tipo_autorizacion = 1;
      $request = array_add($request, 'tipo_autorizacion', $tipo_autorizacion);
      /* Validacion de Archivos, que sean menor o igual a 5, y de tipo jpg,pdf,png,doc */
-     if (($this->validarArchivos($request->fileid, $request ))){        
+     if (($this->validarArchivos($request->fileid, $request ))){
         $pacientesAtendidos = $this->store($request);
-        if ($pacientesAtendidos){ 
-          for($i = 0; $i < count($request->fileid); $i++):    
+        if ($pacientesAtendidos){
+          for($i = 0; $i < count($request->fileid); $i++):
               /* Se cargan los archivo al directorio del afiliado */
               if ($this->subirArchivo($request->clave, $request->cedula_afiliado,$request->fileid[$i])) {
                 $documento = new AcDocumento;
@@ -326,14 +326,14 @@ class PacienteAtendidoController extends Controller
               }else{
                  Session::flash('respuesta', 'Ocurrió un error al subir el Archivo '.$request->fileid[$i]);
                  return redirect()->to($this->getRedirectUrl())
-                        ->withInput($request->input()); 
+                        ->withInput($request->input());
               }
-          endfor;    
+          endfor;
           $acClaveDetalle = AcClavesDetalle::findOrFail($request->id_clave_detalle);
-          $acClaveDetalle->estatus = 2; /* Estatus Atendido*/ 
-          $acClaveDetalle->save(); 
+          $acClaveDetalle->estatus = 2; /* Estatus Atendido*/
+          $acClaveDetalle->save();
           Session::flash('status', 'Se ha Registrado la atencón al paciente!');
-          return  view('servicios.buscarServiciosPaciente'); 
+          return  view('servicios.buscarServiciosPaciente');
         }else{
                Session::flash('respuesta', 'Ocurrió un error al Registar la atención al  paciente');
                 return redirect()->to($this->getRedirectUrl())
@@ -343,24 +343,24 @@ class PacienteAtendidoController extends Controller
          return redirect()->to($this->getRedirectUrl())
                         ->withInput($request->input());
      }
-  }        
-  
-   public  function subirArchivo($clave, $cedula_afiliado,$nombre_archivo){ 
+  }
+
+   public  function subirArchivo($clave, $cedula_afiliado,$nombre_archivo){
     $path_definitivo = $cedula_afiliado.'/'.$clave.'/';
     \Storage::disk('local')->put($nombre_archivo,\File::get('/opt/lampp/htdocs/server/php/files/'.$nombre_archivo));
     \Storage::makeDirectory($path_definitivo);
     \Storage::move($nombre_archivo, $path_definitivo.$nombre_archivo);
     \Storage::delete($nombre_archivo);
-    return true;        
-  } 
-  
-    public function validarArchivos($archivos,$request ){ 
+    return true;
+  }
+
+    public function validarArchivos($archivos,$request ){
         if (count($archivos) > 5){
             Session::flash('message', 'Cantidad Máxima de Archivo deben se cinco(5).');
              return false;
         } else{
-                for($i = 0; $i < count($archivos); $i++):    
-                   $FileType = pathinfo('/opt/lampp/htdocs/server/php/files/'.$archivos[$i],PATHINFO_EXTENSION);    
+                for($i = 0; $i < count($archivos); $i++):
+                   $FileType = pathinfo('/opt/lampp/htdocs/server/php/files/'.$archivos[$i],PATHINFO_EXTENSION);
                    if($FileType != "doc" && $FileType != "docx" && $FileType != "jpg" && $FileType != "pdf" && $FileType != "png" &&
                       $FileType != "DOC" && $FileType != "DOCX" && $FileType != "JPG" && $FileType != "PDF" && $FileType != "PNG" &&
                       $FileType != "zip" && $FileType != "ZIP"     ) {
@@ -369,7 +369,7 @@ class PacienteAtendidoController extends Controller
                    }
                 endfor;
                 return true;
-              }   
+              }
     }
-          
+
 }
