@@ -77,7 +77,6 @@ blockquote:before {
     color: #e2f0f6;
 }
 
-#page-content,
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th,
 ul.wysihtml5-toolbar a.btn.wysihtml5-command-active,

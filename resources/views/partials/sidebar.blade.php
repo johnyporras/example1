@@ -33,10 +33,10 @@
             <div class="sidebar-section sidebar-user clearfix sidebar-nav-mini-hide">
                 <div class="sidebar-user-avatar">
                     <a href="index.html">
-                        <img src="{{ url('img/placeholders/avatars/avatar.jpg') }}" alt="avatar">
+                        <img src="{{ url('images/avatar.jpg') }}" alt="avatar">
                     </a>
                 </div>
-                <div class="sidebar-user-name">John Doe</div>
+                <div class="sidebar-user-name">{{ Auth::user()->name }}</div>
                 <div class="sidebar-user-links">
                     <!--   
                     <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>
@@ -47,19 +47,87 @@
             </div>
             <!-- END User Info -->
 
-            @if (Auth::check())
-               <p>menu mostrar</p>
-            @endif
+            <?php
+                $cont = 0;
+                $id_module = 0;
+                $user = Auth::user();
+                $opciones_perfil = DB::table('types_profile')
+                    ->where('id_type', '=', $user->type)
+                    ->join('submodules', 'types_profile.id_module', '=', 'submodules.id')
+                    ->join('modules', 'modules.id', '=', 'submodules.modules_id')
+                    ->select('modules.description as mdescription','icon','modules.id','submodules.description as sdescription','submodules.url as surl')
+                    ->orderBy('modules.order','asc')
+                    ->orderBy('submodules.order','asc')
+                    ->get(); 
+                    //dd($opciones_perfil); 
+            ?>
 
             <!-- Sidebar Navigation -->
-            <ul class="sidebar-nav">
+            <ul class="sidebar-nav" id="side-menu">
                 <li>
-                    <a href="#" class="btn-icon active">
+                    <a href="{{ url('/') }}" class="btn-icon {{ Request::is('/') ? 'active' : ''  }}">
                         <span class="sp-icon fa-stack fa-lg">
                             <i class="fa fa-circle fa-stack-2x"></i>
-                            <span class="text-primary"><i class="fa fa-lock fa-stack-1x"></i></span>
+                            <span class="text-primary"><i class="glyphicon glyphicon-home fa-stack-1x"></i></span>
                         </span>
-                        <span class="sp-text">Funerario signo</span>
+                        <span class="sp-text">Inicio</span>
+                    </a>
+                </li>
+                @foreach ($opciones_perfil as $opcion_perfil)
+
+                    @if ($opcion_perfil->id != $id_module)
+                        
+                        @if ($cont > 0)
+                            </ul><!-- /.nav-second-level -->
+                            </li>
+                        @endif
+                        <?php $cont++; ?>
+                        <li>
+                        <a href="#" class="sidebar-nav-menu btn-icon">
+                           <span class="sp-icon fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <span class="text-primary">
+                                    <i class="{{ $opcion_perfil->icon }} fa-stack-1x"></i>
+                                </span>
+                            </span>
+                            <span class="sp-text">{{ $opcion_perfil->mdescription }}</span>
+                            <i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i>
+                        </a>
+                        <!-- .nav-second-level -->
+                        <ul>
+                            <li>
+                                <a href="{{ url($opcion_perfil->surl) }}">
+                                    {{ $opcion_perfil->sdescription}} 
+                                </a>
+                            </li>
+                    @else
+                        <li>
+                            <a href="{{ url($opcion_perfil->surl) }}">
+                                {{ $opcion_perfil->sdescription }}
+                            </a>
+                        </li>  
+                    @endif
+                @endforeach
+            </ul>
+            <!-- END Sidebar Navigation -->
+
+        </div>
+        <!-- END Sidebar Content -->
+    </div>
+    <!-- END Wrapper for scrolling functionality -->
+</div>
+<!-- END Main Sidebar -->
+
+@section('name')
+    <!-- Sidebar Navigation -->
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="{{ url('/') }}" class="btn-icon {{ Request::is('/') ? 'active' : ''  }}">
+                        <span class="sp-icon fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <span class="text-primary"><i class="fa fa-home fa-stack-1x"></i></span>
+                        </span>
+                        <span class="sp-text">Inicio</span>
                     </a>
                 </li>
                               
@@ -83,10 +151,4 @@
                 </li>
             </ul>
             <!-- END Sidebar Navigation -->
-
-        </div>
-        <!-- END Sidebar Content -->
-    </div>
-    <!-- END Wrapper for scrolling functionality -->
-</div>
-<!-- END Main Sidebar -->
+@stop

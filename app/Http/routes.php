@@ -164,13 +164,21 @@ Route::group(['middleware' => ['web']], function () {
 //  Route::get('/home', ['middleware' => 'auth', 'as' => 'home', 'uses' => 'UsersController@home']);
     Route::get('/logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
     //Route::resource('users', 'UsersController');
+    
+    // Funcion para reloj local
+    Route::get('api/clock', [
+        'uses' => 'ClockController@clock',
+        'as'   => 'clock.now' 
+    ]);
 });
 Route::auth();
 
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index');
 
-    Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index');
+
+Route::group(['middleware' => ['auth']], function () {
+    
    // ++++++++++++++++++++ MENU +++++++++++++++++++++++++++++++++    
     //CONSULTAR CLAVE ODONTOLOGICA
     Route::get('clavesOdonto/consultar'       , 'ClaveOdontologica\ConsultarController@getFilter');
