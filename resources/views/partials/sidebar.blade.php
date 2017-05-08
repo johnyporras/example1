@@ -38,7 +38,7 @@
                 </div>
                 <div class="sidebar-user-name">{{ Auth::user()->name }}</div>
                 <div class="sidebar-user-links">
-                    <!--   
+                    <!--
                     <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>
                     <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Messages"><i class="gi gi-envelope"></i></a> -->
                     <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Settings"><i class="gi gi-cogwheel"></i></a>
@@ -58,8 +58,8 @@
                     ->select('modules.description as mdescription','icon','modules.id','submodules.description as sdescription','submodules.url as surl')
                     ->orderBy('modules.order','asc')
                     ->orderBy('submodules.order','asc')
-                    ->get(); 
-                    //dd($opciones_perfil); 
+                    ->get();
+                    //dd($opciones_perfil);
             ?>
 
             <!-- Sidebar Navigation -->
@@ -76,7 +76,7 @@
                 @foreach ($opciones_perfil as $opcion_perfil)
 
                     @if ($opcion_perfil->id != $id_module)
-                        
+                        <?php $id_module = $opcion_perfil->id; ?>
                         @if ($cont > 0)
                             </ul><!-- /.nav-second-level -->
                             </li>
@@ -97,7 +97,7 @@
                         <ul>
                             <li>
                                 <a href="{{ url($opcion_perfil->surl) }}">
-                                    {{ $opcion_perfil->sdescription}} 
+                                    {{ $opcion_perfil->sdescription}}
                                 </a>
                             </li>
                     @else
@@ -105,7 +105,7 @@
                             <a href="{{ url($opcion_perfil->surl) }}">
                                 {{ $opcion_perfil->sdescription }}
                             </a>
-                        </li>  
+                        </li>
                     @endif
                 @endforeach
             </ul>
@@ -130,7 +130,7 @@
                         <span class="sp-text">Inicio</span>
                     </a>
                 </li>
-                              
+
                 <li>
                     <a href="#" class="sidebar-nav-menu btn-icon">
                        <span class="sp-icon fa-stack fa-lg">
