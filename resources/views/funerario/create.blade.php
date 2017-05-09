@@ -22,12 +22,13 @@
 @section('breadcrumb')
     <div class="content-header">
         <div class="header-section">
-            <h1><i class="gi gi-brush"></i>Page Title<br><small>Subtitle</small></h1>
+            <h1><i class="gi gi-cardio"></i> Modulo Funerario <br> <small class="text-white">subtitle</small></h1>
         </div>
     </div>
     <ul class="breadcrumb breadcrumb-top">
-        <li>Category</li>
-        <li><a href="">Page</a></li>
+        <li><a href="{{ url('/') }}">Inicio</a></li>
+        <li><a href="{{ url('/funerario/lista') }}">Modulo Funerario</a></li>
+        <li>Generar</li>
     </ul>
 @endsection
 

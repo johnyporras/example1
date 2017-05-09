@@ -17,19 +17,20 @@
                 <div class="row text-center">
                     <div class="col-md-6 col-lg-offset-2">
                         <h2 class="animation-hatch">
-                            <span class="clock-date"></span><br>
-                            <small><i class="fa fa-calendar"></i> <b>Caracas</b></small>
+                           <span><i class="fa fa-calendar"></i></span> 
+                           <span class="clock-date"></span>
+                          <!--  <br><small><i class="fa fa-calendar"></i> <b>Caracas</b></small> -->
                         </h2>
                     </div>
 
                     <div class="col-md-6 col-lg-4">
                         <h2 class="animation-hatch">
+                            <span><i class="fa fa-clock-o"></i></span>
                             <span class="clock-hours"></span> :
-				                <span class="clock-minutes"></span> :
-				                <span class="clock-seconds"></span> 
-				                <span class="clock-ampm"></span>
-                			<br>
-                            <small><i class="fa fa-clock-o"></i> <b>Caracas</b></small>
+				            <span class="clock-minutes"></span> :
+				            <span class="clock-seconds"></span> 
+				            <span class="clock-ampm"></span>
+                			<!-- <br><small><i class="fa fa-clock-o"></i> <b>Caracas</b></small> -->
                         </h2>
                     </div>                     
                 </div>

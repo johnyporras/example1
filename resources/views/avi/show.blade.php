@@ -8,17 +8,18 @@
 @section('breadcrumb')
     <div class="content-header">
         <div class="header-section">
-            <h1><i class="gi gi-brush"></i>Page Title<br><small>Subtitle</small></h1>
+            <h1><i class="gi gi-airplane"></i> Asistencia al Viajero Internacional <br> <small class="text-white">subtitle</small></h1>
         </div>
     </div>
     <ul class="breadcrumb breadcrumb-top">
-        <li>Category</li>
-        <li><a href="">Page</a></li>
+        <li><a href="{{ url('/') }}">Inicio</a></li>
+        <li><a href="{{ url('/avi/lista') }}">Asistencia al Viajero Internacional</a></li>
+        <li>Detalle</li>
     </ul>
 @endsection
 
 @section('content')
-<div class="col-xs-12">
+<div class="col-xs-12 block">
     <div class="row">
         <div class="col-xs-12">
             <p><a href="{{ url('/avi/lista') }}" title="Listado Solicitudes" class="btn btn-success"><span class="pr5"><i class="fa fa-table"></i></span> Listado</a></p>
@@ -41,7 +42,7 @@
     </div> <!-- row -->
 </div>
 
-<div class="col-xs-12">
+<div class="col-xs-12 block">
     <div class="row">
         <div class="col-xs-12">
 
