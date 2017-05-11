@@ -144,6 +144,9 @@ Route::group(['middleware' => ['auth']], function () {
             'as'   => 'funerario.destroy' 
         ]);
 
+    // rutas para eliminar solicitudes
+   Route::resource('profile', 'ProfileController');
+
     
 });
 /*=====================================================*/
