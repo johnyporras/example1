@@ -117,38 +117,3 @@
     <!-- END Wrapper for scrolling functionality -->
 </div>
 <!-- END Main Sidebar -->
-
-@section('name')
-    <!-- Sidebar Navigation -->
-            <ul class="sidebar-nav">
-                <li>
-                    <a href="{{ url('/') }}" class="btn-icon {{ Request::is('/') ? 'active' : ''  }}">
-                        <span class="sp-icon fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <span class="text-primary"><i class="fa fa-home fa-stack-1x"></i></span>
-                        </span>
-                        <span class="sp-text">Inicio</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" class="sidebar-nav-menu btn-icon">
-                       <span class="sp-icon fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <span class="text-primary"><i class="fa fa-lock fa-stack-1x"></i></span>
-                        </span>
-                        <span class="sp-text">Funerario</span>
-                        <i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i>
-                    </a>
-                    <ul>
-                        <li>
-                            <a href="javascript:void(0)">Link #1</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">Link #2</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <!-- END Sidebar Navigation -->
-@stop

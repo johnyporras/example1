@@ -548,15 +548,11 @@ fieldset[disabled] .btn-primary.active:focus {
     transform: translateX(-42%);
 }
 
-.sidebar-nav a > .sidebar-nav-indicator {
-    padding-top: 5px;
-}
-
 .sp-text {
     top: 30%;
     position: absolute;
-    width: 90%;
-    height: 100%;
+    width: 70%;
+    margin-left:10px; 
     line-height: 16px;
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
@@ -572,6 +568,73 @@ fieldset[disabled] .btn-primary.active:focus {
     -moz-transform: translateX(20%);
     -ms-transform: translateX(20%);
     transform: translateX(20%);
+}
+
+/*** Modificacion sidebar ******/
+@media screen and (min-width: 992px){
+    
+    .sidebar-partial #sidebar:hover + #main-container, .sidebar-visible-lg #main-container {
+        margin-left: 230px;
+    }
+
+    .sidebar-partial #sidebar:hover, .sidebar-visible-lg #sidebar, .sidebar-visible-lg.sidebar-partial #sidebar, .sidebar-alt-partial #sidebar-alt:hover, .sidebar-alt-visible-lg #sidebar-alt, .sidebar-alt-visible-lg.sidebar-alt-partial #sidebar-alt {
+        width: 230px;
+    }
+
+    .sidebar-content {
+        width: 230px;
+    }
+}
+
+/*
+
+.sidebar-visible-xs #sidebar {
+    width: 230px;
+}
+
+.sidebar-visible-xs #main-container {
+    margin-left: 230px;
+    margin-right: -230px;
+}
+
+.sidebar-visible-xs.header-fixed-top header.navbar-fixed-top,
+.sidebar-visible-xs.header-fixed-bottom header.navbar-fixed-bottom {
+    left: 230px;
+    right: -230px;
+}
+
+.sidebar-alt-visible-xs #sidebar-alt {
+    width: 230px;
+}
+
+.sidebar-alt-visible-xs #main-container {
+    margin-right: 230px;
+    margin-left: -230px;
+}
+
+.sidebar-alt-visible-xs.header-fixed-top header.navbar-fixed-top,
+.sidebar-alt-visible-xs.header-fixed-bottom header.navbar-fixed-bottom {
+    right: 230px;
+    left: -230px;
+}
+
+.sidebar-partial #sidebar:hover, .sidebar-visible-lg #sidebar, .sidebar-visible-lg.sidebar-partial #sidebar, .sidebar-alt-partial #sidebar-alt:hover, .sidebar-alt-visible-lg #sidebar-alt, .sidebar-alt-visible-lg.sidebar-alt-partial #sidebar-alt {
+    width: 230px;
+}
+
+.sidebar-content {
+    width: 230px;
+}
+
+.sidebar-partial #sidebar:hover + #main-container, .sidebar-visible-lg #main-container {
+    margin-left: 230px;
+}
+ */
+
+/*** Modificacion sidebar ******/
+
+.sidebar-nav a > .sidebar-nav-indicator {
+    padding-top: 5px;
 }
 
 .sidebar-user-avatar {
@@ -626,7 +689,6 @@ table.dataTable thead .sorting_desc:after {
     content: "\e156";
     display: none;
 }
-
 
 /* Mini Sidebar */
 @media screen and (min-width: 992px) {
