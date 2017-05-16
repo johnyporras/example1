@@ -6,7 +6,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable{
 
+    /**
+     * Para usar borrado suave en la base de datos*
+     */
     use SoftDeletes;
+
+    /**
+     *  Name of database
+     * @var string
+     */
     protected $table = 'users';
 
     /**
@@ -14,7 +22,23 @@ class User extends Authenticatable{
      *
      * @var array
      */
-    protected $fillable = ['id', 'name', 'email', 'password', 'department', 'type', 'user', 'active', 'proveedor', 'remember_token', 'deleted_at', 'salt'];
+    protected $fillable = [ 
+        'name', 
+        'email',
+        'user',
+        'password', 
+        'department',
+        'imagen_perfil' 
+        'type',
+        'active',
+        'pregunta_1',
+        'respuesta_1',
+        'pregunta_2',
+        'respuesta_2',
+        'ultimo_acceso',
+        'remember_token', 
+        'deleted_at'
+    ];
 
     /**
      * The attributes excluded from the model's JSON form.

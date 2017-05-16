@@ -14,13 +14,13 @@ class CreateAcPlanesExtranetTable extends Migration {
 	{
 		Schema::create('ac_planes_extranet', function(Blueprint $table)
 		{
-			$table->integer('id', true);
-			$table->integer('codigo_plan')->unique('upe1_codigo_plan');
+			$table->increments('id');
+			$table->integer('codigo_plan')->unique();
 			$table->string('nombre', 200);
 			$table->string('cobertura', 100)->nullable();
 			$table->integer('orden');
-                        $table->timestamps();
-                        $table->softDeletes();
+                    $table->timestamps();
+                    $table->softDeletes();
 		});
 	}
 

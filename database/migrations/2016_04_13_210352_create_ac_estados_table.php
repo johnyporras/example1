@@ -16,11 +16,10 @@ class CreateAcEstadosTable extends Migration {
 		{
 			$table->integer('es_id', true);
 			$table->string('es_desc');
-                        $table->timestamps();
-                        $table->softDeletes();
+                    $table->timestamps();
+                    $table->softDeletes();
 		});
 	}
-
 
 	/**
 	 * Reverse the migrations.
@@ -31,5 +30,4 @@ class CreateAcEstadosTable extends Migration {
 	{
 		Schema::drop('ac_estados');
 	}
-
 }

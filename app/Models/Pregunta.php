@@ -1,20 +1,22 @@
-<?php namespace App\Models;
+<?php
+
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AcEstado extends Model 
+class Pregunta extends Model
 {
-	/**
-     * Para usar borrado suave en la base de datos*
-     */
-    use SoftDeletes; 
+    /**
+	 * Para usar borrado suave en la base de datos*
+	 */
+    use SoftDeletes;
 
     /**
      *  Name of database
      * @var string
      */
-    protected $table = 'ac_estados';
+    protected $table = 'preguntas';
 
     /**
      * The attributes that should be mutated to dates.
@@ -28,5 +30,6 @@ class AcEstado extends Model
      *
      * @var array
      */
-    protected $fillable = ['es_id', 'es_desc', 'deleted_at'];
+    protected $fillable = ['pregunta'];
+    
 }

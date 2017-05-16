@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContratoFuneraiosTable extends Migration
+class CreatePreguntasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,11 @@ class CreateContratoFuneraiosTable extends Migration
      */
     public function up()
     {
-        Schema::create('contrato_funeraio', function (Blueprint $table) {
-            $table->integer('funerario_id')->unsigned();
-            $table->integer('contrato_id')->unsigned();
+        Schema::create('preguntas', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('pregunta')->unique();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -25,6 +27,6 @@ class CreateContratoFuneraiosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('contrato_funeraio');
+        Schema::drop('preguntas');
     }
 }

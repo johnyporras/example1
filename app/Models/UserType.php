@@ -13,7 +13,7 @@ class UserType extends Model {
     protected $table = 'user_types';
     protected $fillable = ['id', 'name', 'modules', 'active', 'deleted_at'];
 
-/**
+    /**
      * Get the Users for Type User.
      */
     public function users()
