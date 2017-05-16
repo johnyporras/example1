@@ -28,7 +28,7 @@ class User extends Authenticatable{
         'user',
         'password', 
         'department',
-        'imagen_perfil' 
+        'imagen_perfil', 
         'type',
         'active',
         'pregunta_1',
