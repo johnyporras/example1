@@ -28,7 +28,7 @@ class ConsultarClaveController extends Controller
    $user = \Auth::user();
    // Analista Proveedor
    if ($user->type == 3){
-        $query = DB::table('ac_claves')
+      /*  $query = DB::table('ac_claves')
                 ->where([['users.id','=',$user->id], ['ac_claves.estatus_clave', '!=', 5],
                      ['ac_contratos.fecha','<=',date('Y-m-d').' 00:00:00']])
                 ->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')
@@ -50,7 +50,30 @@ class ConsultarClaveController extends Controller
                          'ac_especialidades_extranet.descripcion as especialidad',
                          'ac_proveedores_extranet.nombre as proveedor',
                          'ac_estatus.nombre as estatus' )
-               ->distinct();
+               ->distinct();*/
+   	
+			   	$query = DB::table('ac_claves')
+			   	->where([['ac_cuenta.fecha','<=',date('Y-m-d').' 00:00:00'], ['ac_claves.estatus_clave', '!=', 5]])
+			   	->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')
+			   	->join('ac_afiliados'              , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
+			   	->join('ac_cuenta'              , 'ac_afiliados.id_cuenta',"=", 'ac_cuenta.id')
+			   	->join('ac_planes_extranet'        , 'ac_planes_extranet.codigo_plan',"=", 'ac_cuenta.id_plan')
+			   	->join('ac_estatus'                , 'ac_estatus.id',"=",'ac_claves.estatus_clave')
+			   	->join('ac_proveedores_extranet'   , 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')
+			   	->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_claves_detalle.codigo_especialidad')
+			   	->select('ac_claves.id as id',
+			   			'ac_claves.fecha_cita as fecha_citas',
+			   			'ac_claves.cedula_afiliado',
+			   			'ac_claves.clave as clave',
+			   			'ac_afiliados.nombre as nombre_afiliado',
+			   			'ac_planes_extranet.nombre as plan',
+			   			'ac_estatus.nombre as estatus',
+			   			'ac_especialidades_extranet.descripcion as especialidad',
+			   			'ac_proveedores_extranet.nombre as proveedor',
+			   			'ac_estatus.nombre as estatus'
+			   			)
+			   			->distinct();
+			   	
    }elseif ($user->type == 4) // Analista Aseguradora
      {
         $query = DB::table('ac_claves')
