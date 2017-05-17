@@ -14,8 +14,8 @@ class CreateAviTable extends Migration
     {
         Schema::create('avi', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('afiliado_id')->unsigned();
             $table->string('codigo_solicitud',30)->unique();
-            $table->integer('cedula_afiliado');
             $table->integer('codigo_contrato');
             $table->string('cobertura_monto',20);
             $table->integer('edad_afiliado'); 
@@ -24,6 +24,8 @@ class CreateAviTable extends Migration
             $table->integer('creador'); 
             $table->timestamps();
             $table->softDeletes();
+                $table->foreign('afiliado_id')->references('id')->on('ac_afiliados')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

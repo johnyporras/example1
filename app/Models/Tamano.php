@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Avi extends Model 
+class Tamano extends Model
 {
-
 	/**
 	 * Para usar borrado suave en la base de datos*
 	 */
@@ -17,7 +16,7 @@ class Avi extends Model
      *  Name of database
      * @var string
      */
-    protected $table = 'avi';
+    protected $table = 'tamanos';
 
     /**
      * The attributes that should be mutated to dates.
@@ -32,23 +31,16 @@ class Avi extends Model
      * @var array
      */
     protected $fillable = [
-    	'codigo_solicitud',
-        'cedula_afiliado', 
-        'codigo_contrato', 
-        'cobertura_monto',
-        'edad_afiliado',  
-        'nro_cronograma',  
-        'observaciones',     
-        'creador',
-        'deleted_at'
+    	'titulo',
+        'descripcion',
+        'deleted_at',
     ];
 
     /**
-     * Relación can tabla de destinos
-     * @return [type] [description]
+     * Get the mascotas.
      */
-    public function destinos()
-    {
-        return $this->hasMany(\App\Models\AviDestino::class);
+	public function mascotas()
+	{
+        return $this->hasMany(\App\Models\Mascota::class);
     }
 }

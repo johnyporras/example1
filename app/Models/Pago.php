@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Avi extends Model 
+class Pago extends Model
 {
-
-	/**
+    /**
 	 * Para usar borrado suave en la base de datos*
 	 */
     use SoftDeletes;
@@ -17,14 +16,14 @@ class Avi extends Model
      *  Name of database
      * @var string
      */
-    protected $table = 'avi';
+    protected $table = 'pagos';
 
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ['fecha_pago', 'deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -32,23 +31,18 @@ class Avi extends Model
      * @var array
      */
     protected $fillable = [
-    	'codigo_solicitud',
-        'cedula_afiliado', 
-        'codigo_contrato', 
-        'cobertura_monto',
-        'edad_afiliado',  
-        'nro_cronograma',  
-        'observaciones',     
-        'creador',
-        'deleted_at'
+    	'codigo_confirmacion',
+        'monto',
+        'fecha_pago',
+        'estatus',
+        'deleted_at',
     ];
 
     /**
-     * Relación can tabla de destinos
-     * @return [type] [description]
+     * Get the cuenta for the pago.
      */
-    public function destinos()
+    public function cuenta()
     {
-        return $this->hasMany(\App\Models\AviDestino::class);
+        return $this->belongsTo(\App\Models\AcCuenta::class);
     }
 }

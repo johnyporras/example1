@@ -51,7 +51,7 @@ class Funerario extends Model
      */
     public function afiliado()
     {
-        return $this->belongsTo(\App\Models\AcAfiliado::class, 'afiliado_id');
+        return $this->belongsTo(\App\Models\AcAfiliado::class);
     }
 
     /**
