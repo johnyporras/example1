@@ -21,13 +21,14 @@
     {!! Form::close() !!}
     @if (isset($contratos))
         @if (count($contratos) > 0)
-            {!! Form::open(['url' => 'claves/generarFinal', 'class' => 'form-horizontal', 'name' => 'beneficiario']) !!}
+            {!! Form::open(['url' => 'claves/generarFinal', 'class' => 'form-horizontal', 'name' => 'beneficiario', 'id' => 'beneficiario']) !!}
             <div class="table">
+               
+               
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Cédula Afiliado</th><th>Nombre</th><th>Cobertura del Plan</th><th>Colectivo</th>
-                            <th>Aseguradora</th><th>Tipo</th><th></th>
+                            <th>Cédula Afiliado</th><th>Nombre</th><th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,26 +36,24 @@
                         @foreach ($contratos as $contrato)
                             {{-- */$x++;/* --}}
                             <tr>
-                                {!! Form::hidden('contrato'.$x, $contrato->codigo_contrato) !!}
+                                {!! Form::hidden('contrato'.$x, $contrato->codigo_cuenta) !!}
                                 <td>{{ $contrato->cedula_afiliado }}</td>
-                                {!! Form::hidden('cedula_afiliado'.$x, $contrato->cedula_afiliado) !!}
+                                {!! Form::hidden('cedula_afiliado'.$x, $contrato->cedula_titular) !!}
                                 <td>{{ $contrato->nombre_afiliado }}</td>
                                 {!! Form::hidden('nombre_afiliado'.$x, $contrato->nombre_afiliado) !!}
                                 <td>{{ $contrato->plan }}</td>
                                 {!! Form::hidden('plan'.$x, $contrato->plan) !!}
-                                <td>{{ $contrato->colectivo }}</td>
-                                {!! Form::hidden('colectivo'.$x, $contrato->colectivo) !!}
-                                <td>{{ $contrato->aseguradora }}</td>
-                                {!! Form::hidden('aseguradora'.$x, $contrato->aseguradora) !!}
-                                <td>{{ $contrato->tipo_afiliado }}</td>
-                                {!! Form::hidden('tipo_afiliado'.$x, $contrato->tipo_afiliado) !!}
-                                <td>{!! Form::radio('icedula', $x,null, ['id' => 'icedula']) !!}
+                                <td>{!! Form::radio('icedula', $x,null, ['id' => 'icedula','checked'=>true]) !!}
                                     {!! $errors->first('icedula', '<p class="help-block">:message</p>') !!}</td>
                             </tr>
                         @endforeach
                         {!! Form::hidden('max', $x) !!}
                     </tbody>
                 </table>
+                
+                
+                
+                
                 <div class="col-sm-2 pull-right">
                     {!! Form::submit('Seleccionar', ['class' => 'btn btn-primary form-control', 'id' => 'seleccionar']) !!}
                 </div>
@@ -65,6 +64,7 @@
 @endsection
 @section('script')
     <script>
+        $("#beneficiario").submit();
         $(function(){
             $("#seleccionar").click(function(e){
                 entro = false;

@@ -139,6 +139,7 @@ class ClaveController extends Controller{
      * @return Response
      */
     public function generar(Request $request){
+    	
         $ValidarFecha = new ValidarFechaController();
         if  (!($ValidarFecha->validarHorario()) and false){
             return redirect('home')->with('message', 'No se encuentra dentro del Horario Autorizado.');
@@ -154,30 +155,23 @@ class ClaveController extends Controller{
                     //dd(get_class_methods($e)); // lists all available methods for exception object
                     $tipoAfiliado = \App\Models\AcTipoAfiliado::pluck('nombre', 'id')->toArray();
                     $estado = \App\Models\AcEstado::pluck('es_desc', 'es_id')->toArray();
-                    $aseguradora = \App\Models\AcAseguradora::pluck('nombre', 'codigo_aseguradora')->toArray();    
-                    try{
-                        $afiliadosTemporale = AcAfiliadoTemporal::where('cedula', '=', $request->cedula)->firstOrFail();
-                        $colectivo = \App\Models\AcColectivo::pluck('nombre', 'codigo_colectivo')->toArray();
-                        return view('afiliadosTemporales.edit', compact('afiliadosTemporale','tipoAfiliado','aseguradora','estado','colectivo'));
-                    }catch(ModelNotFoundException $e){
-                        return redirect()->back()->withInput()->with('respuesta', 'No existe el Afiliado. Presione si desea ');
-                        //return view('afiliadosTemporales.create', compact('tipoAfiliado','aseguradora','estado'));
-                    }
+                    $aseguradora = \App\Models\AcAseguradora::pluck('nombre', 'codigo_aseguradora')->toArray();
                 }
-                $contratos = DB::table('ac_contratos')
-                            ->where([['cedula_titular', '=', $afiliadoIni->cedula_titular],['fecha_inicio','<=',date('Y-m-d').' 00:00:00'],['fecha_fin','>=',date('Y-m-d').' 00:00:00']])
-                            ->join('ac_afiliados', 'ac_afiliados.cedula',"=", 'ac_contratos.cedula_afiliado')
-                            ->join('ac_tipo_afiliado', 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
-                            ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_contratos.codigo_plan')
-                            ->join('ac_colectivos', 'ac_colectivos.codigo_colectivo',"=", 'ac_contratos.codigo_colectivo')
-                            ->join('ac_aseguradora', 'ac_colectivos.codigo_aseguradora',"=", 'ac_aseguradora.codigo_aseguradora')
-                            ->select('codigo_contrato','cedula_afiliado','ac_afiliados.nombre as nombre_afiliado','ac_afiliados.apellido as apellido_afiliado',
-                                    'ac_planes_extranet.nombre as plan','ac_colectivos.nombre as colectivo','ac_aseguradora.nombre as aseguradora','ac_tipo_afiliado.nombre as tipo_afiliado')
+                $contratos = DB::table('ac_cuenta')
+                            ->where([['cedula_titular', '=', $afiliadoIni->cedula_titular],['fecha','<=',date('Y-m-d').' 00:00:00']])
+                            ->where('ac_cuenta.estatus',"=",1)
+                            ->join('ac_afiliados', 'ac_cuenta.id',"=", 'ac_afiliados.id_cuenta')
+                            ->join('ac_cuentaplan','ac_cuenta.id',"=",'ac_cuentaplan.id_cuenta')
+                            ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuentaplan.id_plan')
+                            ->select('codigo_cuenta','cedula_titular as cedula_afiliado','cedula_titular','ac_afiliados.nombre as nombre_afiliado','ac_afiliados.apellido as apellido_afiliado',
+                                    'ac_planes_extranet.nombre as plan')
                             ->get();
                 if(!empty($contratos)){
+                	//die("aqui");
                     return view('claves.generar', compact('contratos'));
                 }else{
-                    Session::flash('flash_message', 'No tiene contrato vigente');
+                	//die("por aqui");
+                    Session::flash('flash_message', 'No tiene una cuenta vigente');
                     return view('claves.generar', compact('contratos'));
                 }
             }
@@ -198,18 +192,18 @@ class ClaveController extends Controller{
         $beneficiario['contrato'] = $request->input(['contrato'.$id]);
         $beneficiario['cedula_afiliado'] = $request->input('cedula_afiliado'.$id);
         $beneficiario['nombre_afiliado'] = $request->input('nombre_afiliado'.$id);
-        $beneficiario['plan'] = $request->input('plan'.$id);
-        $beneficiario['colectivo'] = $request->input('colectivo'.$id);
+        //$beneficiario['plan'] = $request->input('plan'.$id);
+        $beneficiario['plan'] = 25;
+       /* $beneficiario['colectivo'] = $request->input('colectivo'.$id);
         $beneficiario['aseguradora'] = $request->input('aseguradora'.$id);
-        $beneficiario['tipo_afiliado'] = $request->input('tipo_afiliado'.$id);
+        $beneficiario['tipo_afiliado'] = $request->input('tipo_afiliado'.$id);*/
         $user = \Auth::user();
+        //echo $user->type;die();
         if($user->type == 3){ // PROVEEDOR
-            $coberturas = DB::table('ac_contratos')
-                ->where([['codigo_contrato', '=', $beneficiario['contrato']]])
-                ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_contratos.codigo_plan')
+            $coberturas = DB::table('ac_cuenta')
+                ->where([['codigo_cuenta', '=', $beneficiario['contrato']]])
+                ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuenta.id_plan')
                 ->join('ac_cobertura_extranet', 'ac_cobertura_extranet.id_plan',"=", 'ac_planes_extranet.codigo_plan')
-                ->join('ac_colectivos', 'ac_colectivos.codigo_colectivo',"=", 'ac_contratos.codigo_colectivo')
-                ->join('ac_aseguradora', 'ac_aseguradora.codigo_aseguradora',"=", 'ac_colectivos.codigo_aseguradora')
                 ->join('ac_procedimientos_medicos', function($join){
                         $join->on('ac_procedimientos_medicos.codigo_examen',"=", 'ac_cobertura_extranet.id_procedimiento')
                              ->on('ac_procedimientos_medicos.codigo_especialidad',"=", 'ac_cobertura_extranet.id_especialidad')
@@ -228,12 +222,10 @@ class ClaveController extends Controller{
                 ->get(); // +++++++ array(StdClass)
             $proveedor = AcProveedoresExtranet::where('codigo_proveedor',"=", $user->proveedor)->firstOrFail();
         }else{
-            $coberturas = DB::table('ac_contratos')
-                ->where([['codigo_contrato', '=', $beneficiario['contrato']]])
-                ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_contratos.codigo_plan')
+            $coberturas = DB::table('ac_cuenta')
+                ->where([['codigo_cuenta', '=', $beneficiario['contrato']]])
+                ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuenta.id_plan')
                 ->join('ac_cobertura_extranet', 'ac_cobertura_extranet.id_plan',"=", 'ac_planes_extranet.codigo_plan')
-                ->join('ac_colectivos', 'ac_colectivos.codigo_colectivo',"=", 'ac_contratos.codigo_colectivo')
-                ->join('ac_aseguradora', 'ac_aseguradora.codigo_aseguradora',"=", 'ac_colectivos.codigo_aseguradora')
                 ->join('ac_procedimientos_medicos', function($join){
                         $join->on('ac_procedimientos_medicos.codigo_examen',"=", 'ac_cobertura_extranet.id_procedimiento')
                              ->on('ac_procedimientos_medicos.codigo_especialidad',"=", 'ac_cobertura_extranet.id_especialidad')

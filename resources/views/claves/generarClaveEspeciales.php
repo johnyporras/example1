@@ -23,6 +23,9 @@
         @if (count($contratos) > 0)
             {!! Form::open(['url' => 'claves/generarFinal', 'class' => 'form-horizontal', 'name' => 'beneficiario']) !!}
             <div class="table">
+                
+                
+                
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
@@ -56,6 +59,8 @@
                         {!! Form::hidden('max', $x) !!}
                     </tbody>
                 </table>
+                
+                
                 <div class="col-sm-2 pull-right">
                     {!! Form::submit('Seleccionar', ['class' => 'btn btn-primary form-control', 'id' => 'seleccionar']) !!}
                 </div>

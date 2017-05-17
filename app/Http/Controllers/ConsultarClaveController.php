@@ -24,20 +24,18 @@ class ConsultarClaveController extends Controller
 
  public function getFilter()
  {
+ 
    $user = \Auth::user();
    // Analista Proveedor
    if ($user->type == 3){
         $query = DB::table('ac_claves')
                 ->where([['users.id','=',$user->id], ['ac_claves.estatus_clave', '!=', 5],
-                     ['ac_contratos.fecha_inicio','<=',date('Y-m-d').' 00:00:00'],['ac_contratos.fecha_fin','>=',date('Y-m-d').' 00:00:00']])
+                     ['ac_contratos.fecha','<=',date('Y-m-d').' 00:00:00']])
                 ->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')
                 ->join('ac_afiliados'              , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
-                ->join('ac_contratos'              , 'ac_afiliados.cedula',"=", 'ac_contratos.cedula_afiliado')
-                ->join('ac_tipo_afiliado'          , 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
-                ->join('ac_planes_extranet'        , 'ac_planes_extranet.codigo_plan',"=", 'ac_contratos.codigo_plan')
+                ->join('ac_contratos'              , 'ac_afiliados.cedula',"=", 'ac_cuenta.cedula_titular')
+                ->join('ac_planes_extranet'        , 'ac_planes_extranet.codigo_plan',"=", 'ac_cuenta.id_plan')
                 ->join('ac_estatus'                , 'ac_estatus.id',"=",'ac_claves.estatus_clave')
-                ->join('ac_colectivos'             , 'ac_colectivos.codigo_colectivo',"=",'ac_contratos.codigo_colectivo')
-                ->join('ac_aseguradora'            ,'ac_colectivos.codigo_aseguradora',"=",'ac_aseguradora.codigo_aseguradora')
                 ->join('ac_proveedores_extranet'   , 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')
                 ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_claves_detalle.codigo_especialidad')
                 ->join('users'                     , 'users.proveedor' ,'=','ac_proveedores_extranet.codigo_proveedor')
@@ -48,9 +46,6 @@ class ConsultarClaveController extends Controller
                          'ac_claves.clave as clave',
                          'ac_afiliados.nombre as nombre_afiliado',
                          'ac_planes_extranet.nombre as plan',
-                         'ac_colectivos.nombre as colectivo',
-                         'ac_aseguradora.nombre as aseguradora',
-                         'ac_tipo_afiliado.nombre as tipo_afiliado',
                          'ac_estatus.nombre as estatus',
                          'ac_especialidades_extranet.descripcion as especialidad',
                          'ac_proveedores_extranet.nombre as proveedor',
@@ -90,15 +85,12 @@ class ConsultarClaveController extends Controller
 
    }else{
          $query = DB::table('ac_claves')
-                ->where([['ac_contratos.fecha_inicio','<=',date('Y-m-d').' 00:00:00'],['ac_contratos.fecha_fin','>=',date('Y-m-d').' 00:00:00'] ])
+                ->where([['ac_cuenta.fecha','<=',date('Y-m-d').' 00:00:00']])
                 ->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')
                 ->join('ac_afiliados'              , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
-                ->join('ac_contratos'              , 'ac_afiliados.cedula',"=", 'ac_contratos.cedula_afiliado')
-                ->join('ac_tipo_afiliado'          , 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
-                ->join('ac_planes_extranet'        , 'ac_planes_extranet.codigo_plan',"=", 'ac_contratos.codigo_plan')
+                ->join('ac_cuenta'              , 'ac_afiliados.id_cuenta',"=", 'ac_cuenta.id')
+                ->join('ac_planes_extranet'        , 'ac_planes_extranet.codigo_plan',"=", 'ac_cuenta.id_plan')
                 ->join('ac_estatus'                , 'ac_estatus.id',"=",'ac_claves.estatus_clave')
-                ->join('ac_colectivos'             , 'ac_colectivos.codigo_colectivo',"=",'ac_contratos.codigo_colectivo')
-                ->join('ac_aseguradora'            , 'ac_colectivos.codigo_aseguradora',"=",'ac_aseguradora.codigo_aseguradora')
                 ->join('ac_proveedores_extranet'   , 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')
                 ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_claves_detalle.codigo_especialidad')
                 ->select('ac_claves.id as id',
@@ -107,9 +99,6 @@ class ConsultarClaveController extends Controller
                          'ac_claves.clave as clave',
                          'ac_afiliados.nombre as nombre_afiliado',
                          'ac_planes_extranet.nombre as plan',
-                         'ac_colectivos.nombre as colectivo',
-                         'ac_aseguradora.nombre as aseguradora',
-                         'ac_tipo_afiliado.nombre as tipo_afiliado',
                          'ac_estatus.nombre as estatus',
                          'ac_especialidades_extranet.descripcion as especialidad',
                          'ac_proveedores_extranet.nombre as proveedor',

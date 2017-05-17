@@ -5,20 +5,21 @@
 <h4>Datos del Beneficiario</h4>
 @if (isset($beneficiario))
     <div class="table">
-        <table class="table table-bordered table-striped table-hover table-responsive">
+       <table class="table table-bordered table-striped table-hover table-responsive">
             <thead>
                 <tr>
-                    <th>Cédula</th><th>Nombre</th><th>Tipo</th><th>Cobertura del Plan</th><th>Colectivo</th><th>Aseguradora</th>
+                
+                    <th>Cédula</th>
+                    <th>Nombre</th>
+                    <th>Plan</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>{{ $beneficiario['cedula_afiliado'] }}</td>
                     <td>{{ $beneficiario['nombre_afiliado'] }}</td>
-                    <td>{{ $beneficiario['tipo_afiliado'] }}</td>
                     <td>{{ $beneficiario['plan'] }}</td>
-                    <td>{{ $beneficiario['colectivo'] }}</td>
-                    <td>{{ $beneficiario['aseguradora'] }}</td>
+                    
                 </tr>
             </tbody>
         </table>

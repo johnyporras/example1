@@ -30,6 +30,7 @@
         <!-- Stylesheets -->
         <!-- Bootstrap is included in its original form, unaltered -->
         <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('plugins/jquery-ui/jquery-ui.min.css') }}">
         <!-- Related styles of various icon packs and plugins -->
         <link rel="stylesheet" href="{{ asset('css/plugins.css') }}">
         <!-- Custom default Styles for plugins -->
@@ -51,8 +52,8 @@ if(is_object(Auth::user()))
     var rutaInicio="/";
     var url = location.pathname;
     var id_type='<?php echo Auth::user()->type; ?>'
-    var ruta = "/Seguridad/evalPermiso";
-    var rutanoper="/Seguridad/nopermiso";
+    var ruta = "/atiempon2/public/Seguridad/evalPermiso";
+    var rutanoper="/atiempon2/public/Seguridad/nopermiso";
     //alert(url);
     //alert(rutaInicio);
     if(url!=rutaInicio && url!=rutanoper)
@@ -69,7 +70,7 @@ if(is_object(Auth::user()))
             if(data.permiso==false)
             {
                 //alert("accesso denegado a este módulo");
-                location.href="/atiempon/public/Seguridad/nopermiso";              
+              ///  location.href="/atiempon/public/Seguridad/nopermiso";              
             }
       
         });
@@ -154,6 +155,7 @@ if(is_object(Auth::user()))
             </div>
             <!-- END Page Container -->
         </div>
+<<<<<<< Updated upstream
         <!-- END Page Wrapper -->
 
         <!-- Scroll to top link, initialized in js/app.js - scrollToTop() -->
@@ -161,9 +163,11 @@ if(is_object(Auth::user()))
 
         <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
         <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('plugins/metisMenu/metisMenu.js') }}"></script>
         <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/plugins.js') }}"></script>
-        <script src="{{ asset('js/clock.js') }}"></script>
+        <script src="{{ asset('plugins/parsley-js/parsley.min.js') }}"></script> 
         <script src="{{ asset('js/app.js') }}"></script>
         {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
         <!-- Custom default scripts for plugins -->
@@ -172,3 +176,42 @@ if(is_object(Auth::user()))
         @yield('script')
     </body>
 </html>
+=======
+    </div>
+    <!-- /#wrapper -->
+    <!-- JavaScripts -->
+    
+   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
+    <!-- BOOTSTRAP -->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
+    <script src="{{url('/')}}/bootstrap/js/bootstrap.min.js"></script>
+    <!--Jquery-ui-->
+    <script src="{{url('/')}}/js/jquery-ui.min.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="{{url('/')}}/js/metisMenu.min.js"></script>
+    <script src="{{url('/')}}/js/sb-admin-2.js"></script>
+    <script src="{{url('/')}}/js/parsley.min.js"></script>
+    <script src="{{url('/')}}/js/i18n/es.js"></script>
+    <script src="{{url('/')}}/js/typeahead.bundle.js"></script>
+    <script src="{{url('/')}}/js/bootstrap-treeview.js"></script>
+
+
+
+<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script
+    src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+
+<link rel="stylesheet"
+    href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+    
+    
+
+
+    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    <!-- Custom default scripts for plugins -->
+    @stack('scripts')
+    <!-- Custom scripts -->
+    @yield('script')
+</body>
+</html>
+>>>>>>> Stashed changes

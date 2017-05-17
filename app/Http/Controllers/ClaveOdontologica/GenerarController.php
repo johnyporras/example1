@@ -233,7 +233,7 @@ class GenerarController extends Controller{
 
     public function getContratos($cedula_titular)
     {
-        $contratos = DB::table('ac_contratos')
+        /*$contratos = DB::table('ac_contratos')
             ->where([['cedula_titular', '=', $cedula_titular],['fecha_inicio','<=',date('Y-m-d').' 00:00:00'],['fecha_fin','>=',date('Y-m-d').' 00:00:00']])
             ->join('ac_afiliados', 'ac_afiliados.cedula',"=", 'ac_contratos.cedula_afiliado')
             ->join('ac_tipo_afiliado', 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
@@ -242,7 +242,16 @@ class GenerarController extends Controller{
             ->join('ac_aseguradora', 'ac_colectivos.codigo_aseguradora',"=", 'ac_aseguradora.codigo_aseguradora')
             ->select('codigo_contrato','cedula_afiliado','ac_afiliados.nombre as nombre_afiliado','ac_afiliados.apellido as apellido_afiliado',
                     'ac_planes_extranet.nombre as plan','ac_colectivos.nombre as colectivo','ac_aseguradora.nombre as aseguradora','ac_tipo_afiliado.nombre as tipo_afiliado')
-            ->get();
+            ->get();*/
+    	$contratos = DB::table('ac_cuenta')
+    	->where([['cedula_titular', '=', $afiliadoIni->cedula_titular],['fecha','<=',date('Y-m-d').' 00:00:00']])
+    	->where('ac_cuenta.estatus',"=",1)
+    	->join('ac_afiliados', 'ac_cuenta.id',"=", 'ac_afiliados.id_cuenta')
+    	->join('ac_cuentaplan','ac_cuenta.id',"=",'ac_cuentaplan.id_cuenta')
+    	->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuentaplan.id_plan')
+    	->select('codigo_cuenta','cedula_titular as cedula_afiliado','cedula_titular','ac_afiliados.nombre as nombre_afiliado','ac_afiliados.apellido as apellido_afiliado',
+    			'ac_planes_extranet.nombre as plan')
+    			->get();
 
         return $contratos;
     }

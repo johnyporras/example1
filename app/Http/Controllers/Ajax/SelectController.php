@@ -51,7 +51,7 @@ class SelectController  extends Controller{
                     ->select('tipo_examen','ac_procedimientos_medicos.id'); // +++++++ array(StdClass)
             }else{
                 $coberturas = DB::table('ac_cobertura_extranet')
-                    ->where([['id_aseguradora', '=', $afiliado->codigo_aseguradora],['id_plan', '=', 25]]) // AMP
+                    ->where([['id_plan', '=', 25]]) // AMP
                     ->join('ac_procedimientos_medicos', function($join){
                             $join->on('ac_procedimientos_medicos.codigo_examen',"=", 'ac_cobertura_extranet.id_procedimiento')
                                  ->on('ac_procedimientos_medicos.codigo_especialidad',"=", 'ac_cobertura_extranet.id_especialidad')
@@ -74,12 +74,10 @@ class SelectController  extends Controller{
             }
         }else{   // SI ES AFILIADO
             if($user->type == 3){ // PROVEEDOR
-                $coberturas = DB::table('ac_contratos')
-                    ->where([['codigo_contrato', '=', \Input::get('contrato')]])
-                    ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_contratos.codigo_plan')
+                $coberturas = DB::table('ac_cuenta')
+                    ->where([['codigo_cuenta', '=', \Input::get('contrato')]])
+                    ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuenta.id_plan')
                     ->join('ac_cobertura_extranet', 'ac_cobertura_extranet.id_plan',"=", 'ac_planes_extranet.codigo_plan')
-                    ->join('ac_colectivos', 'ac_colectivos.codigo_colectivo',"=", 'ac_contratos.codigo_colectivo')
-                    ->join('ac_aseguradora', 'ac_aseguradora.codigo_aseguradora',"=", 'ac_colectivos.codigo_aseguradora')
                     ->join('ac_procedimientos_medicos', function($join){
                             $join->on('ac_procedimientos_medicos.codigo_examen',"=", 'ac_cobertura_extranet.id_procedimiento')
                                  ->on('ac_procedimientos_medicos.codigo_especialidad',"=", 'ac_cobertura_extranet.id_especialidad')
@@ -95,12 +93,10 @@ class SelectController  extends Controller{
                     })
                     ->select('tipo_examen','ac_procedimientos_medicos.id'); // +++++++ array(StdClass)
             }else{
-                $coberturas = DB::table('ac_contratos')
-                    ->where([['codigo_contrato', '=', \Input::get('contrato')]])
-                    ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_contratos.codigo_plan')
+                $coberturas = DB::table('ac_cuenta')
+                    ->where([['codigo_cuenta', '=', \Input::get('contrato')]])
+                    ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuenta.id_plan')
                     ->join('ac_cobertura_extranet', 'ac_cobertura_extranet.id_plan',"=", 'ac_planes_extranet.codigo_plan')
-                    ->join('ac_colectivos', 'ac_colectivos.codigo_colectivo',"=", 'ac_contratos.codigo_colectivo')
-                    ->join('ac_aseguradora', 'ac_aseguradora.codigo_aseguradora',"=", 'ac_colectivos.codigo_aseguradora')
                     ->join('ac_procedimientos_medicos', function($join){
                             $join->on('ac_procedimientos_medicos.codigo_examen',"=", 'ac_cobertura_extranet.id_procedimiento')
                                  ->on('ac_procedimientos_medicos.codigo_especialidad',"=", 'ac_cobertura_extranet.id_especialidad')

@@ -71,9 +71,10 @@ class TypesProfile extends Model {
 
         $results=$this->select("types_profile.id")
                 ->join("submodules","types_profile.id_module","=","submodules.id")
-                ->whereRaw("('{$this->url}' like '%'||url2 or '{$this->url}' like '%'||url3 or '{$this->url}' like '%'||url4)")
+                ->whereRaw("('{$this->url}' like '%'||url or '{$this->url}' like '%'||url2 or '{$this->url}' like '%'||url3 or '{$this->url}' like '%'||url4)")
                 ->where("id_type","=",$this->id_type)->get();
-//dd()
+                //echo $results->count();die();
+               // dd($results);
         if($results->count()>0)
         {
             //dd("aqui");

@@ -8,17 +8,18 @@
         <table class="table table-bordered table-striped table-hover table-responsive">
             <thead>
                 <tr>
-                    <th>Cédula</th><th>Nombre</th><th>Tipo</th><th>Cobertura del Plan</th><th>Colectivo</th><th>Aseguradora</th>
+                
+                    <th>Cédula</th>
+                    <th>Nombre</th>
+                    <th>Plan</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>{{ $beneficiario['cedula_afiliado'] }}</td>
                     <td>{{ $beneficiario['nombre_afiliado'] }}</td>
-                    <td>{{ $beneficiario['tipo_afiliado'] }}</td>
                     <td>{{ $beneficiario['plan'] }}</td>
-                    <td>{{ $beneficiario['colectivo'] }}</td>
-                    <td>{{ $beneficiario['aseguradora'] }}</td>
+                    
                 </tr>
             </tbody>
         </table>
@@ -169,8 +170,10 @@
                 }
             }
             $( "#codigo_proveedor" ).autocomplete({
+                
                 delay: 0,
                 source: function(request, response){
+                    
                     if($('#codigo_especialidad').val() !== "" && $('#codigo_servicio').val() !== "" && $('#procedimiento_medico').val() !== ""){
                         $.ajax( {
                           url       : "{{url('selectProveedores')}}",
@@ -203,6 +206,7 @@
                 }
             })
             .autocomplete( "instance" )._renderItem = function( ul, item ) {
+                //alert("")
                     return $( "<li>" )
                     .append( "<div>" + item.nombre + "<br></div>" )
                     .appendTo( ul );
