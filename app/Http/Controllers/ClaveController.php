@@ -152,6 +152,7 @@ class ClaveController extends Controller{
                     $this->validate($request,['cedula' => 'required|numeric|']);                    
                     $afiliadoIni = AcAfiliado::where('cedula', '=', $request->cedula)->firstOrFail();
                 }catch(ModelNotFoundException $e){  // catch(Exception $e) catch any exception
+                	//$afiliadoIni=new \stdClass();
                 	$afiliadoIni=new \stdClass();
                 	$afiliadoIni->cedula_titular=0;
                     //dd(get_class_methods($e)); // lists all available methods for exception object
