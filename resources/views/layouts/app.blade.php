@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--[if IE 9]> <html class="no-js lt-ie10" lang="en"> <![endif]-->
-<!--[if gt IE 9]><!--> 
+<!--[if gt IE 9]><!-->
 <html class="no-js" lang="en"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
@@ -12,7 +12,7 @@
         <meta name="description" content="@yield('description')" />
         <meta name="keywords" content="@yield('keywords')" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
+
         <!-- Icons -->
         <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
         <link rel="shortcut icon" href="img/favicon.png">
@@ -44,7 +44,7 @@
         <!-- Modernizr (browser feature detection library) -->
         <script src="{{ asset('plugins/modernizr/modernizr.min.js') }}"></script>
     </head>
-    <?php 
+    <?php
 if(is_object(Auth::user()))
 {
 ?>
@@ -70,9 +70,9 @@ if(is_object(Auth::user()))
             if(data.permiso==false)
             {
                 //alert("accesso denegado a este módulo");
-              ///  location.href="/atiempon/public/Seguridad/nopermiso";              
+              ///  location.href="/atiempon/public/Seguridad/nopermiso";
             }
-      
+
         });
     }
     </script>
@@ -99,7 +99,7 @@ if(is_object(Auth::user()))
             <!-- END Preloader -->
 
             <div id="page-container" class="sidebar-partial sidebar-visible-lg sidebar-no-animations">
-                
+
                 <!-- Start Sidebar -->
                 @include('partials.sidebar')
                 <!-- End Sidebar -->
@@ -116,7 +116,7 @@ if(is_object(Auth::user()))
                         <!-- Page Header -->
                         @yield('breadcrumb')
                         <!-- END Page Header -->
-                        
+
                             <!--  Page Content -->
                             <div class="row">
 
@@ -140,7 +140,7 @@ if(is_object(Auth::user()))
                                     </ul>
                                 @endif
 
-                                @yield('content') 
+                                @yield('content')
 
                             </div>
                             <!-- END Page Content -->
@@ -155,7 +155,6 @@ if(is_object(Auth::user()))
             </div>
             <!-- END Page Container -->
         </div>
-<<<<<<< Updated upstream
         <!-- END Page Wrapper -->
 
         <!-- Scroll to top link, initialized in js/app.js - scrollToTop() -->
@@ -167,7 +166,7 @@ if(is_object(Auth::user()))
         <script src="{{ asset('plugins/metisMenu/metisMenu.js') }}"></script>
         <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/plugins.js') }}"></script>
-        <script src="{{ asset('plugins/parsley-js/parsley.min.js') }}"></script> 
+        <script src="{{ asset('plugins/parsley-js/parsley.min.js') }}"></script>
         <script src="{{ asset('js/app.js') }}"></script>
         {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
         <!-- Custom default scripts for plugins -->
@@ -176,11 +175,11 @@ if(is_object(Auth::user()))
         @yield('script')
     </body>
 </html>
-=======
+
     </div>
     <!-- /#wrapper -->
     <!-- JavaScripts -->
-    
+
    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
     <!-- BOOTSTRAP -->
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
@@ -203,8 +202,8 @@ if(is_object(Auth::user()))
 
 <link rel="stylesheet"
     href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
-    
-    
+
+
 
 
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
@@ -214,4 +213,3 @@ if(is_object(Auth::user()))
     @yield('script')
 </body>
 </html>
->>>>>>> Stashed changes
