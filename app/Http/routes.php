@@ -96,8 +96,6 @@ Route::group(['middleware' => ['auth']], function () {
             'as'   => 'funerario.modify' 
         ]);
 
-    
-
     Route::post('funerario/store', [
             'uses' => 'FunerarioController@store',
             'as'   => 'funerario.store' 

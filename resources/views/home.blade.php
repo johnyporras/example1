@@ -12,7 +12,7 @@
             <!-- END Main Title -->
 
             <!-- Top Stats -->
-            <div class="col-md-8 col-lg-6 borde">
+            <div class="col-md-8 col-lg-6">
 
                 <div class="row text-center">
                     <div class="col-md-6 col-lg-offset-2">
@@ -23,7 +23,7 @@
                         </h3>
                     </div>
 
-                    <div class="col-md-6 col-lg-4 borde">
+                    <div class="col-md-6 col-lg-4">
                         <h3 class="animation-hatch">
                             <span><i class="fa fa-clock-o"></i></span>
                             <span class="clock-hours"></span> :
@@ -40,7 +40,8 @@
         </div>
     </div>
     <!-- For best results use an image with a resolution of 2560x248 pixels (You can also use a blurred image with ratio 10:1 - eg: 1000x100 pixels - it will adjust and look great!) -->
-   	<img src="{{ url('images/dashboard_header.jpg') }}" alt="header image" class="animation-pulseSlow">
+    <!--
+   	<img src="{{ url('images/dashboard_header.jpg') }}" alt="header image" class="animation-pulseSlow"> -->
 </div>
 @endsection
 

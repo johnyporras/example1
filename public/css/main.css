@@ -896,9 +896,14 @@ a.sidebar-title:focus {
 
 .content-header-media {
     position: relative;
-    height: 248px;
+    height: 100vh !important;
     overflow: hidden;
     border-top-color: #222222;
+    background: url(../images/dashboard_header.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .content-header-media .header-section {
