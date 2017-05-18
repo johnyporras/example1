@@ -56,6 +56,15 @@ class AcAfiliado extends Model {
         */
     
     /**
+     * Get the tipo for the Afiliado.
+     */  
+    public function acTipoAfiliado() 
+    {
+        return $this->belongsTo(\App\Models\AcTipoAfiliado::class, 'tipo_afiliado', 'id');
+    }
+
+    
+    /**
      * Get the cuenta for the Afiliado.
      */
     public function cuenta()

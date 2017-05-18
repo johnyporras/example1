@@ -7,31 +7,31 @@
         <div class="row">
             <!-- Main Title (hidden on small devices for-->
             <div class="col-md-4 col-lg-6">
-                <h1>Bienvenido <strong>{{ Auth::user()->name }}</strong></h1>
+                <h3>Bienvenido <strong>{{ Auth::user()->name }}</strong></h3>
             </div>
             <!-- END Main Title -->
 
             <!-- Top Stats -->
-            <div class="col-md-8 col-lg-6">
+            <div class="col-md-8 col-lg-6 borde">
 
                 <div class="row text-center">
                     <div class="col-md-6 col-lg-offset-2">
-                        <h2 class="animation-hatch">
+                        <h3 class="animation-hatch">
                            <span><i class="fa fa-calendar"></i></span> 
                            <span class="clock-date"></span>
                           <!--  <br><small><i class="fa fa-calendar"></i> <b>Caracas</b></small> -->
-                        </h2>
+                        </h3>
                     </div>
 
-                    <div class="col-md-6 col-lg-4">
-                        <h2 class="animation-hatch">
+                    <div class="col-md-6 col-lg-4 borde">
+                        <h3 class="animation-hatch">
                             <span><i class="fa fa-clock-o"></i></span>
                             <span class="clock-hours"></span> :
 				            <span class="clock-minutes"></span> :
 				            <span class="clock-seconds"></span> 
 				            <span class="clock-ampm"></span>
                 			<!-- <br><small><i class="fa fa-clock-o"></i> <b>Caracas</b></small> -->
-                        </h2>
+                        </h3>
                     </div>                     
                 </div>
 

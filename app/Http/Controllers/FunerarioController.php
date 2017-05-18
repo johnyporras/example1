@@ -31,7 +31,7 @@ class FunerarioController extends Controller
      */
     public function index(Request $request)
     {
-        return 'Por realizar';
+        return view('funerario.index');
     }
 
     /**
@@ -68,6 +68,10 @@ class FunerarioController extends Controller
 
     public function create()
     {
+        //dd($cedula);
+
+       // $afiliado = AcAfiliado::where('cedula', '=', $cedula)->first();
+       
         //Creo array de dias
         $dias = [];
         // leno el arra de dias

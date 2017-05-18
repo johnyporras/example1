@@ -15,15 +15,12 @@ class CreateAcCuentasTable extends Migration
         Schema::create('ac_cuenta', function (Blueprint $table) {
             $table->increments('id');
             $table->string('codigo_cuenta',30)->unique();
-            $table->date('fecha_registro');
+            $table->date('fecha');
             $table->enum('estatus', ['Activo', 'Pendiente', 'Suspendido', 'Anulado'])->default('Pendiente');
             $table->integer('producto_id')->unsigned();
-            $table->integer('plan_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
                 $table->foreign('producto_id')->references('id')->on('ac_producto')
-                ->onUpdate('cascade')->onDelete('cascade');
-                $table->foreign('plan_id')->references('id')->on('ac_estados')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
     }

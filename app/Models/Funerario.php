@@ -43,7 +43,7 @@ class Funerario extends Model
         'doc_acta',
         'creador',
         'deleted_at'
-    ];
+    ]; 
 
     /**
      * Relación can tabla de funerario_detalle

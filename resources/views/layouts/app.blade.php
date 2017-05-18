@@ -31,11 +31,19 @@
         <!-- Bootstrap is included in its original form, unaltered -->
         <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('plugins/jquery-ui/jquery-ui.min.css') }}">
+        
+        <!-- QUITAR CODIGO APLICAR SOLO EN LAS PAGINAS A UTILIZAR -->
+        <link rel="stylesheet"
+    href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+        <!-- QUITAR CODIGO APLICAR SOLO EN LAS PAGINAS A UTILIZAR -->
+
+        <link rel="stylesheet" href="{{ asset('plugins/bootstrap-treeview/bootstrap-treeview.min.js') }}">
         <!-- Related styles of various icon packs and plugins -->
         <link rel="stylesheet" href="{{ asset('css/plugins.css') }}">
         <!-- Custom default Styles for plugins -->
         @stack('styles')
         <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+        
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
         <link rel="stylesheet" href="{{ asset('css/atiempo.css') }}">
 
@@ -165,51 +173,21 @@ if(is_object(Auth::user()))
         <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('plugins/metisMenu/metisMenu.js') }}"></script>
         <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('js/plugins.js') }}"></script>
+        <script src="{{ asset('plugins/typeahead/typeahead.bundle.js') }}"></script>
+        <script src="{{ asset('plugins/bootstrap-treeview/bootstrap-treeview.min.js') }}"></script>
+        
+        <!-- QUITAR CODIGO APLICAR SOLO EN LAS PAGINAS A UTILIZAR -->
+        <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
         <script src="{{ asset('plugins/parsley-js/parsley.min.js') }}"></script>
-        <script src="{{ asset('js/app.js') }}"></script>
-        {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
-        <!-- Custom default scripts for plugins -->
+        <script src="{{ asset('plugins/parsley-js/i18n/es.js') }}"></script>
+        <!-- QUITAR CODIGO APLICAR SOLO EN LAS PAGINAS A UTILIZAR -->
+        
+        <script src="{{ asset('js/plugins.js') }}"></script>
         @stack('scripts')
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/clock.js') }}"></script>
         <!-- Custom scripts -->
         @yield('script')
     </body>
-</html>
-
-    </div>
-    <!-- /#wrapper -->
-    <!-- JavaScripts -->
-
-   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
-    <!-- BOOTSTRAP -->
-    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
-    <script src="{{url('/')}}/bootstrap/js/bootstrap.min.js"></script>
-    <!--Jquery-ui-->
-    <script src="{{url('/')}}/js/jquery-ui.min.js"></script>
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="{{url('/')}}/js/metisMenu.min.js"></script>
-    <script src="{{url('/')}}/js/sb-admin-2.js"></script>
-    <script src="{{url('/')}}/js/parsley.min.js"></script>
-    <script src="{{url('/')}}/js/i18n/es.js"></script>
-    <script src="{{url('/')}}/js/typeahead.bundle.js"></script>
-    <script src="{{url('/')}}/js/bootstrap-treeview.js"></script>
-
-
-
-<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-<script
-    src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
-
-<link rel="stylesheet"
-    href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
-
-
-
-
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
-    <!-- Custom default scripts for plugins -->
-    @stack('scripts')
-    <!-- Custom scripts -->
-    @yield('script')
-</body>
 </html>

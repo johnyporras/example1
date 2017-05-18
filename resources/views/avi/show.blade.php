@@ -20,18 +20,38 @@
 
 @section('content')
 <div class="col-xs-12 block">
-    <div class="row">
-        <div class="col-xs-12">
-            <p><a href="{{ url('/avi/lista') }}" title="Listado Solicitudes" class="btn btn-success"><span class="pr5"><i class="fa fa-table"></i></span> Listado</a></p>
-        </div>
-    </div> <!-- row -->
+   <div class="row">
+      <div class="col-xs-12">
+         <p><a href="{{ url('/avi/lista') }}" title="Listado Solicitudes" class="btn btn-success"><span class="pr5"><i class="fa fa-table"></i></span> Listado</a></p>
+      </div>
+   </div> <!-- row -->
 
-    <div class="row">
-        <div class="col-xs-12">
-            <h2 class="pt10 pb10 m0">Solicitud: {{ strtoupper($solicitud->codigo_solicitud) }}</h2>
-        </div>
-    </div> <!-- row -->
+   <div class="row">
+      <div class="col-xs-12">
+         <h2 class="pt10 pb10 mb10">Solicitud: {{ strtoupper($solicitud->codigo_solicitud) }}</h2>
+      </div>
+
+      <div class="col-md-6">
+            <div class="panel panel-warning">
+               <!-- Default panel contents -->
+               <div class="panel-heading">
+                     <span class="pr-1"><i class="fa fa-user"></i></span> Datos Solicitud
+               </div>
+                 <!-- List group -->
+               <ul class="list-group">
+                     <li class="list-group-item"><span class="text-warning"><b>Cédula:</b></span> {{ $solicitud->cedula_afiliado }}</li>
+                     <li class="list-group-item"><span class="text-warning"><b>Contrato:</b></span> {{ $solicitud->codigo_contrato }} </li>
+                     <li class="list-group-item"><span class="text-warning"><b>Edad:</b></span> {{ $solicitud->edad_afiliado }}</li>
+                     <li class="list-group-item"><span class="text-warning"><b>observaciones:</b></span> {{ $solicitud->observaciones }}</li>
+               </ul>
+            </div>
+      </div>
+   </div> <!-- row -->
 </div>
+
+
+
+<div class="clearfix"></div>
 
 <div class="col-xs-12">
     <div class="row">
