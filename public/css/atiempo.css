@@ -549,7 +549,6 @@ fieldset[disabled] .btn-primary.active:focus {
 }
 
 .sp-text {
-    top: 30%;
     position: absolute;
     width: 70%;
     margin-left:10px; 
@@ -561,6 +560,14 @@ fieldset[disabled] .btn-primary.active:focus {
     -moz-transform: translateX(200%);
     -ms-transform: translateX(200%);
     transform: translateX(200%);
+}
+
+.top15{
+    top: 15%;
+}
+
+.top30{
+    top: 30%;
 }
 
 .btn-icon:hover .sp-text {

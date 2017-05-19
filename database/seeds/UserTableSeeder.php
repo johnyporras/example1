@@ -19,8 +19,7 @@ class UserTableSeeder extends Seeder
           'password' => bcrypt('usuario'),
           'department' => 'Sistemas',
           'type' => '0',
-          'user' => 'germansango',
-          'proveedor' => '0'
+          'user' => 'germansango'
         ];
 
         DB::table('users')->insert($user);

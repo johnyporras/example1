@@ -79,7 +79,10 @@ Route::group(['middleware' => ['auth']], function () {
         'as'   => 'furnerario.files' 
     ]);
 
-    // rutas para crear las solicitudes
+    // Rutas para la lista de solicitudes
+    Route::get('api/funerarios', 'FunerarioController@funerarios');
+
+     // rutas para crear las solicitudes
     Route::get('funerario', [
             'uses' => 'FunerarioController@index',
             'as'   => 'funerario.index' 
@@ -91,28 +94,21 @@ Route::group(['middleware' => ['auth']], function () {
             'as'   => 'funerario.create' 
         ]);
 
-    Route::post('funerario/modify', [
-            'uses' => 'FunerarioController@modify',
-            'as'   => 'funerario.modify' 
+    // rutas para eliminar detalle solicitudes
+    Route::get('funerario/delete/{id}', [
+            'uses' => 'FunerarioController@delete',
+            'as'   => 'funerario.delete' 
         ]);
 
-    Route::post('funerario/store', [
-            'uses' => 'FunerarioController@store',
-            'as'   => 'funerario.store' 
+    // rutas para eliminar solicitudes
+    Route::get('funerario/{id}/destroy', [
+            'uses' => 'FunerarioController@destroy',
+            'as'   => 'funerario.destroy' 
         ]);
-
-    // Rutas para la lista de solicitudes
-    Route::get('api/funerarios', 'FunerarioController@funerarios');
 
     Route::get('funerario/lista', [
             'uses' => 'FunerarioController@lista',
             'as'   => 'funerario.lista' 
-        ]);
-
-    // rutas para el index de las solicitudes
-    Route::get('funerario', [
-            'uses' => 'FunerarioController@index',
-            'as'   => 'funerario.index' 
         ]);
 
     // Rutas para listar por cada una de la solicitudes
@@ -132,28 +128,24 @@ Route::group(['middleware' => ['auth']], function () {
             'as'   => 'funerario.update' 
         ]);
 
+    Route::post('funerario/modify', [
+            'uses' => 'FunerarioController@modify',
+            'as'   => 'funerario.modify' 
+        ]);
+
+    Route::post('funerario/store', [
+            'uses' => 'FunerarioController@store',
+            'as'   => 'funerario.store' 
+        ]);
 
     Route::post('funerario/store/item', [
             'uses' => 'FunerarioController@save',
             'as'   => 'funerario.save' 
         ]);
 
-    // rutas para eliminar solicitudes
-    Route::get('funerario/delete/{id}', [
-            'uses' => 'FunerarioController@delete',
-            'as'   => 'funerario.delete' 
-        ]);
-
-    // rutas para eliminar solicitudes
-    Route::get('funerario/{id}/destroy', [
-            'uses' => 'FunerarioController@destroy',
-            'as'   => 'funerario.destroy' 
-        ]);
-
-    // rutas para eliminar solicitudes
+    // rutas para el perfil
    Route::resource('profile', 'ProfileController');
 
-    
 });
 /*=====================================================*/
 

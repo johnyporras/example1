@@ -15,7 +15,7 @@ class TamanoTableSeeder extends Seeder
             ['titulo' => 'Pequeño', 'descripcion' => '0 a 10kG'],
             ['titulo' => 'Mediano', 'descripcion' => '10.1 a 20KG'],
             ['titulo' => 'Grande', 'descripcion' => '20.1 a 30KG'],
-            ['titulo' => 'Gigante', 'descripcion' => '30.1 KG o más'],
+            ['titulo' => 'Gigante', 'descripcion' => '30.1 KG o más']
         ];
 
         DB::table('tamanos')->insert($tamanos);

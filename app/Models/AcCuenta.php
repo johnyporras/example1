@@ -34,7 +34,7 @@ class AcCuenta extends Model
     	'codigo_cuenta',
         'fecha_registro',
         'estatus',
-        'deleted_at',
+        'deleted_at'
     ];
 
     /**

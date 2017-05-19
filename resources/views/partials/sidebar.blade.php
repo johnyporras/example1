@@ -24,7 +24,7 @@
         <!-- Sidebar Content -->
         <div class="sidebar-content">
             <!-- Brand -->
-            <a href="index.html" class="sidebar-brand1">
+            <a href="{{ url('/') }}" class="sidebar-brand1">
                 <img src="{{ url('images/logo.png') }}" class="img-responsive center" width="100" alt="Logo">
             </a>
             <!-- END Brand -->
@@ -32,7 +32,7 @@
             <!-- User Info -->
             <div class="sidebar-section sidebar-user clearfix sidebar-nav-mini-hide">
                 <div class="sidebar-user-avatar">
-                    <a href="index.html">
+                    <a href="{{ url('/') }}">
                         <img src="{{ url('images/avatar.jpg') }}" alt="avatar">
                     </a>
                 </div>
@@ -70,7 +70,7 @@
                             <i class="fa fa-circle fa-stack-2x"></i>
                             <span class="text-primary"><i class="glyphicon glyphicon-home fa-stack-1x"></i></span>
                         </span>
-                        <span class="sp-text">Inicio</span>
+                        <span class="sp-text top30">Inicio</span>
                     </a>
                 </li>
                 @foreach ($opciones_perfil as $opcion_perfil)
@@ -90,7 +90,7 @@
                                     <i class="{{ $opcion_perfil->icon }} fa-stack-1x"></i>
                                 </span>
                             </span>
-                            <span class="sp-text">{{ $opcion_perfil->mdescription }}</span>
+                            <span class="sp-text {{ strlen(strip_tags($opcion_perfil->mdescription)) > 26 ? "top15" : "top30" }}" >{{ $opcion_perfil->mdescription }}</span>
                             <i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i>
                         </a>
                         <!-- .nav-second-level -->

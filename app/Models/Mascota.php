@@ -36,7 +36,8 @@ class Mascota extends Model
         'color_pelage',
         'edad',
         'fecha',
-        'tipo'
+        'tipo',
+        'deleted_at'
     ];
 
     /**

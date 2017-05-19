@@ -29,7 +29,7 @@
 @section('breadcrumb')
     <div class="content-header">
         <div class="header-section">
-            <h1><i class="gi gi-cardio"></i> Modulo Funerario <br> <small class="text-white">subtitle</small></h1>
+            <h1><i class="glyphicon glyphicon-king"></i> Modulo Funerario <br> <small class="text-white">subtitle</small></h1>
         </div>
     </div>
     <ul class="breadcrumb breadcrumb-top">
@@ -106,28 +106,25 @@
     </div> <!-- .row -->
 </div>
 
-<div class="col-xs-12">
-    <div class="row">
-        <div class="col-xs-12">
-            <h2>Presupuestos</h2>
-            <hr>
-        </div>
-        <div class="col-xs-12">
-            <p>
-              <button
-                data-toggle="modal" 
-                data-target="#fmodal"
-                title="Nuevo Presupuesto" 
-                class="btn btn-info btn-sm">
-                <span class="pr5"><i class="fa fa-plus"></i></span> Presupuesto
-            </button>
-            </p>
-        </div>
-    </div> <!-- row -->
-</div>
-
-<div class="col-xs-12">
+<div class="col-xs-12 block">
    <div class="row">
+
+      <div class="col-xs-12">
+         <h2>Presupuestos</h2>
+         <hr>
+      </div>
+      <div class="col-xs-12">
+         <p>
+            <button
+               data-toggle="modal" 
+               data-target="#fmodal"
+               title="Nuevo Presupuesto" 
+               class="btn btn-info btn-sm">
+               <span class="pr5"><i class="fa fa-plus"></i></span> Presupuesto
+            </button>
+         </p>
+      </div>
+
       <div class="col-xs-12">
 
         	@if (count($solicitud->presupuestos) > 0)

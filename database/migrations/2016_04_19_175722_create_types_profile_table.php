@@ -19,6 +19,9 @@ class CreateTypesProfileTable extends Migration {
 			$table->integer('id_module');
 			$table->timestamps();
 			$table->softDeletes();
+
+				$table->foreign('id_type', 'user_types_profile_fk')->references('id')->on('user_types')->onUpdate('CASCADE')->onDelete('RESTRICT');
+				$table->foreign('id_module', 'user_types_submodules_fk')->references('id')->on('submodules')->onUpdate('CASCADE')->onDelete('RESTRICT');
 		});
 	}
 

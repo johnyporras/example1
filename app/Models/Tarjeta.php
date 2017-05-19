@@ -34,5 +34,6 @@ class Tarjeta extends Model
     	'titulo',
         'codigo_tarjeta',
         'activada',
+        'deleted_at'
     ];
 }

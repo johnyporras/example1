@@ -12,7 +12,7 @@ class CreateAcProveedoresTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('ac_proveedores', function(Blueprint $table)
+		Schema::create('ac_proveedores_extranet', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->string('codigo_proveedor', 30)->unique();
@@ -41,7 +41,7 @@ class CreateAcProveedoresTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('ac_proveedores');
+		Schema::drop('ac_proveedores_extranet');
 	}
 
 }

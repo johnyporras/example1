@@ -18,7 +18,6 @@ class CreateAviTable extends Migration
             $table->string('codigo_solicitud',30)->unique();
             $table->integer('codigo_contrato');
             $table->string('cobertura_monto',20);
-            $table->integer('edad_afiliado'); 
             $table->string('nro_cronograma',20);
             $table->text('observaciones');
             $table->integer('creador'); 

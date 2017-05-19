@@ -66,31 +66,38 @@ class FunerarioController extends Controller
         ->make(true);
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        //dd($cedula);
-
-       // $afiliado = AcAfiliado::where('cedula', '=', $cedula)->first();
+        // Selecciono el Afiliado
+        $afiliado = AcAfiliado::where('cedula', '=', $request->cedula)->first();
        
-        //Creo array de dias
-        $dias = [];
-        // leno el arra de dias
-        for ($i = 1; $i <= 30 ; $i++) {
-            $dias[$i] = $i;
-        }
+        //dd($afiliado);
 
-        // Cargo los estados
-        $estados = AcEstado::orderBy('es_desc', 'ASC')
-                        ->pluck('es_desc', 'es_id');
-        //cargo los metodos de pago
-        $metodos = MetodoPago::orderBy('metodo', 'ASC')
-                        ->pluck('metodo', 'id');
-        //cargo los proveedores funerarios
-        $proveedores = ProveedorFunerario::orderBy('razon_social', 'ASC')
-                        ->pluck('razon_social', 'id');
-        
-        //retorno la vista para el formulario
-        return view('funerario.create', compact('estados','metodos','dias','proveedores'));
+        if ($afiliado) {
+
+            //Creo array de dias
+            $dias = [];
+            // leno el arra de dias
+            for ($i = 1; $i <= 30 ; $i++) {
+                $dias[$i] = $i;
+            }
+
+            // Cargo los estados
+            $estados = AcEstado::orderBy('es_desc', 'ASC')
+                            ->pluck('es_desc', 'es_id');
+            //cargo los metodos de pago
+            $metodos = MetodoPago::orderBy('metodo', 'ASC')
+                            ->pluck('metodo', 'id');
+            //cargo los proveedores funerarios
+            $proveedores = ProveedorFunerario::orderBy('razon_social', 'ASC')
+                            ->pluck('razon_social', 'id');
+            
+            //retorno la vista para el formulario
+            return view('funerario.create', compact('estados','metodos','dias','proveedores'));
+            
+        } else {
+            return back()->with('respuesta', '¡No existe el Afiliado!');
+        }
     }
 
     /**

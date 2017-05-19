@@ -18,8 +18,10 @@ class CreateAcColectivosTable extends Migration {
 			$table->integer('codigo_colectivo')->unique('uac_codigo_colectivo');
 			$table->string('nombre', 100)->nullable();
 			$table->integer('codigo_aseguradora')->unsigned();
-                        $table->timestamps();
-                        $table->softDeletes();
+            $table->timestamps();
+            $table->softDeletes();
+
+            	$table->foreign('codigo_aseguradora', 'ac_colectivos_ibfk_1')->references('codigo_aseguradora')->on('ac_aseguradora')->onUpdate('CASCADE')->onDelete('RESTRICT');
 		});
 	}
 

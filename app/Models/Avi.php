@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Avi extends Model 
 {
-
 	/**
 	 * Para usar borrado suave en la base de datos*
 	 */
@@ -32,11 +31,9 @@ class Avi extends Model
      * @var array
      */
     protected $fillable = [
-    	'codigo_solicitud',
-        'cedula_afiliado', 
+    	'codigo_solicitud', 
         'codigo_contrato', 
-        'cobertura_monto',
-        'edad_afiliado',  
+        'cobertura_monto', 
         'nro_cronograma',  
         'observaciones',     
         'creador',

@@ -28,5 +28,5 @@ class AcEstado extends Model
      *
      * @var array
      */
-    protected $fillable = ['es_id', 'es_desc', 'deleted_at'];
+    protected $fillable = ['id', 'estados', 'deleted_at'];
 }

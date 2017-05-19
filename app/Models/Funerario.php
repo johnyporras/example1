@@ -68,7 +68,7 @@ class Funerario extends Model
      * @return [type] [description]
      */
     public function estado() {
-        return $this->belongsTo(\App\Models\AcEstado::class, 'estado_id', 'es_id');
+        return $this->belongsTo(\App\Models\AcEstado::class);
     }
 
     /**

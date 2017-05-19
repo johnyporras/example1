@@ -22,7 +22,7 @@
 @section('breadcrumb')
     <div class="content-header">
         <div class="header-section">
-            <h1><i class="gi gi-cardio"></i> Modulo Funerario <br> <small class="text-white">subtitle</small></h1>
+            <h1><i class="glyphicon glyphicon-king"></i> Modulo Funerario <br> <small class="text-white">subtitle</small></h1>
         </div>
     </div>
     <ul class="breadcrumb breadcrumb-top">

@@ -39,8 +39,13 @@ class CreateAcClavesTable extends Migration {
 			$table->integer('tipo_afiliado')->nullable();
 			$table->integer('cantidad_servicios')->nullable();
 			$table->time('hora_autorizado')->nullable();
-                        $table->timestamps();
-                        $table->softDeletes();
+            $table->timestamps();
+            $table->softDeletes();
+
+            	$table->foreign('cedula_afiliado', 'ac_claves_ibfk_1')->references('cedula')->on('ac_afiliados')->onUpdate('CASCADE')->onDelete('RESTRICT');
+				$table->foreign('codigo_proveedor', 'ac_claves_ibfk_2')->references('codigo_proveedor')->on('ac_proveedores_extranet')->onUpdate('CASCADE')->onDelete('RESTRICT');
+				$table->foreign('codigo_especialidad', 'ac_claves_ibfk_3')->references('codigo_especialidad')->on('ac_especialidades_extranet')->onUpdate('CASCADE')->onDelete('RESTRICT');
+				$table->foreign('codigo_servicio', 'ac_claves_ibfk_4')->references('codigo_servicio')->on('ac_servicios_extranet')->onUpdate('CASCADE')->onDelete('RESTRICT');
 		});
 	}
 

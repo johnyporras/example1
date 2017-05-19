@@ -14,10 +14,10 @@ class CreateAcEstadosTable extends Migration {
 	{
 		Schema::create('ac_estados', function(Blueprint $table)
 		{
-			$table->integer('es_id', true);
-			$table->string('es_desc');
-                    $table->timestamps();
-                    $table->softDeletes();
+			$table->increments('id');
+			$table->string('estado');
+                $table->timestamps();
+                $table->softDeletes();
 		});
 	}
 

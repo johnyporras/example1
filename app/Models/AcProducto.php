@@ -26,7 +26,7 @@ class AcProducto extends Model
     protected $fillable = [
     	'nombre',
         'costo',
-        'deleted_at',
+        'deleted_at'
     ];
 
     /**

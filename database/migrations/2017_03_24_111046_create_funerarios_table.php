@@ -28,7 +28,7 @@ class CreateFunerariosTable extends Migration
             $table->timestamps();
             $table->softDeletes();
                 $table->foreign('estado_id')
-                        ->references('es_id')->on('ac_estados')
+                        ->references('id')->on('ac_estados')
                         ->onUpdate('CASCADE');
                 $table->foreign('afiliado_id')
                         ->references('id')->on('ac_afiliados')

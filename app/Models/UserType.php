@@ -11,6 +11,14 @@ class UserType extends Model {
      */
 
     protected $table = 'user_types';
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+    
     protected $fillable = ['id', 'name', 'modules', 'active', 'deleted_at'];
 
     /**

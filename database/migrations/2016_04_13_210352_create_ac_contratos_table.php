@@ -22,8 +22,10 @@ class CreateAcContratosTable extends Migration {
 			$table->integer('codigo_colectivo')->nullable()->index('idx2_codigo_colectivo');
 			$table->integer('codigo_plan')->nullable();
 			$table->index(['codigo_contrato','codigo_colectivo'], 'idx_2');
-                        $table->timestamps();
-                        $table->softDeletes();
+            $table->timestamps();
+            $table->softDeletes();
+            
+                $table->foreign('cedula_afiliado', 'ac_contratos_ibfk_1')->references('cedula')->on('ac_afiliados')->onUpdate('CASCADE')->onDelete('RESTRICT');
 		});
 	}
 

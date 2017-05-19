@@ -12,7 +12,7 @@ class CreateTamanosTable extends Migration
      */
     public function up()
     {
-        Schema::create('tamano', function (Blueprint $table) {
+        Schema::create('tamanos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('titulo')->nullable();
             $table->string('descripcion')->nullable();

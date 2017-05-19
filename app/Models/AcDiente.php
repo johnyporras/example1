@@ -10,7 +10,5 @@ class AcDiente extends Model {
 
     protected $table = 'ac_diente';
     protected $fillable = ['id', 'descripcion', 'deleted_at'];
-
-
-
+    
 }

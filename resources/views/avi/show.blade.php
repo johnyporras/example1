@@ -46,25 +46,16 @@
                </ul>
             </div>
       </div>
+      <div class="clearfix"></div>
    </div> <!-- row -->
-</div>
-
-
-
-<div class="clearfix"></div>
-
-<div class="col-xs-12">
-    <div class="row">
-        <div class="col-xs-12">
-            <h2 class="text-center">Intinerario</h2>
-            <hr>
-        </div>
-    </div> <!-- row -->
 </div>
 
 <div class="col-xs-12 block">
     <div class="row">
         <div class="col-xs-12">
+
+        <h2 class="text-center">Intinerario</h2>
+            <hr>
 
         @if (count($solicitud->destinos) > 0)
           <ul class="timeline">

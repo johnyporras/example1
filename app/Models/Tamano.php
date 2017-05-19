@@ -33,7 +33,7 @@ class Tamano extends Model
     protected $fillable = [
     	'titulo',
         'descripcion',
-        'deleted_at',
+        'deleted_at'
     ];
 
     /**

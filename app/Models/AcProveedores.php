@@ -15,7 +15,7 @@ class AcProveedores extends Model {
      *  Name of database
      * @var string
      */
-    protected $table = 'ac_proveedores';
+    protected $table = 'ac_proveedores_extranet';
 
     /**
      * The attributes that should be mutated to dates.
@@ -38,8 +38,8 @@ class AcProveedores extends Model {
         'telefono',  
         'email',     
         'tipo_cuenta',
-        'numero_cuenta'
-        'ciudad'
+        'numero_cuenta',
+        'ciudad',
         'deleted_at'
     ];
 

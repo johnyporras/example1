@@ -35,7 +35,7 @@ class Pago extends Model
         'monto',
         'fecha_pago',
         'estatus',
-        'deleted_at',
+        'deleted_at'
     ];
 
     /**

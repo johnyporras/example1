@@ -24,8 +24,10 @@ class CreateAcFacturasTable extends Migration {
 			$table->date('fecha_creacion')->nullable();
 			$table->integer('usuario_creador')->nullable();
 			$table->integer('status')->nullable();
-                        $table->timestamps();
-                        $table->softDeletes();
+            $table->timestamps();
+            $table->softDeletes();
+
+            	$table->foreign('clave', 'ac_facturas_ibfk_1')->references('clave')->on('ac_claves')->onUpdate('CASCADE')->onDelete('RESTRICT');
 		});
 	}
 
