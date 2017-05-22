@@ -18,12 +18,10 @@ class CreateCuentaPlanTable extends Migration
             $table->integer('plan_id')->unsigned();
             $table->double('monto')->nullable();
 
-            $table->foreign('cuenta_id')->references('id')->on('ac_cuenta')
-                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('plan_id')->references('id')->on('ac_planes_extranet')
                 ->onUpdate('cascade')->onDelete('cascade');
-
-            $table->primary(['cuenta_id', 'plan_id']);
+            $table->foreign('cuenta_id')->references('id')->on('ac_cuenta')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

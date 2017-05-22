@@ -34,7 +34,7 @@
 <div class="col-xs-12">
     <div class="row">
         <div class="col-xs-12">
-            <p><a href="{{ url('/funerario/create') }}" title="Generar otra Solicitud" class="btn btn-success btn-sm"><span class="pr5"><i class="fa fa-plus"></i></span> Generar</a></p>
+            <p><a href="{{ url('/funerario') }}" title="Generar otra Solicitud" class="btn btn-success btn-sm"><span class="pr5"><i class="fa fa-plus"></i></span> Generar</a></p>
         </div>
     </div> <!-- row -->
     <div class="row">
@@ -101,7 +101,7 @@ $(document).ready(function() {
             {data: 'id', name: 'id'},
             {data: 'codigo_solicitud', name: 'codigo_solicitud'},
             {data: 'afiliado.nombre', name: 'afiliado.nombre'},
-            {data: 'estado.es_desc'},
+            {data: 'estado.estado'},
             {data: 'ciudad', name: 'ciudad' },
             {data: 'contacto', name: 'contacto' },
             {data: 'cobertura', name: 'cobertura' },

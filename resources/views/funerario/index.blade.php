@@ -10,7 +10,7 @@
     <ul class="breadcrumb breadcrumb-top">
         <li><a href="{{ url('/') }}">Inicio</a></li>
         <li><a href="{{ url('/funerario/lista') }}">Modulo Funerario</a></li>
-        <li>Detalles</li>
+        <li>Consultar Cédula</li>
     </ul>
 @endsection
 
@@ -21,7 +21,7 @@
         <div class="form-group {{ $errors->has('cedula') ? 'has-error' : ''}}">
             {!! Form::label('cedula', 'Cédula Afiliado: ', ['class' => 'col-sm-2 control-label']) !!}
             <div class="col-sm-2">
-                {!! Form::number('cedula', Input::old('cedula'), ['class' => 'form-control', 'required' => 'required', 'min' => '0', 'placeholder' => 'Ej:12345678']) !!}
+                {!! Form::number('cedula', Input::old('cedula'), ['class' => 'form-control', 'min' => '0', 'placeholder' => 'Ej:12345678']) !!}
                 {!! $errors->first('cedula', '<p class="help-block">:message</p>') !!}
             </div>
             <div class="col-sm-2">

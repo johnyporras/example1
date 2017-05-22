@@ -68,32 +68,53 @@ class FunerarioController extends Controller
 
     public function create(Request $request)
     {
+        // valida los campos del formulario
+        $this->validate($request, [
+            'cedula' => 'required'
+        ]);
+
         // Selecciono el Afiliado
         $afiliado = AcAfiliado::where('cedula', '=', $request->cedula)->first();
-       
-        //dd($afiliado);
 
+        // valido si existe el afiliado
         if ($afiliado) {
 
-            //Creo array de dias
-            $dias = [];
-            // leno el arra de dias
-            for ($i = 1; $i <= 30 ; $i++) {
-                $dias[$i] = $i;
-            }
+            // Selecciona dias de registro
+            $fechaCuenta = $afiliado->cuenta->fecha->diffInDays();
+            // selecciono el estatus cuenta
+            $estatusCuenta = $afiliado->cuenta->estatus;
 
-            // Cargo los estados
-            $estados = AcEstado::orderBy('es_desc', 'ASC')
-                            ->pluck('es_desc', 'es_id');
-            //cargo los metodos de pago
-            $metodos = MetodoPago::orderBy('metodo', 'ASC')
-                            ->pluck('metodo', 'id');
-            //cargo los proveedores funerarios
-            $proveedores = ProveedorFunerario::orderBy('razon_social', 'ASC')
-                            ->pluck('razon_social', 'id');
-            
-            //retorno la vista para el formulario
-            return view('funerario.create', compact('estados','metodos','dias','proveedores'));
+            // Verifico que la cuenta sea mayor de 30 dias y que tenga estatus activo
+            if ($fechaCuenta >= 30 && $estatusCuenta == 'Activo') {
+                
+                // Guardo en variable la cuenta
+                $cuenta = $afiliado->cuenta;
+                // Guardo en variable el plan
+                $plan = $afiliado->cuenta->plan()->first();
+
+                //Creo array de dias
+                $dias = [];
+                // leno el arra de dias
+                for ($i = 1; $i <= 30 ; $i++) {
+                    $dias[$i] = $i;
+                }
+
+                // Cargo los estados
+                $estados = AcEstado::orderBy('estado', 'ASC')
+                                ->pluck('estado', 'id');
+                //cargo los metodos de pago
+                $metodos = MetodoPago::orderBy('metodo', 'ASC')
+                                ->pluck('metodo', 'id');
+                //cargo los proveedores funerarios
+                $proveedores = ProveedorFunerario::orderBy('razon_social', 'ASC')
+                                ->pluck('razon_social', 'id');
+                
+                //retorno la vista para el formulario
+                return view('funerario.create', compact('estados','metodos','dias','proveedores', 'cuenta','afiliado', 'plan'));
+            } else {
+
+                return back()->with('respuesta', '¡No tiene una cuenta vigente!');
+            }
             
         } else {
             return back()->with('respuesta', '¡No existe el Afiliado!');
@@ -219,6 +240,13 @@ class FunerarioController extends Controller
     {
         $solicitud = Funerario::findOrFail($id);
 
+        $afiliado = AcAfiliado::findOrFail($solicitud->afiliado_id);
+
+        // Guardo en variable la cuenta
+        $cuenta = $afiliado->cuenta;
+        // Guardo en variable el plan
+        $plan = $afiliado->cuenta->plan()->first();
+
         //cargo los proveedores funerarios
         $proveedores = ProveedorFunerario::orderBy('razon_social', 'ASC')
                         ->pluck('razon_social', 'id');
@@ -231,7 +259,7 @@ class FunerarioController extends Controller
         $valores = json_encode($valores);
 
         // Retorno la vista con la solicitud y los proveedores
-        return view('funerario.show',compact('solicitud', 'valores','proveedores'));
+        return view('funerario.show',compact('solicitud', 'valores','proveedores', 'cuenta', 'plan'));
     }
 
     public function save(Request $request)
@@ -317,15 +345,22 @@ class FunerarioController extends Controller
         // mando los datos de la solicitud
         $solicitud = Funerario::findOrFail($id);
 
+        $afiliado = AcAfiliado::findOrFail($solicitud->afiliado_id);
+
+        // Guardo en variable la cuenta
+        $cuenta = $afiliado->cuenta;
+        // Guardo en variable el plan
+        $plan = $afiliado->cuenta->plan()->first();
+
         // Cargo los estados
-        $estados = AcEstado::orderBy('es_desc', 'ASC')
-                        ->pluck('es_desc', 'es_id');
+        $estados = AcEstado::orderBy('estado', 'ASC')
+                        ->pluck('estado', 'id');
         //cargo los metodos de pago
         $metodos = MetodoPago::orderBy('metodo', 'ASC')
                         ->pluck('metodo', 'id');
         
         //retorno la vista para el formulario
-        return view('funerario.editar', compact('solicitud','estados','metodos','dias'));
+        return view('funerario.editar', compact('solicitud','estados','metodos','dias','afiliado', 'cuenta', 'plan'));
     }
 
     /**

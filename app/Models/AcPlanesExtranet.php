@@ -5,13 +5,44 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AcPlanesExtranet extends Model {
 
-    use SoftDeletes;
     /**
-     * Generated
+     * Para usar borrado suave en la base de datos*
      */
+    use SoftDeletes;
 
+    /**
+     *  Name of database
+     * @var string
+     */
     protected $table = 'ac_planes_extranet';
-    protected $fillable = ['id', 'codigo_plan', 'nombre', 'cobertura', 'orden', 'deleted_at'];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'codigo_plan',
+        'nombre',
+        'cobertura',
+        'orden',
+        'deleted_at'
+    ];
+
+    /**
+     * Get the Plan Extranet for the Cuenta.
+     */
+    public function cuenta()
+    {
+        return $this->belongsToMany(\App\Models\AcCuenta::class,'cuenta_plan', 'plan_id','cuenta_id');
+    }
 
     /**
      * Get the Coberturas for Planes.

@@ -35,7 +35,7 @@
     <ul class="breadcrumb breadcrumb-top">
         <li><a href="{{ url('/') }}">Inicio</a></li>
         <li><a href="{{ url('/funerario/lista') }}">Modulo Funerario</a></li>
-        <li>Detalles</li>
+        <li>Detalle Solicitud</li>
     </ul>
 @endsection
 
@@ -49,7 +49,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <h2 class="pt10 pb10 m0">Solicitud: {{ strtoupper($solicitud->codigo_solicitud) }}</h2>
+            <h2 class="pt10 pb10 m0">Solicitud: {{ $solicitud->codigo_solicitud }}</h2>
         </div>
     </div> <!-- row -->
 
@@ -59,14 +59,18 @@
             <div class="panel panel-info">
                 <!-- Default panel contents -->
                 <div class="panel-heading">
-                    <span class="pr-1"><i class="fa fa-plane"></i></span> Solicitud Detalles
+                    <span class="pr-1"><i class="fa fa-table"></i></span> Detalle Solicitud
                 </div>
                  <!-- List group -->
                 <ul class="list-group">
-                    <li class="list-group-item"><span class="text-primary"><b>Afiliado:</b></span> {{ $solicitud->afiliado->nombre }}</li>
-                    <li class="list-group-item"><span class="text-primary"><b>Estado:</b></span> {{ $solicitud->estado->es_desc }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Afiliado:</b></span> {{ $solicitud->afiliado->nombre }} {{ $solicitud->afiliado->apellido }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Estado:</b></span> {{ $solicitud->estado->estado }}</li>
                     <li class="list-group-item"><span class="text-primary"><b>Ciudad:</b></span> {{ $solicitud->ciudad }}</li>
                     <li class="list-group-item"><span class="text-primary"><b>Cobertura:</b></span> Bs.{{ $solicitud->cobertura}}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Metodo de pago:</b></span> {{ $solicitud->pago->metodo }}</li>
+                    @if ($solicitud->pago->id == 2)
+                    <li class="list-group-item"><span class="text-primary"><b>Plazo:</b></span> {{ $solicitud->plazo }}</li>   {{-- expr --}}
+                    @endif
                     @if ($solicitud->doc_cedula)
                     <li class="list-group-item"><span class="text-primary pr5"><b>Cedula:</b></span>
 								<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" 
@@ -102,6 +106,24 @@
                     @endif
                 </ul>
             </div>
+        </div>
+
+        <div class="col-md-6 col-lg-5 col-lg-offset-2">
+            @if (isset($cuenta))
+            <div class="panel panel-primary">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <span class="pr-1"><i class="fa fa-book"></i></span> Servicio
+                </div>
+                 <!-- List group -->
+                <ul class="list-group">
+                    <li class="list-group-item"><span class="text-primary"><b>Codigo Cuenta:</b></span> {{ $cuenta->codigo_cuenta }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Estatus:</b></span> {{ $cuenta->estatus }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Plan:</b></span> {{ $plan->nombre }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Cobertura del Plan:</b></span> {{ $plan->cobertura }}</li>
+                </ul>
+            </div>
+            @endif
         </div>
     </div> <!-- .row -->
 </div>

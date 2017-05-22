@@ -40,8 +40,47 @@
             <p><a href="{{ url('/funerario/lista') }}" title="Listado solicitudes" class="btn btn-info btn-sm"><span class="pr5"><i class="fa fa-table"></i></span> Solicitudes</a></p>
         </div>
     </div> <!-- row -->
-
 </div> <!-- .col-12 -->
+
+<div class="col-xs-12">
+    <div class="row">
+        <div class="col-md-6 col-lg-5">
+            @if (isset($afiliado))
+            <div class="panel panel-warning">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <span class="pr-1"><i class="fa fa-user"></i></span> Afiliado
+                </div>
+                 <!-- List group -->
+                <ul class="list-group">
+                    <li class="list-group-item"><span class="text-warning"><b>Cédula:</b></span> {{ $afiliado->cedula }}</li>
+                    <li class="list-group-item"><span class="text-warning"><b>Nombre:</b></span> {{ $afiliado->nombre }} {{ $afiliado->apellido }} </li>
+                    <li class="list-group-item"><span class="text-warning"><b>Edad:</b></span> {{ $afiliado->fecha_nacimiento->age }}</li>
+                    <li class="list-group-item"><span class="text-warning"><b>Sexo:</b></span> {{ ($afiliado->sexo == 'M')?'Masculino':'Femenino' }}</li>
+                </ul>
+            </div>
+            @endif 
+        </div>
+
+        <div class="col-md-6 col-lg-5 col-lg-offset-2">
+            @if (isset($cuenta))
+            <div class="panel panel-primary">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <span class="pr-1"><i class="fa fa-book"></i></span> Servicio
+                </div>
+                 <!-- List group -->
+                <ul class="list-group">
+                    <li class="list-group-item"><span class="text-primary"><b>Codigo Cuenta:</b></span> {{ $cuenta->codigo_cuenta }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Estatus:</b></span> {{ $cuenta->estatus }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Plan:</b></span> {{ $plan->nombre }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Cobertura del Plan:</b></span> {{ $plan->cobertura }}</li>
+                </ul>
+            </div>
+            @endif
+        </div>
+    </div> <!-- .row -->
+</div>
 
 <div class="col-xs-12">
     {{ Form::open(['route'=>'funerario.store', 'files' => true, 'id' => 'funerarioForm', 'class' => 'form-horizontal']) }}
@@ -457,7 +496,7 @@
 
         <div class="col-xs-12">
             <!-- Campos ocultos necesarios para cargar la solicitud -->
-            {{ Form::hidden('afiliado_id', 1) }}
+            {{ Form::hidden('afiliado_id', $afiliado->id) }}
             <hr>
         </div>
 

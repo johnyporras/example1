@@ -43,27 +43,6 @@ class AcAfiliado extends Model {
         'deleted_at'
     ];
     
-
-     /**
-     * The storage format of the model's date columns.
-     * @var string
-     */
-   /* protected $dateFormat = 'Y-m-d';
-    
-    function setFechaNacimientoAttribute($date) {
-        $this->attributes['fecha_nacimiento'] = new Carbon($date);
-    } 
-        */
-    
-    /**
-     * Get the tipo for the Afiliado.
-     */  
-    public function acTipoAfiliado() 
-    {
-        return $this->belongsTo(\App\Models\AcTipoAfiliado::class, 'tipo_afiliado', 'id');
-    }
-
-    
     /**
      * Get the cuenta for the Afiliado.
      */
@@ -78,6 +57,15 @@ class AcAfiliado extends Model {
     public function estado()
     {
         return $this->belongsTo(\App\Models\AcEstado::class);
+    }
+
+
+    /**
+     * Get the tipo for the Afiliado.
+     */  
+    public function acTipoAfiliado() 
+    {
+        return $this->belongsTo(\App\Models\AcTipoAfiliado::class, 'tipo_afiliado', 'id');
     }
 
     /**

@@ -23,7 +23,7 @@ class AcCuenta extends Model
      *
      * @var array
      */
-    protected $dates = ['fecha_registro','deleted_at'];
+    protected $dates = ['fecha','deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -32,7 +32,7 @@ class AcCuenta extends Model
      */
     protected $fillable = [
     	'codigo_cuenta',
-        'fecha_registro',
+        'fecha',
         'estatus',
         'deleted_at'
     ];
@@ -44,15 +44,6 @@ class AcCuenta extends Model
     public function afiliados()
     {
         return $this->hasMany(\App\Models\AcAfiliado::class);
-    }
-
-    /**
-     * Relación con tabla Pago
-     * @return [type] [description]
-     */
-    public function pagos()
-    {
-        return $this->hasMany(\App\Models\Pago::class);
     }
 
     /**
@@ -68,6 +59,16 @@ class AcCuenta extends Model
      */
     public function plan()
     {
-        return $this->belongsTo(\App\Models\AcPlanesExtranet::class);
+        return $this->belongsToMany(\App\Models\AcPlanesExtranet::class, 'cuenta_plan', 'cuenta_id', 'plan_id');
     }
+
+    /**
+     * Relación con tabla Pago
+     * @return [type] [description]
+     */
+    public function pagos()
+    {
+        return $this->hasMany(\App\Models\Pago::class);
+    }
+ 
 }
