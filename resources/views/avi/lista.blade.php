@@ -52,8 +52,6 @@
                     <tr>
                         <th width="20">Id</th>
                         <th width="50">Solicitud</th>
-                        <th>Cédula</th>
-                        <th>Edad</th>
                         <th>Contrato</th>
                         <th>Cobertura</th>
                         <th>Cronograma</th>
@@ -64,8 +62,6 @@
                 </thead>
                 <tfoot>
                     <tr>
-                        <th></th>
-                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -103,8 +99,6 @@ $(document).ready(function() {
         columns: [
             {data: 'id'},
             {data: 'codigo_solicitud'},
-            {data: 'cedula_afiliado' },
-            {data: 'edad_afiliado' },
             {data: 'codigo_contrato' },
             {data: 'cobertura_monto' },
             {data: 'nro_cronograma' },

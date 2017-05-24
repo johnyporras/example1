@@ -130,22 +130,35 @@ if(is_object(Auth::user()))
 
                                 @if (Session::has('message'))
                                     <div id="result" class="alert alert-danger">
-                                        {{Session::get('message')}}
+                                        <p>{{ Session::get('message') }}</p>
+                                        <button type="button" class="close" 
+                                            data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
                                 @else
                                     <div id="result"></div>
                                 @endif
                                 @if (Session::has('status'))
                                     <div class="alert alert-success">
-                                        {{Session::get('status')}}
+                                       <p> {{ Session::get('status') }} </p>
+                                        <button type="button" class="close" 
+                                        data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                    </button>
                                     </div>
                                 @endif
                                 @if ($errors->any())
-                                    <ul class="alert alert-danger">
+                                <div id="result" class="alert alert-danger">
+                                        
+                                    <button type="button" class="close" 
+                                        data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                    </button>
+                                    
+                                    <ul class="list-unstyled">
                                         @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
                                         @endforeach
                                     </ul>
+                                </div>
                                 @endif
 
                                 @yield('content')

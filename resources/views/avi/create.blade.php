@@ -25,7 +25,7 @@
     <ul class="breadcrumb breadcrumb-top">
         <li><a href="{{ url('/') }}">Inicio</a></li>
         <li><a href="{{ url('/avi/lista') }}">Asistencia al Viajero Internacional</a></li>
-        <li>Generar</li>
+        <li>Generar Solicitud</li>
     </ul>
 @endsection
 
@@ -36,30 +36,11 @@
             <p><a href="{{ url('/avi') }}" title="Buscar otro beneficiario" class="btn btn-info"><span class="pr5"><i class="fa fa-search"></i></span> Beneficiario</a></p>
         </div>
     </div> <!-- row -->
+</div> <!-- .col-12 -->
 
+<div class="col-xs-12">
     <div class="row">
-
         <div class="col-md-6 col-lg-5">
-            @if (isset($servicio))
-            <div class="panel panel-primary">
-                <!-- Default panel contents -->
-                <div class="panel-heading">
-                    <span class="pr-1"><i class="fa fa-plane"></i></span> Servicio
-                </div>
-                 <!-- List group -->
-                <ul class="list-group">
-                    <li class="list-group-item"><span class="text-primary"><b>Cédula:</b></span> {{ $servicio['cedula_afiliado'] }}</li>
-                    <li class="list-group-item"><span class="text-primary"><b>Nombre:</b></span> {{ $servicio['nombre_afiliado'] }}</li>
-                    <li class="list-group-item"><span class="text-primary"><b>Tipo:</b></span> {{ $servicio['tipo_afiliado'] }}</li>
-                    <li class="list-group-item"><span class="text-primary"><b>Cobertura del Plan:</b></span> {{ $servicio['plan'] }}</li>
-                    <li class="list-group-item"><span class="text-primary"><b>Colectivo:</b></span> {{ $servicio['colectivo'] }}</li>
-                    <li class="list-group-item"><span class="text-primary"><b>Aseguradora:</b></span> {{ $servicio['aseguradora'] }}</li>
-                </ul>
-            </div>
-            @endif 
-        </div>
-
-        <div class="col-md-6 col-lg-5 col-lg-offset-2">
             @if (isset($afiliado))
             <div class="panel panel-warning">
                 <!-- Default panel contents -->
@@ -72,19 +53,34 @@
                     <li class="list-group-item"><span class="text-warning"><b>Nombre:</b></span> {{ $afiliado->nombre }} {{ $afiliado->apellido }} </li>
                     <li class="list-group-item"><span class="text-warning"><b>Edad:</b></span> {{ $afiliado->fecha_nacimiento->age }}</li>
                     <li class="list-group-item"><span class="text-warning"><b>Sexo:</b></span> {{ ($afiliado->sexo == 'M')?'Masculino':'Femenino' }}</li>
-                    <li class="list-group-item"><span class="text-warning"><b>Correo:</b></span> {{ $afiliado->email }}</li>
-                    <li class="list-group-item"><span class="text-warning"><b>Teléfono:</b></span> {{ $afiliado->telefono }}</li>
+                </ul>
+            </div>
+            @endif 
+        </div>
+
+        <div class="col-md-6 col-lg-5 col-lg-offset-2">
+            @if (isset($cuenta))
+            <div class="panel panel-primary">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <span class="pr-1"><i class="fa fa-book"></i></span> Servicio
+                </div>
+                 <!-- List group -->
+                <ul class="list-group">
+                    <li class="list-group-item"><span class="text-primary"><b>Codigo Cuenta:</b></span> {{ $cuenta->codigo_cuenta }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Estatus:</b></span> {{ $cuenta->estatus }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Plan:</b></span> {{ $plan->nombre }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Cobertura del Plan:</b></span> {{ $plan->cobertura }}</li>
                 </ul>
             </div>
             @endif
         </div>
     </div> <!-- .row -->
-
-</div> <!-- .col-12 -->
+</div>
 
 
 <div class="col-xs-12">
-    {!! Form::open(['route'=>'avi.procesar', 'id' => 'destinoForm', 'class' => 'form-horizontal', 'name' => 'afiliado']) !!}
+    {!! Form::open(['route'=>'avi.store', 'id' => 'destinoForm', 'class' => 'form-horizontal', 'name' => 'afiliado']) !!}
     <div class="row">
         <div class="col-xs-12">
             <div class="pb25">
@@ -295,11 +291,8 @@
                         </div>
                     </div>
                     <!-- End .form-group  -->
-
                     <!-- Campos ocultos necesarios para cargar la solicitud -->
-                    {{ Form::hidden('cedula', $afiliado->cedula) }}
-                    {{ Form::hidden('edad', $afiliado->fecha_nacimiento->age) }}
-                    {{ Form::hidden('contrato', $servicio['contrato']) }}
+                    {{ Form::hidden('afiliado', $afiliado->id) }}
                 </div>
             </div>
         </div>

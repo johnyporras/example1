@@ -401,8 +401,12 @@ class FunerarioController extends Controller
         // Valido y Guardo Cedula fallecido
         if ($request->hasFile('cedula')) 
         {
+    
+            if ($solicitud->doc_cedula)
+            {
             //borro archivo para subirlo otra vez
-            Storage::disk('funerario')->delete($codigo.'/'.$solicitud->doc_cedula);
+            Storage::disk('funerario')->delete($codigo.'/'.$solicitud->doc_cedula); 
+            }
 
             // guardo en una variable la imagen
             $file = $request->file('cedula');
@@ -422,8 +426,12 @@ class FunerarioController extends Controller
         // valido y Guardo carta de defunción
         if ($request->hasFile('acta')) 
         {
-            //borro archivo para subirlo otra vez
-            Storage::disk('funerario')->delete($codigo.'/'.$solicitud->doc_acta);
+            
+            if ($solicitud->doc_acta)
+            {
+                //borro archivo para subirlo otra vez
+                Storage::disk('funerario')->delete($codigo.'/'.$solicitud->doc_acta); 
+            }
 
             // guardo en una variable la imagen
             $file = $request->file('acta');

@@ -31,6 +31,7 @@ class Avi extends Model
      * @var array
      */
     protected $fillable = [
+        'afiliado_id',
     	'codigo_solicitud', 
         'codigo_contrato', 
         'cobertura_monto', 
@@ -47,5 +48,14 @@ class Avi extends Model
     public function destinos()
     {
         return $this->hasMany(\App\Models\AviDestino::class);
+    }
+
+    /**
+     * Relación can tabla de funerario_detalle
+     * @return [type] [description]
+     */
+    public function afiliado()
+    {
+        return $this->belongsTo(\App\Models\AcAfiliado::class);
     }
 }

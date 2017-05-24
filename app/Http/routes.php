@@ -16,6 +16,9 @@
      */
 Route::group(['middleware' => ['auth']], function () {
     
+    
+
+    // Rutas para la lista de solicitudes
     Route::get('api/solicitudes', 'AviController@solicitudes');
     
     Route::get('avi/lista', [
@@ -28,21 +31,25 @@ Route::group(['middleware' => ['auth']], function () {
             'as'   => 'avi.index' 
         ]);
 
-    Route::post('avi', 'AviController@index');
-
-    Route::post('avi/seleccion', [
-            'uses' => 'AviController@select',
-            'as'   => 'avi.seleccion' 
+    Route::get('avi/create', [
+            'uses' => 'AviController@create',
+            'as'   => 'avi.create' 
         ]);
 
-    Route::post('avi/generar', [
-            'uses' => 'AviController@generate',
-            'as'   => 'avi.generar' 
+    Route::post('avi/store', [
+            'uses' => 'AviController@store',
+            'as'   => 'avi.store' 
         ]);
 
-    Route::post('avi/procesar', [
-            'uses' => 'AviController@process',
-            'as'   => 'avi.procesar' 
+    
+    Route::get('avi/{id}/edit', [
+            'uses' => 'AviController@edit',
+            'as'   => 'avi.edit' 
+        ]);
+
+    Route::put('avi/{id}', [
+            'uses' => 'AviController@update',
+            'as'   => 'avi.update' 
         ]);
 
     Route::get('avi/{id}', [
@@ -50,20 +57,11 @@ Route::group(['middleware' => ['auth']], function () {
             'as'   => 'avi.show' 
         ]);
 
-    Route::get('avi/{id}/edit', [
-            'uses' => 'AviController@edit',
-            'as'   => 'avi.edit' 
-        ]);
-
-    Route::post('avi/update/{id}', [
-            'uses' => 'AviController@update',
-            'as'   => 'avi.update' 
-        ]);
-    
     Route::get('avi/{id}/destroy', [
             'uses' => 'AviController@destroy',
             'as'   => 'avi.destroy' 
         ]);
+   
 });
 /*=====================================================*/
 
