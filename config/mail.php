@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'iggtechnology@gmail.com', 'name' => 'Alto Centro Dev'],
+    'from' => ['address' => 'no-replay@corporacionatiempo.com', 'name' => 'Corporacion Atiempo'],
 
     /*
     |--------------------------------------------------------------------------
