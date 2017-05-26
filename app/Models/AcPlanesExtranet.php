@@ -41,7 +41,7 @@ class AcPlanesExtranet extends Model {
      */
     public function cuenta()
     {
-        return $this->belongsToMany(\App\Models\AcCuenta::class,'cuenta_plan', 'plan_id','cuenta_id');
+        return $this->belongsToMany(\App\Models\AcCuenta::class,'ac_cuentaplan', 'id_plan', 'id_cuenta'); 
     }
 
     /**

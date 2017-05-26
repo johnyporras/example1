@@ -51,7 +51,7 @@ class AcCuenta extends Model
      */
     public function producto()
     {
-        return $this->belongsTo(\App\Models\AcProducto::class);
+        return $this->belongsTo(\App\Models\AcProducto::class); 
     }
 
     /**
@@ -59,7 +59,7 @@ class AcCuenta extends Model
      */
     public function plan()
     {
-        return $this->belongsToMany(\App\Models\AcPlanesExtranet::class, 'cuenta_plan', 'cuenta_id', 'plan_id');
+        return $this->belongsToMany(\App\Models\AcPlanesExtranet::class, 'ac_cuentaplan', 'id_cuenta', 'id_plan');
     }
 
     /**

@@ -27,6 +27,6 @@ class CreateTamanosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('tamano');
+        Schema::drop('tamanos');
     }
 }

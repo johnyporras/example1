@@ -14,12 +14,12 @@ class UserTableSeeder extends Seeder
     {
         DB::table('users')->delete();
         $user = [
-          'name' => 'gContreras',
-          'email' => 'germansango@gmail.com',
-          'password' => bcrypt('usuario'),
+          'name' => 'Administrador',
+          'email' => 'admin@gmail.com',
+          'password' => bcrypt('1234'),
           'department' => 'Sistemas',
           'type' => '0',
-          'user' => 'germansango'
+          'user' => 'admin'
         ];
 
         DB::table('users')->insert($user);

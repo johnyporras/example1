@@ -13,14 +13,15 @@ class CreateCuentaPlanTable extends Migration
     public function up()
     {
         // Create table for associating roles to users (Many-to-Many)
-        Schema::create('cuenta_plan', function (Blueprint $table) {
-            $table->integer('cuenta_id')->unsigned();
-            $table->integer('plan_id')->unsigned();
-            $table->double('monto')->nullable();
+        Schema::create('ac_cuentaplan', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('id_cuenta')->unsigned();
+            $table->integer('id_plan')->unsigned();
+            $table->double('costo')->nullable();
 
-            $table->foreign('plan_id')->references('id')->on('ac_planes_extranet')
+            $table->foreign('id_cuenta')->references('id')->on('ac_cuenta')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('cuenta_id')->references('id')->on('ac_cuenta')
+            $table->foreign('id_plan')->references('id')->on('ac_planes_extranet')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
     }
@@ -32,6 +33,6 @@ class CreateCuentaPlanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cuenta_plan');
+        Schema::dropIfExists('ac_cuentaplan');
     }
 }
