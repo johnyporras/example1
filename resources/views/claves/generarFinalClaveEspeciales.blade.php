@@ -41,7 +41,7 @@
         </div>
         {!! Form::label('telefono', 'Teléfono Móvil: ', ['class' => 'col-sm-2 col-sm-offset-1 control-label']) !!}
         <div class="col-sm-2">
-            {!! Form::text('telefono', null, ['class' => 'form-control', 'required' => 'required','placeholder' => '04XX-1234567','pattern' => '\b04\d{2}[-]{1}\d{7}\b']) !!}
+            {!! Form::text('telefono', null, ['class' => 'form-control', 'required' => 'required']) !!}
             {!! $errors->first('telefono', '<p class="help-block">:message</p>') !!}
         </div>
     </div>

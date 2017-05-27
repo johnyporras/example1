@@ -14,6 +14,81 @@ use Illuminate\Http\RedirectResponse;
 class FacturacionController extends Controller
 {
 
+    public function gestionar(Request $request)
+    {
+        $user = \Auth::user();
+        $proveedor = $user->proveedor;
+        if( (isset($request->clave_buscar) || isset($request->fecha)) ||
+            (!empty($request->fecha_desde) && !empty($request->fecha_hasta)) 
+        ){
+            if( (!empty($request->clave_buscar) || !empty($request->fecha)) ||
+                (!empty($request->fecha_desde) && !empty($request->fecha_hasta)) 
+              ){
+                $tipo = 'individual';
+                $query = DB::table('ac_proveedores_extranet')
+                    ->where([
+                        ['ac_proveedores_extranet.codigo_proveedor', '=', $proveedor],
+                        ['ac_claves.estatus_clave', '=', 3 ]                   
+                     ])
+                    ->join('ac_claves_detalle', 'ac_claves_detalle.codigo_proveedor', '=', 'ac_proveedores_extranet.codigo_proveedor')
+                    ->join('ac_claves', 'ac_claves.id', '=', 'ac_claves_detalle.id_clave')
+                    ->join('ac_afiliados', 'ac_afiliados.cedula', '=', 'ac_claves.cedula_afiliado')
+                    ->join('ac_procedimientos_medicos', 'ac_procedimientos_medicos.id', '=', 'ac_claves_detalle.id_procedimiento')
+                    ->join('ac_estatus', 'ac_estatus.id', '=', 'ac_claves.estatus_clave')
+                    ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.id', '=', 'ac_proveedores_extranet.codigo_especialidad')
+                    ->select('ac_claves.clave', 'ac_claves.id', 'ac_claves.fecha_cita',
+                             'ac_claves.cedula_afiliado', 'ac_afiliados.nombre','ac_afiliados.apellido', 
+                             'ac_procedimientos_medicos.tipo_examen', 'ac_estatus.nombre as estatus',
+                             'ac_especialidades_extranet.descripcion as especialidad');
+                if(!empty($request->clave_buscar)){
+                    $query->where('ac_claves.clave', '=', $request->clave_buscar);
+                }
+                if(!empty($request->fecha)){
+                    $query->where('ac_claves.fecha_cita', '=', $request->fecha);
+                }
+                if(!empty($request->fecha_desde) && !empty($request->fecha_hasta)){
+                    $tipo = 'global';
+                    $query->where('ac_claves.fecha_cita', '>=', $request->fecha_desde);
+                    $query->where('ac_claves.fecha_cita', '<=', $request->fecha_hasta);
+
+                    
+                }
+                $claves = $query->get();
+
+                $query1 = DB::table('ac_proveedores_extranet')
+                    ->where([['ac_proveedores_extranet.codigo_proveedor', '=', $proveedor]
+                            ,['ac_carta_aval.estatus', '=', 3 ]
+                            ])
+                    ->join('ac_carta_aval_detalle', 'ac_carta_aval_detalle.codigo_proveedor', '=', 'ac_proveedores_extranet.codigo_proveedor')
+                    ->join('ac_carta_aval', 'ac_carta_aval.id', '=', 'ac_carta_aval_detalle.id_carta')
+                    ->join('ac_afiliados', 'ac_afiliados.cedula', '=', 'ac_carta_aval.cedula_afiliado')
+                    ->join('ac_procedimientos_medicos', 'ac_procedimientos_medicos.id', '=', 'ac_carta_aval_detalle.id_procedimiento')
+                    ->join('ac_estatus', 'ac_estatus.id', '=', 'ac_carta_aval.estatus')
+                    ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.id', '=', 'ac_proveedores_extranet.codigo_especialidad')
+                    ->select('ac_carta_aval.clave', 'ac_carta_aval.id', 'ac_carta_aval.fecha_solicitud','ac_carta_aval.cedula_afiliado'
+                            , 'ac_afiliados.nombre', 'ac_afiliados.apellido', 'ac_procedimientos_medicos.tipo_examen', 'ac_estatus.nombre as estatus',
+                            'ac_especialidades_extranet.descripcion as especialidad');
+                if(!empty($request->clave_buscar)){
+                    $query->where('ac_carta_aval.clave', '=', $request->clave_buscar);
+                }
+                if(!empty($request->fecha)){
+                    $query->where('ac_carta_aval.fecha_solicitud', '=', $request->fecha);
+                }
+                if(!empty($request->fecha_desde) && !empty($request->fecha_hasta)){
+                    $query->where('ac_claves.fecha_cita', '>', $request->fecha_desde);
+                    $query->where('ac_claves.fecha_cita', '<', $request->fecha_hasta);
+                    $tipo = 'global';
+
+                }
+                return view('facturacion.gestionar', compact('claves', 'cartas', 'tipo'));
+            }
+        }
+        //return Response()->json($cartas);
+        return view('facturacion.gestionar');
+
+    }
+
+
     public function store(Request $request)
     {
         $user = \Auth::user();
