@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'no-replay@corporacionatiempo.com', 'name' => 'Corporacion Atiempo'],
+    'from' => ['address' => 'no-reply@corporacionatiempo.com', 'name' => 'Corporacion Atiempo'],
 
     /*
     |--------------------------------------------------------------------------
