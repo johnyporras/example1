@@ -24,9 +24,8 @@ class FacturacionController extends Controller
         if( (isset($request->clave_buscar) || isset($request->fecha)) ||
             (!empty($request->fecha_desde) && !empty($request->fecha_hasta)) 
         ){
-            if( (!empty($request->clave_buscar) || !empty($request->fecha)) ||
-                (!empty($request->fecha_desde) && !empty($request->fecha_hasta)) 
-              ){
+                $request->fecha_hasta = functions::uf_convertirdatetobd($request->fecha_hasta);
+                $request->fecha_desde = functions::uf_convertirdatetobd($request->fecha_desde);
                 $tipo = 'individual';
                 $query = \DB::table('ac_proveedores_extranet')
                     ->where([
@@ -84,7 +83,7 @@ class FacturacionController extends Controller
 
                 }
                 return view('facturacion.gestionar', compact('claves', 'cartas', 'tipo'));
-            }
+            
         }
         //return Response()->json($cartas);
         return view('facturacion.gestionar');
