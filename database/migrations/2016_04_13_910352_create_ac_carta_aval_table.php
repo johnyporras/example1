@@ -15,7 +15,6 @@ class CreateAcCartaAvalTable extends Migration {
 		Schema::create('ac_carta_aval', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->integer('codigo_contrato')->index('idx1_codigo_contrato');
 			$table->string('cedula_afiliado', 20)->index('idx1_cedula_afiliado');
 			$table->date('fecha_solicitud')->nullable();
 			$table->date('fecha_emision')->nullable();
@@ -42,7 +41,6 @@ class CreateAcCartaAvalTable extends Migration {
             	$table->foreign('codigo_especialidad', 'ac_carta_aval_ibfk_1')->references('codigo_especialidad')->on('ac_especialidades_extranet')->onUpdate('CASCADE')->onDelete('RESTRICT');
 				$table->foreign('cedula_afiliado', 'ac_carta_aval_ibfk_2')->references('cedula')->on('ac_afiliados')->onUpdate('CASCADE')->onDelete('RESTRICT');
 				$table->foreign('codigo_proveedor', 'ac_carta_aval_ibfk_3')->references('codigo_proveedor')->on('ac_proveedores_extranet')->onUpdate('CASCADE')->onDelete('RESTRICT');
-				$table->foreign('codigo_contrato', 'ac_carta_aval_ibfk_4')->references('codigo_contrato')->on('ac_contratos')->onUpdate('CASCADE')->onDelete('RESTRICT');
 		});
 	}
 

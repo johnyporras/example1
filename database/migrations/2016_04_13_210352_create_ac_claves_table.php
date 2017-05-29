@@ -18,7 +18,6 @@ class CreateAcClavesTable extends Migration {
 			$table->string('clave', 100)->unique('uc_clave');
 			$table->string('cedula_afiliado', 20)->index('cedula_afiliado');
 			$table->string('codigo_proveedor', 100)->nullable()->index('idxc_codigo_proveedor');
-			$table->integer('codigo_contrato')->nullable()->index('idxc_codigo_contrato');
 			$table->date('fecha_cita')->nullable();
 			$table->date('fecha_creacion')->nullable();
 			$table->string('motivo', 100)->nullable();
