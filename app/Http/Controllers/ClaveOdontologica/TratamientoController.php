@@ -103,7 +103,7 @@ class TratamientoController extends Controller{
         if(empty($request->icedula)){
             return redirect()->back()->withInput()->with('message', 'Debe seleccionar un beneficiario.');
         }
-        $id = $request->input('icedula');
+        $id = $request->input('icedula');   
         $beneficiario['contrato'] = $request->input(['contrato'.$id]);
         $beneficiario['cedula_afiliado'] = $request->input('cedula_afiliado'.$id);
         $beneficiario['nombre_afiliado'] = $request->input('nombre_afiliado'.$id);
@@ -138,7 +138,7 @@ class TratamientoController extends Controller{
         
     }
 
-    public function buscarPorClave($id, $cedulaAfiliado)
+    public function buscarPorClave($id=1, $cedulaAfiliado=1)
     {
         $tratamiento = AcTratamientoOdontologico::where('id_clave', '=', $id)->get();
         if ($tratamiento->isEmpty()){
@@ -340,11 +340,12 @@ class TratamientoController extends Controller{
     public function cerrar(Request $request)
     {
        $fecha_desde =  $request->fecha_desde;
-       $fecha = explode("-",$fecha_desde);
+       $fecha = explode("/",$fecha_desde);
+       //dd($fecha);
        $fecha_desde = $fecha[2]."-".$fecha[1]."-".$fecha[0]; 
        
        $fecha_hasta = $request->fecha_hasta;
-       $fecha = explode("-",$fecha_hasta);
+       $fecha = explode("/",$fecha_hasta);
        $fecha_hasta = $fecha[2]."-".$fecha[1]."-".$fecha[0]; 
         
        

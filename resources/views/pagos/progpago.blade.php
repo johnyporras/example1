@@ -198,7 +198,7 @@ $("#btnGuardarProg").on("click",function()
 	//montoh=ro.node().cells[2].innerHTML;
 	
 
-	//var url = '/atiempon2/public/pagos/guardarProg';
+	//var url = '/Atiempo-Extranet.git/public/pagos/guardarProg';
 	var url = '/pagos/guardarProg';
 	var params = 
 	{
@@ -210,10 +210,10 @@ $("#btnGuardarProg").on("click",function()
 	 $.post(url,params,function(data)
 	{	
 		 	detalles=null;		
-		 	alert(data)
+		 	//alert(data)
             if(data.success==true)
             {
-                alert("La programación de pago fué registrada con éxito");
+                alert("La programaciï¿½n de pago fuï¿½ registrada con ï¿½xito");
                 //location.href="/atiempon/public/Seguridad/nopermiso";              
             }
 		      

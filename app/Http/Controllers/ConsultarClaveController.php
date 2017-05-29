@@ -134,9 +134,7 @@ class ConsultarClaveController extends Controller
         $filter->add('ac_claves.fecha_cita','Fecha Cita','daterange');
         $filter->add('ac_afiliados.nombre','Nombre', 'text'); //validation;
         $filter->add('ac_claves.cedula_afiliado','C.I.','number');//validation;
-        $filter->add('ac_aseguradora.codigo_aseguradora','Seleccione una Opción','select')->option('','Seleccione Una Opción')->options(AcAseguradora::lists('nombre', 'codigo_aseguradora')->all());
-        $filter->add('ac_colectivos.codigo_colectivo','Seleccione una Opción','select')->option('','Seleccione Una Opción')->options(AcColectivo::lists('nombre', 'codigo_colectivo')->all());
-        $filter->add('ac_proveedores_extranet.codigo_proveedor','Seleccione una Opción','select')->option('','Seleccione Una Opción')->options(AcProveedoresExtranet::lists('nombre', 'codigo_proveedor')->all());
+        
         $filter->add('ac_claves.clave','Clave', 'text');
         $filter->add('ac_estatus.id','Seleccione una opcion ','select')->option('','Seleccione Una Opción')->options(AcEstatus::lists('ac_estatus.nombre', 'id')->all());
         $filter->add('user_types.id','Seleccione una opcion ','select')->option('','Seleccione Una Opción')->options(UserType::lists('user_types.name', 'id')->all());
@@ -158,7 +156,7 @@ class ConsultarClaveController extends Controller
        // $grid->add('AcProcedimientosMedico.tipo_examen','Procedimiento', true);
        $grid->add('estatus','Estatus', false);
        $grid->add('proveedor','Proveedor', false);
-       $grid->addActions('/public/claves/consultarDetalle', 'Ver','show','id');
+       $grid->addActions('/claves/consultarDetalle', 'Ver','show','id');
 
        if (isset($_GET['export'])){
             return $grid->buildCSV('clavesAtencion','.Y-m-d.His');

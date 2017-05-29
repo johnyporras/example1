@@ -28,6 +28,7 @@ class GenerarController extends Controller{
      * @return Response
      */
     public function buscar(Request $request){
+        
         $ValidarFecha = new ValidarFechaController();
         if  (!($ValidarFecha->validarHorario()) and false){
             return redirect('home')->with('message', 'No se encuentra dentro del Horario Autorizado.');
@@ -41,6 +42,8 @@ class GenerarController extends Controller{
                     $afiliadoIni = AcAfiliado::where('cedula', '=', $request->cedula)->firstOrFail();
                 }catch(ModelNotFoundException $e){  // catch(Exception $e) catch any exception
                     //dd(get_class_methods($e)); // lists all available methods for exception object
+                    $afiliadoIni=new \stdClass();
+                	$afiliadoIni->cedula_titular=0;
                     $tipoAfiliado = \App\Models\AcTipoAfiliado::pluck('nombre', 'id')->toArray();
                     $estado = \App\Models\AcEstado::pluck('es_desc', 'es_id')->toArray();
                     $aseguradora = \App\Models\AcAseguradora::pluck('nombre', 'codigo_aseguradora')->toArray();    
@@ -244,12 +247,12 @@ class GenerarController extends Controller{
                     'ac_planes_extranet.nombre as plan','ac_colectivos.nombre as colectivo','ac_aseguradora.nombre as aseguradora','ac_tipo_afiliado.nombre as tipo_afiliado')
             ->get();*/
     	$contratos = DB::table('ac_cuenta')
-    	->where([['cedula_titular', '=', $afiliadoIni->cedula_titular],['fecha','<=',date('Y-m-d').' 00:00:00']])
+    	->where([['cedula_titular', '=', $cedula_titular],['fecha','<=',date('Y-m-d').' 00:00:00']])
     	->where('ac_cuenta.estatus',"=",1)
     	->join('ac_afiliados', 'ac_cuenta.id',"=", 'ac_afiliados.id_cuenta')
     	->join('ac_cuentaplan','ac_cuenta.id',"=",'ac_cuentaplan.id_cuenta')
     	->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuentaplan.id_plan')
-    	->select('codigo_cuenta','cedula_titular as cedula_afiliado','cedula_titular','ac_afiliados.nombre as nombre_afiliado','ac_afiliados.apellido as apellido_afiliado',
+    	->select('codigo_cuenta as codigo_contrato','cedula_titular as cedula_afiliado','cedula_titular','ac_afiliados.nombre as nombre_afiliado','ac_afiliados.apellido as apellido_afiliado',
     			'ac_planes_extranet.nombre as plan')
     			->get();
 

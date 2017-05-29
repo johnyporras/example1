@@ -14,8 +14,7 @@ class AcFactura extends Model {
     protected $table = 'ac_facturas';
     protected $fillable = ['id', 'numero_factura', 'numero_control', 'fecha_factura', 'monto', 'observaciones', 'fecha_creacion', 'usuario_creador', 
                            'codigo_estatus', 'deleted_at','documento','codigo_proveedor_creador'];
-    protected $dates = ['fecha_factura'];
-    
+  
     /**
      * The storage format of the model's date columns.
      * @var string

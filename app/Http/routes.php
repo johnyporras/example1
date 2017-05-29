@@ -328,7 +328,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('tratamiento/gestionar'                 , 'ClaveOdontologica\TratamientoController@buscarClave');
     Route::post('tratamiento/cargar'                    , 'ClaveOdontologica\TratamientoController@cargarTratamiento');
     Route::post('tratamiento/procesar'                  , 'ClaveOdontologica\TratamientoController@store');
-    Route::get('tratamiento/consultar/{iclave}/{cedula}', 'ClaveOdontologica\TratamientoController@buscarPorClave');
+    Route::get('tratamiento/consultar', 'ClaveOdontologica\TratamientoController@buscarPorClave');
     Route::get('tratamiento/editar/{id}/{cedula}'       , 'ClaveOdontologica\TratamientoController@edit');
     Route::post('tratamiento/update/{id}'               , 'ClaveOdontologica\TratamientoController@update');
     Route::post('tratamiento/realizados'                , 'ClaveOdontologica\TratamientoController@getTratamientoSeisMese');  

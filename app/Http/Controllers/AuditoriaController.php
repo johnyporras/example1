@@ -53,7 +53,7 @@ class AuditoriaController extends Controller
        $grid->add('fecha_factura|strtotime|date[d/m/Y]','Fecha de Factura', false);
        $grid->add('monto','Monto', false);
        $grid->add('proveedor','Proveedor', false);
-       $grid->addActions('/public/auditoria/procesarClavesAtencion', 'Ver','show','id');
+       $grid->addActions('/Atiempo-Extranet.git/public/auditoria/procesarClavesAtencion', 'Ver','show','id');
 
       if (isset($_GET['export'])){
             return $grid->buildCSV('auditoria','.Y-m-d.His');

@@ -28,6 +28,7 @@ class User extends Authenticatable{
         'user',
         'password', 
         'department',
+        'detalles_usuario_id',
         'imagen_perfil', 
         'type',
         'active',
