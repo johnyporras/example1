@@ -198,11 +198,11 @@
 
 
 
-                    <span class="btn btn-success fileinput-button">
-                        <i class="glyphicon glyphicon-plus"></i>
-                        <span>Agregar Archivos...</span>
+                   
+                   
+                       
                     <!-- The global file processing state -->
-                    <span class="fileupload-process"></span>
+                  
                 </div>
 
 

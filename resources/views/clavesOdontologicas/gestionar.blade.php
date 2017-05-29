@@ -21,13 +21,14 @@
     {!! Form::close() !!}
     @if (isset($contratos))
         @if (count($contratos) > 0)
-            {!! Form::open(['url' => 'clavesOdonto/gestionarDos', 'class' => 'form-horizontal', 'name' => 'beneficiario']) !!}
+            {!! Form::open(['url' => 'clavesOdonto/gestionarDos', 'class' => 'form-horizontal', 'name' => 'beneficiario', 'id' => 'beneficiario']) !!}
             <div class="table">
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Cédula Afiliado</th><th>Nombre</th><th>Cobertura del Plan</th><th>Colectivo</th>
-                            <th>Aseguradora</th><th>Tipo</th><th></th>
+                            <th>Cédula Afiliado</th><th>Nombre</th>
+                            <th>Cobertura del Plan</th><th>Colectivo</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,13 +43,9 @@
                                 {!! Form::hidden('nombre_afiliado'.$x, $contrato->nombre_afiliado) !!}
                                 <td>{{ $contrato->plan }}</td>
                                 {!! Form::hidden('plan'.$x, $contrato->plan) !!}
-                                <td>{{ $contrato->colectivo }}</td>
-                                {!! Form::hidden('colectivo'.$x, $contrato->colectivo) !!}
-                                <td>{{ $contrato->aseguradora }}</td>
-                                {!! Form::hidden('aseguradora'.$x, $contrato->aseguradora) !!}
-                                <td>{{ $contrato->tipo_afiliado }}</td>
-                                {!! Form::hidden('tipo_afiliado'.$x, $contrato->tipo_afiliado) !!}
-                                <td>{!! Form::radio('icedula', $x,null, ['id' => 'icedula']) !!}
+                               
+                               
+                                <td>{!! Form::radio('icedula', $x,null, ['id' => 'icedula','checked'=>true]) !!}
                                     {!! $errors->first('icedula', '<p class="help-block">:message</p>') !!}</td>
                             </tr>
                         @endforeach
@@ -72,6 +69,7 @@
 @section('script')
     <script>
         $(function(){
+            $("#beneficiario").submit();
             $('#procesar').parsley();
             $("#seleccionar").click(function(e){
                 entro = false;
