@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Facturación y Cierres de Caso')
+@section('title','Facturaciï¿½n y Cierres de Caso')
 @section('content')
 <hr/>
 
@@ -54,7 +54,7 @@
         </div>
     {!! Form::close() !!}
     <div id="consulta" >
-        @if(isset($claves) || isset($cartas))
+       
             {!! Form::open(['url' => 'facturacion/crear', 'class' => 'form-horizontal',  'name' => 'fileupload','id' =>"fileupload",
                     'method' => 'POST', 'enctype' => 'multipart/form-data', 'files' => 'true']) !!}
                 <div class="table col-md-12">
@@ -134,9 +134,9 @@
                     <div class="form-group {{ $errors->has('fecha_factura') || $errors->has('monto')}}">
                         {!! Form::label('fecha_factura', 'Fecha Factura: ', ['class' => 'col-sm-3 control-label']) !!}
                         <div class="col-sm-3">
-                            {!! Form::date(
+                            {!! Form::text(
                                 'fecha_factura', null, ['class' => 'form-control', 
-                                'required' => 'required','placeholder' => 'dd-mm-yy'] )
+                                'required' => 'required','placeholder' => 'dd-mm-yy','id'=>'fecha_factura'] )
                             !!}
                         </div>
                         {!! Form::label('monto', 'Monto: ', ['class' => 'col-sm-2 control-label']) !!}
@@ -201,21 +201,6 @@
                     <span class="btn btn-success fileinput-button">
                         <i class="glyphicon glyphicon-plus"></i>
                         <span>Agregar Archivos...</span>
-                        <input type="file" name="files[]"  multiple>
-                    </span>
-                    <button type="submit" class="btn btn-primary start">
-                        <i class="glyphicon glyphicon-upload"></i>
-                        <span>Subir</span>
-                    </button>
-                    <button type="reset" class="btn btn-warning cancel">
-                        <i class="glyphicon glyphicon-ban-circle"></i>
-                        <span>Cancelar</span>
-                    </button>
-                    <button type="button" class="btn btn-danger delete">
-                        <i class="glyphicon glyphicon-trash"></i>
-                        <span>Eliminar</span>
-                    </button>
-                    <input type="checkbox" class="toggle">
                     <!-- The global file processing state -->
                     <span class="fileupload-process"></span>
                 </div>
@@ -224,6 +209,64 @@
                 <!-- The global progress state -->
                 <div class="col-lg-5 fileupload-progress fade">
                     <!-- The global progress bar -->
+                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                    </div>
+                    <!-- The extended global progress state -->
+                    <div class="progress-extended">&nbsp;</div>
+                </div>
+            </div>
+            <!-- The table listing the files available for upload/download -->
+            <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+<!--        </form>-->
+        <br>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Consideraciones</h3>
+            </div>
+            <div class="panel-body">
+                <ul>
+                    <li>El tamaï¿½o mï¿½ximo del archivo para subir es <strong>999 KB</strong>.</li>
+                    <li>Sï¿½lo archivos (<strong> ZIP </strong>) estï¿½n permitidos.</li>
+                    <li>Puede usar <strong>arrastrar &amp; soltar</strong> en esta pï¿½gina.</li>
+                </ul>
+            </div>
+        </div>
+        <a class="upload-field-ids"></a>
+    <!-- The blueimp Gallery widget -->
+    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
+        <div class="slides"></div>
+        <h3 class="title"></h3>
+        <a class="prev">ï¿½</a>
+        <a class="next">ï¿½</a>
+        <a class="close">ï¿½</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+    </div>      
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-4"><!--   -->
+                            {!! Form::submit('Generar facturaciï¿½n', ['class' => 'btn btn-primary form-control', 'id' => 'enviar_clave']) !!}
+                        </div>
+                    </div>
+                </div>
+              
+    </div>
+</div>
+{!! Form::close() !!}   
+@endsection
+
+@section('script')
+<!-- The File Upload user interface plugin -->
+<script src="{{url('/')}}/js/main.js"></script>
+<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->  
+    <!-- The Templates plugin is included to render the upload/download listings -->
+    <script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+    <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+    <script src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+    <!-- The Canvas to Blob plugin is included for image resizing functionality -->
+    <script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>    
+    <!-- blueimp Gallery script -->
+    <!--<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>-->
     <script src="{{url('/')}}/js/blueimp-gallery.min.js"></script>
     <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
     <script src="{{url('/')}}/js/jquery.iframe-transport.js"></script>
@@ -234,6 +277,13 @@
     <!-- The File Upload processing plugin -->
     <script src="{{url('/')}}/js/jquery.fileupload-process.js"></script>
     <!-- The File Upload image preview & resize plugin -->
+    <script src="{{url('/')}}/js/jquery.fileupload-image.js"></script>
+    <!-- The File Upload audio preview plugin -->
+    <script src="{{url('/')}}/js/jquery.fileupload-audio.js"></script>
+    <!-- The File Upload video preview plugin -->
+    <script src="{{url('/')}}/js/jquery.fileupload-video.js"></script>
+    <!-- The File Upload validation plugin -->
+    <script src="{{url('/')}}/js/jquery.fileupload-validate.js"></script>
     <!-- The File Upload user interface plugin -->
     <script src="{{url('/')}}/js/jquery.fileupload-ui.js"></script>    
     <!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
@@ -320,7 +370,13 @@
 </script>
 <script>
         $(function(){ 
-            $('#fecha_desde, #fecha_hasta, #fecha_factura, #fecha').datepicker({dateFormat: "yy-mm-dd"});
+            $('#fecha_desde, #fecha_hasta, #fecha_factura, #fecha').datepicker({dateFormat: "dd/mm/yyyy",changeMonth: true, changeYear: true})
+             $('#fecha_desde, #fecha_hasta, #fecha_factura, #fecha').blur(function () {
+                var currentDate = $(this).val();
+                arr=currentDate.split("/");
+                newDate=arr[1]+"/"+arr[0]+"/"+arr[2]; 
+                $(this).val(newDate);
+            });
             $('#tipo1').on('click', function(){
                 $('#tipo_individual, #boton_buscar').show(true);
                 $('#tipo_global').hide();

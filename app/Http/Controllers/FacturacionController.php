@@ -16,8 +16,11 @@ class FacturacionController extends Controller
 
     public function gestionar(Request $request)
     {
+       
         $user = \Auth::user();
-        $proveedor = $user->proveedor;
+         //dd($user);
+        $proveedor = $user->detalles_usuario_id;
+        //dd($proveedor);
         if( (isset($request->clave_buscar) || isset($request->fecha)) ||
             (!empty($request->fecha_desde) && !empty($request->fecha_hasta)) 
         ){
@@ -25,7 +28,7 @@ class FacturacionController extends Controller
                 (!empty($request->fecha_desde) && !empty($request->fecha_hasta)) 
               ){
                 $tipo = 'individual';
-                $query = DB::table('ac_proveedores_extranet')
+                $query = \DB::table('ac_proveedores_extranet')
                     ->where([
                         ['ac_proveedores_extranet.codigo_proveedor', '=', $proveedor],
                         ['ac_claves.estatus_clave', '=', 3 ]                   
@@ -54,8 +57,8 @@ class FacturacionController extends Controller
                     
                 }
                 $claves = $query->get();
-
-                $query1 = DB::table('ac_proveedores_extranet')
+//dd($user->proveedor);
+                $query1 = \DB::table('ac_proveedores_extranet')
                     ->where([['ac_proveedores_extranet.codigo_proveedor', '=', $proveedor]
                             ,['ac_carta_aval.estatus', '=', 3 ]
                             ])
@@ -92,19 +95,22 @@ class FacturacionController extends Controller
     public function store(Request $request)
     {
         $user = \Auth::user();
-
-        $proveedor = $user->proveedor;
+         //dd($user);
+        $proveedor = $user->detalles_usuario_id;
         $request = array_add($request, 'codigo_proveedor_creador', $proveedor);
         $request->fecha_factura = functions::uf_convertirdatetobd($request->fecha_factura);
+        
        // dd($request->fecha_factura);
         $oFactura = new AcFactura();
         $oFactura->numero_factura=$request->numero_factura;
         $oFactura->numero_control=$request->numero_control;
+       
         $oFactura->fecha_factura=$request->fecha_factura;
+        
         $oFactura->monto=$request->monto;
         $oFactura->observaciones=$request->observaciones;
         $oFactura->codigo_estatus=$request->codigo_estatus;
-        $oFactura->codigo_proveedor_creador=$request->codigo_proveedor_creador;
+        $oFactura->codigo_proveedor_creador=1299;
         $res =$oFactura->save();
         //echo "1121";die();
         return $oFactura;
@@ -115,25 +121,27 @@ class FacturacionController extends Controller
 
     public function procesar(Request $request)
     {
-   /*
+   
     //dd($request->fileid);
      // Validacion de Archivos, que sean menor o igual a 5, y de tipo jpg,pdf,png,doc
      if ($request->hasFile('file1')){
         if (true){
-     if (count($request->fileid) > 0) {
-        if (($this->validarArchivos($request->fileid, $request ))){
-            $request = array_add($request, 'codigo_estatus', 5) /* Pendiente por Aprobacion ;
+    // if (count($request->fileid) > 0) {
+       // if (($this->validarArchivos($request->fileid, $request ))){
+            $request = array_add($request, 'codigo_estatus', 5) /* Pendiente por Aprobacion */;
             //$request = array_add($request, 'documento', $request->fileid[0]) /* Pendiente por Aprobacion ;
             //echo "this is";die();
+            
+            
             $insertFactura = $this->store($request);
 
              $imageName = $insertFactura->id .'.'.$request->file('file1')->getClientOriginalExtension();
             //if ($this->subirArchivo($insertFactura->id, $request->codigo_proveedor_creador,$request->fileid[0])) {
 
             if ($request->file('file1')->move(base_path().'/public/archivo/', $imageName)){
-            $request = array_add($request, 'documento', $request->fileid[0]) // Pendiente por Aprobacion;
+            $request = array_add($request, 'documento', $request->fileid[0]);// Pendiente por Aprobacion;
             $insertFactura = $this->store($request);
-            if ($this->subirArchivo($insertFactura->id, $request->codigo_proveedor_creador,$request->fileid[0])) {
+           // if ($this->subirArchivo($insertFactura->id, $request->codigo_proveedor_creador,$request->fileid[0])) {
                 if($insertFactura){
                     if(is_array(Input::get('id_clave')) || is_array(Input::get('id_aval'))){
                         if(!empty(Input::get('id_clave'))){
@@ -172,17 +180,16 @@ class FacturacionController extends Controller
                         Session::flash('respuesta', 'Ocurri� un error en la creacion de la factura '.$request->fileid[0]);
                         return redirect()->to($this->getRedirectUrl())->withInput($request->input());
                       }
-            }else{
-                Session::flash('respuesta', 'Ocurri� un error al subir el Archivo '.$request->fileid[0]);
-                return redirect()->to($this->getRedirectUrl())->withInput($request->input());
-            }
+          
         }else{
            return redirect()->to($this->getRedirectUrl())->withInput($request->input());
         }
+    // }
+     
+  //  }
+   }
      }
-     */
     }
-
     public function subirArchivo($idFactura, $idProveedor,$nombre_archivo){
         $path_definitivo = $idProveedor.'/'.$idFactura.'/';
         \Storage::disk('local')->put($nombre_archivo,\File::get('/opt/lampp/htdocs/server/php/files/'.$nombre_archivo));
