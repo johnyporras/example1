@@ -92,7 +92,7 @@ class ConsultarController extends Controller{
         $grid->add('nombre_afiliado','Paciente', false);
         $grid->add('estatus','Estatus', false);
         $grid->add('proveedor','Proveedor', false);
-        $grid->addActions('/clavesOdonto/consultarDetalle', 'Ver','show','id');
+        $grid->addActions('/Atiempo-Extranet.git/public/clavesOdonto/consultarDetalle', 'Ver','show','id');
 
         if (isset($_GET['export'])){
             return $grid->buildCSV('clavesOdonto','.Y-m-d.His');
