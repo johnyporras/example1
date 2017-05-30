@@ -46,7 +46,19 @@
               {!! $errors->first('user_types.id', '<p class="help-block">:message</p>') !!}
           </div>           
         @endif
-        </div> 
+        </div>
+
+        <div class="form-group {{ $errors->has('ac_proveedores_extranet.codigo_proveedor') || $errors->has('ac_colectivo.nombre') ? 'has-error' : ''}}">
+        
+        @if($user_type == 1 )
+          {!! Form::label('user_types.id', 'Proveedores: ', ['class' => 'col-sm-2 control-label']) !!}
+          <div class="col-sm-3">
+              {!! $filter->field('ac_proveedores_extranet.id',['selected', 'value'=>'']) !!}
+              {!! $errors->first('ac_proveedores_extranet.id', '<p class="help-block">:message</p>') !!}
+          </div>           
+        @endif
+        </div>
+         
   {!!$filter->footer!!}    
   {!!$grid!!}    
        <div class="table-responsive">    

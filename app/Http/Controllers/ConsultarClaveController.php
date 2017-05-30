@@ -138,6 +138,7 @@ class ConsultarClaveController extends Controller
         $filter->add('ac_claves.clave','Clave', 'text');
         $filter->add('ac_estatus.id','Seleccione una opcion ','select')->option('','Seleccione Una Opción')->options(AcEstatus::lists('ac_estatus.nombre', 'id')->all());
         $filter->add('user_types.id','Seleccione una opcion ','select')->option('','Seleccione Una Opción')->options(UserType::lists('user_types.name', 'id')->all());
+        $filter->add('ac_proveedores_extranet.id','Seleccione una opcion ','select')->option('','Seleccione Una Opción')->options(AcProveedoresExtranet::lists('ac_proveedores_extranet.nombre', 'id')->all());
         $filter->submit('Buscar');
         $filter->reset('reset');
         $filter->build();
