@@ -19,6 +19,7 @@ class CreateAcFeriadosTable extends Migration {
 			$table->integer('mes')->nullable();
 			$table->integer('periodo')->nullable();
 			$table->date('fecha')->nullable();
+			$table->string('descripcion')->nullable();
                         $table->timestamps();
                         $table->softDeletes();
 		});

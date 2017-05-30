@@ -17,8 +17,6 @@ class CreateAcServiciosExtranetTable extends Migration {
 			$table->integer('id', true);
 			$table->integer('codigo_servicio')->unique('ucs_codigo_servicio');
 			$table->string('descripcion');
-			$table->integer('orden');
-			$table->string('act', 1)->default('S');
                         $table->timestamps();
                         $table->softDeletes();
 		});
