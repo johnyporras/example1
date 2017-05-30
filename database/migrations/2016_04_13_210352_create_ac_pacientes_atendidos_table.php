@@ -14,24 +14,19 @@ class CreateAcPacientesAtendidosTable extends Migration {
 	{
 		Schema::create('ac_pacientes_atendidos', function(Blueprint $table)
 		{
-			$table->integer('id', true);
-			$table->integer('id_titular');
-			$table->integer('id_paciente');
-			$table->string('nombre');
-			$table->string('telefono', 50);
-			$table->integer('tipo');
-			$table->string('procedimiento');
+			$table->increments('id');
+			$table->integer('tipo_autorizacion')->unsigned();
+			$table->integer('cedula_afiliado')->index();
 			$table->string('clave');
-			$table->integer('id_profesional');
-			$table->date('fecha');
-			$table->integer('codigo_aseguradora')->nullable();
-			$table->integer('codigo_colectivo')->nullable();
-			$table->decimal('monto', 10)->nullable();
-			$table->text('motivo')->nullable();
-			$table->integer('servicio')->nullable();
-			$table->string('patologia', 100)->nullable();
-                        $table->timestamps();
-                        $table->softDeletes();
+			$table->integer('id_clave_detalle');
+			$table->date('fecha_atencion');
+			$table->string('patologia');
+			$table->text('observaciones');
+            $table->timestamps();
+            $table->softDeletes();
+
+            	$table->foreign('tipo_autorizacion')->references('id')->on('ac_tipo_autorizacion')
+                ->onUpdate('cascade')->onDelete('cascade');
 		});
 	}
 

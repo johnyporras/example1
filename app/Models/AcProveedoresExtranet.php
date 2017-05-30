@@ -6,24 +6,32 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AcProveedoresExtranet extends Model {
 
-    use SoftDeletes;
     /**
-     * Generated
+     * Para usar borrado suave en la base de datos*
      */
+    use SoftDeletes;
 
-    protected $table = 'ac_proveedores_extranet';
-    protected $fillable = ['id', 'codigo_proveedor', 'cedula', 'nombre', 'fecha_nacimiento', 'codigo_especialidad', 'direccion', 'telefono_casa', 'telefono_movil', 'urbanizacion', 'codigo_estado', 'ciudad', 'email', 'colegiatura', 'msas', 'deleted_at'];
-    protected $dates = ['fecha_nacimiento','deleted_at'];
-    
     /**
-     * The storage format of the model's date columns.
+     *  Name of database
      * @var string
      */
-    protected $dateFormat = 'Y-m-d';
+    protected $table = 'ac_proveedores_extranet';
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['id', 'codigo_proveedor', 'cedula', 'nombre', 'codigo_especialidad', 'direccion', 'telefono', 'email', 'tipo_cuenta', 'numero_cuenta', 'estado_id', 'ciudad', 'deleted_at'];
+
     
-    function setFechaNacimientoAttribute($date) {
-        $this->attributes['fecha_nacimiento'] = new Carbon($date);
-    }
     /**
      * Get the Baremos for Proveedores.
      */
@@ -54,6 +62,14 @@ class AcProveedoresExtranet extends Model {
     public function acCartaAvalDetalles()
     {
         return $this->hasMany(\App\Models\AcClavesDetalle::class,'codigo_proveedor','codigo_proveedor');
+    }
+
+    /**
+     * Relación con la tabla ac_estados
+     * @return [type] [description]
+     */
+    public function estado() {
+        return $this->belongsTo(\App\Models\AcEstado::class);
     }
     
 }

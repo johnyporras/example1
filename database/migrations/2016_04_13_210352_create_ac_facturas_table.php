@@ -14,20 +14,24 @@ class CreateAcFacturasTable extends Migration {
 	{
 		Schema::create('ac_facturas', function(Blueprint $table)
 		{
-			$table->integer('id', true);
-			$table->string('clave', 10)->index('clave');
+			$table->increments('id');
 			$table->integer('numero_factura')->index('idxf1_numero_factura');
 			$table->integer('numero_control')->nullable();
 			$table->date('fecha_factura')->nullable();
-			$table->decimal('monto', 10);
+			$table->decimal('monto', 10)->nullable();
 			$table->text('observaciones')->nullable();
 			$table->date('fecha_creacion')->nullable();
 			$table->integer('usuario_creador')->nullable();
-			$table->integer('status')->nullable();
+			$table->integer('codigo_estatus')->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
+            $table->string('documento')->nullable();
+            $table->integer('codigo_proveedor_creador')->nullable()->index();
 
-            	$table->foreign('clave', 'ac_facturas_ibfk_1')->references('clave')->on('ac_claves')->onUpdate('CASCADE')->onDelete('RESTRICT');
+            	$table->foreign('codigo_estatus')->references('id')->on('ac_estatus')
+                ->onUpdate('cascade')->onDelete('cascade');
+            	$table->foreign('codigo_proveedor_creador')->references('codigo_proveedor')->on('ac_proveedores_extranet')
+                ->onUpdate('cascade')->onDelete('cascade');
 		});
 	}
 

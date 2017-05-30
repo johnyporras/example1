@@ -15,8 +15,8 @@ class CreateAcProveedoresTable extends Migration {
 		Schema::create('ac_proveedores_extranet', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('codigo_proveedor', 30)->unique();
-			$table->string('cedula', 100)
+			$table->integer('codigo_proveedor')->unique();
+			$table->string('cedula', 100);
 			$table->string('nombre', 100)->nullable();
 			$table->integer('codigo_especialidad')->nullable();
 			$table->text('direccion')->nullable();
