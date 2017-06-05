@@ -88,7 +88,7 @@ class ConsultarClaveController extends Controller
                 ->join('ac_aseguradora'            , 'ac_colectivos.codigo_aseguradora',"=",'ac_aseguradora.codigo_aseguradora')
                 ->join('ac_proveedores_extranet'   , 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')
                 ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_claves_detalle.codigo_especialidad')
-                ->join('users'                     , 'users.proveedor' ,'=','ac_aseguradora.codigo_aseguradora')
+                ->join('users'                     , 'users.detalles_usuario_id' ,'=','ac_aseguradora.codigo_aseguradora')
                 ->join('user_types'                , 'users.type','=','user_types.id')
                 ->select('ac_claves.id as id',
                          'ac_claves.fecha_cita as fecha_citas',
@@ -327,7 +327,7 @@ class ConsultarClaveController extends Controller
                . '                               user_types'
                . '                    WHERE ac_claves.id = ac_claves_detalle.id_clave '
                . '                      AND ac_proveedores_extranet.codigo_proveedor = ac_claves_detalle.codigo_proveedor '
-               . '                      AND users.proveedor = ac_proveedores_extranet.codigo_proveedor '
+               . '                      AND users.detalles_usuario_id = ac_proveedores_extranet.codigo_proveedor '
                . '                      AND users.type  = user_types.id'
                . '                      AND users.id    = :usuario)', array('usuario' => $user->id));
    }elseif ($user->type == 4) // Analista Aseguradora
@@ -341,7 +341,7 @@ class ConsultarClaveController extends Controller
                . '                               user_types'
                . '                    WHERE ac_claves.id = ac_claves_detalle.id_clave '
                . '                      AND ac_aseguradora.codigo_aseguradora = ac_claves_detalle.codigo_aseguradora'
-               . '                      AND users.proveedor = ac_aseguradora.codigo_aseguradora '
+               . '                      AND users.detalles_usuario_id = ac_aseguradora.codigo_aseguradora '
                . '                      AND users.type  = user_types.id'
                . '                      AND users.id    = :usuario)', array('usuario' => $user->id));
    }else{
@@ -368,7 +368,7 @@ class ConsultarClaveController extends Controller
                . '                               user_types'
                . '                    WHERE ac_claves.id = ac_claves_detalle.id_clave '
                . '                      AND ac_proveedores_extranet.codigo_proveedor = ac_claves_detalle.codigo_proveedor '
-               . '                      AND users.proveedor =  ac_proveedores_extranet.codigo_proveedor '
+               . '                      AND users.detalles_usuario_id =  ac_proveedores_extranet.codigo_proveedor '
                . '                      AND users.type  = user_types.id'
                . '                      AND users.id    = :usuario)', array('usuario' => $user->id, 'estatus'=> $estatus));
    }elseif ($user->type == 4) // Analista Aseguradora
@@ -383,7 +383,7 @@ class ConsultarClaveController extends Controller
                . '                               user_types'
                . '                    WHERE ac_claves.id = ac_claves_detalle.id_clave '
                . '                      AND ac_aseguradora.codigo_aseguradora = ac_claves_detalle.codigo_aseguradora '
-               . '                      AND users.proveedor =   ac_aseguradora.codigo_aseguradora '
+               . '                      AND users.detalles_usuario_id =   ac_aseguradora.codigo_aseguradora '
                . '                      AND users.type  = user_types.id'
                . '                      AND users.id    = :usuario)', array('usuario' => $user->id, 'estatus'=> $estatus));
    }else{
@@ -408,7 +408,7 @@ class ConsultarClaveController extends Controller
                . '                 user_types'
                . '           WHERE ac_proveedores_extranet.codigo_proveedor = ac_claves_detalle.codigo_proveedor '
                .'              AND ac_claves_detalle.codigo_servicio = :servicio'
-               . '             AND users.proveedor = ac_proveedores_extranet.codigo_proveedor '
+               . '             AND users.detalles_usuario_id = ac_proveedores_extranet.codigo_proveedor '
                . '             AND users.type  = user_types.id'
                . '             AND users.id    = :usuario', array('usuario' => $user->id, 'servicio'=> $servicio));
    }elseif ($user->type == 4) // Analista Aseguradora
@@ -420,7 +420,7 @@ class ConsultarClaveController extends Controller
                . '                 user_types'
                . '           WHERE ac_aseguradora.codigo_aseguradora = ac_claves_detalle.codigo_aseguradora '
                .'              AND ac_claves_detalle.codigo_servicio = :servicio'
-               . '             AND users.proveedor = ac_aseguradora.codigo_aseguradora '
+               . '             AND users.detalles_usuario_id = ac_aseguradora.codigo_aseguradora '
                . '             AND users.type  = user_types.id'
                . '             AND users.id    = :usuario', array('usuario' => $user->id, 'servicio'=> $servicio));
 
