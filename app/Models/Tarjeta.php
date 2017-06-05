@@ -31,7 +31,6 @@ class Tarjeta extends Model
      * @var array
      */
     protected $fillable = [
-    	'titulo',
         'codigo_tarjeta',
         'activada',
         'deleted_at'

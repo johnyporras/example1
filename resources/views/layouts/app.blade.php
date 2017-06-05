@@ -46,7 +46,7 @@
         
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
         <link rel="stylesheet" href="{{ asset('css/atiempo.css') }}">
-
+        
         <!-- END Stylesheets -->
 
         <!-- Modernizr (browser feature detection library) -->

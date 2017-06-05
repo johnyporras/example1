@@ -9,15 +9,25 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
 /*=====================================================*/
+    
+Route::get('/check', [
+        'uses' => 'RegisterController@check',
+        'as'   => 'register.check' 
+]);
+
+// Funcion para reloj local
+Route::get('api/clock', [
+        'uses' => 'ClockController@clock',
+        'as'   => 'clock.now' 
+]);
+
+
     /**
      * rutas modulo atención al viajero
      */
 Route::group(['middleware' => ['auth']], function () {
     
-    
-
     // Rutas para la lista de solicitudes
     Route::get('api/solicitudes', 'AviController@solicitudes');
     
@@ -164,11 +174,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
     //Route::resource('users', 'UsersController');
     
-    // Funcion para reloj local
-    Route::get('api/clock', [
-        'uses' => 'ClockController@clock',
-        'as'   => 'clock.now' 
-    ]);
 });
 Route::auth();
 
@@ -230,7 +235,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('clavesEspeciales/crearAfiliadosTemporales' , 'AfiliadoTemporalController@crearAfiliadosTemporalesClaveEspecial');
     Route::resource('clavesEspeciales/generarFinalClaveEspeciales'  , 'ClaveEspecialesController@buscarCobertura');
 
-    
 
     // AUTORIZACION CLAVE DE ATENCION ESPECIAL
     Route::get('clavesEspeciales/autorizar'    , 'AutorizarClaveEspecialesController@getFilter');

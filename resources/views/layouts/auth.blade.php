@@ -36,6 +36,8 @@
         <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
         <link rel="stylesheet" href="{{ asset('css/atiempo.css') }}">
+        <!-- Custom default Styles for plugins -->
+        @stack('style')
         <!-- END Stylesheets -->
 
         <!-- Modernizr (browser feature detection library) -->
