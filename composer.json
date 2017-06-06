@@ -14,7 +14,8 @@
         "barryvdh/laravel-dompdf": "0.6.*",
         "anchu/ftp": "~2.0",
         "grimthorr/laravel-toast": "^1.1",
-        "yajra/laravel-datatables-oracle": "^6.27"
+        "yajra/laravel-datatables-oracle": "^6.27",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

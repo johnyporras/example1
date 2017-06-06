@@ -16,6 +16,16 @@ Route::get('/check', [
         'as'   => 'register.check' 
 ]);
 
+Route::get('/productos', [
+        'uses' => 'RegisterController@productos',
+        'as'   => 'register.productos' 
+]);
+
+Route::get('/plan', [
+        'uses' => 'RegisterController@plan',
+        'as'   => 'register.plan' 
+]);
+
 // Funcion para reloj local
 Route::get('api/clock', [
         'uses' => 'ClockController@clock',
