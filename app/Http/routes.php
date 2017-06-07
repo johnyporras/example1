@@ -16,14 +16,14 @@ Route::get('/check', [
         'as'   => 'register.check' 
 ]);
 
-Route::get('/productos', [
-        'uses' => 'RegisterController@productos',
-        'as'   => 'register.productos' 
+Route::get('/cuenta', [
+        'uses' => 'RegisterController@cuenta',
+        'as'   => 'register.cuenta' 
 ]);
 
-Route::get('/plan', [
-        'uses' => 'RegisterController@plan',
-        'as'   => 'register.plan' 
+Route::get('/afiliado', [
+        'uses' => 'RegisterController@afiliado',
+        'as'   => 'register.afiliado' 
 ]);
 
 // Funcion para reloj local
