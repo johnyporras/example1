@@ -17,10 +17,10 @@ class CreateAcCuentasTable extends Migration
             $table->string('codigo_cuenta',30)->unique();
             $table->date('fecha');
             $table->enum('estatus', ['Activo', 'Pendiente', 'Suspendido', 'Anulado'])->default('Pendiente');
-            $table->integer('producto_id')->unsigned();
+            $table->integer('id_producto')->unsigned();
             $table->timestamps();
             $table->softDeletes();
-                $table->foreign('producto_id')->references('id')->on('ac_producto')
+                $table->foreign('id_prodcuto')->references('id')->on('ac_producto')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
     }
