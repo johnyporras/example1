@@ -27,7 +27,7 @@ Route::get('/afiliado', [
 ]);
 
 // Funcion para reloj local
-Route::get('api/clock', [
+Route::get('/api/clock', [
         'uses' => 'ClockController@clock',
         'as'   => 'clock.now' 
 ]);

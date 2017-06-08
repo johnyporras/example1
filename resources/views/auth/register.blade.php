@@ -11,7 +11,6 @@
     <script src="{{ url('plugins/smartWizard/js/jquery.smartWizard.min.js') }}"></script>
     <script src="{{ url('plugins/parsley-js/parsley.min.js') }}"></script>
     <script src="{{ url('plugins/parsley-js/i18n/es.js') }}"></script>
-    <script src="{{ url('plugins/parsley-js/i18n/es.js') }}"></script>
 @endpush
 
 @section('title','Agregar Nuevo Usuario')
@@ -43,7 +42,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-credit_card"></i></span>
-                        <input type="number" class="form-control input-lg" id="tarjeta" name="tarjeta" placeholder="Codigo Tarjeta" minlength="6" maxlength="16" required>
+                        {{ Form::number('tarjeta', null, ['class' => 'form-control input-lg', 'placeholder' => 'Codigo Tarjeta', 'id' => 'tarjeta','minlength' => '6', 'maxlength' => '16', 'required']) }}
                     </div>
                     @if ($errors->has('tarjeta'))
                         <span class="help-block">
@@ -92,11 +91,155 @@
                 </div>
             </div>
 
+            <div id="mascotas" class="hidden">
+                <div class="form-group {{ $errors->has('nombre') ? ' has-error' : '' }}">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="gi gi-dog"></i></span>
+                            {{ Form::text('nombre', null, ['class' => 'mascota form-control input-lg', 'placeholder' => 'Nombre ', 'id' => 'nombre']) }}
+                        </div>
+                        @if ($errors->has('nombre'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('nombre') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group {{ $errors->has('raza') ? ' has-error' : '' }}">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="gi gi-dog"></i></span>
+                            {{ Form::text('raza', null, ['class' => 'mascota form-control input-lg', 'placeholder' => 'Raza', 'id' => 'raza']) }}
+                        </div>
+                        @if ($errors->has('raza'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('raza') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group {{ $errors->has('color') ? ' has-error' : '' }}">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="gi gi-dog"></i></span>
+                            {{ Form::text('color', null, ['class' => 'mascota form-control input-lg', 'placeholder' => 'Color Pelaje', 'id' => 'color']) }}
+                        </div>
+                        @if ($errors->has('color'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('color') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group {{ $errors->has('tipo') ? ' has-error' : '' }}">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="gi gi-circle_question_mark"></i></span>
+                            {{ Form::select('tipo', ['gato' => 'Gato','perro' => 'Perro'], null, ['class' => 'mascota form-control input-lg', 'placeholder'=>'Tipo de Mascota', 'id' => 'tipo']) }}
+                        </div>
+                        @if ($errors->has('tipo'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('tipo') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group {{ $errors->has('edad') ? ' has-error' : '' }}">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="gi gi-clock"></i></span>
+                            {{ Form::number('edad', null, ['class' => 'mascota form-control input-lg', 'placeholder' => 'Edad mascota', 'id' => 'edad','min' => '0', 'max' => '40', 'maxlength' => '2']) }}
+                        </div>
+                        @if ($errors->has('edad'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('edad') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group {{ $errors->has('fmascota') ? ' has-error' : '' }}">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="gi gi-calendar"></i></span>
+                            {{ Form::text('fmascota', null, ['class' => 'mascota form-control input-lg', 'placeholder' => 'Fecha nacimiento', 'id' => 'fmascota', 'required']) }}
+                        </div>
+                        @if ($errors->has('fmascota'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('fmascota') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group {{ $errors->has('tamano') ? ' has-error' : '' }}">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="gi gi-resize_full"></i></span>
+                            {{ Form::select('tamano', $tamanos, null, ['class' => 'mascota form-control input-lg', 'placeholder'=>'Tamaño mascota', 'id' => 'tamano']) }}
+                        </div>
+                        @if ($errors->has('tamano'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('tamano') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
+            </div> <!-- .mascotas -->
+
+            <div id="maternidad" class="hidden">
+
+                <div class="form-group {{ $errors->has('embarazada') ? ' has-error' : '' }}">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="gi gi-comments"></i></span>
+                            {{ Form::select('embarazada', ['S' => 'SI','N' => 'NO'], null, ['class' => 'form-control input-lg', 'placeholder'=>'¿Usted esta Embarazada?', 'id' => 'embarazada']) }}
+                        </div>
+                        @if ($errors->has('embarazada'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('embarazada') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group {{ $errors->has('semanas') ? ' has-error' : '' }}">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="gi gi-clock"></i></span>
+                            {{ Form::number('semanas', null, ['class' => 'form-control input-lg', 'placeholder' => 'Semanas de Embarazo', 'id' => 'semanas','min' => '1', 'max' => '40', 'maxlength' => '2', 'disabled']) }}
+                        </div>
+                        @if ($errors->has('semanas'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('semanas') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
+            </div> <!-- .maternidad -->
+
+            <div class="form-group">
+                <div class="col-xs-12 text-center">
+                    <button type="submit" class="btn btn-success btn-md"><i class="fa fa-save fa-fw"></i> Guardar</button>
+                </div>
+            </div>
+        {!! Form::close() !!}
+        </div>
+
+        <div id="step-3">
+            {!! Form::open(['url' => '/afiliado', 'class' => 'form-horizontal form-bordered form-control-borderless', 'method' => 'get', 'id' => 'afiliadoForm']) !!}
+                    
             <div class="form-group {{ $errors->has('cedula') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-credit_card"></i></span>
-                        <input type="number" class="form-control input-lg" id="cedula" name="cedula" placeholder="Cédula" minlength="6" maxlength="16" required>
+                        {{ Form::number('cedula', null, ['class' => 'form-control input-lg', 'placeholder' => 'Cédula', 'id' => 'cedula', 'minlength' => '6', 'maxlength' => '2', 'required']) }}
                     </div>
                     @if ($errors->has('cedula'))
                         <span class="help-block">
@@ -218,25 +361,6 @@
                 </div>
             </div>
 
-
-            <div class="mascotas hidden">
-
-            <div class="form-group {{ $errors->has('plan') ? ' has-error' : '' }}">
-                <div class="col-xs-12">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="gi gi-coins"></i></span>
-                        {{ Form::select('plan', $planes, null, ['class' => 'form-control input-lg', 'placeholder'=>'Seleccione Plan', 'required', 'id' => 'plan']) }}
-                    </div>
-                    @if ($errors->has('plan'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('plan') }}</strong>
-                        </span>
-                    @endif
-                </div>
-            </div>
-                
-            </div>
-
             <div class="form-group">
                 <div class="col-xs-12 text-center">
                     <button type="submit" class="btn btn-success btn-md"><i class="fa fa-save fa-fw"></i> Guardar</button>
@@ -245,7 +369,7 @@
         {!! Form::close() !!}
         </div>
 
-        <div id="step-3">
+        <div id="step-4">
                 {!! Form::open(['url' => '/register', 'class' => 'form-horizontal form-bordered form-control-borderless' ]) !!}
                     
                 <div class="form-group {{ $errors->has('user') ? ' has-error' : '' }}">
@@ -325,6 +449,7 @@
                 </div>
         {!! Form::close() !!}
         </div>
+
     </div> 
 
 </div>
@@ -332,202 +457,7 @@
 @endsection
 
 @section('script')
-<script>
-$(document).ready(function() {
 
-    // setup envio ajax token
-    $.ajaxSetup({
-    headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+<script src="{{url('js/register.js') }}"></script>
 
-    // default
-    var validate = false;
-    // Escondo los mensje por defecto
-    $('#result').hide(); 
-    
-    /** Validar formulario **/
-    var parsleyOptions = {
-        errorClass: 'has-error',
-        successClass: 'has-success',
-        classHandler: function(el) {
-            return el.$element.parents('.form-group');
-        },
-        errorsContainer: function(el) {
-            return el.$element.closest('.form-group');
-        },
-        errorsWrapper: '<span class="help-block">',
-        errorTemplate: '<div class=" col-md-offset-1 col-md-11"></div>',
-    };
-
-    // Genero la validacion del formulario...
-    $('#checkForm').parsley(parsleyOptions);
-
-    $('#cuentaForm').parsley(parsleyOptions);
-
-    // Toolbar extra buttons
-    var btnFinish = $('<button></button>').text('Finish')
-        .addClass('btn btn-info btn-finish hidden')
-        .on('click', function(){ });
-
-    // Inicializo step form
-    $('#wizard').smartWizard({ 
-        selected: 0, 
-        theme: 'default',
-        transitionEffect:'fade',
-        toolbarSettings: {
-            toolbarPosition: 'bottom',
-            toolbarExtraButtons: [btnFinish]
-        },
-        anchorSettings: {
-            markDoneStep: true, // add done css
-            markAllPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done
-            removeDoneStepOnNavigateBack: true, // While navigate back done step after active step will be cleared
-            enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
-        },
-        lang:{
-            next: 'Siguiente',
-            previous: 'Atras'
-        }
-    });
-
-    // Verifica si puede pasar al otro step
-    $("#wizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection){
-        // verifico si va adelante
-        if(stepDirection === 'forward'){      
-            if(validate == false){
-                //validation failed
-                return false;    
-            }
-        }else{
-            validate = true;
-            return true;
-        }
-        return true;
-    });
-
-    // Verifica si puede mostrar el ultimo boton para finalizar
-    $("#wizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection) {
-        // Enable finish button only on last step
-        if(stepNumber == 1){ 
-            validate = false; 
-            console.log('estoy en 1');
-        }
-
-        if(stepNumber == 2){
-            validate = false; 
-            console.log('estoy en 2');
-            //$('.btn-finish').removeClass('hidden');  
-        }
-
-    });
-
-    /***********************************************************************/
-
-    //Valida cambio del metodo de pago
-    $("#plan").on('change', function() {
-        // valido metodo para mostrar data adicional
-        plan = this.value;
-
-        if(plan == 17){
-            //$("#cdia").removeClass("hidden");
-            //$("#dia").parsley(parsleyOptions).addConstraint("required", "true");
-            //$("#dia").attr("required");
-            console.log('es plan maternidad');
-
-        }else if(plan == 18){
-            //$("#cdia").addClass("hidden");
-            //$("#dia").parsley(parsleyOptions).removeConstraint("required");
-            //$("#dia").val(null);
-            console.log('es plan mascotas');
-        }else{
-
-        }
-    }); 
-
-    /* Para fecha de solicitud*/
-        $('#fecha').datepicker({
-            language: "es",
-            format: 'yyyy-mm-dd',
-            startView: 2,
-            endDate: '-18y'
-        }).on('changeDate', function (selected) {     
-            //valida el campo al cambiar
-            $('#fecha').parsley(parsleyOptions).validate();
-        });
-
-    /***********************************************************************/
-
-     // Verificar tarjeta
-    $('#checkForm').on('submit', function (e) {
-        e.preventDefault();
-        // Guardo el valor de la tarjeta ingresada..
-        var tarjeta = $('#tarjeta').val();
-        // Ejecuto la peticion para validar la tarjeta
-        $.ajax({
-            type: "GET",
-            url:'/check',
-            data: {tarjeta: tarjeta},
-            success: function(data) {
-                // limpio el campo tarjeta
-                $("#tarjeta").val("");
-                //Verifico la respuesta del servidor
-                if (data.error) {
-                    // Muestro mensaje de error
-                    $('#result').show();
-                    $('#result').removeClass('alert-success'); 
-                    $('#result').addClass('alert-warning '); 
-                    $('#result .text').text(data.error)
-                    validate = false;
-                } else {
-                    // Desabilito los campos paa evitar errores
-                    $('#valid').attr('disabled','disabled');
-                    $('#tarjeta').attr('disabled','disabled');
-                    // Muestro mensaje de exito
-                    $('#result').show(); 
-                    $('#result').removeClass('alert-warning'); 
-                    $('#result').addClass('alert-success'); 
-                    $('#result .text').text(data.success)
-                    // Permito pasar al otro step del registro
-                    validate = true;
-                }
-            }
-        });
-    }); 
-
-     // Verificar tarjeta
-    $('#cuentaForm').on('submit', function (e) {
-        e.preventDefault();
-        // Guardo el valor de la tarjeta ingresada..
-        var producto = $('#producto').val();
-        var plan = $('#plan').val();
-        // Ejecuto la peticion para validar la tarjeta
-        $.ajax({
-            type: "GET",
-            url:'/cuenta',
-            data: {
-                producto: producto,
-                plan: plan
-            },
-            success: function(data) {
-                // limpio el campo tarjeta
-                //$("#tarjeta").val("");
-                //Verifico la respuesta del servidor
-                if (data.error) {
-                    // Muestro mensaje de error
-                    $('#result').show();
-                    $('#result').removeClass('alert-success'); 
-                    $('#result').addClass('alert-warning '); 
-                    $('#result .text').text(data.error)
-                } else {
-                   console.log(data);
-                    validate = true;
-                }
-            }
-        });
-    });
-
-});      
-</script>
 @endsection
