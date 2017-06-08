@@ -48,7 +48,7 @@ class AcAfiliado extends Model {
      */
     public function cuenta()
     {
-        return $this->belongsTo(\App\Models\AcCuenta::class);
+        return $this->belongsTo(\App\Models\AcCuenta::class, 'id_cuenta', 'id');
     }
 
     /**
@@ -56,7 +56,7 @@ class AcAfiliado extends Model {
      */
     public function estado()
     {
-        return $this->belongsTo(\App\Models\AcEstado::class);
+        return $this->belongsTo(\App\Models\AcEstado::class, 'id_estado', 'id');
     }
 
 

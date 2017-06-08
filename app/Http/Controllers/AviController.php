@@ -73,6 +73,7 @@ class AviController extends Controller
 
             // Selecciona dias de registro
             $fechaCuenta = $afiliado->cuenta->fecha->diffInDays();
+
             // selecciono el estatus cuenta
             $estatusCuenta = $afiliado->cuenta->estatus;
 
