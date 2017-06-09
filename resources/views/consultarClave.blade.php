@@ -3,7 +3,7 @@
 
 @section('content') 
 {!! Form::open(['url' => 'claves/consultar', 'class' => 'form-horizontal', 'name' => 'consultar','method' => 'GET']) !!}
-        
+        {!! $filter->render('ac_claves.fecha_cita') !!}
         <?php
              $user = Auth::user();
              $user_type =  $user->type;
@@ -11,13 +11,13 @@
         <div class="form-group {{ $errors->has('ac_afiliados.nombre') || $errors->has('ac_claves.cedula_afiliado') ? 'has-error' : ''}}">
           {!! Form::label('ac_afiliados.nombre', 'Nombre Paciente: ', ['class' => 'col-sm-2 control-label']) !!}
           <div class="col-sm-3">
-              {!! Form::text('nombre') !!}
+              {!! $filter->field('ac_afiliados.nombre',['onchange'=>"ValidarAlpha(this.value,'ac_afiliados_nombre')"]) !!}
               {!! $errors->first('ac_afiliados.nombre', '<p class="help-block">:message</p>') !!}
           </div>
          
-          {!! Form::label('cedula_afiliado', 'C.I: ', ['class' => 'col-sm-2 control-label']) !!}
+          {!! Form::label('ac_claves.cedula_afiliado', 'C.I: ', ['class' => 'col-sm-2 control-label']) !!}
          <div class="col-sm-3">
-              {!! Form::text('cedula_afiliado') !!}
+              {!! $filter->field('ac_claves.cedula_afiliado') !!}
               {!! $errors->first('ac_claves_cedula_afiliado', '<p class="help-block">:message</p>') !!}
           </div>
         </div>      
@@ -33,19 +33,32 @@
           
           {!! Form::label('ac_claves.clave', 'Clave: ', ['class' => 'col-sm-2 control-label']) !!}
           <div class="col-sm-3">
-              {!! Form::text('ac_claves.clave') !!}
+              {!! $filter->field('ac_claves.clave') !!}
               {!! $errors->first('ac_claves.clave', '<p class="help-block">:message</p>') !!}
           </div>  
-        </div>   
+        </div>    
+        <div class="form-group {{ $errors->has('ac_proveedores_extranet.codigo_proveedor') || $errors->has('ac_colectivo.nombre') ? 'has-error' : ''}}">
+        
+        @if($user_type == 1 )
+          {!! Form::label('user_types.id', 'Usuarios: ', ['class' => 'col-sm-2 control-label']) !!}
+          <div class="col-sm-3">
+              {!! $filter->field('user_types.id',['selected', 'value'=>'']) !!}
+              {!! $errors->first('user_types.id', '<p class="help-block">:message</p>') !!}
+          </div>           
+        @endif
+        </div>
+
         <div class="form-group {{ $errors->has('ac_proveedores_extranet.codigo_proveedor') || $errors->has('ac_colectivo.nombre') ? 'has-error' : ''}}">
         
         @if($user_type == 1 )
           {!! Form::label('user_types.id', 'Proveedores: ', ['class' => 'col-sm-2 control-label']) !!}
           <div class="col-sm-3">
+              {!! $filter->field('ac_proveedores_extranet.id',['selected', 'value'=>'']) !!}
               {!! $errors->first('ac_proveedores_extranet.id', '<p class="help-block">:message</p>') !!}
           </div>           
         @endif
-        </div> 
+        </div>
+         
   {!!$filter->footer!!}    
   {!!$grid!!}    
        <div class="table-responsive">    
