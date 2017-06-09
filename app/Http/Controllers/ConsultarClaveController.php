@@ -24,7 +24,7 @@ class ConsultarClaveController extends Controller
 
  public function getFilter()
  {
- 
+
    $user = \Auth::user();
    // Analista Proveedor
    if ($user->type == 3){
@@ -51,7 +51,7 @@ class ConsultarClaveController extends Controller
                          'ac_proveedores_extranet.nombre as proveedor',
                          'ac_estatus.nombre as estatus' )
                ->distinct();*/
-   	
+
 			   	$query = DB::table('ac_claves')
 			   	->where([['ac_cuenta.fecha','<=',date('Y-m-d').' 00:00:00'], ['ac_claves.estatus_clave', '!=', 5]])
 			   	->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')
@@ -73,7 +73,7 @@ class ConsultarClaveController extends Controller
 			   			'ac_estatus.nombre as estatus'
 			   			)
 			   			->distinct();
-			   	
+
    }elseif ($user->type == 4) // Analista Aseguradora
      {
         $query = DB::table('ac_claves')
@@ -134,7 +134,7 @@ class ConsultarClaveController extends Controller
         $filter->add('ac_claves.fecha_cita','Fecha Cita','daterange');
         $filter->add('ac_afiliados.nombre','Nombre', 'text'); //validation;
         $filter->add('ac_claves.cedula_afiliado','C.I.','number');//validation;
-        
+
         $filter->add('ac_claves.clave','Clave', 'text');
         $filter->add('ac_estatus.id','Seleccione una opcion ','select')->option('','Seleccione Una Opción')->options(AcEstatus::lists('ac_estatus.nombre', 'id')->all());
         $filter->add('user_types.id','Seleccione una opcion ','select')->option('','Seleccione Una Opción')->options(UserType::lists('user_types.name', 'id')->all());
@@ -219,10 +219,10 @@ class ConsultarClaveController extends Controller
                              'ac_afiliados.email as email',
                              'ac_afiliados.sexo as sexo',
                              'ac_claves.telefono as telefono',
-                             'ac_afiliados.cedula_titular as cedula_titular',
+
                              'ac_afiliados.nombre as nombre_titular' ,
                              'ac_aseguradora.nombre as aseguradora',
-                             'ac_colectivos.nombre as colectivo' ,
+
                              'ac_claves.clave as clave',
                              'ac_claves.codigo_contrato as contrato',
                              'ac_claves.fecha_cita as fecha_cita',
@@ -272,10 +272,10 @@ class ConsultarClaveController extends Controller
                              'ac_afiliados.email as email',
                              'ac_afiliados.sexo as sexo',
                              'ac_claves.telefono as telefono',
-                             'ac_afiliados.cedula_titular as cedula_titular',
+
                              'ac_afiliados.nombre as nombre_titular' ,
                              'ac_aseguradora.nombre as aseguradora',
-                             'ac_colectivos.nombre as colectivo' ,
+                             
                              'ac_claves.clave as clave',
                              'ac_claves.codigo_contrato as contrato',
                              'ac_claves.fecha_cita as fecha_cita',

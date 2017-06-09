@@ -23,8 +23,8 @@
         @if (count($contratos) > 0)
             {!! Form::open(['url' => 'claves/generarFinal', 'class' => 'form-horizontal', 'name' => 'beneficiario', 'id' => 'beneficiario']) !!}
             <div class="table">
-               
-               
+
+
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
@@ -38,7 +38,7 @@
                             <tr>
                                 {!! Form::hidden('contrato'.$x, $contrato->codigo_cuenta) !!}
                                 <td>{{ $contrato->cedula_afiliado }}</td>
-                                {!! Form::hidden('cedula_afiliado'.$x, $contrato->cedula_titular) !!}
+                                {!! Form::hidden('cedula_afiliado'.$x, $contrato->cedula) !!}
                                 <td>{{ $contrato->nombre_afiliado }}</td>
                                 {!! Form::hidden('nombre_afiliado'.$x, $contrato->nombre_afiliado) !!}
                                 <td>{{ $contrato->plan }}</td>
@@ -50,10 +50,10 @@
                         {!! Form::hidden('max', $x) !!}
                     </tbody>
                 </table>
-                
-                
-                
-                
+
+
+
+
                 <div class="col-sm-2 pull-right">
                     {!! Form::submit('Seleccionar', ['class' => 'btn btn-primary form-control', 'id' => 'seleccionar']) !!}
                 </div>

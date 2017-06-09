@@ -106,7 +106,6 @@ class AuditoriaController extends Controller
                              'ac_afiliados.email as email',
                              'ac_afiliados.sexo as sexo',
                              'ac_claves.telefono as telefono',
-                             'ac_afiliados.cedula_titular as cedula_titular',
                              'ac_afiliados.nombre as nombre_titular' ,
                              'ac_aseguradora.nombre as aseguradora',
                              'ac_colectivos.nombre as colectivo' ,

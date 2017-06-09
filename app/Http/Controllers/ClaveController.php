@@ -18,7 +18,7 @@ use App\Http\Controllers\ConsultarClaveTemporalController;
 use App\Http\Controllers\ValidarFechaController;
 
 class ClaveController extends Controller{
-    
+
     function RandomClave($length=10,$uc=TRUE,$n=TRUE,$sc=FALSE){
         $source = 'abcdefghijklmnopqrstuvwxyz';
         if($uc==1){ $source .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';}
@@ -38,11 +38,11 @@ class ClaveController extends Controller{
     }
     /**
      * Procesar Guardado de Claves
-     * 
+     *
      * @return Response
      */
     public function procesarGuardar(Request $request){
-        $monto_total = 0;     
+        $monto_total = 0;
         $costo       = 0;
         $monto       = array();
         $ValidarFecha = new ValidarFechaController();
@@ -50,16 +50,16 @@ class ClaveController extends Controller{
            Session::flash('result', 'No se encuentra dentro del las Fecha Autorizada.');
                       // return redirect('home')->with('message', );
            return redirect::to('claves/generarFinal')->with('result', 'Debe agregar al menu un procedimiento');
-           //return redirect()->to($this->getRedirectUrl())->withInput(); 
+           //return redirect()->to($this->getRedirectUrl())->withInput();
 
         }
 //       if (isset($request->max) &&($request->max == 0)){
 //           Session::flash('result', 'Debe agregar al menos un prpcedimiento');
 //           return false;
-//          // 
-//       }     
+//          //
+//       }
       /**
-       * Se Obtiene el id del Usuario y el codigo del Proveedor  de la Session 
+       * Se Obtiene el id del Usuario y el codigo del Proveedor  de la Session
        */
         $user = \Auth::user();
         if($user->type == 3){//TIPO PROVEEDOR
@@ -69,50 +69,50 @@ class ClaveController extends Controller{
         /**
         * Creacion de la Clave
         */
-        $clave   = $this->RandomClave($length=8,$uc=TRUE,$n=TRUE,$sc=FALSE);     
+        $clave   = $this->RandomClave($length=8,$uc=TRUE,$n=TRUE,$sc=FALSE);
         $request = array_add($request, 'clave', $clave);
         /**
         * Validacion del codigo_contrato = 0, estatus = 5 => Pendiente, sino estatus = 3 => Aprobado
         */
         $estatus_clave = 5;
-        $request = array_add($request, 'estatus_clave', $estatus_clave); 
+        $request = array_add($request, 'estatus_clave', $estatus_clave);
        //            $request = array_add($request, 'estatus_clave', $estatus_clave);
-     
+
 //        if (( isset($request->codigo_contrato)) && ($request->codigo_contrato == 0)){
 //            $estatus_clave = 5;
 //            $request = array_add($request, 'estatus_clave', $estatus_clave);
 //        } elseif (isset($request->codigo_contrato)){
 //             $estatus_clave = 3;
-//              $request = array_add($request, 'estatus_clave', $estatus_clave);            
+//              $request = array_add($request, 'estatus_clave', $estatus_clave);
 //        }
         for($i = 0; $i < $request->max; $i++):
             if($request->exists(['id_tratamiento'.$i])){
                 $baremos['id_procedimiento'] = $request->input(['id_tratamiento'.$i]);
-                $baremos['id_proveedor']     = $request->input(['id_proveedor'.$i]);                                      
+                $baremos['id_proveedor']     = $request->input(['id_proveedor'.$i]);
                 $baremo = DB::table('ac_baremos')
                             ->where([['id_procedimiento', '=', $baremos['id_procedimiento']], ['id_proveedor','=',$baremos['id_proveedor']]])
                             ->select('monto' )
-                            ->get();                       
+                            ->get();
                 foreach($baremo as $data){
-                    $monto[$i]    =   $data->monto;                
+                    $monto[$i]    =   $data->monto;
                     $monto_total = $monto_total + $data->monto;
                 }
             }
-        endfor; 
+        endfor;
         $request = array_add($request, 'costo_total', $monto_total);
         $request = array_add($request, 'cantidad_servicios', count($monto_total));
         $claves = $this->store($request);
         if(isset($claves)){
-            for($i = 0; $i < $request->max; $i++):                
-                $clavesDetalle = new AcClavesDetalle;   
+            for($i = 0; $i < $request->max; $i++):
+                $clavesDetalle = new AcClavesDetalle;
                 $clavesDetalle->id_clave             = $claves->id;
                 $clavesDetalle->codigo_servicio      = $request->input(['id_servicio'.$i]);
                 $clavesDetalle->codigo_especialidad  = $request->input(['id_especialidad'.$i]);
                 $clavesDetalle->id_procedimiento     = $request->input(['id_tratamiento'.$i]);
                 $clavesDetalle->costo                = $monto[$i];
                 $clavesDetalle->codigo_proveedor     = $request->input(['id_proveedor'.$i]);
-                $clavesDetalle->detalle              = $request->detalle_servicio;    
-                $clavesDetalle->estatus              = 1 /* Pendiente de Atencion*/;   
+                $clavesDetalle->detalle              = $request->detalle_servicio;
+                $clavesDetalle->estatus              = 1 /* Pendiente de Atencion*/;
                 $clavesDetalle->save();
             endfor;
               if($user->type == 3){//TIPO PROVEEDOR
@@ -132,14 +132,14 @@ class ClaveController extends Controller{
             Session::flash('respuesta', 'Ocurrió un error al generar la Clave. ');
             return view('claves.generar');
         }
-    }    
+    }
     /**
      * Display a listing of the resource.
      * @param Request
      * @return Response
      */
     public function generar(Request $request){
-    	
+
         $ValidarFecha = new ValidarFechaController();
         if  (!($ValidarFecha->validarHorario()) and false){
             return redirect('home')->with('message', 'No se encuentra dentro del Horario Autorizado.');
@@ -149,24 +149,24 @@ class ClaveController extends Controller{
                 return redirect()->back()->withInput()->with('message', 'El campo cédula es obligatorio.');
             }else{
                 try{
-                    $this->validate($request,['cedula' => 'required|numeric|']);                    
+                    $this->validate($request,['cedula' => 'required|numeric|']);
                     $afiliadoIni = AcAfiliado::where('cedula', '=', $request->cedula)->firstOrFail();
                 }catch(ModelNotFoundException $e){  // catch(Exception $e) catch any exception
                 	//$afiliadoIni=new \stdClass();
                 	$afiliadoIni=new \stdClass();
-                	$afiliadoIni->cedula_titular=0;
+                	$afiliadoIni->cedula=0;
                     //dd(get_class_methods($e)); // lists all available methods for exception object
                     $tipoAfiliado = \App\Models\AcTipoAfiliado::pluck('nombre', 'id')->toArray();
                     $estado = \App\Models\AcEstado::pluck('es_desc', 'es_id')->toArray();
                     $aseguradora = \App\Models\AcAseguradora::pluck('nombre', 'codigo_aseguradora')->toArray();
                 }
                 $contratos = DB::table('ac_cuenta')
-                            ->where([['cedula_titular', '=', $afiliadoIni->cedula_titular],['fecha','<=',date('Y-m-d').' 00:00:00']])
+                            ->where([['cedula', '=', $afiliadoIni->cedula],['fecha','<=',date('Y-m-d').' 00:00:00']])
                             ->where('ac_cuenta.estatus',"=",1)
                             ->join('ac_afiliados', 'ac_cuenta.id',"=", 'ac_afiliados.id_cuenta')
                             ->join('ac_cuentaplan','ac_cuenta.id',"=",'ac_cuentaplan.id_cuenta')
                             ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuentaplan.id_plan')
-                            ->select('codigo_cuenta','cedula_titular as cedula_afiliado','cedula_titular','ac_afiliados.nombre as nombre_afiliado','ac_afiliados.apellido as apellido_afiliado',
+                            ->select('codigo_cuenta','cedula as cedula_afiliado','cedula','ac_afiliados.nombre as nombre_afiliado','ac_afiliados.apellido as apellido_afiliado',
                                     'ac_planes_extranet.nombre as plan')
                             ->get();
                 if(!empty($contratos)){
@@ -244,7 +244,7 @@ class ClaveController extends Controller{
         $servicios = array_pluck($coberturas,'servicio','id_servicio');
         return view('claves.generarFinal', compact('beneficiario','especialidades_cobertura','servicios','proveedor'));
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -274,7 +274,7 @@ class ClaveController extends Controller{
     public function store(Request $request){
 //        $this->validate($request,  ['cedula_afiliado' => 'required|max:10',
 //                                    'codigo_contrato' => 'required',
-//                                    'fecha_cita'      => 'required|date', 
+//                                    'fecha_cita'      => 'required|date',
 //                                    'telefono'        => 'required'
 //                        ]);
         $ValidarFecha = new ValidarFechaController();

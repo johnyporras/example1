@@ -27,12 +27,9 @@ class ConfirmarClaveController extends Controller
                 ->where([['users.id','=',$user->id],['ac_claves.estatus_clave','=',5] ])
                 ->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')
                 ->join('ac_afiliados'              , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
-                ->join('ac_contratos'              , 'ac_afiliados.cedula',"=", 'ac_contratos.cedula_afiliado')
                 ->join('ac_tipo_afiliado'          , 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
                 ->join('ac_planes_extranet'        , 'ac_planes_extranet.codigo_plan',"=", 'ac_contratos.codigo_plan')
                 ->join('ac_estatus'                , 'ac_estatus.id',"=",'ac_claves.estatus_clave')
-                ->join('ac_colectivos'             , 'ac_colectivos.codigo_colectivo',"=",'ac_contratos.codigo_colectivo')
-                ->join('ac_aseguradora'            , 'ac_colectivos.codigo_aseguradora',"=",'ac_aseguradora.codigo_aseguradora')
                 ->join('ac_proveedores_extranet'   , 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')
                 ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_claves_detalle.codigo_especialidad')
                 ->join('users'                     , 'users.proveedor' ,'=','ac_proveedores_extranet.codigo_proveedor')
@@ -64,7 +61,7 @@ class ConfirmarClaveController extends Controller
        $grid->add('nombre_afiliado','Nombre Afiliado', false);
        $grid->add('tipo_afiliado','Tipo Afiliado', false);
        $grid->add('aseguradora','Aseguradora', false);
-       $grid->addActions('/public/claves/verificarClave', 'Confirmar','show','id'); 
+       $grid->addActions('/public/claves/verificarClave', 'Confirmar','show','id');
        $grid->paginate(10);
        return  view('claves.confirmarClave', compact('filter','grid'));
     }

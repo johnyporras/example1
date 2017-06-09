@@ -42,7 +42,7 @@ class AfiliadoController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, cedula, nombre, apellido, fecha_nacimiento, email, sexo, val_user,tipo_afiliado,telefono, cedula_titular);
+        $this->validate($request, cedula, nombre, apellido, fecha_nacimiento, email, sexo,telefono);
 
         AcAfiliado::create($request->all());
 
@@ -88,7 +88,7 @@ class AfiliadoController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, cedula, nombre, apellido, fecha_nacimiento, email, sexo, val_user,tipo_afiliado,telefono, cedula_titular);
+        $this->validate($request, cedula, nombre, apellido, fecha_nacimiento, email, sexo,telefono);
 
         $afiliado = AcAfiliado::findOrFail($id);
         $afiliado->update($request->all());
