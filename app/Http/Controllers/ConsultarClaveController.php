@@ -22,7 +22,7 @@ use Zofe;
 class ConsultarClaveController extends Controller
 {
 
- public function getFilter()
+ public function getFilter(Request $request)
  {
 
    $user = \Auth::user();
@@ -130,20 +130,33 @@ class ConsultarClaveController extends Controller
                  ->distinct();
         }
 
-        $filter = \DataFilter::source($query);
+        $estatus=AcEstatus::lists('ac_estatus.nombre', 'id')->all();
+        $prov=AcProveedoresExtranet::lists('ac_proveedores_extranet.nombre', 'id')->all();
+        if($request->nombre!="")
+        {
+                $query=$query->where("afiliados.nombre","like",'%'.$request->nombre.'%');        
+        }
+
+        if($request->cedula_afiliado!="")
+        {
+                $query=$query->where("afiliados.cedula","like",'%'.$request->cedula_afiliado.'%');        
+        }
+
+
+
+       /* $filter = \DataFilter::source($query);
         $filter->add('ac_claves.fecha_cita','Fecha Cita','daterange');
         $filter->add('ac_afiliados.nombre','Nombre', 'text'); //validation;
         $filter->add('ac_claves.cedula_afiliado','C.I.','number');//validation;
-
         $filter->add('ac_claves.clave','Clave', 'text');
         $filter->add('ac_estatus.id','Seleccione una opcion ','select')->option('','Seleccione Una Opción')->options(AcEstatus::lists('ac_estatus.nombre', 'id')->all());
         $filter->add('user_types.id','Seleccione una opcion ','select')->option('','Seleccione Una Opción')->options(UserType::lists('user_types.name', 'id')->all());
         $filter->add('ac_proveedores_extranet.id','Seleccione una opcion ','select')->option('','Seleccione Una Opción')->options(AcProveedoresExtranet::lists('ac_proveedores_extranet.nombre', 'id')->all());
         $filter->submit('Buscar');
         $filter->reset('reset');
-        $filter->build();
+        $filter->build();*/
 
-       $grid = \DataGrid::source($filter);
+       $grid = \DataGrid::source($query);
        $url = new Zofe\Rapyd\Url();
        $grid->link($url->append('export',1)->get(),"Exportar a Excel", "TR");
 
@@ -190,7 +203,7 @@ class ConsultarClaveController extends Controller
                    $claves['estudios'] = $servicios->cuantos;
             }
            // print_r($claves);
-            return  view('claves.consultarClave', compact('filter','grid','claves'));
+            return  view('claves.consultarClave', compact('filter','grid','claves','estatus','prov'));
         }
     }
 
