@@ -30,6 +30,7 @@
               <?php
                 foreach ($estatus as $key=>$value)
                 {
+                  //echo 
                   echo "<option value='{$key}'>{$value}</option>";
                 }
               ?>

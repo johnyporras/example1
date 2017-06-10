@@ -6,7 +6,7 @@
     <div class="form-group {{ $errors->has('ac_afiliados.nombre') || $errors->has('ac_claves.cedula_afiliado') ? 'has-error' : ''}}">
         {!! Form::label('ac_afiliados.nombre', 'Nombre Paciente: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-3">
-            {!! $filter->field('ac_afiliados.nombre',['pattern'=>'[A-Za-z]']) !!}
+            {!! $filter->field('ac_afiliados.nombre',['onchange'=>"ValidarAlpha(this.value,'ac_afiliados_nombre')"]) !!}
             {!! $errors->first('ac_afiliados.nombre', '<p class="help-block">:message</p>') !!}
         </div>
 
