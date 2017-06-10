@@ -15,47 +15,48 @@ $(document).ready(function() {
 	];
 
 	function update(){
-
-		$.ajax({
+		/* $.ajax({
 	        url: '/api/clock',
 	        success: function(data) {
 	          dia = data;
 	        },
 	    });
+		var date = new Date(dia);*/
+		
+		var date = new Date();
 
-		 var date = new Date(dia);
-		  
-		 var ampm = date.getHours() < 12
+		var ampm = date.getHours() < 12
 		            ? 'AM'
 		            : 'PM';
 		  
-		 var hours = date.getHours() == 0
+		var hours = date.getHours() == 0
 		            ? 12
 		            : date.getHours() > 12
 		            ? date.getHours() - 12
 		            : date.getHours();
 		  
-		 var minutes = date.getMinutes() < 10 
+		var minutes = date.getMinutes() < 10 
 		            ? '0' + date.getMinutes() 
 		            : date.getMinutes();
 		  
-		 var seconds = date.getSeconds() < 10 
+		var seconds = date.getSeconds() < 10 
 		            ? '0' + date.getSeconds() 
 		            : date.getSeconds();
 		  
-		 var dayOfWeek = days[date.getDay()];
-		 var month = months[date.getMonth()];
-		 var day = date.getDate();
-		 var year = date.getFullYear();
+		var dayOfWeek = days[date.getDay()];
+		var month = months[date.getMonth()];
+		var day = date.getDate();
+		var year = date.getFullYear();
 		  
-		 var dateString = dayOfWeek + ', ' + day + ' ' + month + ', ' + year;
+		var dateString = dayOfWeek + ', ' + day + ' ' + month + ', ' + year;
 		  
-		 $dOut.text(dateString);
-		 $hOut.text(hours);
-		 $mOut.text(minutes);
-		 $sOut.text(seconds);
-		 $ampmOut.text(ampm);
+		$dOut.text(dateString);
+		$hOut.text(hours);
+		$mOut.text(minutes);
+		$sOut.text(seconds);
+		$ampmOut.text(ampm);
 	}
+	// Set and update cada segundo..
+	update();
 	window.setInterval(update, 1000);
-
 });

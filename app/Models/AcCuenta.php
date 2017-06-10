@@ -34,6 +34,7 @@ class AcCuenta extends Model
     	'codigo_cuenta',
         'fecha',
         'estatus',
+        'id_producto',
         'deleted_at'
     ];
 

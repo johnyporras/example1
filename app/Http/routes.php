@@ -10,7 +10,30 @@
 |
 */
 /*=====================================================*/
-    
+/** Rutas de Login */
+Route::auth();
+
+/** Rutas de Inicio */
+Route::get('/', 'HomeController@index');
+Route::get('/home', 'HomeController@index');
+
+/** Rutas de Registro  */
+/**--------------------------------------------*/
+
+/*
+Route::get('auth/confirm/email/{email}/confirm_token/{confirm_token}', 'Auth\AuthController@confirmRegister');
+*/
+
+Route::get('/register', [
+        'uses' => 'RegisterController@register',
+        'as'   => 'register.register' 
+]);
+
+Route::post('/register', [
+        'uses' => 'RegisterController@postRegister',
+        'as'   => 'register.postRegister' 
+]);
+
 Route::get('/check', [
         'uses' => 'RegisterController@check',
         'as'   => 'register.check' 
@@ -26,18 +49,19 @@ Route::get('/afiliado', [
         'as'   => 'register.afiliado' 
 ]);
 
-// Funcion para reloj local
+/**--------------------------------------------*/
+
+/** Funcion para reloj local */
 Route::get('/api/clock', [
         'uses' => 'ClockController@clock',
         'as'   => 'clock.now' 
 ]);
 
-
-    /**
-     * rutas modulo atención al viajero
-     */
+/**
+* rutas modulo atención al viajero
+*/
 Route::group(['middleware' => ['auth']], function () {
-    
+
     // Rutas para la lista de solicitudes
     Route::get('api/solicitudes', 'AviController@solicitudes');
     
@@ -167,33 +191,13 @@ Route::group(['middleware' => ['auth']], function () {
 });
 /*=====================================================*/
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| This route group applies the "web" middleware group to every route
-| it contains. The "web" middleware group is defined in your HTTP
-| kernel and includes session state, CSRF protection, and more.
-|
-*/
-Route::group(['middleware' => ['web']], function () {
-//  Route::get('/login', ['as' => 'login', 'uses' => 'AuthController@login']);
-    Route::post('/handleLogin', ['as' => 'handleLogin', 'uses' => 'Auth\AuthController@handleLogin']);
-//  Route::get('/home', ['middleware' => 'auth', 'as' => 'home', 'uses' => 'UsersController@home']);
-    Route::get('/logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
-    //Route::resource('users', 'UsersController');
-    
-});
-Route::auth();
-
-Route::get('/home', 'HomeController@index');
-
-Route::get('/', 'HomeController@index');
-
 Route::group(['middleware' => ['auth']], function () {
-    
-   // ++++++++++++++++++++ MENU +++++++++++++++++++++++++++++++++    
+
+    // ++++++++++++++++++++ MENU +++++++++++++++++++++++++++++++++
+      
+    // USUARIOS
+    Route::resource('usuarios', 'UserController');
+      
     //CONSULTAR CLAVE ODONTOLOGICA
     Route::get('clavesOdonto/consultar'       , 'ClaveOdontologica\ConsultarController@getFilter');
     Route::get('clavesOdonto/consultarDetalle', 'ClaveOdontologica\ClaveOdontologicaController@show');
@@ -225,13 +229,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('Seguridad/evalPermiso'   ,'PermisosController@evalPermiso');
     Route::get('Seguridad/nopermiso'   ,'PermisosController@nopermiso');
  
-    
-        
     // CONFIRMACION DE CLAVES DE ATENCION ESPECIAL
     Route::get( 'clavesEspeciales/confirmarEspeciales','ConfirmarClaveEspecialController@getFilter');
     Route::get( 'clavesEspeciales/verificarClave'     ,'ConfirmarClaveEspecialController@show');
     Route::post('clavesEspeciales/procesarConfirmar'  ,'ConfirmarClaveEspecialController@confirmar');
-    
     
     //CONSULTAR CLAVES TEMPORALES
     Route::get('claves/consultarAfiliadosTemporales' , 'ConsultarClaveTemporalController@getFilter');
@@ -241,7 +242,7 @@ Route::group(['middleware' => ['auth']], function () {
     //GENERAR CLAVE DE ATENCION ESPECIAL
     Route::get('clavesEspeciales/generar'                       , 'ClaveEspecialesController@generar');
     Route::post('clavesEspeciales/generar'                      , 'ClaveEspecialesController@generar');
-   Route::resource('clavesEspeciales/procesarClaveEspeciales'      , 'ClaveEspecialesController@procesarGuardar');
+    Route::resource('clavesEspeciales/procesarClaveEspeciales'      , 'ClaveEspecialesController@procesarGuardar');
     Route::resource('clavesEspeciales/crearAfiliadosTemporales' , 'AfiliadoTemporalController@crearAfiliadosTemporalesClaveEspecial');
     Route::resource('clavesEspeciales/generarFinalClaveEspeciales'  , 'ClaveEspecialesController@buscarCobertura');
 
@@ -324,7 +325,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('pagos/aprobarProg'       , 'AprobarProgPagoCotroller@aprobarProg');
     
 
-    
     // GESTIONAR CLAVE ODONTOLOGICA dontologica\GenerarController@getProveedores');
     Route::get('clavesOdonto/gestionar'            , 'ClaveOdontologica\GenerarController@buscar');
     Route::post('clavesOdonto/buscar'              , 'ClaveOdontologica\GenerarController@buscar');
@@ -359,19 +359,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('afiliados'  , 'AfiliadoController');
     Route::resource('claves'     , 'ClaveController');
     Route::resource('proveedores', 'ProveedorController');
-    Route::resource('usuarios'   , 'Auth\AuthController');
-    
-    // USARIOS
-    Route::resource('auth/register' , 'Auth\AuthController@getRegister');
-    Route::post('auth/register', 'Auth\AuthController@postRegister');
-    Route::get('auth/confirm/email/{email}/confirm_token/{confirm_token}', 'Auth\AuthController@confirmRegister');
 
     // Consultar Ajax
     Route::post('selectColectivos'    , 'Ajax\SelectController@getColectivos');
     Route::post('selectProcedimientos', 'Ajax\SelectController@getProcedimientos');
     Route::post('selectProveedores'   , 'Ajax\SelectController@getProveedores');
     Route::post('getTitular'          , 'Ajax\SelectController@getTitular');
-    
     
     Route::get('/server/php/', function () {
         return view('server.php.index.php');

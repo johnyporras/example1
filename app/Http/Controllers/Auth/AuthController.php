@@ -1,16 +1,13 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
-use Auth;
-use Session;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Mail;
-        
+
 class AuthController extends Controller
 {
     /*
@@ -34,7 +31,7 @@ class AuthController extends Controller
     protected $redirectTo = '/';
 
     // Cambiar Email por nobre de usuario login 
-     protected $username = 'user';
+    protected $username = 'user';
 
     /**
      * Create a new authentication controller instance.
@@ -43,106 +40,9 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        
-    }
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        $usuarios = User::paginate(15);
-
-        return view('auth.index', compact('usuarios'));
+        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $usuario = User::findOrFail($id);
-
-        return view('auth.show', compact('usuario'));
-    }
-    
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     *
-     * @return Response
-     */
-    public function edit($id)
-    {
-        $usuario = User::findOrFail($id);
-        $perfiles = \App\Models\UserType::get();
-        $perfil = array_pluck($perfiles,'name','id');
-        return view('auth.edit', compact('usuario','perfil'));
-    }
-    
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     *
-     * @return Response
-     */
-    public function update($id, Request $request)
-    {
-        $this->validate($request,  ['name'   => 'required|max:50',
-                                    'email'  => 'required|email|max:255',
-                                    'type'   => 'required|max:1', 
-                                    'active' => 'required|max:1',
-                                    ]);
-        $usuario = User::findOrFail($id);
-        $usuario->update($request->all());
-
-        Session::flash('flash_message', 'Usuario actualizado!');
-
-        return redirect('usuarios');
-    }
-
-
-    /**
-     * Handle an authentication attempt.
-     *
-     * @return Response
-     */
-    public function handleLogin(Request $request)
-    {
-        
-        if(Auth::attempt(['user' => $request->user,'password' => $request->password]))
-        {
-            return redirect()->intended($this->redirectPath());
-        
-        }else{
-
-            $rules = [
-                'user' => 'required',
-                'password' => 'required',
-            ];
-
-            $messages = [
-                'user.required' => 'El campo usuario es requerido',
-                'password.required' => 'El campo password es requerido',
-            ];
-
-            $validator = Validator::make($request->all(), $rules, $messages);
-
-            Session::flash('message', 'Error al iniciar sesión. Usuario o clave inválido.!');
-
-            return  back()->withErrors($validator)->withInput();
-
-        }
-    }
-    
     /**
      * Get a validator for an incoming registration request.
      *
@@ -152,12 +52,9 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'user'      => 'required|max:20',
-            'name'      => 'required|max:255',
-            'email'     => 'required|email|max:255|unique:users',
-            'password'  => 'required|min:6|confirmed',
-            'type'      => 'required|max:1', 
-            'active'    => 'required|max:1', 
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
         ]);
     }
 
@@ -170,73 +67,9 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'user'  => $data['user'],
-            'name'  => $data['name'],
+            'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'type'     => $data['type'], 
-            'active'   => $data['active'], 
         ]);
-    }
-    
-    public function postRegister(Request $request){
-    
-        $rules = [
-            'name' => 'required|min:3|max:16|regex:/^[a-záéíóúàèìòùäëïöüñ\s]+$/i',
-            'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|min:6|max:18|confirmed',
-        ];
-
-        $messages = [
-            'name.required' => 'El campo es requerido',
-            'name.min' => 'El mínimo de caracteres permitidos son 3',
-            'name.max' => 'El máximo de caracteres permitidos son 16',
-            'name.regex' => 'Sólo se aceptan letras',
-            'email.required' => 'El campo es requerido',
-            'email.email' => 'El formato de email es incorrecto',
-            'email.max' => 'El máximo de caracteres permitidos son 255',
-            'email.unique' => 'El email ya existe',
-            'password.required' => 'El campo es requerido',
-            'password.min' => 'El mínimo de caracteres permitidos son 6',
-            'password.max' => 'El máximo de caracteres permitidos son 18',
-            'password.confirmed' => 'Los passwords no coinciden',
-        ];
-
-        $validator = Validator::make($request->all(), $rules, $messages);
-
-        if ($validator->fails()){
-            return redirect("auth/register")->withErrors($validator)->withInput();
-        }
-        else{
-            $user = new User;
-            $data['name'] = $user->name = $request->name;
-            $data['email'] = $user->email = $request->email;
-            $user->password = bcrypt($request->password);
-            $user->remember_token = str_random(100);
-            $data['confirm_token'] = $user->confirm_token = str_random(100);
-            $user->save();
-
-            Mail::send('mails.register', ['data' => $data], function($mail) use($data){
-                $mail->subject('Confirma tu cuenta');
-                $mail->to($data['email'], $data['name']);
-            });
-
-            return redirect("auth/register")->with("message", "Hemos enviado un enlace de confirmación a su cuenta de correo electrónico");
-        }
-    }
-    
-    public function confirmRegister($email, $confirm_token){
-        $user = new User;
-        $the_user = $user->select()->where('email', '=', $email)->where('confirm_token', '=', $confirm_token)->get();
-
-        if (count($the_user) > 0){
-            $active = 1;
-            $confirm_token = str_random(100);
-            $user->where('email', '=', $email)
-            ->update(['active' => $active, 'confirm_token' => $confirm_token]);
-            return redirect('auth/register')->with('message', 'Enhorabuena ' . $the_user[0]['name'] . ' ya puede iniciar sesión');
-        }else{
-            return redirect('');
-        }
     }
 }
