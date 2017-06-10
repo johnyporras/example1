@@ -130,19 +130,29 @@ class ConsultarClaveController extends Controller
                  ->distinct();
         }
 
-        $estatus=AcEstatus::lists('ac_estatus.nombre', 'id')->all();
-        $prov=AcProveedoresExtranet::lists('ac_proveedores_extranet.nombre', 'id')->all();
+        $estatus=AcEstatus::lists('ac_estatus.nombre','id')->all();
+        $prov=AcProveedoresExtranet::lists('ac_proveedores_extranet.nombre','ac_proveedores_extranet.codigo_proveedor as id')->all();
         if($request->nombre!="")
         {
-                $query=$query->where("afiliados.nombre","like",'%'.$request->nombre.'%');        
+                $query=$query->whereRaw("upper(ac_afiliados.nombre) like upper('%".$request->nombre."%')");        
         }
 
         if($request->cedula_afiliado!="")
         {
-                $query=$query->where("afiliados.cedula","like",'%'.$request->cedula_afiliado.'%');        
+                $query=$query->where("ac_afiliados.cedula","like",'%'.$request->cedula_afiliado.'%');       
         }
 
+        
 
+        if($request->codestatus!="")
+        {
+                $query=$query->where("estatus_clave","=",$request->codestatus);       
+        }
+
+        if($request->proveedor!="")
+        {
+                $query=$query->where("ac_claves_detalle.codigo_proveedor","=",$request->proveedor);       
+        }
 
        /* $filter = \DataFilter::source($query);
         $filter->add('ac_claves.fecha_cita','Fecha Cita','daterange');
@@ -155,6 +165,7 @@ class ConsultarClaveController extends Controller
         $filter->submit('Buscar');
         $filter->reset('reset');
         $filter->build();*/
+       $query=$query->get();
 
        $grid = \DataGrid::source($query);
        $url = new Zofe\Rapyd\Url();

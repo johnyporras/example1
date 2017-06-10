@@ -25,8 +25,15 @@
 
           {!! Form::label('ac_estatus.id', 'Estatus: ', ['class' => 'col-sm-2 control-label']) !!}
           <div class="col-sm-3">
-              {!! $filter->field('ac_estatus.id',['selected', 'value'=>''] )!!}
-              {!! $errors->first('ac_estatus.id', '<p class="help-block">:message</p>') !!}
+              <select name="codestatus" id="codestatus">
+              <option value=''>Seleccione una opción</option>
+              <?php
+                foreach ($estatus as $key=>$value)
+                {
+                  echo "<option value='{$key}'>{$value}</option>";
+                }
+              ?>
+              </select>
           </div>
         </div>    
         <div class="form-group {{ $errors->has('ac_colectivos.codigo_colectivo') || $errors->has('ac_colectivos.codiogo_colectivo') ? 'has-error' : ''}}">
@@ -42,11 +49,21 @@
         @if($user_type == 1 )
           {!! Form::label('user_types.id', 'Proveedores: ', ['class' => 'col-sm-2 control-label']) !!}
           <div class="col-sm-3">
-              {!! $errors->first('ac_proveedores_extranet.id', '<p class="help-block">:message</p>') !!}
+              <select name="proveedor" id="proveedor">
+              <option value=''>Seleccione una opción</option>
+              <?php
+                foreach ($prov as $key=>$value)
+                {
+                  echo "<option value='{$key}'>{$value}</option>";
+                }
+              ?>
+              </select>
           </div>           
         @endif
         </div> 
-  {!!$filter->footer!!}    
+
+     {!! Form::submit('Buscar') !!}
+
   {!!$grid!!}    
        <div class="table-responsive">    
         <table class="table table-bordered table-striped table-hover">
