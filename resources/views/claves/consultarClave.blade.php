@@ -1,4 +1,6 @@
 @extends('layouts.app')
+
+
 @section('title','Consulta de Claves')
 
 @section('content') 
@@ -7,7 +9,23 @@
         <?php
              $user = Auth::user();
              $user_type =  $user->type;
-        ?>   
+        ?>
+
+        <div class="form-group {{ $errors->has('ac_afiliados.nombre') || $errors->has('ac_claves.cedula_afiliado') ? 'has-error' : ''}}">
+          {!! Form::label('fechadesde', 'Fecha desde: ', ['class' => 'col-sm-2 control-label']) !!}
+          <div class="col-sm-3">
+              {!! Form::text('fechadesde','',['id'=>'fechadesde']) !!}
+              {!! $errors->first('ac_afiliados.nombre', '<p class="help-block">:message</p>') !!}
+          </div>
+         
+          {!! Form::label('fechahasta', 'Fecha Hasta: ', ['class' => 'col-sm-2 control-label']) !!}
+         <div class="col-sm-3">
+              {!! Form::text('fechahasta','',['id'=>'fechahasta']) !!}
+              {!! $errors->first('ac_claves_cedula_afiliado', '<p class="help-block">:message</p>') !!}
+          </div>
+        </div>
+
+
         <div class="form-group {{ $errors->has('ac_afiliados.nombre') || $errors->has('ac_claves.cedula_afiliado') ? 'has-error' : ''}}">
           {!! Form::label('ac_afiliados.nombre', 'Nombre Paciente: ', ['class' => 'col-sm-2 control-label']) !!}
           <div class="col-sm-3">
@@ -92,8 +110,34 @@
     </div>    
   {{ Form::close() }}
 @endsection
-@section('script')
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
+$( function() {
+  $( "#fechadesde" ).datepicker({dateFormat: "dd/mm/yyyy"});
+  $( "#fechahasta" ).datepicker({ dateFormat:'dd/mm/yyyy' });
+
+
+  $('#fechadesde, #fechahasta').blur(function () 
+  {
+          var currentDate = $(this).val();
+          arr=currentDate.split("/");
+          newDate=arr[1]+"/"+arr[0]+"/"+arr[2]; 
+          $(this).val(newDate);
+  });
+
+  $('#fechadesde, #fechahasta').change(function () 
+  {
+          var currentDate = $(this).val();
+          arr=currentDate.split("/");
+          newDate=arr[1]+"/"+arr[0]+"/"+arr[2]; 
+          $(this).val(newDate);
+  });
+
  function ValidarAlpha(valor,campo){
      var charRegExp = /^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/;
      var valor1 = valor;
@@ -107,7 +151,6 @@
                    return false;
                }       
           };
-    $("#fecha_desde" ).datepicker({ dateFormat: "dd/mm/yy" });
-    $("#fecha_hasta" ).datepicker({ dateFormat: "dd/mm/yy" });
+
+ })
 </script>
-@endsection

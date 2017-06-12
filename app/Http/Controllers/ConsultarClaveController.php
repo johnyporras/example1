@@ -15,7 +15,7 @@ use App\Models\AcColectivo;
 use App\Models\AcEspecialidadesExtranet;
 use App\Models\AcContrato;
 use App\Models\UserType;
-
+use App\Lib\functions;
 use DB;
 use Zofe;
 
@@ -143,7 +143,7 @@ class ConsultarClaveController extends Controller
         }
 
         
-
+//echo 
         if($request->codestatus!="")
         {
                 $query=$query->where("estatus_clave","=",$request->codestatus);       
@@ -152,6 +152,13 @@ class ConsultarClaveController extends Controller
         if($request->proveedor!="")
         {
                 $query=$query->where("ac_claves_detalle.codigo_proveedor","=",$request->proveedor);       
+        }
+
+        if($request->fechadesde!="" && $request->fechahasta!="")
+        {
+                $request->fechahasta = functions::uf_convertirdatetobd($request->fechahasta);
+                $request->fechadesde = functions::uf_convertirdatetobd($request->fechadesde);
+                $query=$query->whereRaw("fecha_cita between '{$request->fechadesde}' and '{$request->fechahasta}'");       
         }
 
        /* $filter = \DataFilter::source($query);
