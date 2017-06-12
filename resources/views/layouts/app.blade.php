@@ -31,13 +31,14 @@
         <!-- Bootstrap is included in its original form, unaltered -->
         <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('plugins/jquery-ui/jquery-ui.min.css') }}">
+        <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
         
         <!-- QUITAR CODIGO APLICAR SOLO EN LAS PAGINAS A UTILIZAR -->
         <link rel="stylesheet"
     href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
         <!-- QUITAR CODIGO APLICAR SOLO EN LAS PAGINAS A UTILIZAR -->
 
-        <link rel="stylesheet" href="{{ asset('plugins/bootstrap-treeview/bootstrap-treeview.min.js') }}">
+        <link rel="stylesheet" href="{{ asset('plugins/bootstrap-treeview/bootstrap-treeview.min.css') }}">
         <!-- Related styles of various icon packs and plugins -->
         <link rel="stylesheet" href="{{ asset('css/plugins.css') }}">
         <!-- Custom default Styles for plugins -->
@@ -60,8 +61,8 @@ if(is_object(Auth::user()))
     var rutaInicio="/";
     var url = location.pathname;
     var id_type='<?php echo Auth::user()->type; ?>'
-    var ruta = "/atiempon2/public/Seguridad/evalPermiso";
-    var rutanoper="/atiempon2/public/Seguridad/nopermiso";
+    var ruta = "/Atiempo-Extranet.git/public/Seguridad/evalPermiso";
+    var rutanoper="/Atiempo-Extranet.git/public/Seguridad/nopermiso";
     //alert(url);
     //alert(rutaInicio);
     if(url!=rutaInicio && url!=rutanoper)
@@ -180,7 +181,7 @@ if(is_object(Auth::user()))
 
         <!-- Scroll to top link, initialized in js/app.js - scrollToTop() -->
         <a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
-
+@yield('script')
         <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
         <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
