@@ -206,7 +206,7 @@ class ClaveController extends Controller{
             $coberturas = DB::table('ac_cuenta')
                 ->where([['codigo_cuenta', '=', $beneficiario['contrato']]])
                 ->join('ac_cuentaplan', 'ac_cuentaplan.id_cuenta',"=", 'ac_cuenta.id')
-                ->join('ac_planes_extranet', 'ac_planes_extranet.id',"=", 'ac_cuentaplan.id_plan')
+                ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuentaplan.id_plan')
                 ->join('ac_cobertura_extranet', 'ac_cobertura_extranet.id_plan',"=", 'ac_planes_extranet.codigo_plan')
                 ->join('ac_procedimientos_medicos', function($join){
                         $join->on('ac_procedimientos_medicos.codigo_examen',"=", 'ac_cobertura_extranet.id_procedimiento')
@@ -226,10 +226,12 @@ class ClaveController extends Controller{
                 ->get(); // +++++++ array(StdClass)
             $proveedor = AcProveedoresExtranet::where('codigo_proveedor',"=", $user->proveedor)->firstOrFail();
         }else{
+
+
             $coberturas = DB::table('ac_cuenta')
                 ->where([['codigo_cuenta', '=', $beneficiario['contrato']]])
                 ->join('ac_cuentaplan', 'ac_cuentaplan.id_cuenta',"=", 'ac_cuenta.id')
-                ->join('ac_planes_extranet', 'ac_planes_extranet.id',"=", 'ac_cuentaplan.id_plan')
+                ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuentaplan.id_plan')
                 ->join('ac_cobertura_extranet', 'ac_cobertura_extranet.id_plan',"=", 'ac_planes_extranet.codigo_plan')
                 ->join('ac_procedimientos_medicos', function($join){
                         $join->on('ac_procedimientos_medicos.codigo_examen',"=", 'ac_cobertura_extranet.id_procedimiento')
