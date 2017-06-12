@@ -17,11 +17,12 @@ use App\Models\AcProveedoresExtranet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
+use App\Lib\functions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ConsultarController extends Controller{
 
-    public function getFilter(){
+    public function getFilter(Request $request){
        $user = \Auth::user();
         // Analista Proveedor
         if ($user->type == 3){
@@ -70,6 +71,54 @@ class ConsultarController extends Controller{
                          'ac_proveedores_extranet.nombre as proveedor'
                         ) ;
         }
+
+
+        $estatus=AcEstatus::lists('ac_estatus.nombre','id')->all();
+        $prov=AcProveedoresExtranet::lists('ac_proveedores_extranet.nombre','ac_proveedores_extranet.codigo_proveedor as id')->all();
+        if($request->nombre!="")
+        {
+                $query=$query->whereRaw("upper(ac_afiliados.nombre) like upper('%".$request->nombre."%')");        
+        }
+
+        if($request->cedula_afiliado!="")
+        {
+                $query=$query->where("ac_afiliados.cedula","like",'%'.$request->cedula_afiliado.'%');       
+        }
+
+        
+//echo 
+        if($request->codestatus!="")
+        {
+                $query=$query->where("estatus","=",$request->codestatus);       
+        }
+
+        if($request->proveedor!="")
+        {
+                $query=$query->where("codigo_proveedor_creador","=",$request->proveedor);       
+        }
+
+        if($request->clave!="")
+        {
+                $query=$query->where("clave","=",$request->clave);       
+        }
+
+        
+
+        if($request->fechadesde!="" && $request->fechahasta!="")
+        {
+                $request->fechahasta = functions::uf_convertirdatetobd($request->fechahasta);
+                $request->fechadesde = functions::uf_convertirdatetobd($request->fechadesde);
+                $query=$query->whereRaw("fecha_atencion1 between '{$request->fechadesde}' and '{$request->fechahasta}'");       
+        }
+
+
+
+
+$query=$query->get();
+
+        
+/*
+
         $filter = \DataFilter::source($query);
         $filter->add('ac_afiliados.nombre','Nombre', 'text'); //validation;
         $filter->add('ac_clave_odontologica.cedula_afiliado','C.I.','number');//validation;
@@ -79,8 +128,8 @@ class ConsultarController extends Controller{
         $filter->submit('Buscar');
         $filter->reset('reset');
         $filter->build();
-
-        $grid = \DataGrid::source($filter);
+*/
+        $grid = \DataGrid::source($query);
         $url = new Zofe\Rapyd\Url();
         $grid->link($url->append('export',1)->get(),"Exportar a Excel", "TR");
 
@@ -98,7 +147,7 @@ class ConsultarController extends Controller{
             return $grid->buildCSV('clavesOdonto','.Y-m-d.His');
         }else{
             $grid->paginate(10);
-            return  view('clavesOdontologicas.consultar', compact('filter','grid'));
+            return  view('clavesOdontologicas.consultar', compact('filter','grid','claves','estatus','prov'));
         }
     }
 
