@@ -25,7 +25,7 @@
           </div>
         </div>
 
-
+@if($user_type!=5)
         <div class="form-group {{ $errors->has('ac_afiliados.nombre') || $errors->has('ac_claves.cedula_afiliado') ? 'has-error' : ''}}">
           {!! Form::label('ac_afiliados.nombre', 'Nombre Paciente: ', ['class' => 'col-sm-2 control-label']) !!}
           <div class="col-sm-3">
@@ -38,7 +38,9 @@
               {!! Form::text('cedula_afiliado') !!}
               {!! $errors->first('ac_claves_cedula_afiliado', '<p class="help-block">:message</p>') !!}
           </div>
-        </div>      
+        </div> 
+
+
         <div class="form-group {{ $errors->has('ac_claves.clave') || $errors->has('ac_estatus.id') ? 'has-error' : ''}}">
 
           {!! Form::label('ac_estatus.id', 'Estatus: ', ['class' => 'col-sm-2 control-label']) !!}
@@ -54,7 +56,9 @@
               ?>
               </select>
           </div>
-        </div>    
+        </div>  
+@endif
+
         <div class="form-group {{ $errors->has('ac_colectivos.codigo_colectivo') || $errors->has('ac_colectivos.codiogo_colectivo') ? 'has-error' : ''}}">
           
           {!! Form::label('ac_claves.clave', 'Clave: ', ['class' => 'col-sm-2 control-label']) !!}

@@ -77,36 +77,59 @@ class ConsultarClaveController extends Controller
    }elseif ($user->type == 4) // Analista Aseguradora
      {
         $query = DB::table('ac_claves')
-                ->where([['users.id','=',$user->id], ['ac_contratos.fecha_inicio','<=',date('Y-m-d').' 00:00:00'],['ac_contratos.fecha_fin','>=',date('Y-m-d').' 00:00:00'] ])
+                ->where([['users.detalles_usuario_id','=',$user->id], ['ac_contratos.fecha_inicio','<=',date('Y-m-d').' 00:00:00'],['ac_contratos.fecha_fin','>=',date('Y-m-d').' 00:00:00'] ])
                 ->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')
                 ->join('ac_afiliados'              , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
-                ->join('ac_contratos'              , 'ac_afiliados.cedula',"=", 'ac_contratos.cedula_afiliado')
-                ->join('ac_tipo_afiliado'          , 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
-                ->join('ac_planes_extranet'        , 'ac_planes_extranet.codigo_plan',"=", 'ac_contratos.codigo_plan')
+                ->join('ac_cuenta'              , 'ac_afiliados.id_cuenta',"=", 'ac_cuenta.id')
+                ->join('ac_planes_extranet'        , 'ac_planes_extranet.codigo_plan',"=", 'ac_cuenta.id_plan')
                 ->join('ac_estatus'                , 'ac_estatus.id',"=",'ac_claves.estatus_clave')
-                ->join('ac_colectivos'             , 'ac_colectivos.codigo_colectivo',"=",'ac_contratos.codigo_colectivo')
-                ->join('ac_aseguradora'            , 'ac_colectivos.codigo_aseguradora',"=",'ac_aseguradora.codigo_aseguradora')
-                ->join('ac_proveedores_extranet'   , 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')
                 ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_claves_detalle.codigo_especialidad')
-                ->join('users'                     , 'users.detalles_usuario_id' ,'=','ac_aseguradora.codigo_aseguradora')
-                ->join('user_types'                , 'users.type','=','user_types.id')
+                ->join('ac_proveedores_extranet'   , 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')
                 ->select('ac_claves.id as id',
-                         'ac_claves.fecha_cita as fecha_citas',
-                         'ac_claves.cedula_afiliado',
-                         'ac_claves.clave as clave',
-                         'ac_afiliados.nombre as nombre_afiliado',
-                         'ac_planes_extranet.nombre as plan',
-                         'ac_colectivos.nombre as colectivo',
-                         'ac_aseguradora.nombre as aseguradora',
-                         'ac_tipo_afiliado.nombre as tipo_afiliado',
-                         'ac_estatus.nombre as estatus',
-                         'ac_especialidades_extranet.descripcion as especialidad',
-                         'ac_proveedores_extranet.nombre as proveedor',
-                         'ac_estatus.nombre as estatus'
+                        'ac_claves.fecha_cita as fecha_citas',
+                        'ac_claves.cedula_afiliado',
+                        'ac_claves.clave as clave',
+                        'ac_afiliados.nombre as nombre_afiliado',
+                        'ac_planes_extranet.nombre as plan',
+                        'ac_estatus.nombre as estatus',
+                        'ac_especialidades_extranet.descripcion as especialidad',
+                        'ac_proveedores_extranet.nombre as proveedor',
+                        'ac_estatus.nombre as estatus'
                         )
                 ->distinct();
 
-   }else{
+   }elseif ($user->type == 5) // afiñoado
+     {
+
+
+        $query = DB::table('ac_claves')
+                ->where([['users.detalles_usuario_id','=',$user->detalles_usuario_id], ['ac_cuenta.fecha','<=',date('Y-m-d').' 00:00:00']])
+                ->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')
+                ->join('ac_afiliados'              , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
+                ->join('ac_cuenta'              , 'ac_afiliados.id_cuenta',"=", 'ac_cuenta.id')
+                ->join('ac_planes_extranet'        , 'ac_planes_extranet.codigo_plan',"=", 'ac_cuenta.id_plan')
+                ->join('ac_estatus'                , 'ac_estatus.id',"=",'ac_claves.estatus_clave')
+                ->join('ac_proveedores_extranet'   , 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')
+                    ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_claves_detalle.codigo_especialidad')
+                ->join('users' ,'ac_afiliados.id','=','users.detalles_usuario_id')
+                ->select('ac_claves.id as id',
+                        'ac_claves.fecha_cita as fecha_citas',
+                        'ac_claves.cedula_afiliado',
+                        'ac_claves.clave as clave',
+                        'ac_afiliados.nombre as nombre_afiliado',
+                        'ac_planes_extranet.nombre as plan',
+                        'ac_estatus.nombre as estatus',
+                        'ac_especialidades_extranet.descripcion as especialidad',
+                        'ac_proveedores_extranet.nombre as proveedor',
+                        'ac_estatus.nombre as estatus'
+                        )
+                ->distinct();
+
+
+
+
+
+     }else{
          $query = DB::table('ac_claves')
                 ->where([['ac_cuenta.fecha','<=',date('Y-m-d').' 00:00:00']])
                 ->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')
@@ -188,7 +211,26 @@ class ConsultarClaveController extends Controller
        $grid->attributes(array("class"=>"table table-grid"));
        $grid->add('id','ID',false);
        $grid->add('fecha_citas|strtotime|date[d/m/Y]','Fecha Cita', false);
-       $grid->add('clave','Clave', false);
+
+       
+
+    if($user->type!=3)
+    {
+        $grid->add('clave','Clave', false);
+    }
+    else
+    {
+        $grid->add('clave','Clave')->cell( function( $value,$row){
+           // dd($user->type);
+            if($row->estatus==5)
+                return "Pendiente";
+            else
+              return $value;
+          //  return ($value != '') ? "rev.{$value}" : "no revisions for art. {$row->id}";
+        });
+    }
+
+
        $grid->add('cedula_afiliado','Cédula', false);
        $grid->add('nombre_afiliado','Paciente', false);
        $grid->add('especialidad','Especialidad', false);
