@@ -59,7 +59,7 @@
           
           {!! Form::label('ac_claves.clave', 'Clave: ', ['class' => 'col-sm-2 control-label']) !!}
           <div class="col-sm-3">
-              {!! Form::text('ac_claves.clave') !!}
+              {!! Form::text('clave') !!}
               {!! $errors->first('ac_claves.clave', '<p class="help-block">:message</p>') !!}
           </div>  
         </div>   

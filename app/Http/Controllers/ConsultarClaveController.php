@@ -154,6 +154,13 @@ class ConsultarClaveController extends Controller
                 $query=$query->where("ac_claves_detalle.codigo_proveedor","=",$request->proveedor);       
         }
 
+        if($request->clave!="")
+        {
+                $query=$query->where("ac_claves.clave","=",$request->clave);       
+        }
+
+        
+
         if($request->fechadesde!="" && $request->fechahasta!="")
         {
                 $request->fechahasta = functions::uf_convertirdatetobd($request->fechahasta);
