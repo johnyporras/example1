@@ -25,13 +25,7 @@
                         {!! $errors->first('nombre_afiliado', '<p class="help-block">:message</p>') !!}
                     </div>                
                 </div>                   
-                <div class="form-group {{ $errors->has('tipo_afiliado') ? 'has-error' : ''}}">    
-                    {!! Form::label('Tipo Afiliado : ', 'Tipo Afiliado :', ['class' => 'col-sm-4 control-label']) !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('tipo_afiliado', $data_clave->tipo_afiliado, ['class' => 'form-control', 'rows' => '1', 'id'=>'tipo_afiliado', 'disabled'] ) !!}
-                        {!! $errors->first('tipo_afiliado', '<p class="help-block">:message</p>') !!}
-                    </div>                
-                </div>                   
+                                  
                  <div class="table-responsive">    
                     <table class="table table-bordered table-striped table-hover">
                         <thead>
@@ -76,9 +70,12 @@
 @endforeach 
 {{ Form::close() }}
 @endsection
+
+
 @section('script')
 <script>
     $('#procesarConfirmar').modal('show'); //show the modal
     $('#confirmarClave').parsley();
 </script>
 @endsection
+

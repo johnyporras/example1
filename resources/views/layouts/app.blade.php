@@ -181,7 +181,7 @@ if(is_object(Auth::user()))
 
         <!-- Scroll to top link, initialized in js/app.js - scrollToTop() -->
         <a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
-@yield('script')
+
         <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
         <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
@@ -196,7 +196,7 @@ if(is_object(Auth::user()))
         <script src="{{ asset('plugins/parsley-js/parsley.min.js') }}"></script>
         <script src="{{ asset('plugins/parsley-js/i18n/es.js') }}"></script>
         <!-- QUITAR CODIGO APLICAR SOLO EN LAS PAGINAS A UTILIZAR -->
-        
+@yield('script')        
         <script src="{{ asset('js/plugins.js') }}"></script>
         @stack('scripts')
         <script src="{{ asset('js/app.js') }}"></script>
