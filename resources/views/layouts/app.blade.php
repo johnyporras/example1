@@ -32,7 +32,7 @@
         <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('plugins/jquery-ui/jquery-ui.min.css') }}">
         <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-        
+
         <!-- QUITAR CODIGO APLICAR SOLO EN LAS PAGINAS A UTILIZAR -->
         <link rel="stylesheet"
     href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
@@ -44,10 +44,10 @@
         <!-- Custom default Styles for plugins -->
         @stack('styles')
         <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
-        
+
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
         <link rel="stylesheet" href="{{ asset('css/atiempo.css') }}">
-        
+
         <!-- END Stylesheets -->
 
         <!-- Modernizr (browser feature detection library) -->
@@ -61,8 +61,8 @@ if(is_object(Auth::user()))
     var rutaInicio="/";
     var url = location.pathname;
     var id_type='<?php echo Auth::user()->type; ?>'
-    var ruta = "/Atiempo-Extranet.git/public/Seguridad/evalPermiso";
-    var rutanoper="/Atiempo-Extranet.git/public/Seguridad/nopermiso";
+    var ruta = "<?php echo url('/Seguridad/evalPermiso');?>";
+    var rutanoper="<?php echo url('/Seguridad/nopermiso');?>";
     //alert(url);
     //alert(rutaInicio);
     if(url!=rutaInicio && url!=rutanoper)
@@ -132,7 +132,7 @@ if(is_object(Auth::user()))
                                 @if (Session::has('message'))
                                     <div id="result" class="alert alert-danger">
                                         <p>{{ Session::get('message') }}</p>
-                                        <button type="button" class="close" 
+                                        <button type="button" class="close"
                                             data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -142,18 +142,18 @@ if(is_object(Auth::user()))
                                 @if (Session::has('status'))
                                     <div class="alert alert-success">
                                        <p> {{ Session::get('status') }} </p>
-                                        <button type="button" class="close" 
+                                        <button type="button" class="close"
                                         data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
                                     </button>
                                     </div>
                                 @endif
                                 @if ($errors->any())
                                 <div id="result" class="alert alert-danger">
-                                        
-                                    <button type="button" class="close" 
+
+                                    <button type="button" class="close"
                                         data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
                                     </button>
-                                    
+
                                     <ul class="list-unstyled">
                                         @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
@@ -189,14 +189,14 @@ if(is_object(Auth::user()))
         <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('plugins/typeahead/typeahead.bundle.js') }}"></script>
         <script src="{{ asset('plugins/bootstrap-treeview/bootstrap-treeview.min.js') }}"></script>
-        
+
         <!-- QUITAR CODIGO APLICAR SOLO EN LAS PAGINAS A UTILIZAR -->
         <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
         <script src="{{ asset('plugins/parsley-js/parsley.min.js') }}"></script>
         <script src="{{ asset('plugins/parsley-js/i18n/es.js') }}"></script>
         <!-- QUITAR CODIGO APLICAR SOLO EN LAS PAGINAS A UTILIZAR -->
-@yield('script')        
+@yield('script')
         <script src="{{ asset('js/plugins.js') }}"></script>
         @stack('scripts')
         <script src="{{ asset('js/app.js') }}"></script>

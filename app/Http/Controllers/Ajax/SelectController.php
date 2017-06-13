@@ -10,7 +10,7 @@ use App\Models\AcAfiliado;
 use App\Http\Controllers\Controller;
 
 class SelectController  extends Controller{
-    
+
     /**
      * Display a select list of Colectivos.
      *
@@ -20,7 +20,7 @@ class SelectController  extends Controller{
         return response()->json(\App\Models\AcColectivo::where('codigo_aseguradora','=',\Input::get('id'))->orderBy('nombre','asc')
                 ->pluck('nombre','codigo_colectivo'));
     }
-    
+
     /**
      * Display a select list of Procedimientos.
      *
@@ -76,7 +76,8 @@ class SelectController  extends Controller{
             if($user->type == 3){ // PROVEEDOR
                 $coberturas = DB::table('ac_cuenta')
                     ->where([['codigo_cuenta', '=', \Input::get('contrato')]])
-                    ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuenta.id_plan')
+                    ->join('ac_cuentaplan', 'ac_cuentaplan.id_cuenta',"=", 'ac_cuenta.id')
+                    ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuentaplan.id_plan')
                     ->join('ac_cobertura_extranet', 'ac_cobertura_extranet.id_plan',"=", 'ac_planes_extranet.codigo_plan')
                     ->join('ac_procedimientos_medicos', function($join){
                             $join->on('ac_procedimientos_medicos.codigo_examen',"=", 'ac_cobertura_extranet.id_procedimiento')
@@ -119,7 +120,7 @@ class SelectController  extends Controller{
         }
         return response()->json($coberturas->pluck('tipo_examen','id'));
     }
-    
+
     /**
      * Display a select list of Proveedores.
      *
@@ -162,7 +163,7 @@ class SelectController  extends Controller{
         }
         return response()->json($proveedores);
     }
-    
+
     /**
      * Display an Afiliado Titular.
      *
@@ -180,12 +181,12 @@ class SelectController  extends Controller{
             return response()->json(['nombre' => '', 'apellido' => '']);
         }
     }
-    
+
     /**
      * Display a select list of Aseguradoras.
      *
      * @return Response
-    */  
+    */
     public function getAseguradoras(){
         $aseguradoras = \App\Models\AcAseguradora::get();
         return response()->json($aseguradoras->pluck('nombre','codigo_aseguradora'));

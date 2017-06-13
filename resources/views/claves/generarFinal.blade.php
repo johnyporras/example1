@@ -8,7 +8,7 @@
         <table class="table table-bordered table-striped table-hover table-responsive">
             <thead>
                 <tr>
-                
+
                     <th>Cédula</th>
                     <th>Nombre</th>
                     <th>Plan</th>
@@ -19,7 +19,7 @@
                     <td>{{ $beneficiario['cedula_afiliado'] }}</td>
                     <td>{{ $beneficiario['nombre_afiliado'] }}</td>
                     <td>{{ $beneficiario['plan'] }}</td>
-                    
+
                 </tr>
             </tbody>
         </table>
@@ -54,7 +54,7 @@
         </div>
         {!! Form::label('detalle_servicio', 'Detalle Servicio: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-2">
-            {!! Form::select('detalle_servicio', ['Primera Vez' => 'Primera Vez', 'Control' => 'Control'], null, ['class' => 'form-control', 
+            {!! Form::select('detalle_servicio', ['Primera Vez' => 'Primera Vez', 'Control' => 'Control'], null, ['class' => 'form-control',
                             'placeholder' => 'Seleccione una opción']) !!}
             {!! $errors->first('detalle_servicio', '<p class="help-block">:message</p>') !!}
         </div>
@@ -97,7 +97,7 @@
             <button type="button" class="btn btn-sm btn-info btn-add-procedimiento">Agregar Procedimiento</button>
         </div>
 
-        
+
 
     </div>
     <div id="resultproc"></div>
@@ -170,10 +170,10 @@
                 }
             }
             $( "#codigo_proveedor" ).autocomplete({
-                
+
                 delay: 0,
                 source: function(request, response){
-                    
+
                     if($('#codigo_especialidad').val() !== "" && $('#codigo_servicio').val() !== "" && $('#procedimiento_medico').val() !== ""){
                         $.ajax( {
                           url       : "{{url('selectProveedores')}}",
@@ -202,7 +202,7 @@
                 select: function( event, ui ) {
                     $( "#codigo_proveedor" ).val( ui.item.nombre );
                     $( "#codigo_proveedor_creador" ).val( ui.item.codigo_proveedor );
-                    return false;   
+                    return false;
                 }
             })
             .autocomplete( "instance" )._renderItem = function( ul, item ) {
@@ -210,7 +210,7 @@
                     return $( "<li>" )
                     .append( "<div>" + item.nombre + "<br></div>" )
                     .appendTo( ul );
-                
+
             };
 //            function getProveedor(especialidad,servicio,procedimiento){
 //                if(especialidad !== "" && servicio !== "" && procedimiento !== ""){
@@ -237,7 +237,7 @@
 //                }
 //            }
             $('table').on('click', '.btnAdd', function(){
-                var itemIndex = $(this).closest('tr').index();    
+                var itemIndex = $(this).closest('tr').index();
                 var tr = "<tr><td><input type=text value=0 id= unit_" + itemIndex + "></input</td><td><input type=text value=0 id=rate></input></td><td><input type=button value=Add class=btnAdd></input></td></tr>";
                 $(this).closest('table').append(tr);
                 $(this).attr('value', 'Delete');
@@ -315,7 +315,7 @@
                 }
             });
         });
-        
+
         function validarFecha(fechaCita){
                 var fechaArr = fechaCita.split('-');
                 var aho = fechaArr[2];
@@ -323,11 +323,11 @@
                 var dia = fechaArr[0];
                 var plantilla = new Date(aho, mes - 1, dia);//mes empieza de cero Enero = 0
                 if ((plantilla.getDay() == 6) ||(plantilla.getDay() == 7)) {
-                   $("#fecha_cita").focus(); 
+                   $("#fecha_cita").focus();
                    $("#result").addClass("alert alert-danger");
-                   $("#result").html("No se pueden otorgar Claves los dias Sabados y Domingos."); 
+                   $("#result").html("No se pueden otorgar Claves los dias Sabados y Domingos.");
                    $('#enviar_clave').prop('disabled', true);
-                   return false;                   
+                   return false;
                 }else{
                        return true;
                      }

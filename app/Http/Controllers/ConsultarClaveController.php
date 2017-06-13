@@ -161,38 +161,38 @@ class ConsultarClaveController extends Controller
         $prov=AcProveedoresExtranet::lists('ac_proveedores_extranet.nombre','ac_proveedores_extranet.codigo_proveedor as id')->all();
         if($request->nombre!="")
         {
-                $query=$query->whereRaw("upper(ac_afiliados.nombre) like upper('%".$request->nombre."%')");        
+                $query=$query->whereRaw("upper(ac_afiliados.nombre) like upper('%".$request->nombre."%')");
         }
 
         if($request->cedula_afiliado!="")
         {
-                $query=$query->where("ac_afiliados.cedula","like",'%'.$request->cedula_afiliado.'%');       
+                $query=$query->where("ac_afiliados.cedula","like",'%'.$request->cedula_afiliado.'%');
         }
 
-        
-//echo 
+
+//echo
         if($request->codestatus!="")
         {
-                $query=$query->where("estatus_clave","=",$request->codestatus);       
+                $query=$query->where("estatus_clave","=",$request->codestatus);
         }
 
         if($request->proveedor!="")
         {
-                $query=$query->where("ac_claves_detalle.codigo_proveedor","=",$request->proveedor);       
+                $query=$query->where("ac_claves_detalle.codigo_proveedor","=",$request->proveedor);
         }
 
         if($request->clave!="")
         {
-                $query=$query->where("ac_claves.clave","=",$request->clave);       
+                $query=$query->where("ac_claves.clave","=",$request->clave);
         }
 
-        
+
 
         if($request->fechadesde!="" && $request->fechahasta!="")
         {
                 $request->fechahasta = functions::uf_convertirdatetobd($request->fechahasta);
                 $request->fechadesde = functions::uf_convertirdatetobd($request->fechadesde);
-                $query=$query->whereRaw("fecha_cita between '{$request->fechadesde}' and '{$request->fechahasta}'");       
+                $query=$query->whereRaw("fecha_cita between '{$request->fechadesde}' and '{$request->fechahasta}'");
         }
 
        /* $filter = \DataFilter::source($query);
@@ -216,7 +216,7 @@ class ConsultarClaveController extends Controller
        $grid->add('id','ID',false);
        $grid->add('fecha_citas|strtotime|date[d/m/Y]','Fecha Cita', false);
 
-       
+
 
     if($user->type!=3)
     {
@@ -289,12 +289,12 @@ class ConsultarClaveController extends Controller
             $clave  = DB::table('ac_claves')
                     ->where([['ac_claves.id', '=', $id['clave']]])
                      ->join('ac_afiliados'     , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
-                     ->join('ac_tipo_afiliado' , 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
+                     //->join('ac_tipo_afiliado' , 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
                      ->leftJoin('ac_cuenta'     , 'ac_cuenta.id',"=",'ac_afiliados.id_cuenta')
                      ->join('ac_estatus'       , 'ac_estatus.id',"=", 'ac_claves.estatus_clave')
                     ->select('ac_claves.cedula_afiliado as cedula_afiliado',
                              'ac_claves.id as id_clave',
-                             'ac_tipo_afiliado.nombre as tipo_afiliado',
+                             //'ac_tipo_afiliado.nombre as tipo_afiliado',
                              'ac_afiliados.nombre as nombre' ,
                              'ac_afiliados.apellido as apellido',
                              'ac_afiliados.fecha_nacimiento as fecha_nacimiento',
@@ -303,7 +303,7 @@ class ConsultarClaveController extends Controller
                              'ac_claves.telefono as telefono',
 
                              'ac_afiliados.nombre as nombre_titular' ,
-                             
+
 
                              'ac_claves.clave as clave',
                              'ac_claves.codigo_contrato as contrato',
@@ -340,14 +340,14 @@ class ConsultarClaveController extends Controller
             $clave  = DB::table('ac_claves')
                     ->where([['ac_claves.id', '=', $id['clave']]])
                      ->join('ac_afiliados'     , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
-                     ->join('ac_tipo_afiliado' , 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
+                    // ->join('ac_tipo_afiliado' , 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
                      ->join('ac_contratos'     , 'ac_contratos.cedula_afiliado',"=",'ac_claves.cedula_afiliado')
                      ->join('ac_colectivos'    , 'ac_colectivos.codigo_colectivo',"=", 'ac_contratos.codigo_colectivo')
                      ->join('ac_aseguradora'   , 'ac_aseguradora.codigo_aseguradora',"=", 'ac_colectivos.codigo_aseguradora')
                      ->join('ac_estatus'       , 'ac_estatus.id',"=", 'ac_claves.estatus_clave')
                     ->select('ac_claves.cedula_afiliado as cedula_afiliado',
                              'ac_claves.id as id_clave',
-                             'ac_tipo_afiliado.nombre as tipo_afiliado',
+                            // 'ac_tipo_afiliado.nombre as tipo_afiliado',
                              'ac_afiliados.nombre as nombre' ,
                              'ac_afiliados.apellido as apellido',
                              'ac_afiliados.fecha_nacimiento as fecha_nacimiento',
@@ -357,7 +357,7 @@ class ConsultarClaveController extends Controller
 
                              'ac_afiliados.nombre as nombre_titular' ,
                              'ac_aseguradora.nombre as aseguradora',
-                             
+
                              'ac_claves.clave as clave',
                              'ac_claves.codigo_contrato as contrato',
                              'ac_claves.fecha_cita as fecha_cita',
