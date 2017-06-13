@@ -205,7 +205,7 @@
                     <div class="col-xs-12">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="gi gi-comments"></i></span>
-                            {{ Form::select('embarazada', ['S' => 'SI','N' => 'NO'], null, ['class' => 'form-control input-lg', 'placeholder'=>'¿Usted esta Embarazada?', 'id' => 'embarazada']) }}
+                            {{ Form::select('embarazada', ['S' => 'SI','N' => 'NO'], 'N', ['class' => 'form-control input-lg', 'placeholder'=>'¿Usted esta Embarazada?', 'id' => 'embarazada']) }}
                         </div>
                         @if ($errors->has('embarazada'))
                             <span class="help-block">
@@ -243,7 +243,7 @@
 
             <div id="result2" class="alert alert-danger">
                 <p><i class="fa fa-exclamation-triangle"></i> <span class="text"></span>
-                <button type="button" class="close" onclick="$('#result1').hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" onclick="$('#result2').hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </p>
             </div>
 
@@ -339,7 +339,7 @@
                         <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
                         {{ Form::select('sexo', ['F' => 'Femenino', 'M' => 'Masculino'], null, ['class' => 'afiliado form-control input-lg', 'placeholder'=>'Seleccione Sexo', 'required', 'id' => 'sexo']) }}
                     </div>
-                    @if ($errors->has('plan'))
+                    @if ($errors->has('sexo'))
                         <span class="help-block">
                             <strong>{{ $errors->first('sexo') }}</strong>
                         </span>
@@ -353,7 +353,7 @@
                         <span class="input-group-addon"><i class="gi gi-globe"></i></span>
                         {{ Form::select('estado', $estados, null, ['class' => 'afiliado form-control input-lg', 'placeholder'=>'Seleccione Estado', 'required', 'id' => 'estado']) }}
                     </div>
-                    @if ($errors->has('plan'))
+                    @if ($errors->has('estado'))
                         <span class="help-block">
                             <strong>{{ $errors->first('estado') }}</strong>
                         </span>
@@ -367,7 +367,7 @@
                         <span class="input-group-addon"><i class="gi gi-globe"></i></span>
                         {{ Form::text('ciudad', null, ['class' => 'afiliado form-control input-lg', 'placeholder' => 'Ciudad', 'id' => 'ciudad', 'required']) }}
                     </div>
-                    @if ($errors->has('telefono'))
+                    @if ($errors->has('ciudad'))
                         <span class="help-block">
                             <strong>{{ $errors->first('ciudad') }}</strong>
                         </span>
@@ -384,92 +384,126 @@
         </div>
 
         <div id="step-4">
-                {!! Form::open(['url' => '/register', 'class' => 'form-horizontal form-bordered form-control-borderless' ]) !!}
+
+            <div id="result3" class="alert alert-danger">
+                <p><i class="fa fa-exclamation-triangle"></i> <span class="text"></span>
+                <button type="button" class="close" onclick="$('#result3').hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </p>
+            </div>
+
+            {!! Form::open(['url' => '/registro', 'class' => 'form-horizontal form-bordered form-control-borderless', 'id' => 'userForm']) !!}
                     
-                <div class="form-group {{ $errors->has('user') ? ' has-error' : '' }}">
-                    <div class="col-xs-12">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="gi gi-user"></i></span>
-                            <input type="text" class="form-control input-lg" name="user" value="{{ old('user') }}" placeholder="Usuario" >
-                        </div>
-                        @if ($errors->has('user'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('user') }}</strong>
-                            </span>
-                        @endif
+            <div class="form-group {{ $errors->has('user') ? ' has-error' : '' }}">
+                <div class="col-xs-12">
+                       <div class="input-group">
+                        <span class="input-group-addon"><i class="gi gi-user"></i></span>
+                        {{ Form::text('user', null, ['class' => 'usuario form-control input-lg', 'placeholder' => 'Usuario','minlength' => '4', 'maxlength' => '16', 'pattern' => '[a-záéíóúàèìòùäëïöüñ]+', 'id' => 'user', 'required']) }}
                     </div>
+                    @if ($errors->has('user'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('user') }}</strong>
+                        </span>
+                    @endif
                 </div>
+            </div>
 
-                <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
-                    <div class="col-xs-12">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="gi gi-user"></i></span>
-                            <input type="text" class="form-control input-lg" name="user" value="{{ old('name') }}" placeholder="Nombre" >
-                        </div>
-                        @if ($errors->has('name'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('name') }}</strong>
-                            </span>
-                        @endif
+            <div class="form-group {{ $errors->has('pregunta1') ? ' has-error' : '' }}">
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="gi gi-circle_question_mark"></i></span>
+                        {{ Form::select('pregunta1', $preguntas1, null, ['class' => 'usuario form-control input-lg', 'placeholder'=>'Seleccione Pregunta', 'required', 'id' => 'pregunta1']) }}
                     </div>
+                    @if ($errors->has('pregunta1'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('pregunta1') }}</strong>
+                        </span>
+                    @endif
                 </div>
+            </div>
 
-                <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
-                    <div class="col-xs-12">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-                            <input type="email" class="form-control input-lg" name="user" value="{{ old('email') }}" placeholder="Email" >
-                        </div>
-                        @if ($errors->has('email'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('email') }}</strong>
-                            </span>
-                        @endif
-                    </div>
+            <div class="form-group {{ $errors->has('respuesta1') ? ' has-error' : '' }}">
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                        {{ Form::text('respuesta1', null, ['class' => 'usuario form-control input-lg', 'placeholder' => 'Respuesta', 'id' => 'respuesta1', 'required']) }}
+                     </div>
+                     @if ($errors->has('respuesta1'))
+                         <span class="help-block">
+                                <strong>{{ $errors->first('respuesta1') }}</strong>
+                        </span>
+                    @endif
                 </div>
+            </div>
 
-                <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
-                    <div class="col-xs-12">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-                            <input type="password" class="form-control input-lg" name="password" placeholder="Clave" >
-                        </div>
-                        @if ($errors->has('password'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('password') }}</strong>
-                            </span>
-                        @endif
+            <div class="form-group {{ $errors->has('pregunta2') ? ' has-error' : '' }}">
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="gi gi-circle_question_mark"></i></span>
+                        {{ Form::select('pregunta2', $preguntas2, null, ['class' => 'usuario form-control input-lg', 'placeholder'=>'Seleccione Pregunta', 'required', 'id' => 'pregunta2']) }}
                     </div>
+                    @if ($errors->has('pregunta2'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('pregunta2') }}</strong>
+                        </span>
+                    @endif
                 </div>
+            </div>
 
-                <div class="form-group {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                    <div class="col-xs-12">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-                            <input type="password" class="form-control input-lg" name="password_confirmation" placeholder="Confirmar Clave" >
-                        </div>
-                        @if ($errors->has('password_confirmation'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('password_confirmation') }}</strong>
-                            </span>
-                        @endif
-                    </div>
+            <div class="form-group {{ $errors->has('respuesta2') ? ' has-error' : '' }}">
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                        {{ Form::text('respuesta2', null, ['class' => 'usuario form-control input-lg', 'placeholder' => 'Respuesta', 'id' => 'respuesta2', 'required']) }}
+                     </div>
+                     @if ($errors->has('respuesta2'))
+                         <span class="help-block">
+                                <strong>{{ $errors->first('respuesta2') }}</strong>
+                        </span>
+                    @endif
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <div class="col-xs-12 text-center">
-                        <button type="submit" class="btn btn-success btn-md"><i class="fa fa-save fa-fw"></i> Guardar</button>
+            <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                        {{ Form::password('password', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Clave', 'id' => 'password', 'required']) }}  
                     </div>
+                     @if ($errors->has('password'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('password') }}</strong>
+                        </span>
+                    @endif
                 </div>
+            </div>
+
+            <div class="form-group {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                        {{ Form::password('password_confirmation', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Confirmar Clave', 'id' => 'password1', 'data-parsley-equalto' => '#password', 'required']) }}
+                            
+                    </div>
+                    @if ($errors->has('password_confirmation'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('password_confirmation') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-12 text-center">
+                    <button type="submit" id="valid3" class="btn btn-success btn-md"><i class="fa fa-save fa-fw"></i> Guardar</button>
+                </div>
+            </div>
         {!! Form::close() !!}
         </div>
 
-        <? 
-            Session::forget('embarazada');
-        ?>
 
     </div> 
-   <p>embarazo {{ Session::get('embarazada') }} </p>
+   <p>embarazo {{ Session::get('embarazo') }} </p>
+   <p>semanas {{ Session::get('semanas') }} </p>
    <p>afiliado {{ Session::get('afiliado') }}</p>
    <p>cuenta {{ Session::get('cuenta') }}</p>
 
@@ -496,7 +530,8 @@ $(document).ready(function() {
     // Escondo los mensje por defecto
     $('#result').hide();
     $('#result1').hide();
-    $('#result2').hide();  
+    $('#result2').hide();
+    $('#result3').hide();  
     
     /** Variable Config parsley **/
     var parsleyOptions = {
@@ -516,6 +551,7 @@ $(document).ready(function() {
     $('#checkForm').parsley(parsleyOptions);
     $('#cuentaForm').parsley(parsleyOptions);
     $('#afiliadoForm').parsley(parsleyOptions);
+    $('#userForm').parsley(parsleyOptions);
 
     // Inicializo step form
     $('#wizard').smartWizard({ 
@@ -739,7 +775,7 @@ $(document).ready(function() {
         });
     });
 
-    // Generar Cuenta
+    // Generar Afiliado
     $('#afiliadoForm').on('submit', function (e) {
         e.preventDefault();
         // Guardo el valor de la tarjeta ingresada..
@@ -799,6 +835,56 @@ $(document).ready(function() {
             }
         });
     });
+
+    // Generar Usuario
+    $('#userForm').on('submit', function (e) {
+        e.preventDefault();
+        // Guardo el valor de la tarjeta ingresada..
+        var usuario    = $('#user').val();
+        var pregunta1  = $('#pregunta1').val();
+        var respuesta1 = $('#respuesta1').val();
+        var pregunta2  = $('#pregunta2').val();
+        var respuesta2 = $('#respuesta2').val();
+        var clave      = $('#password').val();
+  
+        // Ejecuto la peticion para validar la tarjeta
+        $.ajax({
+            type: "POST",
+            url:'{{ url('/registro') }}',
+            data: {
+                user: usuario,
+                pregunta1: pregunta1,
+                respuesta1: respuesta1,
+                pregunta2: pregunta2,
+                respuesta2: respuesta2,
+                password: clave,
+            },
+            success: function(data) {
+                //Verifico la respuesta del servidor
+                if (data.error) {
+                    // Muestro mensaje de error
+                    $('#result3').show();
+                    $('#result3').removeClass('alert-success'); 
+                    $('#result3').addClass('alert-danger'); 
+                    $('#result3 .text').text(data.error)
+                    console.log(data.error);
+
+                } else {
+                    // Desabilito los campos paa evitar errores
+                    $('#valid3').attr('disabled','disabled');
+                    $('.usuario').attr('disabled','disabled');
+                  
+                    // Muestro mensaje de exito
+                    $('#result3').show(); 
+                    $('#result3').removeClass('alert-danger'); 
+                    $('#result3').addClass('alert-success'); 
+                    $('#result3 .text').text(data.success);
+                    console.log(data);
+                }
+            }
+        });
+    });
+
 
 });
 </script>

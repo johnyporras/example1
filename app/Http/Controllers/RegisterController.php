@@ -22,6 +22,7 @@ use Mail;
 use Session;
 use Validator;
 use Carbon\Carbon;
+use DB;
 
 class RegisterController extends Controller
 {
@@ -40,8 +41,11 @@ class RegisterController extends Controller
         $estados = AcEstado::orderBy('estado','ASC')->pluck('estado', 'id');
         // Cargo los estados
         $tamanos = Tamano::pluck('titulo', 'id');
+        //Preguntas 
+        $preguntas1 = DB::table('preguntas')->take(10)->orderBy('id','asc')->pluck('pregunta', 'pregunta');
+        $preguntas2 = DB::table('preguntas')->take(10)->orderBy('id','desc')->pluck('pregunta', 'pregunta');
 
-        return view('auth.register', compact('productos', 'planes','estados', 'tamanos'));
+        return view('auth.register', compact('productos', 'planes','estados', 'tamanos','preguntas1','preguntas2'));
 
     }
 
@@ -96,7 +100,6 @@ class RegisterController extends Controller
             if (Session::get('codigo')){
 
                 try{
-      
                     //Guardo CuentaPlan
                     $cuenta = AcCuenta::create([
                                     'codigo_cuenta' => Session::get('codigo'),
@@ -127,7 +130,7 @@ class RegisterController extends Controller
                     if($request->plan == 17){
                         // Guardo session de embarazada
                         Session::set('embarazo', $request->embarazada);
-                        Session::set('semanas', $request->semanas );
+                        Session::set('semanas', $request->semanas);
                     } 
                 
                     // Guardo la session cuenta
@@ -150,64 +153,73 @@ class RegisterController extends Controller
 
     public function afiliado(Request $request)
     {
-        //if ($request->ajax()) {
+        if ($request->ajax()) {
 
             if (Session::get('cuenta')){
+                // valido para no repetir cedula ni emal en afiliado y en user
+                $emailAf = AcAfiliado::where('email','=', $request->correo)->first();
+                $emailUser = User::where('email','=', $request->correo)->first();
+                $cedulaAf = AcAfiliado::where('cedula','=', $request->cedula)->first();
+                //Guardo variables para embarazo
+                $embarazo = (Session::get('embarazo')) ? Session::get('embarazo') : 'N';
 
-                try{
-    
-                    $afiliado = AcAfiliado::create([
-                                'cedula'    => $request->cedula,
-                                'nombre'    => strtoupper($request->nombre),
-                                'apellido'  => strtoupper($request->apellido),
-                                'fecha_nacimiento' => $request->nacimiento,
-                                'email'     => $request->correo,
-                                'sexo'      => $request->sexo,
-                                'telefono'  => $request->telefono,
-                                'id_cuenta' => Session::get('cuenta')->id,
-                                'id_estado' => $request->estado,
-                                'ciudad'    => $request->ciudad,
-                                'embarazada' => Session::get('embararazo'),
-                                'tiempo_gestacion' => Session::get('semanas')
-                            ]);
-                
-                    // Guardo la session cuenta
-                    Session::set('afiliado', $afiliado);
-                    // borro la session cuenta                  
-                    Session::forget('cuenta');
-                    // Retorno mensaje de sastifactorio
-                    return response()->json(['success' => 'Afiliado creado Sastifactorimente']);
-                }
-                catch(QueryException $e){
-                    return response()->json(['error' => $e]);
-                   //return response()->json(['error' => '¡Ocurrio un error al generar cuenta!']);
-                }
+                if ($emailAf != null || $emailUser != null){
 
-           }else{
+                    return response()->json(['error' => 'El Correo que ingreso ya esta en uso']);
+                }else if($cedulaAf != null){
+
+                    return response()->json(['error' => 'La Cédula que ingreso ya existe en el sistema']);
+                }else{
+                    try{
+                        $afiliado = AcAfiliado::create([
+                                    'cedula'    => $request->cedula,
+                                    'nombre'    => strtoupper($request->nombre),
+                                    'apellido'  => strtoupper($request->apellido),
+                                    'fecha_nacimiento' => $request->nacimiento,
+                                    'email'     => $request->correo,
+                                    'sexo'      => $request->sexo,
+                                    'telefono'  => $request->telefono,
+                                    'id_cuenta' => Session::get('cuenta')->id,
+                                    'id_estado' => $request->estado,
+                                    'ciudad'    => $request->ciudad,
+                                    'embarazada' => $embarazo,
+                                    'tiempo_gestacion' => Session::get('semanas')
+                                ]);
+                    
+                        // Guardo la session cuenta
+                        Session::set('afiliado', $afiliado);
+                        // borro la session cuenta                  
+                        Session::forget('cuenta');
+                        Session::forget('embarazo');
+                        Session::forget('semanas');
+
+                        // Retorno mensaje de sastifactorio
+                        return response()->json(['success' => 'Afiliado creado Sastifactorimente']);
+                    }
+                    catch(QueryException $e){
+                       return response()->json(['error' => '¡Ocurrio un error al generar Afiliado!']);
+                    }
+                }
+            }else{
                 return response()->json(['error' => 'No posee cuenta valida intente nuevamente']);
            }
-        //}
+        }
     }
 
     public function postRegister(Request $request){
 
-        dd($request);
-    
         $rules = [
-            'name' => 'required|min:3|max:16|regex:/^[a-záéíóúàèìòùäëïöüñ\s]+$/i',
-            'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|min:6|max:18|confirmed',
+            'user' => 'required|min:4|max:16|regex:/^[a-záéíóúàèìòùäëïöüñ\s]+$/i',
+            'pregunta1' => 'required',
+            'pregunta2' => 'required',
+            'password'  => 'required|min:6|max:18',
         ];
 
         $messages = [
-            'name.required' => 'El campo es requerido',
-            'name.min' => 'El mínimo de caracteres permitidos son 3',
-            'name.max' => 'El máximo de caracteres permitidos son 16',
-            'name.regex' => 'Sólo se aceptan letras',
-            'email.required' => 'El campo es requerido',
-            'email.email' => 'El formato de email es incorrecto',
-            'email.max' => 'El máximo de caracteres permitidos son 255',
-            'email.unique' => 'El email ya existe',
+            'user.required' => 'El campo es requerido',
+            'user.min' => 'El mínimo de caracteres permitidos son 6',
+            'user.max' => 'El máximo de caracteres permitidos son 16',
+            'user.regex' => 'Sólo se aceptan letras',
             'password.required' => 'El campo es requerido',
             'password.min' => 'El mínimo de caracteres permitidos son 6',
             'password.max' => 'El máximo de caracteres permitidos son 18',
@@ -217,8 +229,15 @@ class RegisterController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()){
-            return redirect("auth/register")->withErrors($validator)->withInput();
+            
+            //return redirect("auth/register")->withErrors($validator)->withInput();
+
+            return response()->json(['error' => $validator->getMessageBag()->toArray() ]);
+
         } else {
+
+            return response()->json(['success' => 'todo fino para crear']);
+            /*
             $user = new User;
             $data['name'] = $user->name = $request->name;
             $data['email'] = $user->email = $request->email;
@@ -232,7 +251,7 @@ class RegisterController extends Controller
                 $mail->to($data['email'], $data['name']);
             });
 
-            return redirect("auth/register")->with("message", "Hemos enviado un enlace de confirmación a su cuenta de correo electrónico");
+            return redirect("auth/register")->with("message", "Hemos enviado un enlace de confirmación a su cuenta de correo electrónico");*/
         }
     }
     

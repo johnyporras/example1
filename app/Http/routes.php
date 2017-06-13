@@ -31,7 +31,7 @@ Route::get('/register', [
         'as'   => 'register.register' 
 ]);
 
-Route::post('/register', [
+Route::post('/registro', [
         'uses' => 'RegisterController@postRegister',
         'as'   => 'register.postRegister' 
 ]);
