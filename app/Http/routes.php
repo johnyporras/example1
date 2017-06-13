@@ -11,6 +11,8 @@
 */
 /*=====================================================*/
 /** Rutas de Login */
+
+
 Route::auth();
 
 /** Rutas de Inicio */
@@ -34,12 +36,12 @@ Route::post('/register', [
         'as'   => 'register.postRegister' 
 ]);
 
-Route::get('/check', [
+Route::post('/check', [
         'uses' => 'RegisterController@check',
         'as'   => 'register.check' 
 ]);
 
-Route::get('/cuenta', [
+Route::post('/cuenta', [
         'uses' => 'RegisterController@cuenta',
         'as'   => 'register.cuenta' 
 ]);

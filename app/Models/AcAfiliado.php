@@ -36,13 +36,15 @@ class AcAfiliado extends Model {
         'fecha_nacimiento', 
         'email', 
         'sexo', 
-        'telefono', 
+        'telefono',
+        'id_cuenta',
+        'id_estado', 
         'ciudad', 
         'embarazada', 
         'tiempo_gestacion', 
         'deleted_at'
     ];
-    
+
     /**
      * Get the cuenta for the Afiliado.
      */
@@ -58,7 +60,6 @@ class AcAfiliado extends Model {
     {
         return $this->belongsTo(\App\Models\AcEstado::class, 'id_estado', 'id');
     }
-
 
     /**
      * Get the tipo for the Afiliado.

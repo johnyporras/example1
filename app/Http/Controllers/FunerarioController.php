@@ -90,7 +90,7 @@ class FunerarioController extends Controller
                 // Guardo en variable la cuenta
                 $cuenta = $afiliado->cuenta;
                 // Guardo en variable el plan
-                $plan = $afiliado->cuenta->plan()->first();
+                $plan = $afiliado->cuenta->cuentaPlan()->first();
 
                 //Creo array de dias
                 $dias = [];
@@ -245,7 +245,7 @@ class FunerarioController extends Controller
         // Guardo en variable la cuenta
         $cuenta = $afiliado->cuenta;
         // Guardo en variable el plan
-        $plan = $afiliado->cuenta->plan()->first();
+        $plan = $afiliado->cuenta->cuentaPlan()->first();
 
         //cargo los proveedores funerarios
         $proveedores = ProveedorFunerario::orderBy('razon_social', 'ASC')
@@ -350,7 +350,7 @@ class FunerarioController extends Controller
         // Guardo en variable la cuenta
         $cuenta = $afiliado->cuenta;
         // Guardo en variable el plan
-        $plan = $afiliado->cuenta->plan()->first();
+        $plan = $afiliado->cuenta->cuentaPlan()->first();
 
         // Cargo los estados
         $estados = AcEstado::orderBy('estado', 'ASC')

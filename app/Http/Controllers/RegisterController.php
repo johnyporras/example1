@@ -3,21 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 use App\Http\Requests;
-use App\User;
+
+use App\Models\AcAfiliado;
 use App\Models\AcCuenta;
-use App\Models\Tarjeta;
+use App\Models\AcCuentaplan;
+use App\Models\AcEstado;
 use App\Models\AcProducto;
 use App\Models\AcPlanesExtranet;
-use App\Models\AcEstado;
+use App\Models\Mascota;
+use App\Models\Tarjeta;
 use App\Models\Tamano;
+use App\User;
 use Hash;
 use Mail;
 use Session;
 use Validator;
 use Carbon\Carbon;
-
 
 class RegisterController extends Controller
 {
@@ -75,85 +79,113 @@ class RegisterController extends Controller
 
             } else {
                 // borro la session codigo                   
-                Session::forget('codigo', $codigo);
+                Session::forget('codigo');
                 return response()->json(['error' => 'Tarjeta Invalida']);
             }
             
         }
     }
 
-    public function cuenta(Request $request){
-        //if ($request->ajax()) {
-
-       /* return response()->json(['data' => [
-                            'producto' => $request->producto,
-                            'plan' => $request->plan,
-                            'embarazada' => $request->embarazada,
-                            'semanas' => $request->semanas,
-                            'nombre' => $request->nombre,
-                            'raza' => $request->raza,
-                            'color' => $request->color,
-                            'tipo' => $request->tipo,
-                            'edad' => $request->edad,
-                            'fmascota' => $request->fmascota,
-                            'tamano' => $request->tamano,
-                            'codigo_cuenta' => Session::get('codigo')
-                        ]]); */
+    public function cuenta(Request $request)
+    {
+        if ($request->ajax()) {
 
             // Fecha creado
             $creado = Carbon::now()->format('Y-m-d'); 
      
-           // if (Session::get('codigo')){
+            if (Session::get('codigo')){
 
-            $cuenta = AcCuenta::create([
-                            'codigo_cuenta' => Session::get('codigo'),
-                            'fecha'         => $creado,
-                            'id_producto'   => $request->producto
-                        ]);
+                try{
+      
+                    //Guardo CuentaPlan
+                    $cuenta = AcCuenta::create([
+                                    'codigo_cuenta' => Session::get('codigo'),
+                                    'fecha' => $creado,
+                                    'id_producto' => $request->producto
+                                ]);  
 
-            //$cuenta->plan()->create(['id_plan' => $plan]);
-/*
-            if($plan == 18){
+                    //Guardo CuentaPlan
+                    $cuentaplan = AcCuentaPlan::create([
+                                        'id_cuenta' => $cuenta->id,
+                                        'id_plan' => $request->plan
+                                    ]);
 
-                $mascota = Mascota::create([
-                            'cuenta_id' => $cuenta->id,
-                            'tamano_id' => $request->tamano,
-                            'nombre'    => $request->nombre,
-                            'raza'      => $request->raza,
-                            'color_pelaje' => $request->color,
-                            'edad'      => $request->edad,
-                            'fecha'     => $request->fmascota,
-                            'tipo'      => $request->tipo,
-                        ]);
-            }
+                    if($request->plan == 18){
 
-            if($plan == 17){
-                // Guardo session de embarazada para utilizar luego  
-                Session::set('embarazada', [
-                                'embarazada' => $request->embarazada,
-                                'semanas' => $request->semanas
-                                ]);
-            } */
-            /*
-            if($cuenta != null){
-                // Guardo la session cuenta
-                Session::set('cuenta', $cuenta);
-                // borro la session codigo                   
-                Session::forget('codigo', $codigo);
+                        $mascota = Mascota::create([
+                                'cuenta_id' => $cuenta->id,
+                                'tamano_id' => $request->tamano,
+                                'nombre'    => $request->nombre,
+                                'raza'      => $request->raza,
+                                'color_pelage' => $request->color,
+                                'edad'      => $request->edad,
+                                'fecha'     => $request->fmascota,
+                                'tipo'      => $request->tipo,
+                            ]);
+                    }
 
-                return response()->json(['success' => 'Cuenta Generada Sastifactorimente']);
+                    if($request->plan == 17){
+                        // Guardo session de embarazada
+                        Session::set('embarazo', $request->embarazada);
+                        Session::set('semanas', $request->semanas );
+                    } 
                 
-            }else{
-                return response()->json(['error' => 'Ocurrio un problema al generar la cuenta']);
-            }
+                    // Guardo la session cuenta
+                    Session::set('cuenta', $cuenta);
+                    // borro la session codigo                   
+                    Session::forget('codigo');
+                    // Retorno mensaje de sastifactorio
+                    return response()->json(['success' => 'Cuenta Generada Sastifactorimente']);
+                }
+                catch(QueryException $e){
+                    //return response()->json(['error' => $e]);
+                   return response()->json(['error' => '¡Ocurrio un error al generar cuenta!']);
+                }
 
            }else{
                 return response()->json(['error' => 'No posee tarjeta valida intente nuevamente']);
            }
-           */
-          
-          return response()->json(['success' => 'Cuenta Generada Sastifactorimente']);
-            
+        }
+    }
+
+    public function afiliado(Request $request)
+    {
+        //if ($request->ajax()) {
+
+            if (Session::get('cuenta')){
+
+                try{
+    
+                    $afiliado = AcAfiliado::create([
+                                'cedula'    => $request->cedula,
+                                'nombre'    => strtoupper($request->nombre),
+                                'apellido'  => strtoupper($request->apellido),
+                                'fecha_nacimiento' => $request->nacimiento,
+                                'email'     => $request->correo,
+                                'sexo'      => $request->sexo,
+                                'telefono'  => $request->telefono,
+                                'id_cuenta' => Session::get('cuenta')->id,
+                                'id_estado' => $request->estado,
+                                'ciudad'    => $request->ciudad,
+                                'embarazada' => Session::get('embararazo'),
+                                'tiempo_gestacion' => Session::get('semanas')
+                            ]);
+                
+                    // Guardo la session cuenta
+                    Session::set('afiliado', $afiliado);
+                    // borro la session cuenta                  
+                    Session::forget('cuenta');
+                    // Retorno mensaje de sastifactorio
+                    return response()->json(['success' => 'Afiliado creado Sastifactorimente']);
+                }
+                catch(QueryException $e){
+                    return response()->json(['error' => $e]);
+                   //return response()->json(['error' => '¡Ocurrio un error al generar cuenta!']);
+                }
+
+           }else{
+                return response()->json(['error' => 'No posee cuenta valida intente nuevamente']);
+           }
         //}
     }
 
@@ -186,8 +218,7 @@ class RegisterController extends Controller
 
         if ($validator->fails()){
             return redirect("auth/register")->withErrors($validator)->withInput();
-        }
-        else{
+        } else {
             $user = new User;
             $data['name'] = $user->name = $request->name;
             $data['email'] = $user->email = $request->email;

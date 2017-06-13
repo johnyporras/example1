@@ -21,7 +21,7 @@ class CreateMascotasTable extends Migration
             $table->string('color_pelage');
             $table->integer('edad');
             $table->date('fecha');
-            $table->enum('tipo', ['Perro', 'gato']);
+            $table->enum('tipo', ['perro', 'gato']);
             $table->timestamps();
             $table->softDeletes();
                 $table->foreign('cuenta_id')->references('id')->on('ac_cuenta')

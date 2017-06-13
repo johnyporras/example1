@@ -58,9 +58,9 @@ class AcCuenta extends Model
     /**
      * Get the Plan Extranet for the Cuenta.
      */
-    public function plan()
+    public function cuentaPlan()
     {
-        return $this->belongsToMany(\App\Models\AcPlanesExtranet::class, 'ac_cuentaplan', 'id_cuenta', 'id_plan');
+        return $this->hasMany(\App\Models\AcCuentaplan::class, 'id_cuenta', 'id');
     }
 
     /**

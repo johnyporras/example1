@@ -31,6 +31,8 @@ class Mascota extends Model
      * @var array
      */
     protected $fillable = [
+        'cuenta_id',
+        'tamano_id',
     	'nombre',
         'raza',
         'color_pelage',

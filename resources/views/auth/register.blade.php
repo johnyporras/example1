@@ -61,6 +61,13 @@
         </div>
 
         <div id="step-2">
+
+            <div id="result1" class="alert alert-danger">
+                <p><i class="fa fa-exclamation-triangle"></i> <span class="text"></span>
+                <button type="button" class="close" onclick="$('#result1').hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </p>
+            </div>
+
             {!! Form::open(['url' => '/cuenta', 'class' => 'form-horizontal form-bordered form-control-borderless', 'method' => 'get', 'id' => 'cuentaForm']) !!}
                     
             <div class="form-group {{ $errors->has('producto') ? ' has-error' : '' }}">
@@ -96,7 +103,7 @@
                     <div class="col-xs-12">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="gi gi-dog"></i></span>
-                            {{ Form::text('nombre', null, ['class' => 'mascota form-control input-lg', 'placeholder' => 'Nombre ', 'id' => 'nombre']) }}
+                            {{ Form::text('nombre', null, ['class' => 'mascota form-control input-lg', 'placeholder' => 'Nombre ', 'id' => 'nmascota']) }}
                         </div>
                         @if ($errors->has('nombre'))
                             <span class="help-block">
@@ -226,20 +233,27 @@
 
             <div class="form-group">
                 <div class="col-xs-12 text-center">
-                    <button type="submit" class="btn btn-success btn-md"><i class="fa fa-save fa-fw"></i> Guardar</button>
+                    <button type="submit" id="valid1" class="btn btn-success btn-md"><i class="fa fa-save fa-fw"></i> Guardar</button>
                 </div>
             </div>
         {!! Form::close() !!}
         </div>
 
         <div id="step-3">
+
+            <div id="result2" class="alert alert-danger">
+                <p><i class="fa fa-exclamation-triangle"></i> <span class="text"></span>
+                <button type="button" class="close" onclick="$('#result1').hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </p>
+            </div>
+
             {!! Form::open(['url' => '/afiliado', 'class' => 'form-horizontal form-bordered form-control-borderless', 'method' => 'get', 'id' => 'afiliadoForm']) !!}
                     
             <div class="form-group {{ $errors->has('cedula') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-credit_card"></i></span>
-                        {{ Form::number('cedula', null, ['class' => 'form-control input-lg', 'placeholder' => 'Cédula', 'id' => 'cedula', 'minlength' => '6', 'maxlength' => '2', 'required']) }}
+                        {{ Form::number('cedula', null, ['class' => 'afiliado form-control input-lg', 'placeholder' => 'Cédula', 'id' => 'cedula', 'maxlength' => '9', 'required']) }}
                     </div>
                     @if ($errors->has('cedula'))
                         <span class="help-block">
@@ -253,7 +267,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-user"></i></span>
-                        {{ Form::text('nombre', null, ['class' => 'form-control input-lg', 'placeholder' => 'Nombre ', 'id' => 'nombre', 'required']) }}
+                        {{ Form::text('nombre', null, ['class' => 'afiliado form-control input-lg', 'placeholder' => 'Nombre ', 'id' => 'nafiliado', 'required']) }}
                     </div>
                     @if ($errors->has('nombre'))
                         <span class="help-block">
@@ -267,7 +281,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-user"></i></span>
-                        {{ Form::text('apellido', null, ['class' => 'form-control input-lg', 'placeholder' => 'Apellido', 'id' => 'apellido', 'required']) }}
+                        {{ Form::text('apellido', null, ['class' => 'afiliado form-control input-lg', 'placeholder' => 'Apellido', 'id' => 'apellido', 'required']) }}
                     </div>
                     @if ($errors->has('apellido'))
                         <span class="help-block">
@@ -281,7 +295,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-envelope"></i></span>
-                        {{ Form::email('email', null, ['class' => 'form-control input-lg', 'placeholder' => 'Correo', 'id' => 'email', 'required']) }}
+                        {{ Form::email('email', null, ['class' => 'afiliado form-control input-lg', 'placeholder' => 'Correo', 'id' => 'email', 'required']) }}
                     </div>
                     @if ($errors->has('email'))
                         <span class="help-block">
@@ -295,7 +309,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-earphone"></i></span>
-                        {{ Form::text('telefono', null, ['class' => 'form-control input-lg', 'placeholder' => 'Teléfono', 'id' => 'telefono', 'required']) }}
+                        {{ Form::text('telefono', null, ['class' => 'afiliado form-control input-lg', 'placeholder' => 'Teléfono', 'id' => 'telefono', 'pattern' => '^[0][24][1-9][0-9]+$', 'minlength' => "11", 'maxlength' => '11', 'required']) }}
                     </div>
                     @if ($errors->has('telefono'))
                         <span class="help-block">
@@ -309,7 +323,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-calendar"></i></span>
-                        {{ Form::text('fecha', null, ['class' => 'form-control input-lg', 'placeholder' => 'Fecha nacimiento', 'id' => 'fecha', 'required']) }}
+                        {{ Form::text('fecha', null, ['class' => 'afiliado form-control input-lg', 'placeholder' => 'Fecha nacimiento', 'id' => 'fecha', 'required']) }}
                     </div>
                     @if ($errors->has('fecha'))
                         <span class="help-block">
@@ -323,7 +337,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
-                        {{ Form::select('sexo', ['F' => 'Femenino', 'M' => 'Masculino'], null, ['class' => 'form-control input-lg', 'placeholder'=>'Seleccione Sexo', 'required', 'id' => 'sexo']) }}
+                        {{ Form::select('sexo', ['F' => 'Femenino', 'M' => 'Masculino'], null, ['class' => 'afiliado form-control input-lg', 'placeholder'=>'Seleccione Sexo', 'required', 'id' => 'sexo']) }}
                     </div>
                     @if ($errors->has('plan'))
                         <span class="help-block">
@@ -337,7 +351,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-globe"></i></span>
-                        {{ Form::select('estado', $estados, null, ['class' => 'form-control input-lg', 'placeholder'=>'Seleccione Estado', 'required', 'id' => 'estado']) }}
+                        {{ Form::select('estado', $estados, null, ['class' => 'afiliado form-control input-lg', 'placeholder'=>'Seleccione Estado', 'required', 'id' => 'estado']) }}
                     </div>
                     @if ($errors->has('plan'))
                         <span class="help-block">
@@ -351,7 +365,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-globe"></i></span>
-                        {{ Form::text('ciudad', null, ['class' => 'form-control input-lg', 'placeholder' => 'Ciudad', 'id' => 'ciudad', 'required']) }}
+                        {{ Form::text('ciudad', null, ['class' => 'afiliado form-control input-lg', 'placeholder' => 'Ciudad', 'id' => 'ciudad', 'required']) }}
                     </div>
                     @if ($errors->has('telefono'))
                         <span class="help-block">
@@ -363,7 +377,7 @@
 
             <div class="form-group">
                 <div class="col-xs-12 text-center">
-                    <button type="submit" class="btn btn-success btn-md"><i class="fa fa-save fa-fw"></i> Guardar</button>
+                    <button type="submit" id="valid2" class="btn btn-success btn-md"><i class="fa fa-save fa-fw"></i> Guardar</button>
                 </div>
             </div>
         {!! Form::close() !!}
@@ -450,7 +464,14 @@
         {!! Form::close() !!}
         </div>
 
+        <? 
+            Session::forget('embarazada');
+        ?>
+
     </div> 
+   <p>embarazo {{ Session::get('embarazada') }} </p>
+   <p>afiliado {{ Session::get('afiliado') }}</p>
+   <p>cuenta {{ Session::get('cuenta') }}</p>
 
 </div>
 
@@ -467,14 +488,17 @@ $(document).ready(function() {
         }
     });
 
-    // default
+    // Valores por defecto
     var validate = false;
     var submitted = false;
     var submitted1 = false;
+    //var submitted2 = false;
     // Escondo los mensje por defecto
-    $('#result').hide(); 
+    $('#result').hide();
+    $('#result1').hide();
+    $('#result2').hide();  
     
-    /** Validar formulario **/
+    /** Variable Config parsley **/
     var parsleyOptions = {
         errorClass: 'has-error',
         successClass: 'has-success',
@@ -490,15 +514,8 @@ $(document).ready(function() {
 
     // Genero la validacion del formulario...
     $('#checkForm').parsley(parsleyOptions);
-
     $('#cuentaForm').parsley(parsleyOptions);
-
     $('#afiliadoForm').parsley(parsleyOptions);
-
-    // Toolbar extra buttons
-    var btnFinish = $('<button></button>').text('Finish')
-        .addClass('btn btn-info btn-finish hidden')
-        .on('click', function(){ });
 
     // Inicializo step form
     $('#wizard').smartWizard({ 
@@ -507,7 +524,6 @@ $(document).ready(function() {
         transitionEffect:'fade',
         toolbarSettings: {
             toolbarPosition: 'bottom',
-            toolbarExtraButtons: [btnFinish]
         },
         anchorSettings: {
             markDoneStep: true, // add done css
@@ -526,10 +542,11 @@ $(document).ready(function() {
         // verifico si va adelante
         if(stepDirection === 'forward'){      
             if(validate == false){
-                //validation failed
                 return false;    
             }
-        }else{
+        }
+        //verifico si va atras
+        if(stepDirection === 'backward'){  
             validate = true;
             return true;
         }
@@ -541,20 +558,18 @@ $(document).ready(function() {
         // Enable finish button only on last step
         if(stepNumber == 1){ 
 
-            if (!submitted) {
+            if (submitted == false) {
                 validate = false;
             }
-            console.log('estoy en 1');
+            console.log('estoy en cuenta');
         }
 
         if(stepNumber == 2){
-            if (!submitted1) {
+            if (submitted1 == false) {
                 validate = false;
             }
-            console.log('estoy en 2');
-            //$('.btn-finish').removeClass('hidden');  
+            console.log('estoy en afiliado'); 
         }
-
     });
 
     /***********************************************************************/
@@ -626,7 +641,7 @@ $(document).ready(function() {
         var tarjeta = $('#tarjeta').val();
         // Ejecuto la peticion para validar la tarjeta
         $.ajax({
-            type: "GET",
+            type: "POST",
             url:'{{ url('/check') }}',
             data: {tarjeta: tarjeta},
             success: function(data) {
@@ -656,7 +671,7 @@ $(document).ready(function() {
         });
     }); 
 
-     // Verificar tarjeta
+    // Generar Cuenta
     $('#cuentaForm').on('submit', function (e) {
         e.preventDefault();
         // Guardo el valor de la tarjeta ingresada..
@@ -664,7 +679,7 @@ $(document).ready(function() {
         var plan = $('#plan').val();
         var embarazada = $('#embarazada').val();
         var semanas = $('#semanas').val();
-        var nombre = $('#nombre').val();
+        var nombre = $('#nmascota').val();
         var raza = $('#raza').val();
         var color = $('#color').val();
         var tipo = $('#tipo').val();
@@ -674,7 +689,7 @@ $(document).ready(function() {
          
         // Ejecuto la peticion para validar la tarjeta
         $.ajax({
-            type: "GET",
+            type: "POST",
             url:'{{ url('/cuenta') }}',
             data: {
                 producto: producto,
@@ -697,12 +712,89 @@ $(document).ready(function() {
                     // Muestro mensaje de error
                     $('#result1').show();
                     $('#result1').removeClass('alert-success'); 
-                    $('#result1').addClass('alert-danger '); 
+                    $('#result1').addClass('alert-danger'); 
                     $('#result1 .text').text(data.error)
+                    validate = false;
+                    console.log(data.error);
                 } else {
-                   console.log(data);
+                    // Desabilito los campos paa evitar errores
+                    $('#valid1').attr('disabled','disabled');
+                    $('#producto').attr('disabled','disabled');
+                    $('#plan').attr('disabled','disabled');
+                    $('.mascota').attr('disabled','disabled');
+                    $('#embarazada').attr('disabled','disabled');
+                    $('#semanas').attr('disabled','disabled');
+                    // Muestro mensaje de exito
+                    $('#result1').show(); 
+                    $('#result1').removeClass('alert-danger'); 
+                    $('#result1').addClass('alert-success'); 
+                    $('#result1 .text').text(data.success);
+                    // Permito pasar al otro step del registro
                     validate = true;
                     submitted = true;
+                    //$("#cuentaForm").resetForm(); 
+                    console.log(data);
+                }
+            }
+        });
+    });
+
+    // Generar Cuenta
+    $('#afiliadoForm').on('submit', function (e) {
+        e.preventDefault();
+        // Guardo el valor de la tarjeta ingresada..
+        var cedula = $('#cedula').val();
+        var nombre = $('#nafiliado').val();
+        var apellido = $('#apellido').val();
+        var correo = $('#email').val();
+        var telefono = $('#telefono').val();
+        var nacimiento = $('#fecha').val();
+        var sexo = $('#sexo').val();
+        var estado = $('#estado').val();
+        var ciudad = $('#ciudad').val();    
+         
+        // Ejecuto la peticion para validar la tarjeta
+        $.ajax({
+            type: "GET",
+            url:'{{ url('/afiliado') }}',
+            data: {
+                cedula: cedula,
+                nombre: nombre,
+                apellido: apellido,
+                correo: correo,
+                telefono: telefono,
+                nacimiento: nacimiento,
+                sexo: sexo,
+                estado: estado,
+                ciudad: ciudad
+            },
+            success: function(data) {
+                // limpio el campo tarjeta
+                //$("#tarjeta").val("");
+                //Verifico la respuesta del servidor
+                if (data.error) {
+                    // Muestro mensaje de error
+                    $('#result2').show();
+                    $('#result2').removeClass('alert-success'); 
+                    $('#result2').addClass('alert-danger'); 
+                    $('#result2 .text').text(data.error)
+                    validate = false;
+                    console.log(data.error);
+                } else {
+                    // Desabilito los campos paa evitar errores
+                    $('#valid2').attr('disabled','disabled');
+                    $('.afiliado').attr('disabled','disabled');
+                  
+                    // Muestro mensaje de exito
+                    $('#result2').show(); 
+                    $('#result2').removeClass('alert-danger'); 
+                    $('#result2').addClass('alert-success'); 
+                    $('#result2 .text').text(data.success);
+                    // Permito pasar al otro step del registro
+                    validate = true;
+                    submitted1 = true;
+                    //$("#cuentaForm").resetForm(); 
+                    console.log(data);
                 }
             }
         });

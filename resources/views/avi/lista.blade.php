@@ -92,7 +92,7 @@ $(document).ready(function() {
         responsive: true,
         processing: true,
         serverSide: true,
-        ajax: '/api/solicitudes',
+        ajax: '{{ url('api/solicitudes') }}',
         language: {
             url: '/plugins/datatables/language/Spanish.json',
         },

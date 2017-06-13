@@ -83,7 +83,7 @@ class AviController extends Controller
                 // Guardo en variable la cuenta
                 $cuenta = $afiliado->cuenta;
                 // Guardo en variable el plan
-                $plan = $afiliado->cuenta->plan()->first();
+                $plan = $afiliado->cuenta->cuentaPlan()->first();
 
                 // Cargo los paises
                 $paises = DB::table('paises')->orderBy('name_es', 'ASC')
@@ -163,7 +163,7 @@ class AviController extends Controller
         // Guardo en variable la cuenta
         $cuenta = $afiliado->cuenta;
         // Guardo en variable el plan
-        $plan = $afiliado->cuenta->plan()->first();
+        $plan = $afiliado->cuenta->cuentaPlan()->first();
 
         return view('avi.show',compact('solicitud', 'cuenta', 'plan'));
     }
@@ -184,7 +184,7 @@ class AviController extends Controller
         // Guardo en variable la cuenta
         $cuenta = $afiliado->cuenta;
         // Guardo en variable el plan
-        $plan = $afiliado->cuenta->plan()->first();
+        $plan = $afiliado->cuenta->cuentaPlan()->first();
 
         $paises = DB::table('paises')->orderBy('name_es', 'ASC')
                         ->pluck('name_es', 'id');
