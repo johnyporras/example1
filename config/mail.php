@@ -55,7 +55,10 @@ return [
     |
     */
 
-    'from' => ['address' => 'no-reply@corporacionatiempo.com', 'name' => 'Corporacion Atiempo'],
+    'from' => [
+        'address' => env('MAIL_USERNAME', 'no-reply@corporacionatiempo.com'),
+        'name' => env('MAIL_NAME', 'Corporacion Atiempo'),
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -108,5 +111,4 @@ return [
     */
 
     'sendmail' => '/usr/sbin/sendmail -bs',
-
 ];

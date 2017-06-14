@@ -22,33 +22,34 @@ Route::get('/home', 'HomeController@index');
 /** Rutas de Registro  */
 /**--------------------------------------------*/
 
-/*
-Route::get('auth/confirm/email/{email}/confirm_token/{confirm_token}', 'Auth\AuthController@confirmRegister');
-*/
-
 Route::get('/register', [
-        'uses' => 'RegisterController@register',
-        'as'   => 'register.register' 
-]);
-
-Route::post('/registro', [
-        'uses' => 'RegisterController@postRegister',
-        'as'   => 'register.postRegister' 
+    'uses' => 'RegisterController@register',
+    'as'   => 'register.register' 
 ]);
 
 Route::post('/check', [
-        'uses' => 'RegisterController@check',
-        'as'   => 'register.check' 
+    'uses' => 'RegisterController@check',
+    'as'   => 'register.check' 
 ]);
 
 Route::post('/cuenta', [
-        'uses' => 'RegisterController@cuenta',
-        'as'   => 'register.cuenta' 
+    'uses' => 'RegisterController@cuenta',
+    'as'   => 'register.cuenta' 
 ]);
 
-Route::get('/afiliado', [
-        'uses' => 'RegisterController@afiliado',
-        'as'   => 'register.afiliado' 
+Route::post('/afiliado', [
+    'uses' => 'RegisterController@afiliado',
+    'as'   => 'register.afiliado' 
+]);
+
+Route::post('/registro', [
+    'uses' => 'RegisterController@postRegister',
+    'as'   => 'register.postRegister' 
+]);
+
+Route::get('verify/{email}/{confirm_token}', [
+    'uses' => 'RegisterController@confirmRegister',
+    'as'   => 'register.confirm' 
 ]);
 
 /**--------------------------------------------*/

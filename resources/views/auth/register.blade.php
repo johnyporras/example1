@@ -1,5 +1,7 @@
 @extends('layouts.auth')
 
+@section('title','Registro')
+
 @push('style')
     <link rel="stylesheet" href="{{ url('plugins/smartWizard/css/smart_wizard.min.css') }}">
     <link rel="stylesheet" href="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
@@ -27,7 +29,6 @@
     </ul>
 
     <div>
- 
         <div id="step-1">
 
             <div id="result" class="alert alert-warning">
@@ -424,7 +425,7 @@
             <div class="form-group {{ $errors->has('respuesta1') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                        <span class="input-group-addon"><i class="gi gi-circle_info"></i></span>
                         {{ Form::text('respuesta1', null, ['class' => 'usuario form-control input-lg', 'placeholder' => 'Respuesta', 'id' => 'respuesta1', 'required']) }}
                      </div>
                      @if ($errors->has('respuesta1'))
@@ -452,7 +453,7 @@
             <div class="form-group {{ $errors->has('respuesta2') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                        <span class="input-group-addon"><i class="gi gi-circle_info"></i></span>
                         {{ Form::text('respuesta2', null, ['class' => 'usuario form-control input-lg', 'placeholder' => 'Respuesta', 'id' => 'respuesta2', 'required']) }}
                      </div>
                      @if ($errors->has('respuesta2'))
@@ -467,7 +468,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-                        {{ Form::password('password', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Clave', 'id' => 'password', 'required']) }}  
+                        {{ Form::password('password', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Clave', 'id' => 'password', 'minlength' => '6', 'maxlength' => '16', 'required']) }}  
                     </div>
                      @if ($errors->has('password'))
                         <span class="help-block">
@@ -481,7 +482,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-                        {{ Form::password('password_confirmation', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Confirmar Clave', 'id' => 'password1', 'data-parsley-equalto' => '#password', 'required']) }}
+                        {{ Form::password('password_confirmation', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Confirmar Clave', 'id' => 'password1', 'data-parsley-equalto' => '#password', 'minlength' => '6', 'maxlength' => '16', 'required']) }}
                             
                     </div>
                     @if ($errors->has('password_confirmation'))
@@ -499,14 +500,7 @@
             </div>
         {!! Form::close() !!}
         </div>
-
-
     </div> 
-   <p>embarazo {{ Session::get('embarazo') }} </p>
-   <p>semanas {{ Session::get('semanas') }} </p>
-   <p>afiliado {{ Session::get('afiliado') }}</p>
-   <p>cuenta {{ Session::get('cuenta') }}</p>
-
 </div>
 
 @endsection
@@ -526,7 +520,8 @@ $(document).ready(function() {
     var validate = false;
     var submitted = false;
     var submitted1 = false;
-    //var submitted2 = false;
+    var success = false;
+
     // Escondo los mensje por defecto
     $('#result').hide();
     $('#result1').hide();
@@ -597,14 +592,12 @@ $(document).ready(function() {
             if (submitted == false) {
                 validate = false;
             }
-            console.log('estoy en cuenta');
         }
 
         if(stepNumber == 2){
             if (submitted1 == false) {
                 validate = false;
             }
-            console.log('estoy en afiliado'); 
         }
     });
 
@@ -682,7 +675,7 @@ $(document).ready(function() {
             data: {tarjeta: tarjeta},
             success: function(data) {
                 // limpio el campo tarjeta
-                $("#tarjeta").val("");
+                $("#tarjeta").val('');
                 //Verifico la respuesta del servidor
                 if (data.error) {
                     // Muestro mensaje de error
@@ -712,16 +705,16 @@ $(document).ready(function() {
         e.preventDefault();
         // Guardo el valor de la tarjeta ingresada..
         var producto = $('#producto').val();
-        var plan = $('#plan').val();
+        var plan     = $('#plan').val();
         var embarazada = $('#embarazada').val();
         var semanas = $('#semanas').val();
-        var nombre = $('#nmascota').val();
-        var raza = $('#raza').val();
-        var color = $('#color').val();
-        var tipo = $('#tipo').val();
-        var edad = $('#edad').val();
+        var nombre  = $('#nmascota').val();
+        var raza    = $('#raza').val();
+        var color   = $('#color').val();
+        var tipo    = $('#tipo').val();
+        var edad    = $('#edad').val();
         var fmascota = $('#fmascota').val();
-        var tamano = $('#tamano').val();    
+        var tamano  = $('#tamano').val();    
          
         // Ejecuto la peticion para validar la tarjeta
         $.ajax({
@@ -751,7 +744,6 @@ $(document).ready(function() {
                     $('#result1').addClass('alert-danger'); 
                     $('#result1 .text').text(data.error)
                     validate = false;
-                    console.log(data.error);
                 } else {
                     // Desabilito los campos paa evitar errores
                     $('#valid1').attr('disabled','disabled');
@@ -768,8 +760,6 @@ $(document).ready(function() {
                     // Permito pasar al otro step del registro
                     validate = true;
                     submitted = true;
-                    //$("#cuentaForm").resetForm(); 
-                    console.log(data);
                 }
             }
         });
@@ -779,19 +769,19 @@ $(document).ready(function() {
     $('#afiliadoForm').on('submit', function (e) {
         e.preventDefault();
         // Guardo el valor de la tarjeta ingresada..
-        var cedula = $('#cedula').val();
-        var nombre = $('#nafiliado').val();
+        var cedula   = $('#cedula').val();
+        var nombre   = $('#nafiliado').val();
         var apellido = $('#apellido').val();
-        var correo = $('#email').val();
-        var telefono = $('#telefono').val();
+        var correo   = $('#email').val();
+        var telefono   = $('#telefono').val();
         var nacimiento = $('#fecha').val();
-        var sexo = $('#sexo').val();
+        var sexo   = $('#sexo').val();
         var estado = $('#estado').val();
         var ciudad = $('#ciudad').val();    
          
         // Ejecuto la peticion para validar la tarjeta
         $.ajax({
-            type: "GET",
+            type: "POST",
             url:'{{ url('/afiliado') }}',
             data: {
                 cedula: cedula,
@@ -859,32 +849,39 @@ $(document).ready(function() {
                 respuesta2: respuesta2,
                 password: clave,
             },
+            beforeSend:function() { 
+               $('#valid3').attr('disabled','disabled');
+               $('#valid3').html("<i class='fa fa-refresh fa-spin fa-fw'></i> Cargando");
+            },
+            complete:function() {
+                $('#valid3').html('<i class="fa fa-save fa-fw"></i> Guardar');
+
+                if(success != true){
+                    $('#valid3').prop("disabled", false);
+                }
+            },
             success: function(data) {
-                //Verifico la respuesta del servidor
+                
                 if (data.error) {
                     // Muestro mensaje de error
                     $('#result3').show();
                     $('#result3').removeClass('alert-success'); 
                     $('#result3').addClass('alert-danger'); 
                     $('#result3 .text').text(data.error)
-                    console.log(data.error);
-
                 } else {
                     // Desabilito los campos paa evitar errores
                     $('#valid3').attr('disabled','disabled');
                     $('.usuario').attr('disabled','disabled');
-                  
                     // Muestro mensaje de exito
                     $('#result3').show(); 
                     $('#result3').removeClass('alert-danger'); 
                     $('#result3').addClass('alert-success'); 
                     $('#result3 .text').text(data.success);
-                    console.log(data);
+                    success = true;
                 }
             }
         });
     });
-
 
 });
 </script>

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ModifyMascotaTable extends Migration
+class ModifyUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class ModifyMascotaTable extends Migration
      */
     public function up()
     {
-        Schema::table('mascotas', function ($table) {
+        Schema::table('users', function ($table) {
     
-            $table->enum('tipo', ['gato', 'perro'])->after('fecha')->nullable();
-        }); 
+            $table->string('confirm_token',100)->after('remember_token')->nullable();
+        });
     }
 
     /**
@@ -25,9 +25,9 @@ class ModifyMascotaTable extends Migration
      */
     public function down()
     {
-        Schema::table('mascotas', function ($table) {
+        Schema::table('users', function ($table) {
     
-            $table->dropColumn('tipo');
+            $table->dropColumn('confirm_token');
         });
     }
 }

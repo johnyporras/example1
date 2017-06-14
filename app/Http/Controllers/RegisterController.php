@@ -46,7 +46,6 @@ class RegisterController extends Controller
         $preguntas2 = DB::table('preguntas')->take(10)->orderBy('id','desc')->pluck('pregunta', 'pregunta');
 
         return view('auth.register', compact('productos', 'planes','estados', 'tamanos','preguntas1','preguntas2'));
-
     }
 
     /**
@@ -76,6 +75,9 @@ class RegisterController extends Controller
                 if ($tarjeta->activada == 'N') {
                     // Guardo la session codigo
                     Session::set('codigo', $codigo);
+                    //Guardo id tarjeta
+                    Session::set('tarjeta', $tarjeta->id);
+
                     return response()->json(['success' => 'Tarjeta Valida']);
                 } else {
                     return response()->json(['error' => 'Tarjeta ya fue activada']);
@@ -86,7 +88,6 @@ class RegisterController extends Controller
                 Session::forget('codigo');
                 return response()->json(['error' => 'Tarjeta Invalida']);
             }
-            
         }
     }
 
@@ -155,7 +156,8 @@ class RegisterController extends Controller
     {
         if ($request->ajax()) {
 
-            if (Session::get('cuenta')){
+            if (Session::get('cuenta')) {
+                
                 // valido para no repetir cedula ni emal en afiliado y en user
                 $emailAf = AcAfiliado::where('email','=', $request->correo)->first();
                 $emailUser = User::where('email','=', $request->correo)->first();
@@ -164,55 +166,56 @@ class RegisterController extends Controller
                 $embarazo = (Session::get('embarazo')) ? Session::get('embarazo') : 'N';
 
                 if ($emailAf != null || $emailUser != null){
-
                     return response()->json(['error' => 'El Correo que ingreso ya esta en uso']);
-                }else if($cedulaAf != null){
-
-                    return response()->json(['error' => 'La Cédula que ingreso ya existe en el sistema']);
-                }else{
-                    try{
-                        $afiliado = AcAfiliado::create([
-                                    'cedula'    => $request->cedula,
-                                    'nombre'    => strtoupper($request->nombre),
-                                    'apellido'  => strtoupper($request->apellido),
-                                    'fecha_nacimiento' => $request->nacimiento,
-                                    'email'     => $request->correo,
-                                    'sexo'      => $request->sexo,
-                                    'telefono'  => $request->telefono,
-                                    'id_cuenta' => Session::get('cuenta')->id,
-                                    'id_estado' => $request->estado,
-                                    'ciudad'    => $request->ciudad,
-                                    'embarazada' => $embarazo,
-                                    'tiempo_gestacion' => Session::get('semanas')
-                                ]);
-                    
-                        // Guardo la session cuenta
-                        Session::set('afiliado', $afiliado);
-                        // borro la session cuenta                  
-                        Session::forget('cuenta');
-                        Session::forget('embarazo');
-                        Session::forget('semanas');
-
-                        // Retorno mensaje de sastifactorio
-                        return response()->json(['success' => 'Afiliado creado Sastifactorimente']);
-                    }
-                    catch(QueryException $e){
-                       return response()->json(['error' => '¡Ocurrio un error al generar Afiliado!']);
-                    }
                 }
+
+                if($cedulaAf != null){
+                    return response()->json(['error' => 'La cédula que ingreso ya existe en el sistema']);
+                }
+
+                try{
+
+                    $afiliado = AcAfiliado::create([
+                                'cedula'    => $request->cedula,
+                                'nombre'    => strtoupper($request->nombre),
+                                'apellido'  => strtoupper($request->apellido),
+                                'fecha_nacimiento' => $request->nacimiento,
+                                'email'     => $request->correo,
+                                'sexo'      => $request->sexo,
+                                'telefono'  => $request->telefono,
+                                'id_cuenta' => Session::get('cuenta')->id,
+                                'id_estado' => $request->estado,
+                                'ciudad'    => $request->ciudad,
+                                'embarazada' => $embarazo,
+                                'tiempo_gestacion' => Session::get('semanas')
+                            ]);
+
+                    // Guardo la session cuenta
+                    Session::set('afiliado', $afiliado);
+                    // borro la session cuenta
+                    Session::forget('embarazo');
+                    Session::forget('semanas');
+
+                    // Retorno mensaje de sastifactorio
+                    return response()->json(['success' => 'Afiliado creado Sastifactorimente']);
+
+                }catch(QueryException $e){
+                    return response()->json(['error' => '¡Ocurrio un error al generar Afiliado!']);
+                }
+
             }else{
                 return response()->json(['error' => 'No posee cuenta valida intente nuevamente']);
            }
         }
     }
 
-    public function postRegister(Request $request){
-
+    public function postRegister(Request $request)
+    {
         $rules = [
             'user' => 'required|min:4|max:16|regex:/^[a-záéíóúàèìòùäëïöüñ\s]+$/i',
             'pregunta1' => 'required',
             'pregunta2' => 'required',
-            'password'  => 'required|min:6|max:18',
+            'password'  => 'required|min:6|max:16',
         ];
 
         $messages = [
@@ -229,46 +232,100 @@ class RegisterController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()){
-            
             //return redirect("auth/register")->withErrors($validator)->withInput();
-
             return response()->json(['error' => $validator->getMessageBag()->toArray() ]);
 
-        } else {
+        }else{
 
-            return response()->json(['success' => 'todo fino para crear']);
-            /*
-            $user = new User;
-            $data['name'] = $user->name = $request->name;
-            $data['email'] = $user->email = $request->email;
-            $user->password = bcrypt($request->password);
-            $user->remember_token = str_random(100);
-            $data['confirm_token'] = $user->confirm_token = str_random(100);
-            $user->save();
+            if(Session::get('afiliado')){
 
-            Mail::send('mails.register', ['data' => $data], function($mail) use($data){
-                $mail->subject('Confirma tu cuenta');
-                $mail->to($data['email'], $data['name']);
-            });
+                $user = User::where('user','=', $request->user)->first();
 
-            return redirect("auth/register")->with("message", "Hemos enviado un enlace de confirmación a su cuenta de correo electrónico");*/
-        }
+                if($user == null){
+                    // Guardo el nombre del usuario
+                    $name = Session::get('afiliado')->nombre.' '.Session::get('afiliado')->apellido;
+
+                    try{
+                        //Genero el usuario
+                        $usuario = User::create([
+                                    'name'  => $name,
+                                    'email' => Session::get('afiliado')->email,
+                                    'user'  => $request->user,
+                                    'password'   => bcrypt($request->password),
+                                    'department' => 'cliente',
+                                    'type'       => 5,
+                                    'active'     => false,
+                                    'pregunta_1'  => $request->pregunta1,
+                                    'respuesta_1' => bcrypt($request->respuesta1),
+                                    'pregunta_2'  => $request->pregunta2,
+                                    'respuesta_2' => bcrypt($request->respuesta2),
+                                    'remember_token' => str_random(100),
+                                    'confirm_token'  => str_random(100)
+                                ]);
+
+                       //Guardo data para enviar el correo
+                        $data = ['name' => $usuario->name,
+                                'email' => $usuario->email,
+                                'confirm_token' => $usuario->confirm_token];
+
+                        // Envio de Correo para confirmar 
+                        Mail::send('mails.register', ['data' => $data], function($mail) use($data){
+                            $mail->subject('Confirma tu cuenta');
+                            $mail->to($data['email'], $data['name']);
+                        });
+
+                        // borro la session afiliado                 
+                        Session::forget('afiliado');
+
+                        // Retorno mensaje de sastifactorio
+                        return response()->json(['success' => 'Hemos enviado un enlace de confirmación a su Cuenta de correo electrónico']);
+
+                    }catch(QueryException $e){
+                       return response()->json(['error' => '¡Ocurrio un error al generar Usuario!']);
+                    }
+                    
+                }else{
+                    return response()->json(['error' => 'El nombre de usuario ya existe en el sistema']);
+                }
+            }else{
+                return response()->json(['error' => 'Afiliado Invalido intente nuevamente']);
+            }
+        } 
     }
     
-    public function confirmRegister($email, $confirm_token){
-        $user = new User;
-        $the_user = $user->select()->where('email', '=', $email)->where('confirm_token', '=', $confirm_token)->get();
+    public function confirmRegister($email, $confirm_token)
+    {
+        $user = User::where('email','=', $email)->where('confirm_token', '=', $confirm_token)->first();
 
-        if (count($the_user) > 0){
-            $active = 1;
-            $confirm_token = str_random(100);
-            $user->where('email', '=', $email)
-            ->update(['active' => $active, 'confirm_token' => $confirm_token]);
-            return redirect('auth/register')->with('message', 'Enhorabuena ' . $the_user[0]['name'] . ' ya puede iniciar sesión');
+        if ($user){
+            
+            if($user->active == true){
+               return view('auth.verify')->with('warning', 'Cuenta de usuario ya se encuentra activa'); 
+            }
+
+            //Actualizo usuario activo
+            $user->active = true;
+            $user->save();
+            //Actualizao tarjeta usada
+            $tarjeta = tarjeta::findOrFail(Session::get('tarjeta'));
+            $tarjeta->activada = 'S';
+            $tarjeta->save();
+            // Actualizo estatus de cuenta
+            $cuenta = AcCuenta::findOrFail(Session::get('cuenta')->id);
+            $cuenta->estatus = 'Activo';
+            $cuenta->save();
+
+            //Elimino sessiones finales
+            Session::forget('tarjeta');
+            Session::forget('cuenta');
+
+            return view('auth.verify')->with('success', 'Felicitaciones ya puede iniciar sesión');
         }else{
-            return redirect('');
+
+            //dd($confirm_token .' - '.$email );
+
+            return view('auth.verify')->with('error', 'Cuenta de usuario Incorrecta Intente Nuevamente');
         }
     }
-
 
 }
