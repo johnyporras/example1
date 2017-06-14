@@ -341,9 +341,9 @@ class ConsultarClaveController extends Controller
                     ->where([['ac_claves.id', '=', $id['clave']]])
                      ->join('ac_afiliados'     , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
                     // ->join('ac_tipo_afiliado' , 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
-                     ->join('ac_contratos'     , 'ac_contratos.cedula_afiliado',"=",'ac_claves.cedula_afiliado')
-                     ->join('ac_colectivos'    , 'ac_colectivos.codigo_colectivo',"=", 'ac_contratos.codigo_colectivo')
-                     ->join('ac_aseguradora'   , 'ac_aseguradora.codigo_aseguradora',"=", 'ac_colectivos.codigo_aseguradora')
+                     ->leftJoin('ac_cuenta'     , 'ac_cuenta.id',"=",'ac_afiliados.id_cuenta')
+                     //->join('ac_colectivos'    , 'ac_colectivos.codigo_colectivo',"=", 'ac_contratos.codigo_colectivo')
+                     //->join('ac_aseguradora'   , 'ac_aseguradora.codigo_aseguradora',"=", 'ac_colectivos.codigo_aseguradora')
                      ->join('ac_estatus'       , 'ac_estatus.id',"=", 'ac_claves.estatus_clave')
                     ->select('ac_claves.cedula_afiliado as cedula_afiliado',
                              'ac_claves.id as id_clave',
@@ -356,7 +356,7 @@ class ConsultarClaveController extends Controller
                              'ac_claves.telefono as telefono',
 
                              'ac_afiliados.nombre as nombre_titular' ,
-                             'ac_aseguradora.nombre as aseguradora',
+                            // 'ac_aseguradora.nombre as aseguradora',
 
                              'ac_claves.clave as clave',
                              'ac_claves.codigo_contrato as contrato',
