@@ -11,6 +11,7 @@ use App\Models\AcAfiliado;
 use App\Models\AcProveedoresExtranet;
 use App\Models\AcAseguradora;
 use App\Models\UserType;
+use App\Lib\functions;
 
 use DB;
 use Session;
@@ -18,7 +19,7 @@ use Session;
 class ConfirmarClaveController extends Controller
 {
 
- public function getFilter()
+ public function getFilter(Request $request)
  {
    $user = \Auth::user();
    // Analista Proveedor
@@ -159,24 +160,42 @@ class ConfirmarClaveController extends Controller
 
 
 
+         if($request->nombre!="")
+        {
+                $query=$query->whereRaw("upper(ac_afiliados.nombre) like upper('%".$request->nombre."%')");
+        }
+
+        if($request->cedula_afiliado!="")
+        {
+                $query=$query->where("ac_afiliados.cedula","like",'%'.$request->cedula_afiliado.'%');
+        }
+
+
+        if($request->fechadesde!="" && $request->fechahasta!="")
+        {
+                $request->fechahasta = functions::uf_convertirdatetobd($request->fechahasta);
+                $request->fechadesde = functions::uf_convertirdatetobd($request->fechadesde);
+                $query=$query->whereRaw("fecha_cita between '{$request->fechadesde}' and '{$request->fechahasta}'");
+        }
 
 
 
 
 
-
-
-
-
-        $filter = \DataFilter::source($query);
+       /* $filter = \DataFilter::source($query);
         $filter->add('ac_claves.fecha_cita','Fecha Cita','daterange');
         $filter->add('ac_claves.cedula_afiliado','C.I.','number');//validation;
         $filter->add('ac_afiliados.nombre','Nombre', 'text'); //validation;
         $filter->add('ac_aseguradora.codigo_aseguradora','Seleccione una Opción','select')->option('','Seleccione Una Opción')->options(AcAseguradora::lists('nombre', 'codigo_aseguradora')->all());
         $filter->submit('Buscar');
         $filter->reset('reset');
-        $filter->build();
+        $filter->build();*/
 
+
+
+
+
+        $filter=$query->get();
        $grid = \DataGrid::source($filter);
        $grid->attributes(array("class"=>"table table-grid"));
        $grid->add('id','ID',false);
