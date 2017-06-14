@@ -241,7 +241,7 @@ class ConsultarClaveController extends Controller
        // $grid->add('AcProcedimientosMedico.tipo_examen','Procedimiento', true);
        $grid->add('estatus','Estatus', false);
        $grid->add('proveedor','Proveedor', false);
-       $grid->addActions('/claves/consultarDetalle', 'Ver','show','id');
+       $grid->addActions(url('/claves/consultarDetalle'), 'Ver','show','id');
 
        if (isset($_GET['export'])){
             return $grid->buildCSV('clavesAtencion','.Y-m-d.His');

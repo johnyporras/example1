@@ -183,7 +183,7 @@ class ConfirmarClaveController extends Controller
        $grid->add('fecha_citas|strtotime|date[d/m/Y]','Fecha Cita', false);
        $grid->add('cedula_afiliado','Cédula', false);
        $grid->add('nombre_afiliado','Nombre Afiliado', false);
-       $grid->addActions('/claves/verificarClave', 'Confirmar','show','id');
+       $grid->addActions(url('/claves/verificarClave'), 'Confirmar','show','id');
        $grid->paginate(10);
        return  view('claves.confirmarClave', compact('filter','grid'));
     }
