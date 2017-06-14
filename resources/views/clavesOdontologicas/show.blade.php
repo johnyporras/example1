@@ -42,16 +42,13 @@
                 <tr>
                     <th>Cédula</th>
                     <th>Nombre</th>
-                    <th>Aseguradora</th>                    
-                    <th>Colectivo</th>                                        
+                                                          
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>{{ $data_clave->cedula_titular}}</td>
-                    <td>{{ $data_clave->nombre_titular}}</td>
-                    <td>{{ $data_clave->aseguradora}}</td>                    
-                    <td>{{ $data_clave->colectivo}}</td>                                        
+                    <td>{{ $data_clave->nombre_titular}}</td>                   
                 </tr>
             </tbody>
         </table>

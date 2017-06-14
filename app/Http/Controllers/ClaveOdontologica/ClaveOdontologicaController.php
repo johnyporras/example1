@@ -78,22 +78,21 @@ class ClaveOdontologicaController extends Controller{
             $clave  = DB::table('ac_clave_odontologica')
                     ->where([['ac_clave_odontologica.id', '=', $id['clave']]])
                      ->join('ac_afiliados'     , 'ac_afiliados.cedula',"=", 'ac_clave_odontologica.cedula_afiliado')
-                     ->join('ac_tipo_afiliado' , 'ac_afiliados.tipo_afiliado',"=", 'ac_tipo_afiliado.id')
-                     ->join('ac_contratos'     , 'ac_contratos.cedula_afiliado',"=",'ac_clave_odontologica.cedula_afiliado')
-                     ->join('ac_colectivos'    , 'ac_colectivos.codigo_colectivo',"=", 'ac_contratos.codigo_colectivo')
-                     ->join('ac_aseguradora'   , 'ac_aseguradora.codigo_aseguradora',"=", 'ac_colectivos.codigo_aseguradora')
+                     ->join('ac_cuenta'              , 'ac_afiliados.id_cuenta',"=", 'ac_cuenta.id')
+                    ->join('ac_cuentaplan'              , 'ac_afiliados.id_cuenta',"=", 'ac_cuentaplan.id_cuenta')
+                    ->join('ac_planes_extranet'        , 'ac_cuentaplan.id_plan',"=", 'ac_planes_extranet.codigo_plan')
                      ->join('ac_estatus'       , 'ac_estatus.id',"=", 'ac_clave_odontologica.estatus')
                     ->select('ac_clave_odontologica.cedula_afiliado as cedula_afiliado',
                              'ac_clave_odontologica.id as id_clave',
-                             'ac_tipo_afiliado.nombre as tipo_afiliado',
-                             'ac_afiliados.nombre as nombre' ,
                              'ac_afiliados.apellido as apellido',
+                             'ac_afiliados.nombre as nombre',
+                             'ac_afiliados.nombre as nombre_titular',
+                             'ac_afiliados.cedula as cedula_titular',
                              'ac_afiliados.fecha_nacimiento as fecha_nacimiento',
                              'ac_afiliados.email as email',
                              'ac_afiliados.sexo as sexo',
+                             'ac_afiliados.id as contrato',
                              'ac_clave_odontologica.telefono as telefono',
-                             'ac_afiliados.nombre as nombre_titular' ,
-                             'ac_aseguradora.nombre as aseguradora',
                              'ac_clave_odontologica.clave as clave',
                              'ac_clave_odontologica.fecha_atencion1 as fecha_cita',
                              'ac_clave_odontologica.motivo as motivo',
