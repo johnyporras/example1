@@ -85,12 +85,12 @@ class FunerarioController extends Controller
             $estatusCuenta = $afiliado->cuenta->estatus;
 
             // Verifico que la cuenta sea mayor de 30 dias y que tenga estatus activo
-            if ($fechaCuenta >= 30 && $estatusCuenta == 'Activo') {
+            if ($fechaCuenta >= 30 && $estatusCuenta == 1 ) {
                 
                 // Guardo en variable la cuenta
                 $cuenta = $afiliado->cuenta;
                 // Guardo en variable el plan
-                $plan = $afiliado->cuenta->cuentaPlan()->first();
+                $plan = $afiliado->cuenta->plan()->first();
 
                 //Creo array de dias
                 $dias = [];
@@ -245,7 +245,7 @@ class FunerarioController extends Controller
         // Guardo en variable la cuenta
         $cuenta = $afiliado->cuenta;
         // Guardo en variable el plan
-        $plan = $afiliado->cuenta->cuentaPlan()->first();
+        $plan = $afiliado->cuenta->plan()->first();
 
         //cargo los proveedores funerarios
         $proveedores = ProveedorFunerario::orderBy('razon_social', 'ASC')
@@ -350,7 +350,7 @@ class FunerarioController extends Controller
         // Guardo en variable la cuenta
         $cuenta = $afiliado->cuenta;
         // Guardo en variable el plan
-        $plan = $afiliado->cuenta->cuentaPlan()->first();
+        $plan = $afiliado->cuenta->plan()->first();
 
         // Cargo los estados
         $estados = AcEstado::orderBy('estado', 'ASC')

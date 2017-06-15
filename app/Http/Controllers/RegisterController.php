@@ -106,6 +106,7 @@ class RegisterController extends Controller
                                     'codigo_cuenta' => Session::get('codigo'),
                                     'fecha' => $creado,
                                     'id_producto' => $request->producto
+                                    'estatus' => 2
                                 ]);  
 
                     //Guardo CuentaPlan
@@ -312,7 +313,7 @@ class RegisterController extends Controller
             $tarjeta->save();
             // Actualizo estatus de cuenta
             $cuenta = AcCuenta::findOrFail(Session::get('cuenta')->id);
-            $cuenta->estatus = 'Activo';
+            $cuenta->estatus = 1;
             $cuenta->save();
 
             //Elimino sessiones finales

@@ -43,7 +43,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-credit_card"></i></span>
-                        {{ Form::number('tarjeta', null, ['class' => 'form-control input-lg', 'placeholder' => 'Codigo Tarjeta', 'id' => 'tarjeta','minlength' => '6', 'maxlength' => '16', 'required']) }}
+                        {{ Form::text('tarjeta', null, ['class' => 'form-control input-lg', 'placeholder' => 'Codigo Tarjeta', 'id' => 'tarjeta','minlength' => '16', 'maxlength' => '16', 'pattern' => '[0-9]+', 'required']) }}
                     </div>
                     @if ($errors->has('tarjeta'))
                         <span class="help-block">

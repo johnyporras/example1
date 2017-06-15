@@ -78,12 +78,12 @@ class AviController extends Controller
             $estatusCuenta = $afiliado->cuenta->estatus;
 
             // Verifico que la cuenta sea mayor de 30 dias y que tenga estatus activo
-            if ($fechaCuenta >= 30 && $estatusCuenta == 'Activo') {
+            if ($fechaCuenta >= 30 && $estatusCuenta == 1 ) {
                 
                 // Guardo en variable la cuenta
                 $cuenta = $afiliado->cuenta;
                 // Guardo en variable el plan
-                $plan = $afiliado->cuenta->cuentaPlan()->first();
+                $plan = $afiliado->cuenta->plan()->first();
 
                 // Cargo los paises
                 $paises = DB::table('paises')->orderBy('name_es', 'ASC')
@@ -163,7 +163,7 @@ class AviController extends Controller
         // Guardo en variable la cuenta
         $cuenta = $afiliado->cuenta;
         // Guardo en variable el plan
-        $plan = $afiliado->cuenta->cuentaPlan()->first();
+        $plan = $afiliado->cuenta->plan()->first();
 
         return view('avi.show',compact('solicitud', 'cuenta', 'plan'));
     }
@@ -184,7 +184,7 @@ class AviController extends Controller
         // Guardo en variable la cuenta
         $cuenta = $afiliado->cuenta;
         // Guardo en variable el plan
-        $plan = $afiliado->cuenta->cuentaPlan()->first();
+        $plan = $afiliado->cuenta->plan()->first();
 
         $paises = DB::table('paises')->orderBy('name_es', 'ASC')
                         ->pluck('name_es', 'id');

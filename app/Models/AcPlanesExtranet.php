@@ -45,6 +45,14 @@ class AcPlanesExtranet extends Model {
     }
 
     /**
+     * Get the Plan Extranet for the Cuenta.
+     */
+    public function cuenta()
+    {
+        return $this->belongsToMany(\App\Models\AcCuenta::class,'ac_cuentaplan', 'id_plan', 'id_cuenta'); 
+    }
+
+    /**
      * Get the Coberturas for Planes.
      */
     public function coberturas()
