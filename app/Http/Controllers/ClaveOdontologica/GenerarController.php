@@ -56,7 +56,7 @@ class GenerarController extends Controller{
                     }
                 }
 
-                $contratos = $this->getContratos($afiliadoIni->cedula_titular);
+                $contratos = $this->getContratos($afiliadoIni->cedula);
 
                 if(!empty($contratos)){
                     return view('clavesOdontologicas.gestionar', compact('contratos'));
@@ -247,12 +247,12 @@ class GenerarController extends Controller{
                     'ac_planes_extranet.nombre as plan','ac_colectivos.nombre as colectivo','ac_aseguradora.nombre as aseguradora','ac_tipo_afiliado.nombre as tipo_afiliado')
             ->get();*/
     	$contratos = DB::table('ac_cuenta')
-    	->where([['cedula_titular', '=', $cedula_titular],['fecha','<=',date('Y-m-d').' 00:00:00']])
+    	->where([['cedula', '=', $cedula_titular],['fecha','<=',date('Y-m-d').' 00:00:00']])
     	->where('ac_cuenta.estatus',"=",1)
     	->join('ac_afiliados', 'ac_cuenta.id',"=", 'ac_afiliados.id_cuenta')
     	->join('ac_cuentaplan','ac_cuenta.id',"=",'ac_cuentaplan.id_cuenta')
     	->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuentaplan.id_plan')
-    	->select('codigo_cuenta as codigo_contrato','cedula_titular as cedula_afiliado','cedula_titular','ac_afiliados.nombre as nombre_afiliado','ac_afiliados.apellido as apellido_afiliado',
+    	->select('codigo_cuenta as codigo_contrato','cedula as cedula_afiliado','cedula','ac_afiliados.nombre as nombre_afiliado','ac_afiliados.apellido as apellido_afiliado',
     			'ac_planes_extranet.nombre as plan')
     			->get();
 
