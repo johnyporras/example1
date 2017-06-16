@@ -76,7 +76,7 @@
         </div>
     </div>
     <div class="form-group {{ $errors->has('codigo_proveedor') ? 'has-error' : ''}}">
-        {!! Form::label('codigo_proveedor', 'Proveedor: ', ['class' => 'col-sm-2 control-label']) !!}
+        {!! Form::label('codigo_proveedor', 'Proveedor Preferido: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-5">
             @if (isset($proveedor))
                 {!! Form::label('codigo_proveedor_creador', $proveedor->nombre, ['class' => 'control-label']) !!}
@@ -87,6 +87,24 @@
                 <!--{!! Form::select('codigo_proveedor',[''=>'Seleccione una opción'],null, ['class' => 'form-control']) !!}-->
                 {!! Form::text('codigo_proveedor', null, ['class' => 'form-control']) !!}
                 {!! Form::hidden('codigo_proveedor_creador', null, ['id' => 'codigo_proveedor_creador', 'required' => 'required']) !!}
+            </div>
+            @endif
+            {!! $errors->first('codigo_proveedor', '<p class="help-block">:message</p>') !!}
+        </div>
+    </div>
+    
+    <div class="form-group {{ $errors->has('codigo_proveedor') ? 'has-error' : ''}}">
+        {!! Form::label('codigo_proveedor', 'Proveedor Secundario: ', ['class' => 'col-sm-2 control-label']) !!}
+        <div class="col-sm-5">
+            @if (isset($proveedor))
+                {!! Form::label('codigo_proveedor_creador', $proveedor->nombre, ['class' => 'control-label']) !!}
+                {!! Form::hidden('codigo_proveedor_creador',$proveedor->codigo_proveedor,['class' => 'form-control']) !!}
+                {!! Form::hidden('codigo_proveedor',$proveedor->nombre,['class' => 'form-control']) !!}
+            @else
+            <div id='div_proveedor'>
+                <!--{!! Form::select('codigo_proveedor',[''=>'Seleccione una opción'],null, ['class' => 'form-control']) !!}-->
+                {!! Form::text('codigo_proveedor2', null, ['class' => 'form-control','id'=>'codigo_proveedor2']) !!}
+                {!! Form::hidden('codigo_proveedor_creador2', null, ['id' => 'codigo_proveedor_creador2', 'required' => 'required']) !!}
             </div>
             @endif
             {!! $errors->first('codigo_proveedor', '<p class="help-block">:message</p>') !!}
@@ -212,6 +230,53 @@
                     .appendTo( ul );
 
             };
+
+
+            $("#codigo_proveedor2" ).autocomplete({
+
+                delay: 0,
+                source: function(request, response){
+
+                    if($('#codigo_especialidad').val() !== "" && $('#codigo_servicio').val() !== "" && $('#procedimiento_medico').val() !== ""){
+                        $.ajax( {
+                          url       : "{{url('selectProveedores')}}",
+                          dataType  : "json",
+                          method    : "POST",
+                          data: {
+                            q: request.term.toUpperCase(),
+                            'procedimiento' : $('#procedimiento_medico').val(),
+                            'proveedor'     : proveedorX,
+                            '_token'        : $('[name="_token"]').val()
+                          },
+                          success: function( data ) {
+                            // Handle 'no match' indicated by [ "" ] response
+                            response( data.length === 1 && data[ 0 ].length === 0 ? [] : data );
+                          }
+                        });
+                    }else{
+                        $("#result").addClass("alert alert-danger");
+                        $("#result").html("Debe seleccionar todos los campos para agregar un Proveedor.");
+                    }
+                },
+                focus: function( event, ui ) {
+                    $( "#codigo_proveedor2" ).val( ui.nombre );
+                    return false;
+                },
+                select: function( event, ui ) {
+                    $( "#codigo_proveedor2" ).val( ui.item.nombre );
+                    $( "#codigo_proveedor_creador2" ).val( ui.item.codigo_proveedor );
+                    return false;
+                }
+            })
+            .autocomplete( "instance" )._renderItem = function( ul, item ) {
+                //alert("")
+                    return $( "<li>" )
+                    .append( "<div>" + item.nombre + "<br></div>" )
+                    .appendTo( ul );
+
+            };
+
+            
 //            function getProveedor(especialidad,servicio,procedimiento){
 //                if(especialidad !== "" && servicio !== "" && procedimiento !== ""){
 //                    var data = {
