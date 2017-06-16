@@ -5,6 +5,7 @@ use DB;
 use Session;
 use Carbon\Carbon;
 use App\Models\AcClave;
+use App\Models\AcCuenta;
 use App\Models\AcClavesDetalle;
 use App\Models\AcAfiliado;
 use App\Models\AcAfiliadoTemporal;
@@ -187,66 +188,55 @@ class ClaveController extends Controller{
      * @param  Request $request
      * @return Response
      */
-    public function buscarCobertura(Request $request){
-        if(empty($request->icedula)){
-            return redirect()->back()->withInput()->with('message', 'Debe seleccionar un beneficiario.');
-        }
-        $id = $request->input('icedula');
-        $beneficiario['contrato'] = $request->input(['contrato'.$id]);
-        $beneficiario['cedula_afiliado'] = $request->input('cedula_afiliado'.$id);
-        $beneficiario['nombre_afiliado'] = $request->input('nombre_afiliado'.$id);
-        //$beneficiario['plan'] = $request->input('plan'.$id);
-        $beneficiario['plan'] = 25;
-       /* $beneficiario['colectivo'] = $request->input('colectivo'.$id);
-        $beneficiario['aseguradora'] = $request->input('aseguradora'.$id);
-        $beneficiario['tipo_afiliado'] = $request->input('tipo_afiliado'.$id);*/
-        $user = \Auth::user();
-        //echo $user->type;die();
-        if($user->type == 3){ // PROVEEDOR
-            $coberturas = DB::table('ac_cuenta')
-                ->where([['codigo_cuenta', '=', $beneficiario['contrato']]])
-                ->join('ac_cuentaplan', 'ac_cuentaplan.id_cuenta',"=", 'ac_cuenta.id')
-                ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuentaplan.id_plan')
-                ->join('ac_cobertura_extranet', 'ac_cobertura_extranet.id_plan',"=", 'ac_planes_extranet.codigo_plan')
-                ->join('ac_procedimientos_medicos', function($join){
-                        $join->on('ac_procedimientos_medicos.codigo_examen',"=", 'ac_cobertura_extranet.id_procedimiento')
-                             ->on('ac_procedimientos_medicos.codigo_especialidad',"=", 'ac_cobertura_extranet.id_especialidad')
-                             ->on('ac_procedimientos_medicos.codigo_servicio',"=", 'ac_cobertura_extranet.id_servicio');
-                })
-                ->join('ac_servicios_extranet', 'ac_servicios_extranet.codigo_servicio',"=", 'ac_procedimientos_medicos.codigo_servicio')
-                ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_procedimientos_medicos.codigo_especialidad')
-                ->join('ac_baremos', 'ac_procedimientos_medicos.id',"=", 'ac_baremos.id_procedimiento')
-                ->join('ac_proveedores_extranet', function($join){
-                    $user = \Auth::user();
-                    $join->on('ac_proveedores_extranet.codigo_proveedor',"=", 'ac_baremos.id_proveedor')
-                         ->where('ac_proveedores_extranet.codigo_proveedor',"=", $user->proveedor);
-                })
-                ->select('id_servicio','ac_servicios_extranet.descripcion as servicio',
-                        'id_especialidad','ac_especialidades_extranet.descripcion as especialidad')
-                ->get(); // +++++++ array(StdClass)
-            $proveedor = AcProveedoresExtranet::where('codigo_proveedor',"=", $user->proveedor)->firstOrFail();
-        }else{
-
-
-            $coberturas = DB::table('ac_cuenta')
-                ->where([['codigo_cuenta', '=', $beneficiario['contrato']]])
-                ->join('ac_cuentaplan', 'ac_cuentaplan.id_cuenta',"=", 'ac_cuenta.id')
-                ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuentaplan.id_plan')
-                ->join('ac_cobertura_extranet', 'ac_cobertura_extranet.id_plan',"=", 'ac_planes_extranet.codigo_plan')
-                ->join('ac_procedimientos_medicos', function($join){
-                        $join->on('ac_procedimientos_medicos.codigo_examen',"=", 'ac_cobertura_extranet.id_procedimiento')
-                             ->on('ac_procedimientos_medicos.codigo_especialidad',"=", 'ac_cobertura_extranet.id_especialidad')
-                             ->on('ac_procedimientos_medicos.codigo_servicio',"=", 'ac_cobertura_extranet.id_servicio');
-                })
-                ->join('ac_servicios_extranet', 'ac_servicios_extranet.codigo_servicio',"=", 'ac_procedimientos_medicos.codigo_servicio')
-                ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_procedimientos_medicos.codigo_especialidad')
-                ->select('id_servicio','ac_servicios_extranet.descripcion as servicio',
-                        'id_especialidad','ac_especialidades_extranet.descripcion as especialidad')
-                ->distinct()->get();
-        }
-        $especialidades_cobertura = array_pluck($coberturas,'especialidad','id_especialidad'); // ++++++++++++++++ ARRAY
-        $servicios = array_pluck($coberturas,'servicio','id_servicio');
-        return view('claves.generarFinal', compact('beneficiario','especialidades_cobertura','servicios','proveedor'));
+    public function buscarCobertura(Request $request)
+    {
+    	
+       // $id = $request->input('icedula');
+       // dd($id);
+    	$user = \Auth::user();
+    //	dd($user->detalles_usuario_id);
+    	//if($user->type==5)
+    	if(true)
+    	{
+    		
+    		$objAfiliado= new AcAfiliado();
+    		$obCuenta = new AcCuenta();
+    		$rsAf =$objAfiliado->findOrFail($user->detalles_usuario_id);
+    		$rsCu=$obCuenta->findOrFail($rsAf->id_cuenta);	
+    		$beneficiario['contrato'] = $rsCu->codigo_cuenta;
+    		$beneficiario['cedula_afiliado'] = $rsAf->cedula;
+    		$beneficiario['nombre_afiliado'] = $rsAf->nombre. " ".$rsAf->apellido;
+	        //$beneficiario['plan'] = $request->input('plan'.$id);
+	        $beneficiario['plan'] = 25;
+	       /* $beneficiario['colectivo'] = $request->input('colectivo'.$id);
+	        $beneficiario['aseguradora'] = $request->input('aseguradora'.$id);
+	        $beneficiario['tipo_afiliado'] = $request->input('tipo_afiliado'.$id);*/
+	       
+	        //echo $user->type;die();
+	        
+	
+	            $coberturas = DB::table('ac_cuenta')
+	                ->where([['codigo_cuenta', '=', $beneficiario['contrato']]])
+	                ->join('ac_cuentaplan', 'ac_cuentaplan.id_cuenta',"=", 'ac_cuenta.id')
+	                ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuentaplan.id_plan')
+	                ->join('ac_cobertura_extranet', 'ac_cobertura_extranet.id_plan',"=", 'ac_planes_extranet.codigo_plan')
+	                ->join('ac_procedimientos_medicos', function($join){
+	                        $join->on('ac_procedimientos_medicos.codigo_examen',"=", 'ac_cobertura_extranet.id_procedimiento')
+	                             ->on('ac_procedimientos_medicos.codigo_especialidad',"=", 'ac_cobertura_extranet.id_especialidad')
+	                             ->on('ac_procedimientos_medicos.codigo_servicio',"=", 'ac_cobertura_extranet.id_servicio');
+	                })
+	                ->join('ac_servicios_extranet', 'ac_servicios_extranet.codigo_servicio',"=", 'ac_procedimientos_medicos.codigo_servicio')
+	                ->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_procedimientos_medicos.codigo_especialidad')
+	                ->select('id_servicio','ac_servicios_extranet.descripcion as servicio',
+	                        'id_especialidad','ac_especialidades_extranet.descripcion as especialidad')
+	                ->distinct()->get();
+	                
+	                //dd($coberturas->count());
+	       
+	        $especialidades_cobertura = array_pluck($coberturas,'especialidad','id_especialidad'); // ++++++++++++++++ ARRAY
+	        $servicios = array_pluck($coberturas,'servicio','id_servicio');
+	        return view('claves.generarFinal', compact('beneficiario','especialidades_cobertura','servicios','proveedor'));
+    	}
     }
 
     /**
