@@ -890,11 +890,10 @@ $(document).ready(function() {
                     $('#result3 .text').text(data.success);
                     success = true;
                     //Redirecciono a login
-                    setTimeout(function() {
+                   /* setTimeout(function() {
                             $('.sw-btn-next').click();
                             window.location.href = "{{ url('login') }}";
-                        }, 1000);
-
+                        }, 1000);*/
 
                 }
             }

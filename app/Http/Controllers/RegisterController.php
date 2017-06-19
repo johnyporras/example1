@@ -67,7 +67,6 @@ class RegisterController extends Controller
                 }else {
                     return null;
                 }
-                
             })->first();
 
             if ($tarjeta != null) {
@@ -143,7 +142,6 @@ class RegisterController extends Controller
                     return response()->json(['success' => 'Cuenta Generada Sastifactorimente']);
                 }
                 catch(QueryException $e){
-                    //return response()->json(['error' => $e]);
                    return response()->json(['error' => '¡Ocurrio un error al generar cuenta!',
                                             'data' => $e
                                                 ]);
@@ -306,28 +304,32 @@ class RegisterController extends Controller
 
         if ($user){
             
-            if($user->active == true){
+           if ($user->active == true){
                return view('auth.verify')->with('warning', 'Cuenta de usuario ya se encuentra activa'); 
             }
 
-            //Actualizo usuario activo
+            // Actualizo usuario activo
             $user->active = true;
             $user->save();
-            //Actualizao tarjeta usada
-            $tarjeta = tarjeta::find(Session::get('tarjeta'));
-
-            if ($tarjeta == null) {
-
-                return view('auth.verify')->with('error', 'Tarjeta o Cuenta de usuario invalidas');
-            }
+            // Selecciono afiliado para seleccionar cuenta
+            $afiliado =  AcAfiliado::where('email','=',$email)->first();
+            // Guardo codigo de cuanta para comparar con tarjetas
+            $codigo = $afiliado->cuenta->codigo_cuenta;
+            // Selecciono tarjeta
+            $tarjeta = Tarjeta::get()->filter(function($record) use($codigo) {
+                if (Hash::check($codigo, $record->codigo_tarjeta)) {
+                    return $record;
+                }else {
+                    return null;
+                }
+            })->first();
             // Modifico estatus de tarjeta a usada
             $tarjeta->activada = 'S';
             $tarjeta->save();
             // Actualizo estatus de cuenta
-            $cuenta = AcCuenta::findOrFail(Session::get('cuenta')->id);
+            $cuenta = AcCuenta::where('codigo_cuenta','=',$codigo)->first();
             $cuenta->estatus = 1;
             $cuenta->save();
-
             //Elimino sessiones de tarjeta y cuenta
             Session::forget('tarjeta');
             Session::forget('cuenta');

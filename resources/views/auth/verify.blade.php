@@ -11,11 +11,8 @@
             <p><i class="fa fa-exclamation-triangle"></i> <span class="text">{{ $success }}</span>
                 <button type="button" class="close" onclick="$('#result').hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </p>
+            </div>
         </div>
-
-        <div class="col-xs-12 text-center">
-            <a href="{{ url('/login') }}" class="btn btn-primary btn-md" ><i class="fa fa-sign-in fa-fw"></i> Iniciar Sesión</a> 
-        </div> 
     @endif
 
     @if (isset($warning))
@@ -24,6 +21,7 @@
             <p><i class="fa fa-exclamation-triangle"></i> <span class="text">{{ $warning }}</span>
                 <button type="button" class="close" onclick="$('#result').hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </p>
+            </div>
         </div>
     @endif
 
@@ -33,10 +31,13 @@
             <p><i class="fa fa-exclamation-triangle"></i> <span class="text">{{ $error }}</span>
                 <button type="button" class="close" onclick="$('#result').hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </p>
+            </div>
         </div>
     @endif
 
-    </div>
+    <div class="col-xs-12 text-center">
+        <a href="{{ url('/login') }}" class="btn btn-primary btn-md" ><i class="fa fa-sign-in fa-fw"></i> Iniciar Sesión</a> 
+    </div> 
            
 </div>
 @endsection
