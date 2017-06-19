@@ -105,7 +105,7 @@ class RegisterController extends Controller
                     $cuenta = AcCuenta::create([
                                     'codigo_cuenta' => Session::get('codigo'),
                                     'fecha' => $creado,
-                                    'id_producto' => $request->producto
+                                    'id_producto' => $request->producto,
                                     'estatus' => 2
                                 ]);  
 
