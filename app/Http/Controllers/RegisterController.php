@@ -144,7 +144,9 @@ class RegisterController extends Controller
                 }
                 catch(QueryException $e){
                     //return response()->json(['error' => $e]);
-                   return response()->json(['error' => '¡Ocurrio un error al generar cuenta!']);
+                   return response()->json(['error' => '¡Ocurrio un error al generar cuenta!',
+                                            'data' => $e
+                                                ]);
                 }
 
            }else{
@@ -201,7 +203,9 @@ class RegisterController extends Controller
                     return response()->json(['success' => 'Afiliado creado Sastifactorimente']);
 
                 }catch(QueryException $e){
-                    return response()->json(['error' => '¡Ocurrio un error al generar Afiliado!']);
+                    return response()->json(['error' => '¡Ocurrio un error al generar Afiliado!',
+                                            'data' => $e
+                                                ]);
                 }
 
             }else{
@@ -282,7 +286,9 @@ class RegisterController extends Controller
                         return response()->json(['success' => 'Hemos enviado un enlace de confirmación a su Cuenta de correo electrónico']);
 
                     }catch(QueryException $e){
-                       return response()->json(['error' => '¡Ocurrio un error al generar Usuario!']);
+                       return response()->json(['error' => '¡Ocurrio un error al generar Usuario!',
+                                                'data' => $e
+                                                ]);
                     }
                     
                 }else{

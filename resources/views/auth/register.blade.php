@@ -813,7 +813,7 @@ $(document).ready(function() {
                     $('#result2').addClass('alert-danger'); 
                     $('#result2 .text').text(data.error)
                     validate = false;
-                    console.log(data.error);
+                    console.log(data.data);
                 } else {
                     // Desabilito los campos paa evitar errores
                     $('#valid2').attr('disabled','disabled');
@@ -877,7 +877,8 @@ $(document).ready(function() {
                     $('#result3').show();
                     $('#result3').removeClass('alert-success'); 
                     $('#result3').addClass('alert-danger'); 
-                    $('#result3 .text').text(data.error)
+                    $('#result3 .text').text(data.error);
+                    console.log(data.data);
                 } else {
                     // Desabilito los campos paa evitar errores
                     $('#valid3').attr('disabled','disabled');
