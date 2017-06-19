@@ -9,7 +9,7 @@ use App\Http\Requests;
 
 use App\Models\AcAfiliado;
 use App\Models\AcCuenta;
-use App\Models\AcCuentaplan;
+use App\Models\AcCuentaPlan;
 use App\Models\AcEstado;
 use App\Models\AcProducto;
 use App\Models\AcPlanesExtranet;
@@ -308,7 +308,13 @@ class RegisterController extends Controller
             $user->active = true;
             $user->save();
             //Actualizao tarjeta usada
-            $tarjeta = tarjeta::findOrFail(Session::get('tarjeta'));
+            $tarjeta = tarjeta::find(Session::get('tarjeta'));
+
+            if ($tarjeta == null) {
+
+                return view('auth.verify')->with('error', 'Tarjeta o Cuenta de usuario invalidas');
+            }
+            // Modifico estatus de tarjeta a usada
             $tarjeta->activada = 'S';
             $tarjeta->save();
             // Actualizo estatus de cuenta
@@ -316,15 +322,13 @@ class RegisterController extends Controller
             $cuenta->estatus = 1;
             $cuenta->save();
 
-            //Elimino sessiones finales
+            //Elimino sessiones de tarjeta y cuenta
             Session::forget('tarjeta');
             Session::forget('cuenta');
-
+            // Retorno msn de felicitaciones
             return view('auth.verify')->with('success', 'Felicitaciones ya puede iniciar sesión');
         }else{
-
-            //dd($confirm_token .' - '.$email );
-
+            // retorno msn de error
             return view('auth.verify')->with('error', 'Cuenta de usuario Incorrecta Intente Nuevamente');
         }
     }

@@ -49,8 +49,8 @@
 
         <div class="form-group">
             <div class="col-xs-12 text-center">
-                <a href="{{ url('/password/reset') }}" ><small>¿Olvido su clave?</small></a> 
-               <!-- - <a href="{{ url('/register') }}" ><small>Registrate</small></a> -->
+                <a href="{{ url('/password/reset') }}" ><small>¿Olvido su clave?</small></a> |
+                <a href="{{ url('/register') }}" ><small>Registrate</small></a>
             </div>
         </div>
 

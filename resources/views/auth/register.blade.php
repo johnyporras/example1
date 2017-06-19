@@ -695,6 +695,10 @@ $(document).ready(function() {
                     $('#result .text').text(data.success)
                     // Permito pasar al otro step del registro
                     validate = true;
+                    // paso el siguiente punto
+                    setTimeout(function() {
+                            $('.sw-btn-next').click();
+                        }, 1000);
                 }
             }
         });
@@ -760,6 +764,10 @@ $(document).ready(function() {
                     // Permito pasar al otro step del registro
                     validate = true;
                     submitted = true;
+                    // paso el siguiente punto
+                    setTimeout(function() {
+                            $('.sw-btn-next').click();
+                        }, 1000);
                 }
             }
         });
@@ -819,8 +827,10 @@ $(document).ready(function() {
                     // Permito pasar al otro step del registro
                     validate = true;
                     submitted1 = true;
-                    //$("#cuentaForm").resetForm(); 
-                    console.log(data);
+                    // paso el siguiente punto
+                    setTimeout(function() {
+                            $('.sw-btn-next').click();
+                        }, 1000);
                 }
             }
         });
@@ -878,6 +888,13 @@ $(document).ready(function() {
                     $('#result3').addClass('alert-success'); 
                     $('#result3 .text').text(data.success);
                     success = true;
+                    //Redirecciono a login
+                    setTimeout(function() {
+                            $('.sw-btn-next').click();
+                            window.location.href = "{{ url('login') }}";
+                        }, 1000);
+
+
                 }
             }
         });
