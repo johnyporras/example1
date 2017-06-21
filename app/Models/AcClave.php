@@ -20,6 +20,20 @@ class AcClave extends Model {
      * @var string
      */
     protected $dateFormat = 'Y-m-d';
+    public function getClave()
+    {
+    	$this->select("ac_claves.id","ac_claves.clave","ac_claves.codigo_contrato",
+    			"ac_claves.clave.fecha_cita","ac_claves.clave.motivo","ac_claves.clave.costo_total"
+    			,"ac_claves.clave.telefono","ac_claves_detalle.detalle","ac_servicios_extranet.descripcion",
+    			"ac_especialidades_extranet.descripcion","ac_procedimientos_medicos.tipo_examen")
+    		->join("ac_claves_detalle","ac_clave.id","=","ac_claves_detalle.id_clave")
+    		->join("ac_servicios_extranet","ac_claves_detalle.codigo_servicio","=","ac_servicios_extranet.id")
+    		->join("ac_especialidades_extranet","ac_claves_detalle.codigo_especialidad","=","ac_especialidades_extranet.id")
+    		->join("ac_procedimientos_medicos","ac_claves_detalle.id_procedimiento","=","ac_procedimientos_medicos.id")
+    		->where("ac_claves.id","=",$this->id)
+    		->get();
+    }
+    
     
     function setFechaCitaAttribute($date) {
         $this->attributes['fecha_cita'] = new Carbon($date);

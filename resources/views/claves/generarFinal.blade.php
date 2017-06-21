@@ -344,6 +344,7 @@
                     var servicio     = "<input type='hidden' value='"+ $('#codigo_servicio').val() +"' name='id_servicio" + x +"' id='id_servicio" + x +"'>";
                     var tratamiento  = "<input type='hidden' value='"+ $('#procedimiento_medico').val() +"' name='id_tratamiento" + x +"'>";
                     var proveedor    = "<input type='hidden' value='"+ $('#codigo_proveedor_creador').val() +"' name='id_proveedor" + x +"'>";
+                    var proveedor2    = "<input type='hidden' value='"+ $('#codigo_proveedor_creador2').val() +"' name='id_proveedor2" + x +"'>";
                     var detalle      = "<input type='hidden' value='"+ $('#detalle').val() +"' name='detalle" + x +"'>";
                     proveedorX       = $('#codigo_proveedor_creador').val();
                     $('#procedimientos').append("<tr class='fila" + x +"'><td>"+$("#codigo_servicio option:selected").text()+"</td>"+

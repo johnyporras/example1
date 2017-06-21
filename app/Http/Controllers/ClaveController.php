@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\AcClave;
 use App\Models\AcCuenta;
 use App\Models\AcClavesDetalle;
+use App\Models\AcClaveProv;
 use App\Models\AcAfiliado;
 use App\Models\AcAfiliadoTemporal;
 use App\Models\AcProveedoresExtranet;
@@ -75,7 +76,7 @@ class ClaveController extends Controller{
         /**
         * Validacion del codigo_contrato = 0, estatus = 5 => Pendiente, sino estatus = 3 => Aprobado
         */
-        $estatus_clave = 5;
+        $estatus_clave = 10;
         $request = array_add($request, 'estatus_clave', $estatus_clave);
        //            $request = array_add($request, 'estatus_clave', $estatus_clave);
 
@@ -113,9 +114,66 @@ class ClaveController extends Controller{
                 $clavesDetalle->costo                = $monto[$i];
                 $clavesDetalle->codigo_proveedor     = $request->input(['id_proveedor'.$i]);
                 $clavesDetalle->detalle              = $request->detalle_servicio;
+                $proveedor1 = $request->input(['id_proveedor'.$i]);
+                $proveedor2 = $request->input(['id_proveedor2'.$i]);
                 $clavesDetalle->estatus              = 1 /* Pendiente de Atencion*/;
                 $clavesDetalle->save();
             endfor;
+            
+            
+			$oProv1 = new AcProveedoresExtranet();      
+			$oProv1->codigo_proveedor=$proveedor1;
+			$rsProv1 =$oProv1->leerProv();
+			$oClave = new AcClave();
+			$rsClave=$oClave->getClave();
+            $oDetalleP= new AcClaveProv();
+            $oDetalleP->id_clave=$claves->id;
+            $oDetalleP->id_proveedor=$proveedor1;
+            $oDetalleP->aceptado=0;
+            $oDetalleP->incluir();
+            
+            $data = [
+            		'nombre' =>$rsProv1->nombre,
+            		'email' => $rsProv1->email,
+            		'datosclave' =>$rsClave
+        		];
+            
+            // Envio de Correo para confirmar
+            Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
+            	$mail->subject('Nueva solicitud de Servicios');
+            	$mail->to($data['email'], $data['nombre']);
+            });
+            
+            	$oProv2 = new AcProveedoresExtranet();
+            	$oProv2->codigo_proveedor=$proveedor2;
+            	$rsProv2 =$oProv1->leerProv();
+            	$oClave = new AcClave();
+            	$rsClave=$oClave->getClave();
+            	$oDetalleP= new AcClaveProv();
+            	$oDetalleP->id_clave=$claves->id;
+            	$oDetalleP->id_proveedor=$proveedor2;
+            	$oDetalleP->aceptado=0;
+            	$oDetalleP->incluir();
+            	
+            	$data = [
+            			'nombre' =>$rsProv2->nombre,
+            			'email' => $rsProv2->email,
+            			'datosclave' =>$rsClave
+            	];
+            	
+            	// Envio de Correo para confirmar
+            	Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
+            		$mail->subject('Nueva solicitud de Servicios');
+            		$mail->to($data['email'], $data['nombre']);
+            	});
+            	
+            
+            
+            
+            
+            
+            
+            
               if($user->type == 3){//TIPO PROVEEDOR
                    Session::flash('status', 'Su clave  ha sido generada!');
               }else{

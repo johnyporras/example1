@@ -35,6 +35,21 @@ class AcProveedoresExtranet extends Model {
     /**
      * Get the Baremos for Proveedores.
      */
+    public function leerProv()
+    {
+    	$res = $this->select("nombre","direccion","telefono","email")
+    				->where("codigo_proveedor","=",$this->codigo_proveedor)
+    				->get();
+    	if($res->count()>0)
+    	{
+    		return $res[0];
+    	}
+    	else 
+    	{
+    		return 0;
+    	}
+    }
+    
     public function acBaremos()
     {
         return $this->hasMany(\app\Models\AcBaremo::class,'id_proveedor','codigo_proveedor');
