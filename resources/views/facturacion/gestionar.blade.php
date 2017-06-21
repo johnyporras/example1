@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Facturaci�n y Cierres de Caso')
+@section('title','Facturaci&oacute;n y Cierres de Caso')
 @section('content')
 <hr/>
 
@@ -18,8 +18,8 @@
         </div>
         <div class="col-md-1">
             <input type="radio" name="tipo" id="tipo2" value="global">
-        </div>      
-    </div>   
+        </div>
+    </div>
 </div>
 <div id="form" class="col-md-12">
     {!! Form::open(['url' => 'facturacion/buscar',  'class' => 'form-horizontal', 'name' => 'buscar', 'method' => 'POST']) !!}
@@ -54,7 +54,7 @@
         </div>
     {!! Form::close() !!}
     <div id="consulta" >
-       
+
             {!! Form::open(['url' => 'facturacion/crear', 'class' => 'form-horizontal',  'name' => 'fileupload','id' =>"fileupload",
                     'method' => 'POST', 'enctype' => 'multipart/form-data', 'files' => 'true']) !!}
                 <div class="table col-md-12">
@@ -119,14 +119,14 @@
                         {!! Form::label('numero_factura', 'Nro Factura: ', ['class' => 'col-sm-3 control-label']) !!}
                         <div class="col-sm-3">
                             {!! Form::number(
-                                'numero_factura', null, ['class' => 'form-control', 
+                                'numero_factura', null, ['class' => 'form-control',
                                 'required' => 'required','placeholder' => '156780'] )
                             !!}
                         </div>
                         {!! Form::label('numero_control', 'Nro Control: ', ['class' => 'col-sm-2 control-label']) !!}
                         <div class="col-sm-3">
                             {!! Form::number(
-                                'numero_control', null, ['class' => 'form-control', 
+                                'numero_control', null, ['class' => 'form-control',
                                 'required' => 'required','placeholder' => '78940'] )
                             !!}
                         </div>
@@ -135,14 +135,14 @@
                         {!! Form::label('fecha_factura', 'Fecha Factura: ', ['class' => 'col-sm-3 control-label']) !!}
                         <div class="col-sm-3">
                             {!! Form::text(
-                                'fecha_factura', null, ['class' => 'form-control', 
+                                'fecha_factura', null, ['class' => 'form-control',
                                 'required' => 'required','placeholder' => 'dd-mm-yy','id'=>'fecha_factura'] )
                             !!}
                         </div>
                         {!! Form::label('monto', 'Monto: ', ['class' => 'col-sm-2 control-label']) !!}
                         <div class="col-sm-3">
                             {!! Form::number(
-                                'monto', null, ['class' => 'form-control', 
+                                'monto', null, ['class' => 'form-control',
                                 'required' => 'required','placeholder' => '10000'] )
                             !!}
                         </div>
@@ -186,7 +186,7 @@
                     }
                     </style>
 
-                    
+
                     <script>
                       var loadFile = function(id,id2) {
 //alert(id);
@@ -198,11 +198,11 @@
 
 
 
-                   
-                   
-                       
+
+
+
                     <!-- The global file processing state -->
-                  
+
                 </div>
 
 
@@ -226,45 +226,45 @@
             </div>
             <div class="panel-body">
                 <ul>
-                    <li>El tama�o m�ximo del archivo para subir es <strong>999 KB</strong>.</li>
-                    <li>S�lo archivos (<strong> ZIP </strong>) est�n permitidos.</li>
-                    <li>Puede usar <strong>arrastrar &amp; soltar</strong> en esta p�gina.</li>
+                    <li>El tama&ntilde;o m&aacute;ximo del archivo para subir es <strong>999 KB</strong>.</li>
+                    <li>S&oacute;lo archivos (<strong> ZIP </strong>) est&aacute;n permitidos.</li>
+                    <li>Puede usar <strong>arrastrar y soltar</strong> en esta p&aacute;gina.</li>
                 </ul>
             </div>
         </div>
         <a class="upload-field-ids"></a>
     <!-- The blueimp Gallery widget -->
-    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
+    <!--<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
         <div class="slides"></div>
         <h3 class="title"></h3>
-        <a class="prev">�</a>
-        <a class="next">�</a>
-        <a class="close">�</a>
+        <a class="prev"><</a>
+        <a class="next">></a>
+        <a class="close">x</a>
         <a class="play-pause"></a>
         <ol class="indicator"></ol>
-    </div>      
+    </div>-->
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-4"><!--   -->
-                            {!! Form::submit('Generar facturaci�n', ['class' => 'btn btn-primary form-control', 'id' => 'enviar_clave']) !!}
+                            {!! Form::submit('Generar facturaci&oacute;n', ['class' => 'btn btn-primary form-control', 'id' => 'enviar_clave']) !!}
                         </div>
                     </div>
                 </div>
-              
+
     </div>
 </div>
-{!! Form::close() !!}   
+{!! Form::close() !!}
 @endsection
 
 @section('script')
 <!-- The File Upload user interface plugin -->
 <script src="{{url('/')}}/js/main.js"></script>
-<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->  
+<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
     <!-- The Templates plugin is included to render the upload/download listings -->
     <script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
     <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
     <script src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
     <!-- The Canvas to Blob plugin is included for image resizing functionality -->
-    <script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>    
+    <script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
     <!-- blueimp Gallery script -->
     <!--<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>-->
     <script src="{{url('/')}}/js/blueimp-gallery.min.js"></script>
@@ -285,9 +285,9 @@
     <!-- The File Upload validation plugin -->
     <script src="{{url('/')}}/js/jquery.fileupload-validate.js"></script>
     <!-- The File Upload user interface plugin -->
-    <script src="{{url('/')}}/js/jquery.fileupload-ui.js"></script>    
+    <script src="{{url('/')}}/js/jquery.fileupload-ui.js"></script>
     <!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
-   
+
     <!-- The basic File Upload plugin -->
     <!--[if (gte IE 8)&(lt IE 10)]>
     <script src="{{url('/')}}/js/cors/jquery.xdr-transport.js"></script>
@@ -339,14 +339,14 @@
             <p class="name">
                 {% if (file.url) { %}
                     <a href="{%=file.url%}"  title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-                    <input type="hidden" name="fileid[]" id= "fileid[]" value="{%=file.name%}">                                    
+                    <input type="hidden" name="fileid[]" id= "fileid[]" value="{%=file.name%}">
                 {% } else { %}
                     <span>{%=file.name%}</span>
                 {% } %}
             </p>
             {% if (file.error) { %}
                 <div><span class="label label-danger">Error</span> {%=file.error%}</div>
-            {% } %}            
+            {% } %}
         </td>
         <td>
             <span class="size">{%=o.formatFileSize(file.size)%}</span>
@@ -369,12 +369,12 @@
 {% } %}
 </script>
 <script>
-        $(function(){ 
+        $(function(){
             $('#fecha_desde, #fecha_hasta, #fecha_factura, #fecha').datepicker({dateFormat: "dd/mm/yyyy",changeMonth: true, changeYear: true})
              $('#fecha_desde, #fecha_hasta, #fecha_factura, #fecha').blur(function () {
                 var currentDate = $(this).val();
                 arr=currentDate.split("/");
-                newDate=arr[1]+"/"+arr[0]+"/"+arr[2]; 
+                newDate=arr[1]+"/"+arr[0]+"/"+arr[2];
                 $(this).val(newDate);
             });
             $('#tipo1').on('click', function(){
@@ -382,17 +382,17 @@
                 $('#tipo_global').hide();
                 $('#fecha_desde').attr('disabled', true);
                 $('#fecha_hasta').attr('disabled', true);
-                
+
                 $('#clave').attr('disabled', false);
                 $('#fecha').attr('disabled', false);
             });
-            
+
             $('#tipo2').on('click', function(){
                 $('#tipo_global, #boton_buscar').show(true);
                 $('#tipo_individual').hide();
                 $('#clave').attr('disabled', true);
                 $('#fecha').attr('disabled', true);
-                
+
                 $('#fecha_desde').attr('disabled', false);
                 $('#fecha_hasta').attr('disabled', false);
             });
