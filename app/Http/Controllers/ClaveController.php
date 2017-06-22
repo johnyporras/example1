@@ -272,7 +272,8 @@ class ClaveController extends Controller{
 	       
 	        //echo $user->type;die();
 	        
-	
+	//echo $beneficiario['contrato']."<br>";
+
 	            $coberturas = DB::table('ac_cuenta')
 	                ->where([['codigo_cuenta', '=', $beneficiario['contrato']]])
 	                ->join('ac_cuentaplan', 'ac_cuentaplan.id_cuenta',"=", 'ac_cuenta.id')
@@ -289,10 +290,11 @@ class ClaveController extends Controller{
 	                        'id_especialidad','ac_especialidades_extranet.descripcion as especialidad')
 	                ->distinct()->get();
 	                
-	                //dd($coberturas->count());
-	       
+	               
+	       dd($coberturas);
 	        $especialidades_cobertura = array_pluck($coberturas,'especialidad','id_especialidad'); // ++++++++++++++++ ARRAY
-	        $servicios = array_pluck($coberturas,'servicio','id_servicio');
+	        
+          $servicios = array_pluck($coberturas,'servicio','id_servicio');
 	        return view('claves.generarFinal', compact('beneficiario','especialidades_cobertura','servicios','proveedor'));
     	}
     }
