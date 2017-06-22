@@ -9,8 +9,10 @@ class Module extends Model {
     /**
      * Generated
      */
-
     protected $table = 'modules';
+
+    protected $dates = ['deleted_at'];
+    
     protected $fillable = ['id', 'description', 'url', 'order', 'icon', 'deleted_at'];
 
     /**

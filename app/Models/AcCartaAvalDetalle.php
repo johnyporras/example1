@@ -11,6 +11,7 @@ class AcCartaAvalDetalle extends Model {
      */
 
     protected $table = 'ac_carta_aval_detalle';
+    
     protected $fillable = ['id', 'id_carta', 'codigo_servicio', 'codigo_especialidad', 'id_procedimiento', 'codigo_proveedor', 'costo', 'detalle', 'deleted_at','estatus'];
 
 

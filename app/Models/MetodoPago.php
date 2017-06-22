@@ -13,6 +13,12 @@ class MetodoPago extends Model
     protected $table = 'metodo_pago';
 
     /**
+     * [$timestamps description]
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

@@ -28,12 +28,13 @@ class CreateUsersTable extends Migration {
 			$table->string('pregunta_2')->nullable();
 			$table->string('respuesta_2')->nullable();
 			$table->date('ultimo_acceso')->nullable();
+			$table->integer('detalles_usuario_id')->nullable()->unsigned();
+			$table->string('confirm_token',100)->nullable();
             	$table->rememberToken();
             	$table->timestamps();
             	$table->softDeletes();
 		});
 	}
-
 
 	/**
 	 * Reverse the migrations.
@@ -42,7 +43,7 @@ class CreateUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('users');
+		Schema::dropIfExists('users');
 	}
 
 }

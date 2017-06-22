@@ -20,12 +20,10 @@ class CreateAviDestinoTable extends Migration
             $table->date('fecha_hasta'); 
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('avi_id')
-                    ->references('id')->on('avi')
-                    ->onUpdate('CASCADE')->onDelete('RESTRICT');
-            $table->foreign('pais_id')
-                    ->references('id')->on('paises')
-                    ->onUpdate('CASCADE')->onDelete('RESTRICT');
+                $table->foreign('avi_id')->references('id')->on('avi')
+                ->onUpdate('CASCADE')->onDelete('CASCADE');
+                $table->foreign('pais_id')->references('id')->on('paises')
+                ->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
 
@@ -36,6 +34,6 @@ class CreateAviDestinoTable extends Migration
      */
     public function down()
     {
-        Schema::drop('avi_destino');
+        Schema::dropIfExists('avi_destino');
     }
 }

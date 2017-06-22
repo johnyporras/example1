@@ -3,15 +3,15 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class TypesProfile extends Model {
-
-    
-
+class TypesProfile extends Model 
+{
     /**
      * Generated
      */
-
     protected $table = 'types_profile';
+    
+    protected $dates = ['deleted_at'];
+
     protected $fillable = ['id', 'id_type', 'id_module', 'deleted_at'];
 
 

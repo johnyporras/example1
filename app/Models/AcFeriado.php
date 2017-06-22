@@ -10,10 +10,11 @@ class AcFeriado extends Model {
     /**
      * Generated
      */
-
     protected $table = 'ac_feriados';
+
     protected $fillable = ['id', 'dia', 'mes', 'periodo', 'fecha', 'descripcion', 'deleted_at'];
-    protected $dates = ['fecha'];
+    
+    protected $dates = ['fecha', 'deleted_at'];
     
      /**
      * The storage format of the model's date columns.

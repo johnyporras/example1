@@ -9,8 +9,10 @@ class AcTipoAutorizacion extends Model {
     /**
      * Generated
      */
-
     protected $table = 'ac_tipo_autorizacion';
+
+    protected $dates = ['deleted_at'];
+
     protected $fillable = ['id', 'descripcion', 'deleted_at'];
 
     /**

@@ -12,7 +12,9 @@ class AcClave extends Model {
      */
 
     protected $table = 'ac_claves';
-    protected $fillable = ['id', 'clave', 'cedula_afiliado', 'codigo_contrato', 'fecha_cita', 'motivo', 'observaciones', 'costo_total', 'codigo_proveedor_creador', 'correo', 'examen', 'estatus_clave', 'creador', 'telefono', 'rechazo', 'tipo_afiliado', 'cantidad_servicios', 'hora_autorizado', 'deleted_at','id_factura'];
+
+    protected $fillable = ['id', 'clave', 'cedula_afiliado', 'fecha_cita', 'motivo', 'observaciones', 'costo_total', 'codigo_proveedor_creador', 'correo', 'examen', 'estatus_clave', 'creador', 'telefono', 'rechazo', 'tipo_afiliado', 'cantidad_servicios', 'hora_autorizado', 'deleted_at','id_factura', 'codigo_contrato'];
+
     protected $dates = ['fecha_cita','deleted_at'];
     
      /**

@@ -14,17 +14,16 @@ class CreateAcFeriadosTable extends Migration {
 	{
 		Schema::create('ac_feriados', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
 			$table->integer('dia')->nullable();
 			$table->integer('mes')->nullable();
 			$table->integer('periodo')->nullable();
 			$table->date('fecha')->nullable();
 			$table->string('descripcion')->nullable();
-                        $table->timestamps();
-                        $table->softDeletes();
+                $table->timestamps();
+                $table->softDeletes();
 		});
 	}
-
 
 	/**
 	 * Reverse the migrations.
@@ -33,7 +32,7 @@ class CreateAcFeriadosTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('ac_feriados');
+		Schema::dropIfExists('ac_feriados');
 	}
 
 }

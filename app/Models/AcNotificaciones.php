@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AcProducto extends Model
+class AcNotificaciones extends Model
 {
     /**
 	 * Para usar borrado suave en la base de datos*
@@ -16,7 +16,7 @@ class AcProducto extends Model
      *  Name of database
      * @var string
      */
-    protected $table = 'ac_producto';
+    protected $table = 'ac_notificaciones';
 
     /**
      * The attributes that should be mutated to dates.
@@ -31,17 +31,12 @@ class AcProducto extends Model
      * @var array
      */
     protected $fillable = [
-    	'nombre',
-        'costo',
+    	'notificacion',
+        'enviado_a',
+        'enviado_por',
+        'respuesta',
+        'id_notificacion'
         'deleted_at'
     ];
 
-    /**
-     * Relación can tabla afiliados
-     * @return [type] [description]
-     */
-    public function cuentas()
-    {
-        return $this->hasMany(\App\Models\AcCuenta::class);
-    }
 }

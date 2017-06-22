@@ -23,12 +23,10 @@ class CreateFunerarioDetallesTable extends Migration
             $table->text('doc_factura')->nullable();
             $table->timestamps();
             $table->softDeletes();
-                $table->foreign('funerario_id')
-                        ->references('id')->on('funerario')
-                        ->onUpdate('CASCADE');
-                $table->foreign('proveedor_id')
-                        ->references('id')->on('proveedor_funerario')
-                        ->onUpdate('CASCADE');
+                $table->foreign('funerario_id')->references('id')->on('funerario')
+                ->onUpdate('CASCADE')->onDelete('cascade');
+                $table->foreign('proveedor_id')->references('id')->on('proveedor_funerario')
+                ->onUpdate('CASCADE')->onDelete('cascade');
         });
     }
 
@@ -39,6 +37,6 @@ class CreateFunerarioDetallesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('funerario_detalle');
+        Schema::dropIfExists('funerario_detalle');
     }
 }

@@ -12,9 +12,8 @@ class AcCartaAval extends Model {
      */
 
     protected $table = 'ac_carta_aval';
-    protected $fillable = ['id', 'clave', 'cedula_afiliado', 'codigo_contrato', 'fecha_solicitud', 'fecha_emision', 'motivo', 'diagnostico', 
-                            'costo_total', 'documentos', 'estatus', 'codigo_proveedor_creador', 'creador', 'telefono', 'rechazo', 'cantidad_servicios', 
-                            'tipo_afiliado', 'fecha_autorizacion', 'deleted_at','id_factura'];
+    protected $fillable = ['id', 'clave', 'cedula_afiliado', 'fecha_solicitud', 'fecha_emision', 'motivo', 'diagnostico', 'costo_total', 'documentos', 'estatus', 'codigo_proveedor_creador', 'creador', 'telefono', 'rechazo', 'cantidad_servicios', 'tipo_afiliado', 'fecha_autorizacion', 'deleted_at','id_factura'];
+
     protected $dates = ['fecha_solicitud','fecha_emision','fecha_autorizacion'];
 
     /**

@@ -9,8 +9,8 @@ class AcColectivo extends Model {
     /**
      * Generated
      */
-
     protected $table = 'ac_colectivos';
+    
     protected $fillable = ['id', 'codigo_colectivo', 'nombre', 'codigo_aseguradora', 'deleted_at'];
 
 

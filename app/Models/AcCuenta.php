@@ -23,7 +23,7 @@ class AcCuenta extends Model
      *
      * @var array
      */
-    protected $dates = ['fecha','deleted_at'];
+    protected $dates = ['fecha', 'deleted_at'];
 
     /**
      * The attributes that are mass assignable.

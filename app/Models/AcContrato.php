@@ -10,9 +10,10 @@ class AcContrato extends Model {
     /**
      * Generated
      */
-
     protected $table = 'ac_contratos';
+
     protected $fillable = ['id', 'codigo_contrato', 'cedula_afiliado', 'fecha_inicio', 'fecha_fin', 'codigo_colectivo', 'codigo_plan', 'deleted_at'];
+    
     protected $dates = ['fecha_inicio','fecha_fin'];
 
      /**

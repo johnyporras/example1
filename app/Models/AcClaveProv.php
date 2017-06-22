@@ -18,7 +18,7 @@ class AcClaveProv extends Model
      *
      * @var array
      */
-    protected $dates = ['fecha','deleted_at'];
+    protected $dates = ['fechacita'];
 
     /**
      * The attributes that are mass assignable.
@@ -27,11 +27,13 @@ class AcClaveProv extends Model
      */
     protected $fillable = [
     	'id_clave',
-        'id_provedor',
+        'id_proveedor',
+        'aeptado',
         'observacion',
-        'aeptado'
+        'preferido'
+        'fechacita'
+        'rangohoracita'   
     ];
-
 
     public function incluir()
     {

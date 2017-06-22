@@ -10,10 +10,11 @@ class AcPacientesAtendido extends Model {
     /**
      * Generated
      */
-
     protected $table = 'ac_pacientes_atendidos';
+
     protected $fillable = ['id', 'tipo_autorizacion', 'cedula_afiliado', 'clave', 'id_clave_detalle', 'fecha_atencion', 'patologia', 'observaciones', 'deleted_at'];
-    protected $dates = ['fecha_atencion'];
+    
+    protected $dates = ['fecha_atencion', 'deleted_at'];
 
      /**
      * The storage format of the model's date columns.

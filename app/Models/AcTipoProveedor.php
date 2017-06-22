@@ -11,6 +11,9 @@ class AcTipoProveedor extends Model {
      */
 
     protected $table = 'ac_tipo_proveedor';
+
+    protected $dates = ['deleted_at'];
+    
     protected $fillable = ['id', 'descripcion', 'deleted_at'];
 
     /**

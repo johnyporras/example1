@@ -38,6 +38,6 @@ class CreateMascotasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('mascotas');
+        Schema::dropIfExists('mascotas');
     }
 }

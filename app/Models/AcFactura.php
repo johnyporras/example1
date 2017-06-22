@@ -4,16 +4,32 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AcFactura extends Model {
-
-    use SoftDeletes;
+class AcFactura extends Model 
+{
     /**
-     * Generated
+     * Para usar borrado suave en la base de datos*
      */
+    use SoftDeletes;
 
+    /**
+     *  Name of database
+     * @var string
+     */
     protected $table = 'ac_facturas';
-    protected $fillable = ['id', 'numero_factura', 'numero_control', 'fecha_factura', 'monto', 'observaciones', 'fecha_creacion', 'usuario_creador', 
-                           'codigo_estatus', 'deleted_at','documento','codigo_proveedor_creador'];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['id', 'numero_factura', 'numero_control', 'fecha_factura', 'monto', 'observaciones', 'fecha_creacion', 'usuario_creador', 'codigo_estatus', 'deleted_at', 'documento','codigo_proveedor_creador'];
   
     /**
      * The storage format of the model's date columns.

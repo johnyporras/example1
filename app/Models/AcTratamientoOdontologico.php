@@ -10,21 +10,12 @@ class AcTratamientoOdontologico extends Model {
     /**
      * Generated
      */
+    protected $table = 'ac_tratamientos_odontologicos';
 
-    protected $table = 'ac_tratamiento_odontologico';
-    protected $fillable = ['id', 'id_clave', 'id_procedimiento', 'id_diente', 'id_ubicacion', 'fecha_atencion', 'observaciones', 'estatus', 'creador', 'telefono', 'doc1', 'doc2', 'deleted_at'];
-    protected $dates = ['fecha_atencion','deleted_at'];
+    protected $fillable = ['id', 'clave', 'tratamiento_realizado', 'fecha_tratamiento', 'dientes', 'estatus', 'fecha_creacion', 'fecha_modifico', 'usuario_creador', 'usuario_modifico', 'rechazo', 'doc1', 'doc2', 'deleted_at'];
 
-    /**
-     * The storage format of the model's date columns.
-     * @var string
-     */
-    protected $dateFormat = 'Y-m-d';
-    
-    function setFechaAtencionAttribute($date) {
-        $this->attributes['fecha_atencion'] = new Carbon($date);
-    }
-    
+    protected $dates = ['fecha_tratamiento', 'fecha_creacion', 'fecha_modifico', 'deleted_at'];
+
     public function acEstatusDetalle() {
         return $this->belongsTo(\App\Models\AcEstatusDetalle::class, 'estatus', 'id');
     }

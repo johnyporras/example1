@@ -9,8 +9,8 @@ class AcClavesDetalle extends Model {
     /**
      * Generated
      */
-
     protected $table = 'ac_claves_detalle';
+    
     protected $fillable = ['id', 'id_clave', 'codigo_servicio', 'codigo_especialidad', 'id_procedimiento', 'codigo_proveedor', 'costo', 'detalle', 'deleted_at','estatus'];
 
 

@@ -31,10 +31,10 @@ class CreateAcClavesTable extends Migration {
 			$table->integer('tipo_afiliado')->nullable();
 			$table->integer('cantidad_servicios')->nullable();
 			$table->time('hora_autorizado')->nullable();
+			$table->integer('id_factura')->nullable();
+			$table->integer('codigo_contrato')->nullable();
 			$table->timestamps();
             $table->softDeletes();
-			$table->integer('id_factura')->nullable();
-
 				$table->foreign('estatus_clave')->references('id')->on('ac_estatus')
                 ->onUpdate('cascade')->onDelete('cascade');
 		});
@@ -47,7 +47,6 @@ class CreateAcClavesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('ac_claves');
+		Schema::dropIfExists('ac_claves');
 	}
-
 }

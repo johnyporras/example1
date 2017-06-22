@@ -22,10 +22,9 @@ class CreateAcClavesDetalleTable extends Migration {
 			$table->integer('codigo_proveedor')->nullable()->unsigned();
 			$table->double('costo')->nulleable();
 			$table->text('detalle', 65535)->nullable();
+			$table->integer('estatus')->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
-            $table->integer('estatus')->nullable()->unsigned();
-
             	$table->foreign('id_clave')->references('id')->on('ac_claves')
                 ->onUpdate('cascade')->onDelete('cascade');
             	$table->foreign('codigo_servicio')->references('codigo_servicio')->on('ac_servicios_extranet')
@@ -40,7 +39,6 @@ class CreateAcClavesDetalleTable extends Migration {
                 ->onUpdate('cascade')->onDelete('cascade');	
 		});
 	}
-
 
 	/**
 	 * Reverse the migrations.

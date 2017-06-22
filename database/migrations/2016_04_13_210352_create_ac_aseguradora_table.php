@@ -18,11 +18,10 @@ class CreateAcAseguradoraTable extends Migration {
 			$table->integer('codigo_aseguradora')->unique('codigo_aseguradora');
 			$table->string('nombre', 100);
 			$table->string('rif', 10);
-                        $table->timestamps();
-                        $table->softDeletes();
+            	$table->timestamps();
+            	$table->softDeletes();
 		});
 	}
-
 
 	/**
 	 * Reverse the migrations.

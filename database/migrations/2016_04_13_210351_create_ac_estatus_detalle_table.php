@@ -29,7 +29,7 @@ class CreateAcEstatusDetalleTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('ac_estatus_detalle');
+		Schema::dropIfExists('ac_estatus_detalle');
 	}
 
 }

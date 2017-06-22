@@ -9,9 +9,10 @@ class AcCoberturaExtranet extends Model {
     /**
      * Generated
      */
-
     protected $table = 'ac_cobertura_extranet';
+
     protected $fillable = ['id', 'id_plan', 'id_aseguradora', 'id_servicio', 'id_especialidad', 'id_procedimiento', 'deleted_at'];
+
     protected $dates = ['deleted_at'];
 
     public function acProcedimientosMedico() {

@@ -31,7 +31,7 @@ class AviDestino extends Model
      * @var array
      */
     protected $fillable = [
-		'pais_id',	'fecha_desde', 'fecha_hasta', 'deleted_at'
+		'avi_id', 'pais_id', 'fecha_desde', 'fecha_hasta', 'deleted_at'
 	];
 
 	/**

@@ -28,6 +28,6 @@ class CreateAcEstadosTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('ac_estados');
+		Schema::dropIfExists('ac_estados');
 	}
 }

@@ -27,18 +27,14 @@ class CreateFunerariosTable extends Migration
             $table->integer('creador')->unsigned(); 
             $table->timestamps();
             $table->softDeletes();
-                $table->foreign('estado_id')
-                        ->references('id')->on('ac_estados')
-                        ->onUpdate('CASCADE');
-                $table->foreign('afiliado_id')
-                        ->references('id')->on('ac_afiliados')
-                        ->onUpdate('CASCADE');
-                $table->foreign('metodo_id')
-                        ->references('id')->on('metodo_pago')
-                        ->onUpdate('CASCADE');
-                $table->foreign('creador')
-                        ->references('id')->on('users')
-                        ->onUpdate('CASCADE');
+                $table->foreign('estado_id')->references('id')->on('ac_estados')
+                ->onUpdate('CASCADE')->onDelete('cascade');
+                $table->foreign('afiliado_id')->references('id')->on('ac_afiliados')
+                ->onUpdate('CASCADE')->onDelete('cascade');
+                $table->foreign('metodo_id')->references('id')->on('metodo_pago')
+                ->onUpdate('CASCADE')->onDelete('cascade');
+                $table->foreign('creador')->references('id')->on('users')
+                ->onUpdate('CASCADE')->onDelete('cascade');
         });
     }
 
@@ -49,6 +45,6 @@ class CreateFunerariosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('funerario');
+        Schema::dropIfExists('funerario');
     }
 }

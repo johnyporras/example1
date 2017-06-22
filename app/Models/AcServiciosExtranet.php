@@ -9,8 +9,15 @@ class AcServiciosExtranet extends Model {
     /**
      * Generated
      */
-
     protected $table = 'ac_servicios_extranet';
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+
     protected $fillable = ['id', 'codigo_servicio', 'descripcion', 'deleted_at'];
 
     /**

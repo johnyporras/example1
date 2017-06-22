@@ -9,10 +9,11 @@ class Submodule extends Model {
     /**
      * Generated
      */
-
     protected $table = 'submodules';
-    protected $fillable = ['id', 'description', 'modules_id', 'url', 'order', 'deleted_at'];
 
+    protected $dates = ['deleted_at'];
+
+    protected $fillable = ['id', 'description', 'modules_id', 'url', 'url2', 'url3', 'url4', 'url5', 'order', 'deleted_at'];
 
     public function module()
     {

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ModifyUsersTable extends Migration
+class CreateAcTipoProveedorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,11 @@ class ModifyUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function ($table) {
-    
-            $table->string('confirm_token',100)->after('remember_token')->nullable();
+        Schema::create('ac_tipo_proveedor', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('descripcion');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -25,9 +27,6 @@ class ModifyUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function ($table) {
-    
-            $table->dropColumn('confirm_token');
-        });
+        Schema::dropIfExists('ac_tipo_proveedor');
     }
 }

@@ -35,6 +35,6 @@ class CreateAviTable extends Migration
      */
     public function down()
     {
-        Schema::drop('avi');
+        Schema::dropIfExists('avi');
     }
 }

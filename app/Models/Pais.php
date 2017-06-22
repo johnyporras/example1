@@ -13,11 +13,17 @@ class Pais extends Model
     protected $table = 'paises';
 
     /**
+     * [$timestamps description]
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-    	'name_es','name_en', 'codigo_contrato'
+    	'code', 'name_es','name_en'
     ];
 }

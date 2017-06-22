@@ -9,10 +9,20 @@ class AcEstatus extends Model {
     /**
      * Generated
      */
-
     protected $table = 'ac_estatus';
-    protected $fillable = ['id', 'nombre', 'deleted_at', 'referencia'];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['id', 'nombre', 'deleted_at'];
 
 }

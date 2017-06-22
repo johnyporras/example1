@@ -3,15 +3,32 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AcProcedimientosMedico extends Model {
-
-    use SoftDeletes;
+class AcProcedimientosMedico extends Model 
+{
     /**
-     * Generated
+     * Para usar borrado suave en la base de datos*
      */
+    use SoftDeletes;
 
+    /**
+     *  Name of database
+     * @var string
+     */
     protected $table = 'ac_procedimientos_medicos';
-    protected $fillable = ['id', 'codigo_examen', 'codigo_especialidad', 'codigo_servicio', 'tipo_examen', 'deleted_at'];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['id', 'codigo_examen', 'codigo_especialidad', 'codigo_servicio', 'tipo_examen', 'orden', 'deleted_at'];
 
 
     public function acEspecialidadesExtranet() {

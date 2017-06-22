@@ -23,7 +23,6 @@ class CreateAcEspecialidadesExtranetTable extends Migration {
 		});
 	}
 
-
 	/**
 	 * Reverse the migrations.
 	 *
@@ -31,7 +30,7 @@ class CreateAcEspecialidadesExtranetTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('ac_especialidades_extranet');
+		Schema::dropIfExists('ac_especialidades_extranet');
 	}
 
 }

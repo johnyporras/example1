@@ -31,9 +31,9 @@ class CreateAcCartaAvalTable extends Migration {
 			$table->integer('cantidad_servicios')->nullable();
 			$table->integer('tipo_afiliado')->nullable();
 			$table->date('fecha_autorizacion')->nullable();
-			$table->timestamps();
-            $table->softDeletes();
-            $table->integer('id_factura')->nullable();
+			$table->integer('id_factura')->nullable();
+				$table->timestamps();
+	            $table->softDeletes();
 		});
 	}
 

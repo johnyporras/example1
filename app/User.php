@@ -18,6 +18,13 @@ class User extends Authenticatable{
     protected $table = 'users';
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['ultimo_acceso', 'deleted_at'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

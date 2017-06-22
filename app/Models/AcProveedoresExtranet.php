@@ -31,7 +31,6 @@ class AcProveedoresExtranet extends Model {
      */
     protected $fillable = ['id', 'codigo_proveedor', 'cedula', 'nombre', 'codigo_especialidad', 'direccion', 'telefono', 'email', 'tipo_cuenta', 'numero_cuenta', 'estado_id', 'ciudad', 'deleted_at'];
 
-    
     /**
      * Get the Baremos for Proveedores.
      */
@@ -86,5 +85,5 @@ class AcProveedoresExtranet extends Model {
     public function estado() {
         return $this->belongsTo(\App\Models\AcEstado::class);
     }
-    
+
 }

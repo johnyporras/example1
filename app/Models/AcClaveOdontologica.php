@@ -10,9 +10,10 @@ class AcClaveOdontologica extends Model {
     /**
      * Generated
      */
-
     protected $table = 'ac_clave_odontologica';
+
     protected $fillable = ['id', 'clave', 'tipo_control', 'cedula_afiliado', 'codigo_contrato', 'fecha_atencion1', 'fecha_atencion2', 'fecha_atencion3', 'clave_primaria', 'motivo', 'codigo_proveedor_creador', 'estatus', 'numero_control','creador', 'telefono', 'deleted_at'];
+    
     protected $dates = ['fecha_atencion1','fecha_atencion2','fecha_atencion3','deleted_at'];
 
     /**

@@ -23,7 +23,7 @@ class Funerario extends Model
      *
      * @var array
      */
-    protected $dates = ['fecha_solicitud','deleted_at'];
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.

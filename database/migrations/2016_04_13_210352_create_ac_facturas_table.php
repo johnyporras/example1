@@ -23,18 +23,16 @@ class CreateAcFacturasTable extends Migration {
 			$table->date('fecha_creacion')->nullable();
 			$table->integer('usuario_creador')->nullable();
 			$table->integer('codigo_estatus')->nullable()->unsigned();
+			$table->string('documento')->nullable();
+            $table->integer('codigo_proveedor_creador')->nullable()->index();
             $table->timestamps();
             $table->softDeletes();
-            $table->string('documento')->nullable();
-            $table->integer('codigo_proveedor_creador')->nullable()->index();
-
             	$table->foreign('codigo_estatus')->references('id')->on('ac_estatus')
                 ->onUpdate('cascade')->onDelete('cascade');
             	$table->foreign('codigo_proveedor_creador')->references('codigo_proveedor')->on('ac_proveedores_extranet')
                 ->onUpdate('cascade')->onDelete('cascade');
 		});
 	}
-
 
 	/**
 	 * Reverse the migrations.
@@ -43,7 +41,7 @@ class CreateAcFacturasTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('ac_facturas');
+		Schema::dropIfExists('ac_facturas');
 	}
 
 }

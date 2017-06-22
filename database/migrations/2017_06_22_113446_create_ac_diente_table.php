@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePreguntasTable extends Migration
+class CreateAcDienteTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,12 @@ class CreatePreguntasTable extends Migration
      */
     public function up()
     {
-        Schema::create('preguntas', function (Blueprint $table) {
+        Schema::create('ac_diente', function(Blueprint $table)
+        {
             $table->increments('id');
-            $table->string('pregunta')->unique();
+            $table->string('descripcion')->nullable();
+            $table->integer('orden')->nullable()->unsigned();
+            $table->integer('cuadrante')->nullable()->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +30,6 @@ class CreatePreguntasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('preguntas');
+        Schema::dropIfExists('ac_diente');
     }
 }
