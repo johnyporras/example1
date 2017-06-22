@@ -28,7 +28,7 @@ class AcClaveProv extends Model
     protected $fillable = [
     	'id_clave',
         'id_proveedor',
-        'aeptado',
+        'aceptado',
         'observacion',
         'preferido'
         'fechacita'

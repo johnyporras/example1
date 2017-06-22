@@ -143,8 +143,7 @@ class RegisterController extends Controller
                 }
                 catch(QueryException $e){
                    return response()->json(['error' => '¡Ocurrio un error al generar cuenta!',
-                                            'data' => $e
-                                                ]);
+                                            'data' => $e ]);
                 }
 
            }else{
@@ -202,8 +201,7 @@ class RegisterController extends Controller
 
                 }catch(QueryException $e){
                     return response()->json(['error' => '¡Ocurrio un error al generar Afiliado!',
-                                            'data' => $e
-                                                ]);
+                                            'data' => $e ]);
                 }
 
             }else{
@@ -263,7 +261,8 @@ class RegisterController extends Controller
                                     'pregunta_2'  => $request->pregunta2,
                                     'respuesta_2' => bcrypt($request->respuesta2),
                                     'remember_token' => str_random(100),
-                                    'confirm_token'  => str_random(100)
+                                    'confirm_token'  => str_random(100),
+                                    'detalles_usuario_id' => Session::get('afiliado')->id,
                                 ]);
 
                        //Guardo data para enviar el correo
@@ -285,8 +284,7 @@ class RegisterController extends Controller
 
                     }catch(QueryException $e){
                        return response()->json(['error' => '¡Ocurrio un error al generar Usuario!',
-                                                'data' => $e
-                                                ]);
+                                                'data' => $e ]);
                     }
                     
                 }else{
