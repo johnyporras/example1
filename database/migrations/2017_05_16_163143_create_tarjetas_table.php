@@ -14,7 +14,7 @@ class CreateTarjetasTable extends Migration
     {
         Schema::create('tarjetas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('codigo_tarjeta',20)->unique();
+            $table->string('codigo_tarjeta')->unique();
             $table->enum('activada', ['S', 'N'])->default('N');
             $table->timestamps();
             $table->softDeletes();

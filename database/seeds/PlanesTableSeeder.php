@@ -27,7 +27,10 @@ class PlanesTableSeeder extends Seeder
 			["codigo_plan" => "6", "nombre" => "IMPLANTOLOGIA", "cobertura" => "IMPLANTOLOGIA", "orden" => "0", "created_at" => "2016-05-14 00:00:00"],
 			["codigo_plan" => "18", "nombre" => "BANCARIBE PLAN INDIVIDUAL", "cobertura" => "BANCARIBE PLAN INDIVIDUAL", "orden" => "0", "created_at" => "2016-05-14 00:00:00"],
 			["codigo_plan" => "19", "nombre" => "BANCARIBE PLAN FAMILIAR", "cobertura" => "BANCARIBE PLAN FAMILIAR", "orden" => "0", "created_at" => "2016-05-14 00:00:00"],
-			["codigo_plan" => "21", "nombre" => "VISION PLUS - ORIENTAL", "cobertura" => "VISION PLUS - ORIENTAL", "orden" => "0", "created_at" => "2016-05-14 00:00:00"]
+			["codigo_plan" => "21", "nombre" => "VISION PLUS - ORIENTAL", "cobertura" => "VISION PLUS - ORIENTAL", "orden" => "0", "created_at" => "2016-05-14 00:00:00"],
+			["codigo_plan" => "7", "nombre" => "MATERNIDAD", "cobertura" => "MATERNIDAD", "orden" => "0", "created_at" => "2016-05-14 00:00:00"],
+			["codigo_plan" => "8", "nombre" => "MASCOTAS", "cobertura" => "MASCOTAS", "orden" => "0", "created_at" => "2016-05-14 00:00:00"],
+
         ];
         DB::table('ac_planes_extranet')->insert($planes);
     }
