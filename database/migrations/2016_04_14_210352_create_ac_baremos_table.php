@@ -18,7 +18,7 @@ class CreateAcBaremosTable extends Migration {
 			$table->integer('id_procedimiento')->unsigned();
             $table->integer('id_proveedor')->unsigned();
 			$table->double('monto')->nullable();
-			$table->text('observaciones', 65535);
+			$table->text('observaciones', 65535)->nullable();
             $table->timestamps();
             $table->softDeletes();
             	$table->foreign('id_procedimiento')->references('id')->on('ac_procedimientos_medicos')

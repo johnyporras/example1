@@ -14,7 +14,7 @@ class CreateAcUbicacionTratamientoTable extends Migration
     {
         Schema::create('ac_ubicacion_tratamiento', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('descripcion');
+            $table->string('descripcion')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

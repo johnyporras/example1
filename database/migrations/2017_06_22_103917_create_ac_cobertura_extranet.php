@@ -15,7 +15,7 @@ class CreateAcCoberturaExtranet extends Migration
         Schema::create('ac_cobertura_extranet', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->integer('id_´plan')->nullable()->unsigned();
+            $table->integer('id_plan')->nullable()->unsigned();
             $table->integer('id_servicio')->nullable()->unsigned();
             $table->integer('id_especialidad')->nullable()->unsigned();
             $table->integer('id_procedimieto')->nullable()->unsigned();

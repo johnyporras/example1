@@ -16,10 +16,10 @@ class CreateAcDetprogpagoTable extends Migration
         {
             $table->increments('id');
             $table->integer('id_factura')->nullable()->unsigned();
-            $table->doble('montofact')->nullable();
-            $table->doble('montoimp1')->nullable();
-            $table->doble('montoimp2')->nullable();
-            $table->doble('montoimp3')->nullable();
+            $table->double('montofact')->nullable();
+            $table->double('montoimp1')->nullable();
+            $table->double('montoimp2')->nullable();
+            $table->double('montoimp3')->nullable();
             $table->integer('estatus')->nullable()->unsigned();
             $table->integer('id_progpago')->nullable()->unsigned();
             $table->timestamps();

@@ -27,7 +27,7 @@ class CreateAcCuentaTable extends Migration
             $table->integer('id_producto')->unsigned();
             $table->timestamps();
             $table->softDeletes();
-                $table->foreign('id_prodcuto')->references('id')->on('ac_producto')
+                $table->foreign('id_producto')->references('id')->on('ac_producto')
                 ->onUpdate('cascade')->onDelete('cascade');
                 $table->foreign('estatus')->references('id')->on('estatus_cuenta')
                 ->onUpdate('cascade')->onDelete('cascade');
@@ -41,7 +41,8 @@ class CreateAcCuentaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estatus_cuenta');
+        
         Schema::dropIfExists('ac_cuenta');
+        Schema::dropIfExists('estatus_cuenta');
     }
 }

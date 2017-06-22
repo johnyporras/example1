@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateAcClaveOdontologicasTable extends Migration {
+class CreateAcClaveOdontologicaTable extends Migration {
 
 	/**
 	 * Run the migrations.

@@ -12,11 +12,10 @@ class ProductosTableSeeder extends Seeder
     public function run()
     {
         $productos = [
-            ['nombre' => 'producto 1', 'costo' => '50000', 'created_at' => '2017-05-14 00:00:00'],
-            ['nombre' => 'producto 2', 'costo' => '84000', 'created_at' => '2017-05-14 00:00:00'],
-            ['nombre' => 'producto 3', 'costo' => '45000', 'created_at' => '2017-05-14 00:00:00']
+            ['nombre' => 'A-CARD', 'costo' => '50000', 'created_at' => '2017-05-14 00:00:00'],
+            ['nombre' => 'A-HORA', 'costo' => '84000', 'created_at' => '2017-05-14 00:00:00'],
+            ['nombre' => 'A-MEMBER', 'costo' => '45000', 'created_at' => '2017-05-14 00:00:00']
         ];
-
         DB::table('ac_producto')->insert($productos);
     }
 }
