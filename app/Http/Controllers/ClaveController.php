@@ -249,6 +249,8 @@ class ClaveController extends Controller{
     public function buscarCobertura(Request $request)
     {
     	
+
+
        // $id = $request->input('icedula');
        // dd($id);
     	$user = \Auth::user();
@@ -272,7 +274,7 @@ class ClaveController extends Controller{
 	       
 	        //echo $user->type;die();
 	        
-	//echo $beneficiario['contrato']."<br>";
+	///echo $beneficiario['contrato']."<br>";
 
 	            $coberturas = DB::table('ac_cuenta')
 	                ->where([['codigo_cuenta', '=', $beneficiario['contrato']]])
@@ -291,7 +293,7 @@ class ClaveController extends Controller{
 	                ->distinct()->get();
 	                
 	               
-	       dd($coberturas);
+	    
 	        $especialidades_cobertura = array_pluck($coberturas,'especialidad','id_especialidad'); // ++++++++++++++++ ARRAY
 	        
           $servicios = array_pluck($coberturas,'servicio','id_servicio');
