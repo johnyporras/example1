@@ -32,11 +32,52 @@
                 
                 	
                 	
-                	<h2>Estimad@ <br><br> {{$data['name']}}</h2>
+                	<h2>Estimad@ <br><br> </h2>
                     <b>Hemos recibido una solicitud de orden de servicio con los siguientes detalles</b>
                     <br/>
                     Detalles
-                    
+                     </br>
+                    </br>
+                    <table border="0">
+                        <tr>
+                            <td>Cedula del solicitante</td>
+                            <td>{{ $data['cedula'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Nombre del solicitante</td>
+                            <td>{{ $data['nombreafiliado'].' '.$data['apafiliado'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Telefono</td>
+                            <td>{{ $data['telefono'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Fecha de la cita</td>
+                            <td>{{ $data['fecha_cita'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Motivo</td>
+                            <td>{{ $data['motivo'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Observaciones</td>
+                            <td>{{ $data['obser'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Servicio</td>
+                            <td>{{ $data['servicio'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Especialidad</td>
+                            <td>{{ $data['especialidad'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Procedimiento</td>
+                            <td>{{ $data['procedimiento'] }}</td>
+                        </tr>
+                    </table>
+                   
+
                     
                     
                     
@@ -49,8 +90,8 @@
                     <table bgcolor="#6dcff6" border="0" cellspacing="0" cellpadding="0" class="buttonwrapper">
                         <tr>
                             <td align="center" height="50" style=" padding: 0 25px 0 25px; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;" class="button">
-                                <a href="#" style="color: #ffffff; text-align: center; text-decoration: none;">Aceptar</a>
-                                
+                                <a href="http://35.164.247.216/claves/aceptarClave/{{ $data['idclave'] }}" style="color: #ffffff; text-align: center; text-decoration: none;">Aceptar</a>
+                                &nbsp;&nbsp;&nbsp;
                                 <a href="#" style="color: #ffffff; text-align: center; text-decoration: none;">Rechazar</a>
                             </td>
                         </tr>

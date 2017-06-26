@@ -30,8 +30,8 @@ class AcClaveProv extends Model
         'id_proveedor',
         'aceptado',
         'observacion',
-        'preferido'
-        'fechacita'
+        'preferido',
+        'fechacita',
         'rangohoracita'   
     ];
 

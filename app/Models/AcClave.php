@@ -22,18 +22,29 @@ class AcClave extends Model {
      * @var string
      */
     protected $dateFormat = 'Y-m-d';
+
     public function getClave()
     {
-    	$this->select("ac_claves.id","ac_claves.clave","ac_claves.codigo_contrato",
-    			"ac_claves.clave.fecha_cita","ac_claves.clave.motivo","ac_claves.clave.costo_total"
-    			,"ac_claves.clave.telefono","ac_claves_detalle.detalle","ac_servicios_extranet.descripcion",
-    			"ac_especialidades_extranet.descripcion","ac_procedimientos_medicos.tipo_examen")
-    		->join("ac_claves_detalle","ac_clave.id","=","ac_claves_detalle.id_clave")
+    	$res = $this->select("ac_claves.id","ac_claves.clave","ac_claves.observaciones","ac_claves.codigo_contrato","ac_afiliados.nombre",
+            "ac_afiliados.apellido","cedula_afiliado",
+    			"ac_claves.fecha_cita","ac_claves.motivo","ac_claves.costo_total"
+    			,"ac_claves.telefono","ac_claves_detalle.detalle","ac_servicios_extranet.descripcion as servicio",
+    			"ac_especialidades_extranet.descripcion as especialidad","ac_procedimientos_medicos.tipo_examen as procedimiento")
+    		->join("ac_claves_detalle","ac_claves.id","=","ac_claves_detalle.id_clave")
+            ->join("ac_afiliados","ac_claves.cedula_afiliado","=","ac_afiliados.cedula")
     		->join("ac_servicios_extranet","ac_claves_detalle.codigo_servicio","=","ac_servicios_extranet.id")
     		->join("ac_especialidades_extranet","ac_claves_detalle.codigo_especialidad","=","ac_especialidades_extranet.id")
     		->join("ac_procedimientos_medicos","ac_claves_detalle.id_procedimiento","=","ac_procedimientos_medicos.id")
     		->where("ac_claves.id","=",$this->id)
     		->get();
+            if($res->count()>0)
+            {
+                return $res[0];
+            }
+            else
+            {
+                return "0";
+            }
     }
     
     

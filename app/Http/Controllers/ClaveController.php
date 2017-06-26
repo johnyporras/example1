@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\ConsultarClaveController;
 use App\Http\Controllers\ConsultarClaveTemporalController;
 use App\Http\Controllers\ValidarFechaController;
+use Illuminate\Support\Facades\Mail;
 
 class ClaveController extends Controller{
 
@@ -55,6 +56,8 @@ class ClaveController extends Controller{
            //return redirect()->to($this->getRedirectUrl())->withInput();
 
         }
+
+
 //       if (isset($request->max) &&($request->max == 0)){
 //           Session::flash('result', 'Debe agregar al menos un prpcedimiento');
 //           return false;
@@ -125,6 +128,7 @@ class ClaveController extends Controller{
 			$oProv1->codigo_proveedor=$proveedor1;
 			$rsProv1 =$oProv1->leerProv();
 			$oClave = new AcClave();
+      $oClave->id=$claves->id;
 			$rsClave=$oClave->getClave();
             $oDetalleP= new AcClaveProv();
             $oDetalleP->id_clave=$claves->id;
@@ -135,16 +139,29 @@ class ClaveController extends Controller{
             $data = [
             		'nombre' =>$rsProv1->nombre,
             		'email' => $rsProv1->email,
-            		'datosclave' =>$rsClave
+            		'nombreafiliado'=>$rsClave->nombre,
+                'apafiliado'=>$rsClave->apellido,
+                'cedula'=>$rsClave->cedula_afiliado,
+                'fecha_cita'=>$rsClave->fecha_cita,
+                'telefono'=>$rsClave->telefono,
+                'obser'=>$rsClave->observaciones,
+                'motivo'=>$rsClave->observaciones,
+                'servicio'=>$rsClave->servicio,
+                'especialidad'=>$rsClave->especialidad,
+                'procedimiento'=>$rsClave->procedimiento,
+                'idclave'=>$rsClave->id
+
         		];
             
+
+           // dd($data['datosclave']->clave);
             // Envio de Correo para confirmar
             Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
             	$mail->subject('Nueva solicitud de Servicios');
             	$mail->to($data['email'], $data['nombre']);
             });
             
-            	$oProv2 = new AcProveedoresExtranet();
+          /*  	$oProv2 = new AcProveedoresExtranet();
             	$oProv2->codigo_proveedor=$proveedor2;
             	$rsProv2 =$oProv1->leerProv();
             	$oClave = new AcClave();
@@ -166,7 +183,7 @@ class ClaveController extends Controller{
             		$mail->subject('Nueva solicitud de Servicios');
             		$mail->to($data['email'], $data['nombre']);
             	});
-            	
+            	*/
             
             
             
@@ -197,6 +214,17 @@ class ClaveController extends Controller{
      * @param Request
      * @return Response
      */
+
+
+    public function aceptarClave($id)
+    {
+      if($id!="")
+      {
+        
+      }
+    }
+
+
     public function generar(Request $request){
 
         $ValidarFecha = new ValidarFechaController();
@@ -255,11 +283,13 @@ class ClaveController extends Controller{
        // dd($id);
     	$user = \Auth::user();
     //	dd($user->detalles_usuario_id);
+      //$user->detalles_usuario_id=30005;
     	//if($user->type==5)
     	if(true)
     	{
     		
     		$objAfiliado= new AcAfiliado();
+        //dd($user->detalles_usuario_id);
     		$obCuenta = new AcCuenta();
     		$rsAf =$objAfiliado->findOrFail($user->detalles_usuario_id);
     		$rsCu=$obCuenta->findOrFail($rsAf->id_cuenta);	

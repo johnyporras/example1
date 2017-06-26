@@ -213,6 +213,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('claves/generar'      , 'ClaveController@generar');
     Route::post('claves/generar'     , 'ClaveController@generar');
     Route::get('claves/generarFinal', 'ClaveController@buscarCobertura');
+    Route::get('claves/aceptarClave/{id}','ClaveController@aceptarClave');
     Route::post('claves/procesar'    , 'ClaveController@procesarGuardar');
      
     //CONSULTAR CLAVES DE ATENCION
