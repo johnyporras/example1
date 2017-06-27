@@ -26,7 +26,7 @@ class AcClave extends Model {
     public function getClave()
     {
     	$res = $this->select("ac_claves.id","ac_claves.clave","ac_claves.observaciones","ac_claves.codigo_contrato","ac_afiliados.nombre",
-            "ac_afiliados.apellido","cedula_afiliado",
+            "ac_afiliados.apellido","cedula_afiliado","ac_afiliados.email as emailafiliado",
     			"ac_claves.fecha_cita","ac_claves.motivo","ac_claves.costo_total"
     			,"ac_claves.telefono","ac_claves_detalle.detalle","ac_servicios_extranet.descripcion as servicio",
     			"ac_especialidades_extranet.descripcion as especialidad","ac_procedimientos_medicos.tipo_examen as procedimiento")
@@ -46,6 +46,9 @@ class AcClave extends Model {
                 return "0";
             }
     }
+
+
+    
     
     
     function setFechaCitaAttribute($date) {

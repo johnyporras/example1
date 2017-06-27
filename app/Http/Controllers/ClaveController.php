@@ -133,6 +133,7 @@ class ClaveController extends Controller{
             $oDetalleP= new AcClaveProv();
             $oDetalleP->id_clave=$claves->id;
             $oDetalleP->id_proveedor=$proveedor1;
+            $oDetalleP->preferido=1;
             $oDetalleP->aceptado=0;
             $oDetalleP->incluir();
             
@@ -149,7 +150,9 @@ class ClaveController extends Controller{
                 'servicio'=>$rsClave->servicio,
                 'especialidad'=>$rsClave->especialidad,
                 'procedimiento'=>$rsClave->procedimiento,
-                'idclave'=>$rsClave->id
+                'idclave'=>$rsClave->id,
+                'idclaveprov'=>$proveedor1,
+                'tipo'=>1
 
         		];
             
@@ -161,17 +164,14 @@ class ClaveController extends Controller{
             	$mail->to($data['email'], $data['nombre']);
             });
             
-          /*  	$oProv2 = new AcProveedoresExtranet();
-            	$oProv2->codigo_proveedor=$proveedor2;
-            	$rsProv2 =$oProv1->leerProv();
-            	$oClave = new AcClave();
-            	$rsClave=$oClave->getClave();
+
             	$oDetalleP= new AcClaveProv();
             	$oDetalleP->id_clave=$claves->id;
             	$oDetalleP->id_proveedor=$proveedor2;
-            	$oDetalleP->aceptado=0;
+            	$oDetalleP->preferido=0;
+                $oDetalleP->aceptado=0;
             	$oDetalleP->incluir();
-            	
+          /*  	
             	$data = [
             			'nombre' =>$rsProv2->nombre,
             			'email' => $rsProv2->email,
@@ -215,12 +215,155 @@ class ClaveController extends Controller{
      * @return Response
      */
 
-
-    public function aceptarClave($id)
+    public function aceptarClaveGrabar(Request $request)
     {
-      if($id!="")
-      {
         
+        if($request->id!="" && $request->idclaveprov!="")
+        {
+          AcClaveProv::where("id_clave","=",$request->id)
+                      ->where("id_proveedor","=",$request->idclaveprov)
+                      ->update(["fechacita"=>$request->fechacita,"horacita"=>$request->horacita
+                              ,"direccion"=>$request->direccion,"observacion"=>$request->observac,
+                              "aceptado"=>'1']);
+
+          AcClave::where("id","=",$request->id)
+                ->update(["codigo_proveedor_creador"=>$request->idclaveprov]);
+
+                $oClave = new AcClave();
+                $oClave->id=$request->id;
+                $rsClave=$oClave->getClave();
+                $rsProvC=AcProveedoresExtranet::where("codigo_proveedor","=",$request->idclaveprov);
+                $rsProv1=$rsProvC[0];
+                $data = [
+                'nombre' =>$rsProv1->nombre,
+                'email' => $rsClave->emailafiliado,
+                'fecha_cita'=>$request->fechacita,
+                'fecha_cita'=>$request->fechacita,
+                'clave'=>$rsClave->clave,
+                'direccion'=>$request->direccion,
+                'observacion'=>$request->observac,
+                'telefono'=>$rsClave->telefono,
+                'motivo'=>$rsClave->motivo,
+                'servicio'=>$rsClave->servicio,
+                'especialidad'=>$rsClave->especialidad,
+                'procedimiento'=>$rsClave->procedimiento,
+                'idclave'=>$rsClave->id,
+                'idclaveprov'=>$rsProv1->id
+            ];
+            
+           // dd($data['datosclave']->clave);
+            // Envio de Correo para confirmar
+            Mail::send('mails.claveafil1', ['data' => $data], function($mail) use($data){
+              $mail->subject('Confirmación de aceptacion de Servicios');
+              $mail->to($data['email'], $data['nombre']);
+            });
+
+             return view("claves.confirmaAceptarClave");
+             
+        }        
+    }
+
+
+
+
+
+    public function rechazarClaveGrabar1(Request $request)
+    {
+    //    dd($request->id);
+        if($request->id!="" && $request->idclaveprov!="")
+        {
+          AcClaveProv::where("id_clave","=",$request->id)
+                      ->where("id_proveedor","=",$request->idclaveprov)
+                      ->update(["observacion"=>$request->observac,
+                              "aceptado"=>'0']);
+
+
+            
+          
+
+                $oClave = new AcClave();
+                $oClave->id=$request->id;
+                $rsClave=$oClave->getClave();
+
+//dd($request->tipo);
+                if($request->tipo==1)
+                {
+
+                   // dd($request->id);
+                    $oProv = new AcClaveProv();
+                    $oProv->idclave =$request->id; 
+                    $rsProv2=$oProv->getProvSecundario();
+
+                  $data = [
+                    'nombre' =>$rsProv2->nombre,
+                    'email' => $rsProv2->email,
+                    'nombreafiliado'=>$rsClave->nombre,
+                    'apafiliado'=>$rsClave->apellido,
+                    'cedula'=>$rsClave->cedula_afiliado,
+                    'fecha_cita'=>$rsClave->fecha_cita,
+                    'telefono'=>$rsClave->telefono,
+                    'obser'=>$rsClave->observaciones,
+                    'motivo'=>$rsClave->observaciones,
+                    'servicio'=>$rsClave->servicio,
+                    'especialidad'=>$rsClave->especialidad,
+                    'procedimiento'=>$rsClave->procedimiento,
+                    'idclave'=>$rsClave->id,
+                    'idclaveprov'=>$rsProv2->id,
+                    'tipo'=>2
+                    ];
+                
+
+               // dd($data['datosclave']->clave);
+                // Envio de Correo para confirmar
+                Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
+                    $mail->subject('Nueva solicitud de Servicios');
+                    $mail->to($data['email'], $data['nombre']);
+                });
+          
+            }
+            else
+            {
+                 $data = [
+                'nombre' =>$rsClave->nombre." ".$rsClave->apellido,
+                'email' => $rsClave->emailafiliado,
+                'fecha_cita'=>$rsClave->fecha_cita,
+                'telefono'=>$rsClave->telefono,
+                'motivo'=>$rsClave->motivo,
+                'servicio'=>$rsClave->servicio,
+                'especialidad'=>$rsClave->especialidad,
+                'procedimiento'=>$rsClave->procedimiento,
+                'idclave'=>$rsClave->id
+            ];
+            
+           // dd($data['datosclave']->clave);
+            // Envio de Correo para confirmar
+            Mail::send('mails.claveafil2', ['data' => $data], function($mail) use($data){
+              $mail->subject('Confirmación de aceptacion de Servicios');
+              $mail->to($data['email'], $data['nombre']);
+            });
+
+            }
+             return view("claves.confirmaRechazaClave");
+             
+        }        
+    }
+
+
+
+    public function aceptarClave($id,$idclaveprov)
+    {
+      if($id!="" && $idclaveprov!="")
+      {
+              return view("claves.aceptarClave",compact('id','idclaveprov'));
+      }
+    }
+
+
+    public function rechazarClave($id,$idclaveprov,$tipo)
+    {
+      if($id!="" && $idclaveprov!="")
+      {
+              return view("claves.rechazarClave1",compact('id','idclaveprov','tipo'));
       }
     }
 
