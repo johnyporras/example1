@@ -23,9 +23,10 @@
     
     <ul>
         <li><a href="#step-1">Tarjeta</a></li>
-        <li><a href="#step-2">Cuenta</a></li>
-        <li><a href="#step-3">Afiliado</a></li>
-        <li><a href="#step-4">Registro</a></li>
+        <li><a href="#step-2">Terminos</a></li>
+        <li><a href="#step-3">Cuenta</a></li>
+        <li><a href="#step-4">Afiliado</a></li>
+        <li><a href="#step-5">Registro</a></li>
     </ul>
 
     <div>
@@ -62,6 +63,47 @@
         </div>
 
         <div id="step-2">
+
+            <div id="rAccept" class="alert alert-success">
+                <p><i class="fa fa-check"></i> <span class="text">He leído y acepto los términos y condiciones de uso</span>
+                <button type="button" class="close" onclick="$('#rAccept').hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </p>
+            </div> 
+
+            {!! Form::open(['url' => '/check', 'class' => 'form-horizontal form-bordered form-control-borderless', 'method' => 'get', 'id' => 'checkForm' ]) !!}
+                    
+            <div class="form-group {{ $errors->has('pais') ? ' has-error' : '' }}">
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="gi gi-credit_card"></i></span>
+                        {{ Form::select('pais', $paises, null, ['class' => 'form-control input-lg', 'placeholder'=>'Seleccione Pais', 'required', 'id' => 'pais']) }}
+                    </div>
+                    @if ($errors->has('pais'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('pais') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            <div id="contTerminos">
+
+                <div id="pTerminos" class="text-justify"></div>
+                <hr>
+                <div id="bTerminos" class="mt20">
+                    <div class="col-xs-6 text-center">
+                        <button id="clear" type="button" class="btn btn-danger btn-md"><i class="fa fa-close fa-fw"></i>Cancelar</button>
+                     </div>
+                    <div class="col-xs-6 text-center">
+                        <button id="accept" type="button" class="btn btn-success btn-md"><i class="fa fa-check fa-fw"></i> Acepto</button>
+                    </div>
+                </div>
+            </div>
+
+            {!! Form::close() !!}
+        </div>
+
+        <div id="step-3">
 
             <div id="result1" class="alert alert-danger">
                 <p><i class="fa fa-exclamation-triangle"></i> <span class="text"></span>
@@ -240,7 +282,7 @@
         {!! Form::close() !!}
         </div>
 
-        <div id="step-3">
+        <div id="step-4">
 
             <div id="result2" class="alert alert-danger">
                 <p><i class="fa fa-exclamation-triangle"></i> <span class="text"></span>
@@ -384,7 +426,7 @@
         {!! Form::close() !!}
         </div>
 
-        <div id="step-4">
+        <div id="step-5">
 
             <div id="result3" class="alert alert-danger">
                 <p><i class="fa fa-exclamation-triangle"></i> <span class="text"></span>
@@ -518,6 +560,8 @@ $(document).ready(function() {
 
     // Valores por defecto
     var validate = false;
+    var accept = false;
+    var submitt = false;
     var submitted = false;
     var submitted1 = false;
     var success = false;
@@ -526,7 +570,10 @@ $(document).ready(function() {
     $('#result').hide();
     $('#result1').hide();
     $('#result2').hide();
-    $('#result3').hide();  
+    $('#result3').hide();
+    // Para los terminos
+    $('#contTerminos').hide();
+    $('#rAccept').hide();
     
     /** Variable Config parsley **/
     var parsleyOptions = {
@@ -586,15 +633,26 @@ $(document).ready(function() {
 
     // Verifica si puede mostrar el ultimo boton para finalizar
     $("#wizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection) {
-        // Enable finish button only on last step
+        // Enable finish button only on last steps
+        if(stepNumber == 0){ 
+            if (submitt == false) {
+                validate = false;
+            }
+        }
+        
         if(stepNumber == 1){ 
+            if (accept == false) {
+                validate = false;
+            }
+        }
 
+        if(stepNumber == 2){ 
             if (submitted == false) {
                 validate = false;
             }
         }
 
-        if(stepNumber == 2){
+        if(stepNumber == 3){
             if (submitted1 == false) {
                 validate = false;
             }
@@ -694,6 +752,7 @@ $(document).ready(function() {
                     $('#result').addClass('alert-success'); 
                     $('#result .text').text(data.success)
                     // Permito pasar al otro step del registro
+                    submitt = true;
                     validate = true;
                     // paso el siguiente punto
                     setTimeout(function() {
@@ -738,8 +797,6 @@ $(document).ready(function() {
                 tamano: tamano 
             },
             success: function(data) {
-                // limpio el campo tarjeta
-                //$("#tarjeta").val("");
                 //Verifico la respuesta del servidor
                 if (data.error) {
                     // Muestro mensaje de error
@@ -889,16 +946,52 @@ $(document).ready(function() {
                     $('#result3').addClass('alert-success'); 
                     $('#result3 .text').text(data.success);
                     success = true;
-                    //Redirecciono a login
-                   /* setTimeout(function() {
-                            $('.sw-btn-next').click();
-                            window.location.href = "{{ url('login') }}";
-                        }, 1000);*/
-
                 }
             }
         });
     });
+
+    /************************************************************************/
+    // Terminos y Condiciones
+
+    // Generar Afiliado
+    $('#pais').on('change', function (e) {
+        // Guardo el valor del pais ingresada..
+        var pais = $('#pais').val();
+        // Ejecuto la peticion para validar la tarjeta
+        $.ajax({
+            type: "GET",
+            url:'{{ url('/pais') }}',
+            data: {pais: pais},
+            success: function(data) {
+                // Muestro contendor de terminos
+                $('#contTerminos').show();
+                // Muestro los terminos en pantalla.
+                $('#pTerminos').text(data.value.terminos);
+            }
+        });
+    }); 
+
+    // Al aceptar las condiciones
+    $('#accept').on('click', function (e) {
+        // Muestro mensaje de acceptacion
+        $('#rAccept').show();
+        $('#pais').attr('disabled','disabled');
+        // valido los terminos
+        accept = true;
+        validate = true;
+        // paso el siguiente punto
+        setTimeout(function() {
+            $('.sw-btn-next').click();
+            $('#bTerminos').hide();
+        }, 1000);
+    });
+
+    // Al aceptar las condiciones
+    $('#clear').on('click', function (e) {
+        // regreso al paso 1
+        $('.sw-btn-prev').click();
+    });  
 
 });
 </script>

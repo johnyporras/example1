@@ -50,7 +50,7 @@
         <!-- END Login Full Background -->
 
         <!-- Login Container -->
-        <div id="login-container" class="animation-fadeIn">
+        <div id="{{ Request::is('register*') ? 'register-container' : 'login-container'  }}" class="animation-fadeIn">
             <!-- Login Title -->
             <div class="login-title text-center">
                 <a href="{{ url('/') }}" >

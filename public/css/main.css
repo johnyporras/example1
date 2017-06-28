@@ -1374,6 +1374,7 @@ a.widget.widget-hover-effect4:active {
 }
 
 #login-container,
+#register-container,
 #login-alt-container {
     position: absolute;
     width: 300px;
@@ -1383,29 +1384,35 @@ a.widget.widget-hover-effect4:active {
     z-index: 1000;
 }
 
-#login-container .login-title {
+#login-container .login-title,
+#register-container .login-title
+{
     padding: 20px 10px;
     background: #444444;
     background: rgba(0, 0, 0, 0.6);
 }
 
 #login-container .login-title h1,
+#register-container .login-title h1,
 #login-alt-container h1 {
     font-size: 26px;
     color: #ffffff;
 }
 
 #login-container .login-title h1 small,
+#register-container .login-title h1 small,
 #login-alt-container h1 small {
     font-size: 16px;
     color: #dddddd;
 }
 
-#login-container > .block {
+#login-container > .block,
+#register-container > .block {
     border: none;
 }
 
-#login-container .register-terms {
+#login-container .register-terms,
+#register-container .register-terms {
     line-height: 30px;
     margin-right: 10px;
     float: left;
@@ -4010,6 +4017,12 @@ p, .table, .alert, .carousel {
         width: 480px;
         top: 186px;
         margin-left: -240px;
+    }
+
+    #register-container {
+        width: 580px;
+        top: 186px;
+        margin-left: -290px;
     }
 
     .full-page-container {

@@ -50,6 +50,11 @@ Route::post('/registro', [
     'as'   => 'register.postRegister' 
 ]);
 
+Route::get('/pais', [
+    'uses' => 'RegisterController@checkTerminos',
+    'as'   => 'register.checkTerminos' 
+]);
+
 Route::get('verify/{email}/{confirm_token}', [
     'uses' => 'RegisterController@confirmRegister',
     'as'   => 'register.confirm' 

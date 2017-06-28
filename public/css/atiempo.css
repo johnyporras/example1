@@ -703,3 +703,11 @@ table.dataTable thead .sorting_desc:after {
         background-color: #17b3f1;
     }
 }
+
+/** Modificacion del parrafo para los terminos en registro */
+#contTerminos{
+    margin: 0 20px;
+    padding: 10px 15px;
+    overflow-y: scroll;
+    height: 300px;
+}

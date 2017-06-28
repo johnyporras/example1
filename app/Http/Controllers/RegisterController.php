@@ -14,7 +14,9 @@ use App\Models\AcEstado;
 use App\Models\AcProducto;
 use App\Models\AcPlanesExtranet;
 use App\Models\Mascota;
+use App\Models\Pais;
 use App\Models\Tarjeta;
+use App\Models\Terminos;
 use App\Models\Tamano;
 use App\User;
 use Hash;
@@ -39,13 +41,15 @@ class RegisterController extends Controller
         $planes = AcPlanesExtranet::orderBy('nombre','ASC')->pluck('nombre', 'id');
         // Cargo los estados
         $estados = AcEstado::orderBy('estado','ASC')->pluck('estado', 'id');
-        // Cargo los estados
+        // Cargo los paises
+        $paises = Pais::orderBy('name_es','ASC')->pluck('name_es', 'id');
+        // Cargo los tamaños
         $tamanos = Tamano::pluck('titulo', 'id');
         //Preguntas 
         $preguntas1 = DB::table('preguntas')->take(10)->orderBy('id','asc')->pluck('pregunta', 'pregunta');
         $preguntas2 = DB::table('preguntas')->take(10)->orderBy('id','desc')->pluck('pregunta', 'pregunta');
 
-        return view('auth.register', compact('productos', 'planes','estados', 'tamanos','preguntas1','preguntas2'));
+        return view('auth.register', compact('productos', 'planes','estados', 'tamanos','preguntas1','preguntas2','paises'));
     }
 
     /**
@@ -88,6 +92,34 @@ class RegisterController extends Controller
                 return response()->json(['error' => 'Tarjeta Invalida']);
             }
         }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function checkTerminos(Request $request)
+    {   
+        //if($request->ajax()){
+            
+            // Guardo el valor de l formulario para comparar
+            $pais = $request->pais;
+
+            //realizo un filtro para buscar en la tabla tarjetas
+            $terminos = Terminos::where('pais_id','=', $pais)->first();
+
+            if ($terminos !== null) {
+                
+                return response()->json(['value' => $terminos ]);
+            
+            } else {
+                //terminos default
+                $terminos1 = Terminos::where('pais_id','=', 239)->first();
+
+                return response()->json(['value' => $terminos1 ]);
+            }
+        //}
     }
 
     public function cuenta(Request $request)
