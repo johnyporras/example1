@@ -58,7 +58,7 @@ class AcClaveProv extends Model
 
     public function getProvSecundario()
     {
-        $res = $this->select("ac_proveedores_extranet.id","ac_proveedores_extranet.nombre","ac_proveedores_extranet.email")
+        $res = $this->select("ac_proveedores_extranet.id","ac_proveedores_extranet.nombre","ac_proveedores_extranet.email","ac_proveedores_extranet.codigo_proveedor")
                 ->join("ac_proveedores_extranet","ac_clavedetalleprov.id_proveedor","=","ac_proveedores_extranet.codigo_proveedor")
                 ->where("id_clave","=",$this->idclave)
                 ->where("preferido","=",0)->get();

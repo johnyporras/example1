@@ -233,8 +233,9 @@ class ClaveController extends Controller{
 
     public function aceptarClaveGrabar(Request $request)
     {
+         $user = \Auth::user();
 
-        if($request->id!="" && $request->idclaveprov!="")
+        if($request->id!="" && $request->idclaveprov!="" && $user->type!='3' && $user->detalles_usuario_id!=$request->idclaveprov)
         {
 
             $request->fechacita
@@ -297,8 +298,9 @@ class ClaveController extends Controller{
 
     public function rechazarClaveGrabar1(Request $request)
     {
+        $user = \Auth::user();
     //    dd($request->id);
-        if($request->id!="" && $request->idclaveprov!="")
+        if($request->id!="" && $request->idclaveprov!="" && $user->type!='3' && $user->detalles_usuario_id!=$request->idclaveprov)
         {
           AcClaveProv::where("id_clave","=",$request->id)
                       ->where("id_proveedor","=",$request->idclaveprov)
@@ -336,7 +338,7 @@ class ClaveController extends Controller{
                     'especialidad'=>$rsClave->especialidad,
                     'procedimiento'=>$rsClave->procedimiento,
                     'idclave'=>$rsClave->id,
-                    'idclaveprov'=>$rsProv2->id,
+                    'idclaveprov'=>$rsProv2->codigo_proveedor,
                     'tipo'=>2
                     ];
 
