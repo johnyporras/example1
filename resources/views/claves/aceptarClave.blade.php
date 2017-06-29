@@ -37,7 +37,7 @@
           </div>
      </div>               
      <div class="row">
-                <div class="col-sm-3 pull-left">
+                <div class="col-sm-3 pull-center">
                     {!! Form::submit('Aceptar Cita', ['class' => 'btn btn-primary form-control', 'id' => 'seleccionar']) !!}
                 </div>
       </div>
@@ -46,7 +46,7 @@
 @section('script')
     <script>
      
-
-
+  $( "#fechacita" ).datepicker({dateFormat: "dd/mm/yyyy"});
+  
     </script>
 @endsection

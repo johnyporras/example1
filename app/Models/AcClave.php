@@ -27,10 +27,11 @@ class AcClave extends Model {
     {
     	$res = $this->select("ac_claves.id","ac_claves.clave","ac_claves.observaciones","ac_claves.codigo_contrato","ac_afiliados.nombre",
             "ac_afiliados.apellido","cedula_afiliado","ac_afiliados.email as emailafiliado",
-    			"ac_claves.fecha_cita","ac_claves.motivo","ac_claves.costo_total"
+    			"ac_claves.motivo","ac_claves.costo_total"
     			,"ac_claves.telefono","ac_claves_detalle.detalle","ac_servicios_extranet.descripcion as servicio",
     			"ac_especialidades_extranet.descripcion as especialidad","ac_procedimientos_medicos.tipo_examen as procedimiento")
-    		->join("ac_claves_detalle","ac_claves.id","=","ac_claves_detalle.id_clave")
+    		      ->selectRaw("to_char(ac_claves.fecha_cita, 'dd/MM/YYYY') as fecha_cita")
+            ->join("ac_claves_detalle","ac_claves.id","=","ac_claves_detalle.id_clave")
             ->join("ac_afiliados","ac_claves.cedula_afiliado","=","ac_afiliados.cedula")
     		->join("ac_servicios_extranet","ac_claves_detalle.codigo_servicio","=","ac_servicios_extranet.id")
     		->join("ac_especialidades_extranet","ac_claves_detalle.codigo_especialidad","=","ac_especialidades_extranet.codigo_especialidad")

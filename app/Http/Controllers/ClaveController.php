@@ -107,6 +107,7 @@ class ClaveController extends Controller{
         $request = array_add($request, 'costo_total', $monto_total);
         $request = array_add($request, 'cantidad_servicios', count($monto_total));
         $request->estatus_clave=1;
+
         $claves = $this->store($request);
         if(isset($claves)){
             for($i = 0; $i < $request->max; $i++):
@@ -235,6 +236,8 @@ class ClaveController extends Controller{
 
         if($request->id!="" && $request->idclaveprov!="")
         {
+
+            $request->fechacita
           AcClaveProv::where("id_clave","=",$request->id)
                       ->where("id_proveedor","=",$request->idclaveprov)
                       ->update(["fechacita"=>$request->fechacita,"horacita"=>$request->horacita
