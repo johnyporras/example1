@@ -46,7 +46,7 @@
 @section('script')
     <script>
      
-  $( "#fechacita" ).datepicker({dateFormat: "dd/mm/yyyy"});
+  $( "#fechacita" ).datepicker({dateFormat: "dd/mm/yy"});
   
     </script>
 @endsection

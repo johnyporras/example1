@@ -14,6 +14,7 @@ use App\Models\AcProveedoresExtranet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
+use App\Lib\functions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\ConsultarClaveController;
 use App\Http\Controllers\ConsultarClaveTemporalController;
@@ -45,6 +46,7 @@ class ClaveController extends Controller{
      * @return Response
      */
     public function procesarGuardar(Request $request){
+
         $monto_total = 0;
         $costo       = 0;
         $monto       = array();
@@ -109,6 +111,7 @@ class ClaveController extends Controller{
         $request->estatus_clave=1;
 
         $claves = $this->store($request);
+
         if(isset($claves)){
             for($i = 0; $i < $request->max; $i++):
 
@@ -142,7 +145,7 @@ class ClaveController extends Controller{
             $oDetalleP->preferido=1;
             $oDetalleP->aceptado=0;
             $oDetalleP->incluir();
-
+  
             $data = [
             		'nombre' =>$rsProv1->nombre,
             		'email' => $rsProv1->email,
@@ -233,12 +236,16 @@ class ClaveController extends Controller{
 
     public function aceptarClaveGrabar(Request $request)
     {
+
+
          $user = \Auth::user();
 
-        if($request->id!="" && $request->idclaveprov!="" && $user->type!='3' && $user->detalles_usuario_id!=$request->idclaveprov)
+        if($request->id!="" && $request->idclaveprov!="" && $user->type=='3' && $user->detalles_usuario_id==$request->idclaveprov)
         {
 
-            
+         //   dd("asdasd");
+
+            $request->fechacita=functions::uf_convertirdatetobd($request->fechacita);
           AcClaveProv::where("id_clave","=",$request->id)
                       ->where("id_proveedor","=",$request->idclaveprov)
                       ->update(["fechacita"=>$request->fechacita,"horacita"=>$request->horacita
@@ -290,6 +297,10 @@ class ClaveController extends Controller{
              return view("claves.confirmaAceptarClave");
 
         }
+        else
+        {
+            return view("seguridad.nopermiso");            
+        }
     }
 
 
@@ -300,8 +311,10 @@ class ClaveController extends Controller{
     {
         $user = \Auth::user();
     //    dd($request->id);
-        if($request->id!="" && $request->idclaveprov!="" && $user->type!='3' && $user->detalles_usuario_id!=$request->idclaveprov)
+        if($request->id!="" && $request->idclaveprov!="" && $user->type=='3' && $user->detalles_usuario_id==$request->idclaveprov)
         {
+
+
           AcClaveProv::where("id_clave","=",$request->id)
                       ->where("id_proveedor","=",$request->idclaveprov)
                       ->update(["observacion"=>$request->observac,
@@ -379,6 +392,10 @@ class ClaveController extends Controller{
             }
              return view("claves.confirmaRechazaClave");
 
+        }
+        else
+        {
+            return view("seguridad.nopermiso");            
         }
     }
 
