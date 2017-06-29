@@ -6,6 +6,7 @@
 <?php
      $user = Auth::user();
      $user_type =  $user->type;
+     //dd($user_type);
 ?>
   @foreach ($clave as $data_clave)
     <div class="table-responsive">
@@ -42,7 +43,7 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                 @if($user_type != 3 )
+                 @if($user_type !='3' && $user_type!='5')
                     <th>Clave</th>
                  @endif
                     <th>Cuenta</th>
@@ -53,7 +54,7 @@
             </thead>
             <tbody>
                 <tr>
-                  @if($user_type != 3 )
+                  @if($user_type !='3' && $user_type!='5')
                     <td>{{ $data_clave->clave}}</td>
                   @endif
                     <td>{{ $data_clave->contrato}}</td>
@@ -90,15 +91,15 @@
             </tbody>
         </table>
     </div>
-    <div class="form-group">
+   <!-- <div class="form-group">
       <div class="col-sm-offset-2 col-sm-3">
           <p><a href="{{ url('claves/pdfDetalle?id_clave='.$id_clave.'&accion=imprimir') }}"  target="_blank" class="btn btn-primary form-control ">Imprimir</a>
           </p>
       </div>
-        <div class="col-sm-offset-2 col-sm-3"><!--   -->
+        <div class="col-sm-offset-2 col-sm-3">
           <p><a href="{{ url('claves/pdfDetalle?id_clave='.$id_clave.'&accion=descargar') }}" target="_blank" class="btn btn-primary form-control ">Descargar</a>
           </p>
-        </div>
+        </div> -->
     </div>
 @endif
 @endsection

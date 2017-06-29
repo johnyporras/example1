@@ -79,7 +79,7 @@ class ClaveController extends Controller{
         /**
         * Validacion del codigo_contrato = 0, estatus = 5 => Pendiente, sino estatus = 3 => Aprobado
         */
-        $estatus_clave = 10;
+        $estatus_clave = 1;
         $request = array_add($request, 'estatus_clave', $estatus_clave);
        //            $request = array_add($request, 'estatus_clave', $estatus_clave);
 
@@ -160,11 +160,11 @@ class ClaveController extends Controller{
 
            // dd($data['datosclave']->clave);
             // Envio de Correo para confirmar
-            Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
+            /*Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
             	$mail->subject('Nueva solicitud de Servicios');
             	$mail->to($data['email'], $data['nombre']);
             });
-            
+            */
 
             	$oDetalleP= new AcClaveProv();
             	$oDetalleP->id_clave=$claves->id;
@@ -172,31 +172,34 @@ class ClaveController extends Controller{
             	$oDetalleP->preferido=0;
                 $oDetalleP->aceptado=0;
             	$oDetalleP->incluir();
-          /*  	
-            	$data = [
+          
+           /* 	$data = [
             			'nombre' =>$rsProv2->nombre,
             			'email' => $rsProv2->email,
             			'datosclave' =>$rsClave
-            	];
+            	];*/
             	
             	// Envio de Correo para confirmar
             	Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
             		$mail->subject('Nueva solicitud de Servicios');
             		$mail->to($data['email'], $data['nombre']);
             	});
-            	*/
+            	
             
             
             
             
             
             
-            
+ /*           
               if($user->type == 3){//TIPO PROVEEDOR
                    Session::flash('status', 'Su clave  ha sido generada!');
               }else{
                       Session::flash('status', 'Su clave '.$clave.' ha sido generada!');
                    }
+*/
+            Session::flash('status', 'Su clave  ha sido generada!');
+
             $request = array_add($request, 'show', $claves->id);
             if (( isset($request->codigo_contrato)) && ($request->codigo_contrato == 0)){
                 $consultarClaveTemporal = new ConsultarClaveTemporalController();
@@ -426,9 +429,6 @@ class ClaveController extends Controller{
      */
     public function buscarCobertura(Request $request)
     {
-    	
-
-
        // $id = $request->input('icedula');
        // dd($id);
     	$user = \Auth::user();
