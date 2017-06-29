@@ -54,6 +54,7 @@ class ConsultarClaveController extends Controller
 
 			   	$query = DB::table('ac_claves')
 			   	->where([['ac_cuenta.fecha','<=',date('Y-m-d').' 00:00:00'], ['ac_claves.estatus_clave', '!=', 5]])
+                ->where("ac_proveedores_extranet.codigo_proveedor","=",$user->detalles_usuario_id)
 			   	->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')
 			   	->join('ac_afiliados'              , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
 			   	->join('ac_cuenta'              , 'ac_afiliados.id_cuenta',"=", 'ac_cuenta.id')
@@ -135,7 +136,6 @@ class ConsultarClaveController extends Controller
      }else{
          $query = DB::table('ac_claves')
                 ->where([['ac_cuenta.fecha','<=',date('Y-m-d').' 00:00:00']])
-                ->where("ac_proveedores_extranet.codigo_proveedor","=",$user->detalles_usuario_id)
                 ->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')
                 ->join('ac_afiliados'              , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
                 ->join('ac_cuenta'              , 'ac_afiliados.id_cuenta',"=", 'ac_cuenta.id')
