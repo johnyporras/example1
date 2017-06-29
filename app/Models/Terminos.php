@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Models;
+namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pais extends Model
+class Terminos extends Model
 {
     /**
      *  Name of database
      * @var string
      */
-    protected $table = 'paises';
+    protected $table = 'terminos';
 
     /**
      * [$timestamps description]
@@ -24,13 +24,13 @@ class Pais extends Model
      * @var array
      */
     protected $fillable = [
-    	'code', 'name_es','name_en'
+    	'pais_id', 'terminos'
     ];
 
     /**
-     * Relación con la tabla pais
-     */
-    public function terminos() {
-        return $this->hasOne(\App\Models\Termino::class);
+	 * Relación con la tabla pais
+	 */
+	public function pais() {
+        return $this->belongsTo(\App\Models\Pais::class);
     }
 }
