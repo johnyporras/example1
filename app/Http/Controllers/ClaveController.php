@@ -129,7 +129,7 @@ class ClaveController extends Controller{
 			$oProv1->codigo_proveedor=$proveedor1;
 			$rsProv1 =$oProv1->leerProv();
 			$oClave = new AcClave();
-      $oClave->id=$claves->id;
+        $oClave->id=$claves->id;
 			$rsClave=$oClave->getClave();
             $oDetalleP= new AcClaveProv();
             $oDetalleP->id_clave=$claves->id;
@@ -160,11 +160,11 @@ class ClaveController extends Controller{
 
            // dd($data['datosclave']->clave);
             // Envio de Correo para confirmar
-            /*Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
+            Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
             	$mail->subject('Nueva solicitud de Servicios');
             	$mail->to($data['email'], $data['nombre']);
             });
-            */
+            
 
             	$oDetalleP= new AcClaveProv();
             	$oDetalleP->id_clave=$claves->id;
@@ -180,10 +180,10 @@ class ClaveController extends Controller{
             	];*/
             	
             	// Envio de Correo para confirmar
-            	Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
+            /*	Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
             		$mail->subject('Nueva solicitud de Servicios');
             		$mail->to($data['email'], $data['nombre']);
-            	});
+            	});*/
             	
             
             
