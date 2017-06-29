@@ -160,10 +160,10 @@ class ClaveController extends Controller{
 
            // dd($data['datosclave']->clave);
             // Envio de Correo para confirmar
-         /*   Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
+            Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
             	$mail->subject('Nueva solicitud de Servicios');
             	$mail->to($data['email'], $data['nombre']);
-            });*/
+            });
 
             	$oDetalleP= new AcClaveProv();
             	$oDetalleP->id_clave=$claves->id;
@@ -243,13 +243,17 @@ class ClaveController extends Controller{
                 $oClave = new AcClave();
                 $oClave->id=$request->id;
                 $rsClave=$oClave->getClave();
-                //$rsProvC=AcProveedoresExtranet::where("codigo_proveedor","=",$request->idclaveprov);
-                /*dd($request->idclaveprov);
+                $rsProvC=AcProveedoresExtranet::where("codigo_proveedor","=",$request->idclaveprov)->get();
+               // dd($rsProvC->count());
+              //  $rsProv1=$rsProvC;
                 foreach ($rsProvC as $value)
                 {
+                    //dd("asdd");
                     $rsProv1=$value;
-                }*/
-                $rsProv1=AcProveedoresExtranet::findOrFail($request->idclaveprov);
+                }
+                //$rsProv1=AcProveedoresExtranet::findOrFail($request->idclaveprov);
+//dd($rsProv1);
+
 
                 $data = [
                 'nombre' =>$rsProv1->nombre,
