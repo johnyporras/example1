@@ -238,7 +238,7 @@ class ClaveController extends Controller{
         if($request->id!="" && $request->idclaveprov!="" && $user->type!='3' && $user->detalles_usuario_id!=$request->idclaveprov)
         {
 
-            $request->fechacita
+            
           AcClaveProv::where("id_clave","=",$request->id)
                       ->where("id_proveedor","=",$request->idclaveprov)
                       ->update(["fechacita"=>$request->fechacita,"horacita"=>$request->horacita
