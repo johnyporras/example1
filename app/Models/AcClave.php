@@ -33,7 +33,7 @@ class AcClave extends Model {
     		->join("ac_claves_detalle","ac_claves.id","=","ac_claves_detalle.id_clave")
             ->join("ac_afiliados","ac_claves.cedula_afiliado","=","ac_afiliados.cedula")
     		->join("ac_servicios_extranet","ac_claves_detalle.codigo_servicio","=","ac_servicios_extranet.id")
-    		->join("ac_especialidades_extranet","ac_claves_detalle.codigo_especialidad","=","ac_especialidades_extranet.id")
+    		->join("ac_especialidades_extranet","ac_claves_detalle.codigo_especialidad","=","ac_especialidades_extranet.codigo_especialidad")
     		->join("ac_procedimientos_medicos","ac_claves_detalle.id_procedimiento","=","ac_procedimientos_medicos.id")
     		->where("ac_claves.id","=",$this->id)
     		->get();
