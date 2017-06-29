@@ -36,8 +36,7 @@
         {!! Form::label('telefono', 'Teléfono Móvil: ', ['class' => 'col-sm-2 col-sm-offset-1 control-label']) !!}
         <div class="col-sm-2">
 
-            {!! Form::select('codigocel', ['0414' => '0414', '0424' => '0424','0414' => '0414', '0424' => '0424'], null, ['class' => 'form-control',
-                            'placeholder' => 'Seleccione una opción']) !!}
+            {!! Form::select('codigocel', ['0414' => '0414', '0424' => '0424','0412' =>'0412', '0416' => '0416', '0426' => '0426'], null) !!}
             {!! Form::number('telefono', null, ['class' => 'form-control', 'required' => 'required']) !!}
             {!! $errors->first('telefono', '<p class="help-block">:message</p>') !!}
         </div>
