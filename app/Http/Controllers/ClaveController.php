@@ -123,9 +123,9 @@ class ClaveController extends Controller{
                 $clavesDetalle->estatus              = 1 /* Pendiente de Atencion*/;
                 $clavesDetalle->save();
             endfor;
-            
-            
-			$oProv1 = new AcProveedoresExtranet();      
+
+
+			$oProv1 = new AcProveedoresExtranet();
 			$oProv1->codigo_proveedor=$proveedor1;
 			$rsProv1 =$oProv1->leerProv();
 			$oClave = new AcClave();
@@ -137,7 +137,7 @@ class ClaveController extends Controller{
             $oDetalleP->preferido=1;
             $oDetalleP->aceptado=0;
             $oDetalleP->incluir();
-            
+
             $data = [
             		'nombre' =>$rsProv1->nombre,
             		'email' => $rsProv1->email,
@@ -156,15 +156,14 @@ class ClaveController extends Controller{
                 'tipo'=>1
 
         		];
-            
+
 
            // dd($data['datosclave']->clave);
             // Envio de Correo para confirmar
-            Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
+         /*   Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
             	$mail->subject('Nueva solicitud de Servicios');
             	$mail->to($data['email'], $data['nombre']);
-            });
-            
+            });*/
 
             	$oDetalleP= new AcClaveProv();
             	$oDetalleP->id_clave=$claves->id;
@@ -173,31 +172,39 @@ class ClaveController extends Controller{
                 $oDetalleP->aceptado=0;
             	$oDetalleP->incluir();
           
-           /* 	$data = [
+ 
+          /*
+            	$data = [
             			'nombre' =>$rsProv2->nombre,
             			'email' => $rsProv2->email,
             			'datosclave' =>$rsClave
-            	];*/
-            	
+            	];
+
+
             	// Envio de Correo para confirmar
-            /*	Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
+            	Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
             		$mail->subject('Nueva solicitud de Servicios');
             		$mail->to($data['email'], $data['nombre']);
-            	});*/
+            	});
             	
             
             
             
-            
-            
-            
- /*           
+*/            
+          
+
+
+
+
+
+
+
               if($user->type == 3){//TIPO PROVEEDOR
-                   Session::flash('status', 'Su clave  ha sido generada!');
+                   Session::flash('status', 'Su orden ha sido generada!');
               }else{
-                      Session::flash('status', 'Su clave '.$clave.' ha sido generada!');
+                      Session::flash('status', 'Su orden de servicios ha sido creada con exito y enviada para su asignacion!');
                    }
-*/
+
             Session::flash('status', 'Su clave  ha sido generada!');
 
             $request = array_add($request, 'show', $claves->id);
@@ -221,7 +228,7 @@ class ClaveController extends Controller{
 
     public function aceptarClaveGrabar(Request $request)
     {
-        
+
         if($request->id!="" && $request->idclaveprov!="")
         {
           AcClaveProv::where("id_clave","=",$request->id)
@@ -240,7 +247,7 @@ class ClaveController extends Controller{
                 /*dd($request->idclaveprov);
                 foreach ($rsProvC as $value)
                 {
-                    $rsProv1=$value;    
+                    $rsProv1=$value;
                 }*/
                 $rsProv1=AcProveedoresExtranet::findOrFail($request->idclaveprov);
 
@@ -260,7 +267,7 @@ class ClaveController extends Controller{
                 'idclave'=>$rsClave->id,
                 'idclaveprov'=>$rsProv1->id
             ];
-            
+
            // dd($data['datosclave']->clave);
             // Envio de Correo para confirmar
             Mail::send('mails.claveafil1', ['data' => $data], function($mail) use($data){
@@ -269,8 +276,8 @@ class ClaveController extends Controller{
             });
 
              return view("claves.confirmaAceptarClave");
-             
-        }        
+
+        }
     }
 
 
@@ -288,8 +295,8 @@ class ClaveController extends Controller{
                               "aceptado"=>'0']);
 
 
-            
-          
+
+
 
                 $oClave = new AcClave();
                 $oClave->id=$request->id;
@@ -301,7 +308,7 @@ class ClaveController extends Controller{
 
                    // dd($request->id);
                     $oProv = new AcClaveProv();
-                    $oProv->idclave =$request->id; 
+                    $oProv->idclave =$request->id;
                     $rsProv2=$oProv->getProvSecundario();
 
                   $data = [
@@ -321,7 +328,7 @@ class ClaveController extends Controller{
                     'idclaveprov'=>$rsProv2->id,
                     'tipo'=>2
                     ];
-                
+
 
                // dd($data['datosclave']->clave);
                 // Envio de Correo para confirmar
@@ -329,7 +336,7 @@ class ClaveController extends Controller{
                     $mail->subject('Nueva solicitud de Servicios');
                     $mail->to($data['email'], $data['nombre']);
                 });
-          
+
             }
             else
             {
@@ -344,7 +351,7 @@ class ClaveController extends Controller{
                 'procedimiento'=>$rsClave->procedimiento,
                 'idclave'=>$rsClave->id
             ];
-            
+
            // dd($data['datosclave']->clave);
             // Envio de Correo para confirmar
             Mail::send('mails.claveafil2', ['data' => $data], function($mail) use($data){
@@ -354,8 +361,8 @@ class ClaveController extends Controller{
 
             }
              return view("claves.confirmaRechazaClave");
-             
-        }        
+
+        }
     }
 
 
@@ -429,6 +436,7 @@ class ClaveController extends Controller{
      */
     public function buscarCobertura(Request $request)
     {
+
        // $id = $request->input('icedula');
        // dd($id);
     	$user = \Auth::user();
@@ -437,12 +445,12 @@ class ClaveController extends Controller{
     	//if($user->type==5)
     	if(true)
     	{
-    		
+
     		$objAfiliado= new AcAfiliado();
         //dd($user->detalles_usuario_id);
     		$obCuenta = new AcCuenta();
     		$rsAf =$objAfiliado->findOrFail($user->detalles_usuario_id);
-    		$rsCu=$obCuenta->findOrFail($rsAf->id_cuenta);	
+    		$rsCu=$obCuenta->findOrFail($rsAf->id_cuenta);
     		$beneficiario['contrato'] = $rsCu->codigo_cuenta;
     		$beneficiario['cedula_afiliado'] = $rsAf->cedula;
     		$beneficiario['nombre_afiliado'] = $rsAf->nombre. " ".$rsAf->apellido;
@@ -451,9 +459,9 @@ class ClaveController extends Controller{
 	       /* $beneficiario['colectivo'] = $request->input('colectivo'.$id);
 	        $beneficiario['aseguradora'] = $request->input('aseguradora'.$id);
 	        $beneficiario['tipo_afiliado'] = $request->input('tipo_afiliado'.$id);*/
-	       
+
 	        //echo $user->type;die();
-	        
+
 	///echo $beneficiario['contrato']."<br>";
 
 	            $coberturas = DB::table('ac_cuenta')
@@ -471,11 +479,11 @@ class ClaveController extends Controller{
 	                ->select('id_servicio','ac_servicios_extranet.descripcion as servicio',
 	                        'id_especialidad','ac_especialidades_extranet.descripcion as especialidad')
 	                ->distinct()->get();
-	                
-	               
-	    
+
+
+
 	        $especialidades_cobertura = array_pluck($coberturas,'especialidad','id_especialidad'); // ++++++++++++++++ ARRAY
-	        
+
           $servicios = array_pluck($coberturas,'servicio','id_servicio');
 	        return view('claves.generarFinal', compact('beneficiario','especialidades_cobertura','servicios','proveedor'));
     	}
