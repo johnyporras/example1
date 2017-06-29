@@ -106,6 +106,7 @@ class ClaveController extends Controller{
         endfor;
         $request = array_add($request, 'costo_total', $monto_total);
         $request = array_add($request, 'cantidad_servicios', count($monto_total));
+        $request->estatus_clave=1;
         $claves = $this->store($request);
         if(isset($claves)){
             for($i = 0; $i < $request->max; $i++):
@@ -232,13 +233,19 @@ class ClaveController extends Controller{
                 $oClave = new AcClave();
                 $oClave->id=$request->id;
                 $rsClave=$oClave->getClave();
-                $rsProvC=AcProveedoresExtranet::where("codigo_proveedor","=",$request->idclaveprov);
-                $rsProv1=$rsProvC[0];
+                //$rsProvC=AcProveedoresExtranet::where("codigo_proveedor","=",$request->idclaveprov);
+                /*dd($request->idclaveprov);
+                foreach ($rsProvC as $value)
+                {
+                    $rsProv1=$value;    
+                }*/
+                $rsProv1=AcProveedoresExtranet::findOrFail($request->idclaveprov);
+
                 $data = [
                 'nombre' =>$rsProv1->nombre,
                 'email' => $rsClave->emailafiliado,
                 'fecha_cita'=>$request->fechacita,
-                'fecha_cita'=>$request->fechacita,
+                'hora_cita'=>$request->horacita,
                 'clave'=>$rsClave->clave,
                 'direccion'=>$request->direccion,
                 'observacion'=>$request->observac,

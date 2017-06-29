@@ -135,6 +135,7 @@ class ConsultarClaveController extends Controller
      }else{
          $query = DB::table('ac_claves')
                 ->where([['ac_cuenta.fecha','<=',date('Y-m-d').' 00:00:00']])
+                ->where("ac_proveedores_extranet.codigo_proveedor","=",$user->detalles_usuario_id)
                 ->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')
                 ->join('ac_afiliados'              , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
                 ->join('ac_cuenta'              , 'ac_afiliados.id_cuenta',"=", 'ac_cuenta.id')
@@ -157,12 +158,22 @@ class ConsultarClaveController extends Controller
                  ->distinct();
         }
 
-        $estatus=AcEstatus::lists('ac_estatus.nombre','id')->all();
+
+
+
         $prov=AcProveedoresExtranet::lists('ac_proveedores_extranet.nombre','ac_proveedores_extranet.codigo_proveedor as id')->all();
+        $estatus=AcEstatus::lists('ac_estatus.nombre','id')->all();
         if($request->nombre!="")
         {
                 $query=$query->whereRaw("upper(ac_afiliados.nombre) like upper('%".$request->nombre."%')");
         }
+
+
+        if($user->type==5)
+        {
+             $query=$query->whereRaw("ac_estatus.id in(1,3,4,5)");    
+        }
+
 
         if($request->cedula_afiliado!="")
         {
@@ -218,7 +229,7 @@ class ConsultarClaveController extends Controller
 
 
 
-    if($user->type!=3)
+    if($user->type!=3 || $user->type!=5)
     {
         $grid->add('clave','Clave', false);
     }
