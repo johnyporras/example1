@@ -110,6 +110,9 @@ class ClaveController extends Controller{
         $claves = $this->store($request);
         if(isset($claves)){
             for($i = 0; $i < $request->max; $i++):
+
+              //  dd($request->input(['id_proveedor2'.$i]));
+
                 $clavesDetalle = new AcClavesDetalle;
                 $clavesDetalle->id_clave             = $claves->id;
                 $clavesDetalle->codigo_servicio      = $request->input(['id_servicio'.$i]);
@@ -123,6 +126,7 @@ class ClaveController extends Controller{
                 $clavesDetalle->estatus              = 1 /* Pendiente de Atencion*/;
                 $clavesDetalle->save();
             endfor;
+
 
 
 			$oProv1 = new AcProveedoresExtranet();
@@ -164,7 +168,7 @@ class ClaveController extends Controller{
             	$mail->subject('Nueva solicitud de Servicios');
             	$mail->to($data['email'], $data['nombre']);
             });
-
+//dd($proveedor2);
             	$oDetalleP= new AcClaveProv();
             	$oDetalleP->id_clave=$claves->id;
             	$oDetalleP->id_proveedor=$proveedor2;
@@ -238,7 +242,7 @@ class ClaveController extends Controller{
                               "aceptado"=>'1']);
 
           AcClave::where("id","=",$request->id)
-                ->update(["codigo_proveedor_creador"=>$request->idclaveprov]);
+                ->update(["codigo_proveedor_creador"=>$request->idclaveprov,"estatus_clave"=>5]);
 
                 $oClave = new AcClave();
                 $oClave->id=$request->id;
@@ -310,7 +314,7 @@ class ClaveController extends Controller{
                 if($request->tipo==1)
                 {
 
-                   // dd($request->id);
+                    //dd($request->id);
                     $oProv = new AcClaveProv();
                     $oProv->idclave =$request->id;
                     $rsProv2=$oProv->getProvSecundario();
@@ -359,9 +363,13 @@ class ClaveController extends Controller{
            // dd($data['datosclave']->clave);
             // Envio de Correo para confirmar
             Mail::send('mails.claveafil2', ['data' => $data], function($mail) use($data){
-              $mail->subject('Confirmación de aceptacion de Servicios');
+              $mail->subject('Rechazo de Servicios');
               $mail->to($data['email'], $data['nombre']);
             });
+
+
+                 AcClave::where("id","=",$request->id)
+                ->update(["estatus_clave"=>3]);
 
             }
              return view("claves.confirmaRechazaClave");

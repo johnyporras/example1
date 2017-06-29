@@ -35,7 +35,7 @@
                 	<h2>Estimad@ <br><br> </h2>
                     <b>Hemos recibido una solicitud de orden de servicio con los siguientes detalles</b>
                     <br/>
-                    Detalles
+                   
                      </br>
                     </br>
                     <table border="0">
@@ -89,13 +89,13 @@
                 <td align="center" style="padding: 30px 20px 30px 20px; font-family: Arial, sans-serif;">
                     <table bgcolor="#6dcff6" border="0" cellspacing="0" cellpadding="0" class="buttonwrapper">
                         <tr>
-                            <td align="center" height="50" style=" padding: 0 25px 0 25px; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;" class="button" bgcolor="#f9f9f9">
+                            <td align="center" height="50" style=" padding: 0 25px 0 25px; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;" class="button" bgcolor="#6dcff6">
                                 &nbsp;&nbsp;&nbsp;
                                 <a href="http://35.164.247.216/claves/aceptarClave/{{ $data['idclave'] }}/{{ $data['idclaveprov'] }}" style="color: #ffffff; text-align: center; text-decoration: none;">Aceptar</a>
                             </td>    
                             <td>
                             </td>
-                            <td align="center" height="50" style=" padding: 0 25px 0 25px; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;" class="button">
+                            <td align="center" height="50" style=" padding: 0 25px 0 25px; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;" class="button" bgcolor="#FF0000">
                                 &nbsp;&nbsp;&nbsp;
                                 <a href="http://35.164.247.216/claves/rechazarClave/{{ $data['idclave'] }}/{{ $data['idclaveprov'] }}/{{ $data['tipo'] }}" style="color: #ffffff; text-align: center; text-decoration: none;">Rechazar</a>
                             </td>

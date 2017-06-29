@@ -356,7 +356,7 @@
                                                 "<td>"+$("#codigo_proveedor").val()+"</td>"+
                                                 "<td><button type='button' class='btn btn-sm btn-danger btn-del-procedimiento'"+
                                                 ">Quitar</button></td>"
-                                                +especialidad+servicio+tratamiento+proveedor+detalle+"</tr>");
+                                                +especialidad+servicio+tratamiento+proveedor+proveedor2+detalle+"</tr>");
                     x++;
                     if($('#codigo_servicio :selected').val() != 2 && $('#codigo_servicio :selected').val() != 3){ // Si no es laboratorio
                         if($('#codigo_servicio :selected').val() == 1){
