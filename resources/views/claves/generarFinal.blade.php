@@ -35,7 +35,10 @@
         </div>
         {!! Form::label('telefono', 'Teléfono Móvil: ', ['class' => 'col-sm-2 col-sm-offset-1 control-label']) !!}
         <div class="col-sm-2">
-            {!! Form::text('telefono', null, ['class' => 'form-control', 'required' => 'required']) !!}
+
+            {!! Form::select('codigocel', ['0414' => '0414', '0424' => '0424','0414' => '0414', '0424' => '0424'], null, ['class' => 'form-control',
+                            'placeholder' => 'Seleccione una opción']) !!}
+            {!! Form::number('telefono', null, ['class' => 'form-control', 'required' => 'required']) !!}
             {!! $errors->first('telefono', '<p class="help-block">:message</p>') !!}
         </div>
     </div>
@@ -323,6 +326,7 @@
                 if($('#max').val() == 0){
                     proveedorX = '';
                     $('#codigo_proveedor').prop('disabled', false);
+                    $('#codigo_proveedor2').prop('disabled', false);
                     $('#codigo_especialidad').prop('disabled', false);
                     $('#enviar_clave').prop('disabled', true);
                 }
@@ -333,10 +337,10 @@
 
             $('.btn-add-procedimiento').on('click',function(){
 
-                if(x==3)
+                if(x==1)
                 {
                     $("#resultproc").addClass("alert alert-danger");
-                    $("#resultproc").html("No puede agregar más de  tres procedimientos.");
+                    $("#resultproc").html("No puede agregar más de  un procedimientos.");
                     return false;
                 }
                 if($('#codigo_especialidad').val() !== "" && $('#codigo_servicio').val() !== "" && $('#procedimiento_medico').val() !== "" && $('#codigo_proveedor_creador').val() !== ""){
@@ -368,6 +372,7 @@
                     $('#procedimiento_medico').val("");
                     //$('#codigo_proveedor').val("");
                     $('#codigo_proveedor').prop('disabled', true);
+                    $('#codigo_proveedor2').prop('disabled', true);
                     $('#codigo_especialidad').prop('disabled', true);
                     //$('#codigo_proveedor_creador').val("");
                     //$('#detalle_servicio').val("");
