@@ -49,7 +49,7 @@ class ConsultarClaveController extends Controller
                          'ac_estatus.nombre as estatus',
                          'ac_especialidades_extranet.descripcion as especialidad',
                          'ac_proveedores_extranet.nombre as proveedor',
-                         'ac_estatus.nombre as estatus' )
+                         'ac_estatus.nombre as estatus' )cccfdfdf
                ->distinct();*/
 
 			   	$query = DB::table('ac_claves')
