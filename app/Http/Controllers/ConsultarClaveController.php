@@ -49,7 +49,7 @@ class ConsultarClaveController extends Controller
                          'ac_estatus.nombre as estatus',
                          'ac_especialidades_extranet.descripcion as especialidad',
                          'ac_proveedores_extranet.nombre as proveedor',
-                         'ac_estatus.nombre as estatus' )cccfdfdf       
+                         'ac_estatus.nombre as estatus' )cccfdfdf
                ->distinct();*/
 
 			   	$query = DB::table('ac_claves')
@@ -171,7 +171,7 @@ class ConsultarClaveController extends Controller
 
         if($user->type==5)
         {
-             $query=$query->whereRaw("ac_estatus.id in(1,3,4,5)");    
+             $query=$query->whereRaw("ac_estatus.id in(1,3,4,5)");
         }
 
 
@@ -229,21 +229,21 @@ class ConsultarClaveController extends Controller
 
 
 
-    if($user->type!=3 || $user->type!=5)
+    /*if($user->type!=3 || $user->type!=5)
     {
         $grid->add('clave','Clave', false);
     }
     else
-    {
+    {*/
         $grid->add('clave','Clave')->cell( function( $value,$row){
            // dd($user->type);
-            if($row->estatus==5)
-                return "Pendiente";
+            if($row->estatus==5 || $row->estatus==1)
+                return "Por Asignar";
             else
               return $value;
           //  return ($value != '') ? "rev.{$value}" : "no revisions for art. {$row->id}";
         });
-    }
+    //}
 
 
        $grid->add('cedula_afiliado','Cédula', false);
