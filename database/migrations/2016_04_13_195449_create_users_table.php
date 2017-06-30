@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration {
 			$table->string('respuesta_1')->nullable();
 			$table->string('pregunta_2')->nullable();
 			$table->string('respuesta_2')->nullable();
-			$table->date('ultimo_acceso')->nullable();
+			$table->dateTime('ultimo_acceso')->nullable();
 			$table->integer('detalles_usuario_id')->nullable()->unsigned();
 			$table->string('confirm_token',100)->nullable();
             	$table->rememberToken();

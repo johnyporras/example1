@@ -50,7 +50,7 @@ Route::post('/registro', [
     'as'   => 'register.postRegister' 
 ]);
 
-Route::get('/pais', [
+Route::post('/pais', [
     'uses' => 'RegisterController@checkTerminos',
     'as'   => 'register.checkTerminos' 
 ]);

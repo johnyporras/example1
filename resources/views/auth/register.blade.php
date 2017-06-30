@@ -960,7 +960,7 @@ $(document).ready(function() {
         var pais = $('#pais').val();
         // Ejecuto la peticion para validar la tarjeta
         $.ajax({
-            type: "GET",
+            type: "POST",
             url:'{{ url('/pais') }}',
             data: {pais: pais},
             success: function(data) {
