@@ -22,15 +22,12 @@
         <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 600px;" class="content">
             <tr>
                 <td align="center" bgcolor="#6dcff6" style="padding: 20px 20px 20px 20px; color: #ffffff; font-family: Arial, sans-serif; font-size: 36px; font-weight: bold;">
-                    <img src="http://35.164.247.216/images/logo.png" alt="Atiempo" width="100" style="display:block;" />
-                    <!-- url('images/logo.png')-->
+                    <img src="{{ url('images/logo.png') }}" alt="Atiempo" width="100" style="display:block;" />
                 </td>
             </tr>
             <tr>
                 <td align="center" bgcolor="#ffffff" style="padding: 40px 20px 40px 20px; color: #555555; font-family: Arial, sans-serif; font-size: 20px; line-height: 30px; border-bottom: 1px solid #f6f6f6;">
                 
-                
-                	
                 	
                 	<h2>Estimad@ <br><br> </h2>
                     <b>Hemos recibido una solicitud de orden de servicio con los siguientes detalles</b>
@@ -91,13 +88,13 @@
                         <tr>
                             <td align="center" height="50" style=" padding: 0 25px 0 25px; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;" class="button" bgcolor="#6dcff6">
                                 &nbsp;&nbsp;&nbsp;
-                                <a href="http://35.164.247.216/claves/aceptarClave/{{ $data['idclave'] }}/{{ $data['idclaveprov'] }}" style="color: #ffffff; text-align: center; text-decoration: none;">Aceptar</a>
+                                <a href="{{ route('claves.aceptar',['id' => $data['idclave'], 'idprov' => $data['idclaveprov'] ]) }}" style="color: #ffffff; text-align: center; text-decoration: none;">Aceptar</a>
                             </td>    
                             <td>
                             </td>
                             <td align="center" height="50" style=" padding: 0 25px 0 25px; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;" class="button" bgcolor="#FF0000">
                                 &nbsp;&nbsp;&nbsp;
-                                <a href="http://35.164.247.216/claves/rechazarClave/{{ $data['idclave'] }}/{{ $data['idclaveprov'] }}/{{ $data['tipo'] }}" style="color: #ffffff; text-align: center; text-decoration: none;">Rechazar</a>
+                                <a href="{{ route('claves.rechazar',['id' => $data['idclave'], 'idprov' => $data['idclaveprov'], 'tipo' => $data['tipo'] ]) }}" style="color: #ffffff; text-align: center; text-decoration: none;">Rechazar</a>
                             </td>
                         </tr>
                     </table>

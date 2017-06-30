@@ -218,8 +218,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('claves/generar'      , 'ClaveController@generar');
     Route::post('claves/generar'     , 'ClaveController@generar');
     Route::get('claves/generarFinal', 'ClaveController@buscarCobertura');
-    Route::get('claves/aceptarClave/{id}/{idprov}','ClaveController@aceptarClave');
-    Route::get('claves/rechazarClave/{id}/{idprov}/{tipo}','ClaveController@rechazarClave');
+    Route::get('claves/aceptarClave/{id}/{idprov}', [
+            'uses' => 'ClaveController@aceptarClave',
+            'as'   => 'claves.aceptar' 
+        ]);
+    Route::get('claves/rechazarClave/{id}/{idprov}/{tipo}', [
+            'uses' => 'ClaveController@rechazarClave',
+            'as'   => 'claves.rechazar' 
+        ]);
     Route::post('claves/grabarClaveAceptar','ClaveController@aceptarClaveGrabar');
     Route::post('claves/grabarClaveRechazar1','ClaveController@rechazarClaveGrabar1');
     

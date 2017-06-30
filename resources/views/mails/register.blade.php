@@ -22,8 +22,7 @@
         <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 600px;" class="content">
             <tr>
                 <td align="center" bgcolor="#6dcff6" style="padding: 20px 20px 20px 20px; color: #ffffff; font-family: Arial, sans-serif; font-size: 36px; font-weight: bold;">
-                    <img src="http://35.164.247.216/images/logo.png" alt="Atiempo" width="100" style="display:block;" />
-                    <!-- url('images/logo.png')-->
+                    <img src="{{ url('images/logo.png') }}" alt="Atiempo" width="100" style="display:block;" />
                 </td>
             </tr>
             <tr>
