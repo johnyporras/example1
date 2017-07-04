@@ -2,10 +2,18 @@
 
 @section('title','Login')
 
+@push('style')
+    <link rel="stylesheet" href="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
+@endpush
+
+@push('scripts')
+    <script src="{{ url('plugins/parsley-js/parsley.min.js') }}"></script>
+    <script src="{{ url('plugins/parsley-js/i18n/es.js') }}"></script>
+@endpush
+
 @section('content')
 <div class="block push-bit">
-    <!--<form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">-->
-    {!! Form::open(['url' => '/login', 'class' => 'form-horizontal form-bordered form-control-borderless' ]) !!}
+    {!! Form::open(['url' => '/login', 'class' => 'form-horizontal form-bordered form-control-borderless', 'id' => 'loginForm' ]) !!}
 
         @if (session('message'))
             <div class="alert alert-danger">
@@ -17,7 +25,7 @@
             <div class="col-xs-12">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="gi gi-user"></i></span>
-                    <input type="text" class="form-control input-lg" name="user" value="{{ old('user') }}" placeholder="Usuario" >
+                    <input type="email" class="form-control input-lg" name="user" value="{{ old('user') }}" placeholder="Usuario" required >
                 </div>
                 @if ($errors->has('user'))
                     <span class="help-block">
@@ -31,7 +39,7 @@
             <div class="col-xs-12">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-                    <input type="password" class="form-control input-lg" name="password" placeholder="Clave" >
+                    <input type="password" class="form-control input-lg" name="password" placeholder="Clave" required >
                 </div>
                 @if ($errors->has('password'))
                     <span class="help-block">
@@ -56,4 +64,27 @@
 
     {!! Form::close() !!}           
 </div>
+@endsection
+
+@section('script')
+<script type="text/javascript">
+$(document).ready(function() {
+    /** Variable Config parsley **/
+    var parsleyOptions = {
+        errorClass: 'has-error',
+        successClass: 'has-success',
+        classHandler: function(el) {
+            return el.$element.parents('.form-group');
+        },
+        errorsContainer: function(el) {
+            return el.$element.closest('.form-group');
+        },
+        errorsWrapper: '<span class="help-block">',
+        errorTemplate: '<div class=" col-md-offset-1 col-md-11"></div>',
+    };
+
+    // Genero la validacion del formulario...
+    $('#loginForm').parsley(parsleyOptions);
+});
+</script>
 @endsection

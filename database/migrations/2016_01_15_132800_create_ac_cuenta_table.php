@@ -25,6 +25,7 @@ class CreateAcCuentaTable extends Migration
             $table->date('fecha');
             $table->integer('estatus')->unsigned();
             $table->integer('id_producto')->unsigned();
+            $table->dateTime('acepto_terminos')->nullable();
             $table->timestamps();
             $table->softDeletes();
                 $table->foreign('id_producto')->references('id')->on('ac_producto')

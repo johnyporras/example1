@@ -15,7 +15,6 @@ class SubmodulesTableSeeder extends Seeder
     	DB::table('submodules')->delete();
 
         $submodules = [
-
 ['description'=>'Consultar Afiliados Temporales', 'modules_id' => 3, 'url'=>'clavesEspeciales/consultarAfiliadosTemporales', 'order' => 3, 'created_at'=>'2017-03-03 16:34:11'],
 ['description'=>'Facturación y Cierre de Casos', 'modules_id' => 4, 'url'=>'facturacion/registrar', 'order' => 1, 'created_at'=>'2017-03-03 16:34:11'],
 ['description'=>'Autorizar AVAL', 'modules_id' => 3, 'url'=>'clavesEspeciales/autorizar', 'order' => 1, 'created_at'=>'2017-03-03 16:34:11'],

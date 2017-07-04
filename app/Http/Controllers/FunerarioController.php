@@ -86,19 +86,17 @@ class FunerarioController extends Controller
 
             // Verifico que la cuenta sea mayor de 30 dias y que tenga estatus activo
             if ($fechaCuenta >= 30 && $estatusCuenta == 1 ) {
-                
                 // Guardo en variable la cuenta
                 $cuenta = $afiliado->cuenta;
                 // Guardo en variable el plan
-                $plan = $afiliado->cuenta->plan()->first();
-
+                $cuentaPlan = $afiliado->cuenta->cuentaPlan()->first();
+                $plan = $cuentaPlan->plan()->first();
                 //Creo array de dias
                 $dias = [];
                 // leno el arra de dias
                 for ($i = 1; $i <= 30 ; $i++) {
                     $dias[$i] = $i;
                 }
-
                 // Cargo los estados
                 $estados = AcEstado::orderBy('estado', 'ASC')
                                 ->pluck('estado', 'id');
@@ -108,7 +106,6 @@ class FunerarioController extends Controller
                 //cargo los proveedores funerarios
                 $proveedores = ProveedorFunerario::orderBy('razon_social', 'ASC')
                                 ->pluck('razon_social', 'id');
-                
                 //retorno la vista para el formulario
                 return view('funerario.create', compact('estados','metodos','dias','proveedores', 'cuenta','afiliado', 'plan'));
             } else {
@@ -245,7 +242,8 @@ class FunerarioController extends Controller
         // Guardo en variable la cuenta
         $cuenta = $afiliado->cuenta;
         // Guardo en variable el plan
-        $plan = $afiliado->cuenta->plan()->first();
+        $cuentaPlan = $afiliado->cuenta->cuentaPlan()->first();
+        $plan = $cuentaPlan->plan()->first();
 
         //cargo los proveedores funerarios
         $proveedores = ProveedorFunerario::orderBy('razon_social', 'ASC')
@@ -350,7 +348,8 @@ class FunerarioController extends Controller
         // Guardo en variable la cuenta
         $cuenta = $afiliado->cuenta;
         // Guardo en variable el plan
-        $plan = $afiliado->cuenta->plan()->first();
+        $cuentaPlan = $afiliado->cuenta->cuentaPlan()->first();
+        $plan = $cuentaPlan->plan()->first();
 
         // Cargo los estados
         $estados = AcEstado::orderBy('estado', 'ASC')

@@ -35,7 +35,7 @@ class AcCuentaPlan extends Model
      */
     public function cuenta()
     {
-        return $this->belongsTo(\App\Models\AcCuenta::class, 'id_cuenta');
+        return $this->belongsTo(\App\Models\AcCuenta::class, 'id_cuenta', 'id');
     }
 
     /**
@@ -43,6 +43,6 @@ class AcCuentaPlan extends Model
      */
     public function plan()
     {
-        return $this->belongsTo(\App\Models\AcPlanesExtranet::class, 'id_plan');
+        return $this->belongsTo(\App\Models\AcPlanesExtranet::class, 'id_plan', 'codigo_plan');
     }
 }

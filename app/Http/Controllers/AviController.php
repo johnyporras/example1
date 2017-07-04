@@ -64,37 +64,29 @@ class AviController extends Controller
         $this->validate($request, [
             'cedula' => 'required'
         ]);
-
         // Selecciono el Afiliado
         $afiliado = AcAfiliado::where('cedula', '=', $request->cedula)->first();
-
         // valido si existe el afiliado
         if ($afiliado) {
-
             // Selecciona dias de registro
             $fechaCuenta = $afiliado->cuenta->fecha->diffInDays();
-
             // selecciono el estatus cuenta
             $estatusCuenta = $afiliado->cuenta->estatus;
-
             // Verifico que la cuenta sea mayor de 30 dias y que tenga estatus activo
             if ($fechaCuenta >= 30 && $estatusCuenta == 1 ) {
-                
                 // Guardo en variable la cuenta
                 $cuenta = $afiliado->cuenta;
                 // Guardo en variable el plan
-                $plan = $afiliado->cuenta->plan()->first();
-
+                $cuentaPlan = $afiliado->cuenta->cuentaPlan()->first();
+                $plan = $cuentaPlan->plan()->first();
                 // Cargo los paises
                 $paises = DB::table('paises')->orderBy('name_es', 'ASC')
                                 ->pluck('name_es', 'id'); 
-
+                //Retorno la vista
                 return view('avi.create', compact('afiliado', 'paises', 'cuenta', 'plan'));
-
             } else {
                 return back()->with('respuesta', '¡No tiene una cuenta vigente!');
-            }
-            
+            } 
         } else {
             return back()->with('respuesta', '¡No existe el Afiliado!');
         }
@@ -115,10 +107,8 @@ class AviController extends Controller
             'cronograma'    => 'required',
             'observaciones' => 'min:10'
         ]);
-
         // Genero codigo unico
         $codigo = 'av'.substr(uniqid(),7,13);
-
         // crea nueva solicitud
         $avi = Avi::create([
             'afiliado_id'    => $request->afiliado,
@@ -129,10 +119,8 @@ class AviController extends Controller
             'observaciones'    => $request->observaciones,     
             'creador'          => Auth::user()->id
         ]);
-
         // Total de destinos para realizar bucle
         $total = count($request->desde);
-
         // Aqui se guardan todos los destinos da la solicitud
         for ($i = 0; $i < $total; $i++) {
 
@@ -159,12 +147,12 @@ class AviController extends Controller
         $solicitud = Avi::findOrFail($id);
         // selecciono afiliado
         $afiliado = AcAfiliado::findOrFail($solicitud->afiliado_id);
-
         // Guardo en variable la cuenta
         $cuenta = $afiliado->cuenta;
         // Guardo en variable el plan
-        $plan = $afiliado->cuenta->plan()->first();
-
+        $cuentaPlan = $afiliado->cuenta->cuentaPlan()->first();
+        $plan = $cuentaPlan->plan()->first();
+        // Retorno la vista
         return view('avi.show',compact('solicitud', 'cuenta', 'plan'));
     }
 
@@ -180,15 +168,15 @@ class AviController extends Controller
         $solicitud = Avi::findOrFail($id);
         // selecciono afiliado
         $afiliado = AcAfiliado::findOrFail($solicitud->afiliado_id);
-
         // Guardo en variable la cuenta
         $cuenta = $afiliado->cuenta;
         // Guardo en variable el plan
-        $plan = $afiliado->cuenta->plan()->first();
-
+        $cuentaPlan = $afiliado->cuenta->cuentaPlan()->first();
+        $plan = $cuentaPlan->plan()->first();
+        // Cargo los Paises
         $paises = DB::table('paises')->orderBy('name_es', 'ASC')
                         ->pluck('name_es', 'id');
-
+        // Retorno vista
         return view('avi.editar', compact('solicitud', 'paises', 'afiliado', 'cuenta', 'plan'));
     }
 

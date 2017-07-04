@@ -15,8 +15,6 @@
     <script src="{{ url('plugins/parsley-js/i18n/es.js') }}"></script>
 @endpush
 
-@section('title','Agregar Nuevo Usuario')
-
 @section('content')
 
 <div id="wizard" class="block push-bit">
@@ -26,7 +24,7 @@
         <li><a href="#step-2">Terminos</a></li>
         <li><a href="#step-3">Cuenta</a></li>
         <li><a href="#step-4">Afiliado</a></li>
-        <li><a href="#step-5">Registro</a></li>
+        <li><a href="#step-5">Seguridad</a></li>
     </ul>
 
     <div>
@@ -70,7 +68,7 @@
                 </p>
             </div> 
 
-            {!! Form::open(['url' => '/check', 'class' => 'form-horizontal form-bordered form-control-borderless', 'method' => 'get', 'id' => 'checkForm' ]) !!}
+            {!! Form::open(['url' => '/pais', 'class' => 'form-horizontal form-bordered form-control-borderless', 'method' => 'get', 'id' => 'checkForm' ]) !!}
                     
             <div class="form-group {{ $errors->has('pais') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
@@ -296,7 +294,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-credit_card"></i></span>
-                        {{ Form::number('cedula', null, ['class' => 'afiliado form-control input-lg', 'placeholder' => 'Cédula', 'id' => 'cedula', 'maxlength' => '9', 'required']) }}
+                        {{ Form::text('cedula', null, ['class' => 'afiliado form-control input-lg', 'placeholder' => 'Cédula', 'id' => 'cedula','minlength' => '4', 'maxlength' => '9', 'pattern' => '[1-9][0-9]+', 'required']) }}
                     </div>
                     @if ($errors->has('cedula'))
                         <span class="help-block">
@@ -435,20 +433,6 @@
             </div>
 
             {!! Form::open(['url' => '/registro', 'class' => 'form-horizontal form-bordered form-control-borderless', 'id' => 'userForm']) !!}
-                    
-            <div class="form-group {{ $errors->has('user') ? ' has-error' : '' }}">
-                <div class="col-xs-12">
-                       <div class="input-group">
-                        <span class="input-group-addon"><i class="gi gi-user"></i></span>
-                        {{ Form::text('user', null, ['class' => 'usuario form-control input-lg', 'placeholder' => 'Usuario','minlength' => '4', 'maxlength' => '16', 'pattern' => '[a-záéíóúàèìòùäëïöüñ]+', 'id' => 'user', 'required']) }}
-                    </div>
-                    @if ($errors->has('user'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('user') }}</strong>
-                        </span>
-                    @endif
-                </div>
-            </div>
 
             <div class="form-group {{ $errors->has('pregunta1') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
@@ -548,7 +532,6 @@
 @endsection
 
 @section('script')
-
 <script type="text/javascript">
 $(document).ready(function() {
     // setup envio ajax token
@@ -666,12 +649,12 @@ $(document).ready(function() {
         // valido metodo para mostrar data adicional
         plan = this.value;
         //verifico valor
-        if(plan == 17){
+        if(plan == 7){
             $("#mascotas").addClass("hidden");
             $('#embarazada').attr('required','required');
             $("#maternidad").removeClass("hidden");
             $('.mascota').removeAttr('required','required');
-        }else if(plan == 18){
+        }else if(plan == 8){
             $("#mascotas").removeClass("hidden");
             $("#maternidad").addClass("hidden");
             $('.mascota').attr('required','required');
@@ -742,7 +725,14 @@ $(document).ready(function() {
                     $('#result').addClass('alert-warning '); 
                     $('#result .text').text(data.error)
                     validate = false;
-                } else {
+                }
+                // Verifica si existe cuenta generada en estatus pendiente
+                if(data.id) {
+                    // Redirecciono a otra pagina
+                    window.location.href = "{{ url('/resend') }}/"+data.id;
+                } 
+                // Verifica que se puede utilizar la tarjeta
+                if(data.success) {
                     // Desabilito los campos paa evitar errores
                     $('#valid').attr('disabled','disabled');
                     $('#tarjeta').attr('disabled','disabled');
@@ -805,6 +795,7 @@ $(document).ready(function() {
                     $('#result1').addClass('alert-danger'); 
                     $('#result1 .text').text(data.error)
                     validate = false;
+                    console.log(data.data);
                 } else {
                     // Desabilito los campos paa evitar errores
                     $('#valid1').attr('disabled','disabled');

@@ -35,16 +35,16 @@ class AcCuenta extends Model
         'fecha',
         'estatus',
         'id_producto',
+        'acepto_terminos',
         'deleted_at'
     ];
 
     /**
-     * Relación con tabla afiliados
-     * @return [type] [description]
+     * Get the Producto for the Cuenta.
      */
-    public function afiliados()
+    public function status()
     {
-        return $this->hasMany(\App\Models\AcAfiliado::class);
+        return $this->belongsTo(\App\Models\EstatusCuenta::class, 'estatus'); 
     }
 
     /**
@@ -56,19 +56,20 @@ class AcCuenta extends Model
     }
 
     /**
-     * Get the Plan Extranet for the Cuenta.
+     * Relación con tabla afiliados
+     * @return [type] [description]
      */
-    public function cuentaPlan()
+    public function afiliados()
     {
-        return $this->hasMany(\App\Models\AcCuentaplan::class, 'id_cuenta', 'id');
+        return $this->hasMany(\App\Models\AcAfiliado::class, 'id_cuenta', 'id');
     }
 
     /**
      * Get the Plan Extranet for the Cuenta.
      */
-    public function plan()
+    public function cuentaPlan()
     {
-        return $this->belongsToMany(\App\Models\AcPlanesExtranet::class, 'ac_cuentaplan', 'id_cuenta', 'id_plan');
+        return $this->hasMany(\App\Models\AcCuentaplan::class, 'id_cuenta', 'id');
     }
 
     /**

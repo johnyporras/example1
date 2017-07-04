@@ -21,7 +21,7 @@ class CreateCuentaPlanTable extends Migration
 
             $table->foreign('id_cuenta')->references('id')->on('ac_cuenta')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('id_plan')->references('id')->on('ac_planes_extranet')
+            $table->foreign('id_plan')->references('codigo_plan')->on('ac_planes_extranet')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
     }

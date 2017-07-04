@@ -89,7 +89,7 @@
                  <!-- List group -->
                 <ul class="list-group">
                     <li class="list-group-item"><span class="text-primary"><b>Codigo Cuenta:</b></span> {{ $cuenta->codigo_cuenta }}</li>
-                    <li class="list-group-item"><span class="text-primary"><b>Estatus:</b></span> {{ $cuenta->estatus }}</li>
+                    <li class="list-group-item"><span class="text-primary"><b>Estatus:</b></span> {{ $cuenta->status->descripcion }}</li>
                     <li class="list-group-item"><span class="text-primary"><b>Plan:</b></span> {{ $plan->nombre }}</li>
                     <li class="list-group-item"><span class="text-primary"><b>Cobertura del Plan:</b></span> {{ $plan->cobertura }}</li>
                 </ul>

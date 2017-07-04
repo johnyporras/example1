@@ -60,6 +60,16 @@ Route::get('verify/{email}/{confirm_token}', [
     'as'   => 'register.confirm' 
 ]);
 
+Route::get('resend/{cuenta}', [
+    'uses' => 'RegisterController@resend',
+    'as'   => 'register.resend' 
+]);
+
+Route::get('resend/email/{id}', [
+    'uses' => 'RegisterController@resendEmail',
+    'as'   => 'register.resendEmail' 
+]);
+
 /**--------------------------------------------*/
 
 /** Funcion para reloj local */
