@@ -31,7 +31,7 @@
                 	<h2>Estimad@ <br><br> </h2>
                     <b>Su solicitud ha sido rechazada `por parte del proveedor de la orden de servicio con los siguientes detalles</b>
                     <br/>
-                    Detalles
+                    
                      </br>
                     </br>
                     <table border="0">

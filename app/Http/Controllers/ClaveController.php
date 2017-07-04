@@ -155,7 +155,7 @@ class ClaveController extends Controller{
                 'fecha_cita'=>$rsClave->fecha_cita,
                 'telefono'=>$rsClave->telefono,
                 'obser'=>$rsClave->observaciones,
-                'motivo'=>$rsClave->observaciones,
+                'motivo'=>$rsClave->motivo,
                 'servicio'=>$rsClave->servicio,
                 'especialidad'=>$rsClave->especialidad,
                 'procedimiento'=>$rsClave->procedimiento,
@@ -404,8 +404,12 @@ class ClaveController extends Controller{
     public function aceptarClave($id,$idclaveprov)
     {
       if($id!="" && $idclaveprov!="")
-      {
-              return view("claves.aceptarClave",compact('id','idclaveprov'));
+      {   
+                            
+              $oClave=new AcClave();
+              $oClave->id=$id;
+              $rsClave = $oClave->getClave();
+              return view("claves.aceptarClave",compact('id','idclaveprov','rsClave'));
       }
     }
 

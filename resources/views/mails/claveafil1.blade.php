@@ -28,10 +28,10 @@
             <tr>
                 <td align="center" bgcolor="#ffffff" style="padding: 40px 20px 40px 20px; color: #555555; font-family: Arial, sans-serif; font-size: 20px; line-height: 30px; border-bottom: 1px solid #f6f6f6;">
   
-                	<h2>Estimad@ <br><br> </h2>
+                	<h2>Estimad@  <br><br> </h2>
                     <b>Hemos recibido la aceptacion de parte del proveedor de la orden de servicio con los siguientes detalles</b>
                     <br/>
-                    Detalles
+                    
                      </br>
                     </br>
                     <table border="0">
@@ -54,10 +54,6 @@
                         <tr>
                             <td>Dirección</td>
                             <td>{{ $data['direccion'] }}</td>
-                        </tr>
-                        <tr>
-                            <td>Observaciones</td>
-                            <td>{{ $data['observacion'] }}</td>
                         </tr>
                         <tr>
                             <td>Observacion</td>

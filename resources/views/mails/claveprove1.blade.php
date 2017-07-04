@@ -29,7 +29,7 @@
                 <td align="center" bgcolor="#ffffff" style="padding: 40px 20px 40px 20px; color: #555555; font-family: Arial, sans-serif; font-size: 20px; line-height: 30px; border-bottom: 1px solid #f6f6f6;">
                 
                 	
-                	<h2>Estimad@ <br><br> </h2>
+                	<h2>Estimad@  {{ $data['nombre'] }}<br><br> </h2>
                     <b>Hemos recibido una solicitud de orden de servicio con los siguientes detalles</b>
                     <br/>
                    
@@ -37,11 +37,11 @@
                     </br>
                     <table border="0">
                         <tr>
-                            <td>Cedula del solicitante</td>
+                            <td>Cedula del afiliado</td>
                             <td>{{ $data['cedula'] }}</td>
                         </tr>
                         <tr>
-                            <td>Nombre del solicitante</td>
+                            <td>Nombre del afiliado</td>
                             <td>{{ $data['nombreafiliado'].' '.$data['apafiliado'] }}</td>
                         </tr>
                         <tr>
