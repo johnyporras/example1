@@ -47,9 +47,12 @@ class RegisterController extends Controller
         // Selecciono paises con terminos
         $terminos = Terminos::orderBy('pais_id','ASC')->get();
         // Genero los paises con terminos agregados
-        foreach ($terminos as $termino) {
+        /*foreach ($terminos as $termino) {
             $paises[$termino->pais->id] = $termino->pais->name_es;
-        }
+        }*/
+         // Cargo los paises
+        $paises = Pais::orderBy('name_es','ASC')->pluck('name_es', 'id');
+
         // Retorno la vista
         return view('auth.register', compact('productos', 'planes','estados', 'tamanos','preguntas1','preguntas2','paises'));
     }
@@ -94,7 +97,7 @@ class RegisterController extends Controller
                             //Guardo id tarjeta
                             Session::set('tarjeta', $tarjeta->id);
                             // retorno respuesta
-                            return response()->json(['success' => 'Tarjeta Valida y borro la cuenta']);
+                            return response()->json(['success' => 'Tarjeta Valida']);
                         }
                         if ( $cuenta->estatus == 2 ) {
                             // retorno respuesta redirect
@@ -136,7 +139,13 @@ class RegisterController extends Controller
             if ($terminos !== null) {
                 // Retorno los terminos..
                 return response()->json(['value' => $terminos ]);
+            } else {
+                //terminos default
+                $terminos1 = Terminos::where('pais_id','=', 239)->first();
+                // Retorno los terminos default
+                return response()->json(['value' => $terminos1 ]);
             }
+
         }
     }
 
