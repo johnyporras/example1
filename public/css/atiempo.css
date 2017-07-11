@@ -102,6 +102,10 @@ ul.wysihtml5-toolbar a.btn.wysihtml5-command-active,
     padding-bottom: 14px;
 }
 
+.table > tbody > tr > td {
+     vertical-align: middle;
+}
+
 blockquote,
 .table thead > tr > th,
 .table tbody > tr > th,

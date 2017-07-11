@@ -131,11 +131,11 @@ class RegisterController extends Controller
     public function checkTerminos(Request $request)
     {   
         if($request->ajax()){
-            // Guardo el valor de l formulario para comparar
+            // Guardo el valor del formulario para comparar
             $pais = $request->pais;
-            //realizo un filtro para buscar en la tabla tarjetas
+            //realizo un filtro para buscar en la tabla terminos
             $terminos = Terminos::where('pais_id','=', $pais)->first();
-            // Verifico Pais seleccionado
+            // Verifico terminos del Pais seleccionado
             if ($terminos !== null) {
                 // Retorno los terminos..
                 return response()->json(['value' => $terminos ]);
@@ -145,7 +145,6 @@ class RegisterController extends Controller
                 // Retorno los terminos default
                 return response()->json(['value' => $terminos1 ]);
             }
-
         }
     }
 

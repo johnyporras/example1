@@ -11,8 +11,6 @@
 */
 /*=====================================================*/
 /** Rutas de Login */
-
-
 Route::auth();
 
 //Envio de correo de prueba
@@ -77,6 +75,7 @@ Route::get('/api/clock', [
         'uses' => 'ClockController@clock',
         'as'   => 'clock.now' 
 ]);
+/**--------------------------------------------*/
 
 /**
 * rutas modulo atención al viajero
@@ -89,44 +88,43 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('avi/lista', [
             'uses' => 'AviController@lista',
             'as'   => 'avi.lista' 
-        ]);
+    ]);
     
     Route::get('avi', [
             'uses' => 'AviController@index',
             'as'   => 'avi.index' 
-        ]);
+    ]);
 
     Route::get('avi/create', [
             'uses' => 'AviController@create',
             'as'   => 'avi.create' 
-        ]);
+    ]);
 
     Route::post('avi/store', [
             'uses' => 'AviController@store',
             'as'   => 'avi.store' 
-        ]);
+    ]);
 
-    
     Route::get('avi/{id}/edit', [
             'uses' => 'AviController@edit',
             'as'   => 'avi.edit' 
-        ]);
+    ]);
 
     Route::put('avi/{id}', [
             'uses' => 'AviController@update',
             'as'   => 'avi.update' 
-        ]);
+    ]);
 
     Route::get('avi/{id}', [
             'uses' => 'AviController@show',
             'as'   => 'avi.show' 
-        ]);
+    ]);
 
     Route::get('avi/{id}/destroy', [
             'uses' => 'AviController@destroy',
             'as'   => 'avi.destroy' 
-        ]);
-   
+    ]);
+    
 });
 /*=====================================================*/
 
@@ -149,65 +147,71 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('funerario', [
             'uses' => 'FunerarioController@index',
             'as'   => 'funerario.index' 
-        ]);
+    ]);
 
     // rutas para crear las solicitudes
     Route::get('funerario/create', [
             'uses' => 'FunerarioController@create',
             'as'   => 'funerario.create' 
-        ]);
+    ]);
 
     // rutas para eliminar detalle solicitudes
     Route::get('funerario/delete/{id}', [
             'uses' => 'FunerarioController@delete',
             'as'   => 'funerario.delete' 
-        ]);
+    ]);
 
     // rutas para eliminar solicitudes
     Route::get('funerario/{id}/destroy', [
             'uses' => 'FunerarioController@destroy',
             'as'   => 'funerario.destroy' 
-        ]);
+    ]);
 
     Route::get('funerario/lista', [
             'uses' => 'FunerarioController@lista',
             'as'   => 'funerario.lista' 
-        ]);
+    ]);
 
     // Rutas para listar por cada una de la solicitudes
     Route::get('funerario/{id}', [
             'uses' => 'FunerarioController@show',
             'as'   => 'funerario.show' 
-        ]);
+    ]);
 
     //Rutas para editar las solicitudes
     Route::get('funerario/{id}/edit', [
             'uses' => 'FunerarioController@edit',
             'as'   => 'funerario.edit' 
-        ]);
+    ]);
 
     Route::put('funerario/{id}', [
             'uses' => 'FunerarioController@update',
             'as'   => 'funerario.update' 
-        ]);
+    ]);
 
     Route::post('funerario/modify', [
             'uses' => 'FunerarioController@modify',
             'as'   => 'funerario.modify' 
-        ]);
+    ]);
 
     Route::post('funerario/store', [
             'uses' => 'FunerarioController@store',
             'as'   => 'funerario.store' 
-        ]);
+    ]);
 
     Route::post('funerario/store/item', [
             'uses' => 'FunerarioController@save',
             'as'   => 'funerario.save' 
-        ]);
+    ]);
 
-    // rutas para el perfil
-   Route::resource('profile', 'ProfileController');
+});
+/*=====================================================*/
+/**
+ * rutas para el perfil
+ */
+Route::group(['middleware' => ['auth']], function () {
+    
+    Route::resource('perfil', 'ProfileController');
 
 });
 /*=====================================================*/
@@ -401,6 +405,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/server/php/', function () {
         return view('server.php.index.php');
     });
+
 });
 //Archivo XML
 Route::get('dataXml', 'GenerateXmlController@getData');

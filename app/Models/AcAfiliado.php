@@ -74,7 +74,31 @@ class AcAfiliado extends Model {
      */
     public function contratos()
     {
-        return $this->hasMany(\App\Models\AcContrato::class,'cedula_afiliado','cedula');
+        return $this->hasMany(\App\Models\AcContrato::class, 'cedula_afiliado', 'cedula');
     }
-    
+
+    /**
+     * Get the documentos for the Afiliado.
+     */
+    public function documentos()
+    {
+        return $this->hasMany(\App\Models\AcDocumento::class, 'id_afiliado', 'id');
+    }
+
+    /**
+     * Get the detalle del motivo for the Afiliado.
+     */
+    public function motivos()
+    {
+        return $this->hasMany(\App\Models\MotivoDetalle::class, 'id_afiliado', 'id');
+    }
+
+    /**
+     * Get the detalle del motivo for the Afiliado.
+     */
+    public function medicamentos()
+    {
+        return $this->hasMany(\App\Models\Medicamento::class, 'id_afiliado', 'id');
+    }
+
 }

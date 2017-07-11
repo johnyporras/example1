@@ -11,8 +11,7 @@ class AcTipoControl extends Model {
      */
 
     protected $table = 'ac_tipo_control';
+
     protected $fillable = ['id', 'descripcion', 'deleted_at'];
-
-
 
 }

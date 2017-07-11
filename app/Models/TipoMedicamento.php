@@ -1,10 +1,13 @@
-<?php namespace App\Models;
+<?php
+
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AcDocumento extends Model {
-
+class TipoMedicamento extends Model
+{
+    
     /**
      * Para usar borrado suave en la base de datos*
      */
@@ -14,7 +17,7 @@ class AcDocumento extends Model {
      *  Name of database
      * @var string
      */
-    protected $table = 'ac_documentos'; 
+    protected $table = 'tipo_medicamentos'; 
 
     /**
      * The attributes that should be mutated to dates.
@@ -29,25 +32,15 @@ class AcDocumento extends Model {
      * @var array
      */
     protected $fillable = [
-        'id_afiliado', 
-        'id_tipo_documento',
-        'detalle',
-        'file',
+        'descripcion', 
         'deleted_at'
     ];
 
     /**
-     * Get Tipo Documento.
+     * Get the Medicamentos.
      */
-    public function tipo() {
-        return $this->belongsTo(\App\Models\AcTipoDocumento::class, 'id_tipo_documento', 'id');
+    public function medicamentos()
+    {
+        return $this->hasMany(\App\Models\Medicamento::class,'id_tipo_medicamento', 'id');
     }
-
-    /**
-     * Get the afiliado
-     */
-    public function afiliado() {
-        return $this->belongsTo(\App\Models\AcAfiliado::class, 'id_afiliado', 'id');
-    }
-
 }

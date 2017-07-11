@@ -24,7 +24,7 @@ class ProfileController extends Controller
 
        // dd($profile);
 
-        return view('profile.show', compact('usuario'));
+        return view('profile.show', compact('usuario')); 
     }
 
     /**

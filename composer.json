@@ -15,7 +15,8 @@
         "anchu/ftp": "~2.0",
         "grimthorr/laravel-toast": "^1.1",
         "yajra/laravel-datatables-oracle": "^6.27",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "simplesoftwareio/simple-qrcode": "^1.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

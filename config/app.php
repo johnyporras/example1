@@ -155,6 +155,7 @@ return [
         Anchu\Ftp\FtpServiceProvider::class,
         Grimthorr\LaravelToast\ServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -215,6 +216,7 @@ return [
         'PDF'   => Barryvdh\DomPDF\Facade::class,
         'Toast' => Grimthorr\LaravelToast\Facade::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     ],
 
 ];
