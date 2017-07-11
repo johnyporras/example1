@@ -45,10 +45,6 @@
                             <td>{{ $data['nombreafiliado'].' '.$data['apafiliado'] }}</td>
                         </tr>
                         <tr>
-                            <td>Telefono</td>
-                            <td>{{ $data['telefono'] }}</td>
-                        </tr>
-                        <tr>
                             <td>Fecha de la cita</td>
                             <td>{{ $data['fecha_cita'] }}</td>
                         </tr>

@@ -47,7 +47,7 @@
     <div class="row">
           {!! Form::label('fechacita', 'Fecha Cita: ', ['class' => 'col-sm-2 control-label']) !!}
          <div class="col-sm-3">
-              {!! Form::text('fechacita','',['id'=>'fechacita']) !!}
+              {!! Form::text('fechacita',$data['fecha_cita'],['id'=>'fechacita','readonly'=>true]) !!}
               
           </div>
     </div>
@@ -56,12 +56,6 @@
          <div class="col-sm-3">
               {!! Form::text('horacita','',['id'=>'horacita']) !!}
               
-          </div>
-    </div>
-    <div class="row">
-          {!! Form::label('direccion', 'Dirección: ', ['class' => 'col-sm-2 control-label']) !!}
-         <div class="col-sm-3">
-              {!! Form::textarea('direccion','',['id'=>'direccion']) !!}              
           </div>
     </div>
     <div class="row">
@@ -84,7 +78,7 @@
 @section('script')
     <script>
      
-  $( "#fechacita" ).datepicker({dateFormat: "dd/mm/yy"});
+//  $( "#fechacita" ).datepicker({dateFormat: "dd/mm/yy"});
   
     </script>
 @endsection

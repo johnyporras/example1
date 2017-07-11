@@ -213,7 +213,7 @@ class ClaveController extends Controller{
                       Session::flash('status', 'Su orden de servicios ha sido creada con exito y enviada para su asignacion!');
                    }
 
-            Session::flash('status', 'Su clave  ha sido generada!');
+            Session::flash('status', 'Su solicitud de cita ha sido gestionada satisfactoriamente, en un lapso no mayor a 48 hrs hábiles recibirá un SMS y un correo electrónico con los datos de la  asignación de su cita!');
 
             $request = array_add($request, 'show', $claves->id);
             if (( isset($request->codigo_contrato)) && ($request->codigo_contrato == 0)){
@@ -249,7 +249,7 @@ class ClaveController extends Controller{
           AcClaveProv::where("id_clave","=",$request->id)
                       ->where("id_proveedor","=",$request->idclaveprov)
                       ->update(["fechacita"=>$request->fechacita,"horacita"=>$request->horacita
-                              ,"direccion"=>$request->direccion,"observacion"=>$request->observac,
+                              ,"observacion"=>$request->observac,
                               "aceptado"=>'1']);
 
           AcClave::where("id","=",$request->id)
@@ -346,7 +346,7 @@ class ClaveController extends Controller{
                     'fecha_cita'=>$rsClave->fecha_cita,
                     'telefono'=>$rsClave->telefono,
                     'obser'=>$rsClave->observaciones,
-                    'motivo'=>$rsClave->observaciones,
+                    'motivo'=>$rsClave->motivo,
                     'servicio'=>$rsClave->servicio,
                     'especialidad'=>$rsClave->especialidad,
                     'procedimiento'=>$rsClave->procedimiento,

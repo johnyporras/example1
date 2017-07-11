@@ -304,7 +304,7 @@ class ConsultarClaveController extends Controller
                      ->leftJoin('ac_cuenta'     , 'ac_cuenta.id',"=",'ac_afiliados.id_cuenta')
                      ->join('ac_estatus'       , 'ac_estatus.id',"=", 'ac_claves.estatus_clave')
                     ->select('ac_claves.cedula_afiliado as cedula_afiliado',
-                             'ac_claves.id as id_clave',
+                        'ac_claves.id as id_clave','ac_claves.estatus_clave',
                              //'ac_tipo_afiliado.nombre as tipo_afiliado',
                              'ac_afiliados.nombre as nombre' ,
                              'ac_afiliados.apellido as apellido',
