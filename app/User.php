@@ -88,13 +88,6 @@ class User extends Authenticatable{
     }
 
     /**
-     * Get Afiliado.
-     */
-    public function afiliado() {
-        return $this->belongsTo(\App\Models\AcAfiliado::class, 'detalles_usuario_id');
-    }
-    
-    /**
      * Get Claves.
      */
     public function claves() {

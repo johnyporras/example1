@@ -221,6 +221,11 @@ Route::group(['middleware' => ['auth']], function () {
         'as'   => 'perfil.editar' 
     ]);
 
+    Route::post('perfil/image', [
+        'uses' => 'ProfileController@image',
+        'as'   => 'perfil.image' 
+    ]);
+
 });
 /*=====================================================*/
 

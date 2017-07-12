@@ -34,9 +34,6 @@ class CreateUsersTable extends Migration {
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
-            	$table->foreign('detalles_usuario_id')->references('id')->on('ac_afiliados')
-                ->onUpdate('cascade')->onDelete('cascade');
-
 		});
 	}
 

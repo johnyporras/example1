@@ -48,6 +48,11 @@ return [
             'root' => public_path('archivos'),
         ],
 
+        'avatar' => [
+            'driver' => 'local',
+            'root' => public_path('images/avatars'),
+        ],
+
         'funerario' => [
             'driver' => 'local',
             'root' => storage_path('app/funerario'),

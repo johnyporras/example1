@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\User;
 use App\Models\AcAfiliado;
 use Auth;
+use Storage;
 
 class ProfileController extends Controller
 {
@@ -27,6 +28,32 @@ class ProfileController extends Controller
         //dd($perfil);
         // Retorno vista
         return view('profile.index', compact('usuario', 'perfil')); 
+    }
+
+    public function image(Request $request)
+    {
+       // dd($request);
+
+        // Guardo facturas asociadas
+        if ($request->hasFile('image')) 
+        {
+            // Selecciono usuario logueado
+            $id = Auth::user()->id;
+            $usuario = User::findOrFail($id);
+            // guardo en una variable la imagen
+            $file = $file = $request->image;
+            // Cambio nombre de la imagen
+            $filename = 'avatar_'.$usuario->id.'.'.$file->getClientOriginalExtension();
+            // Guardo la imagen en el directorio 
+            Storage::disk('avatar')->put($filename, file_get_contents($file));
+
+            // Guardo el registro en la base de datos
+            $usuario->imagen_perfil = $filename;
+            $usuario->save();
+        }
+
+        toast()->success(' Imagen Actualizada correctamente', 'Información:');
+        return redirect()->route('perfil.index');
     }
 
     /**

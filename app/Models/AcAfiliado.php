@@ -101,12 +101,4 @@ class AcAfiliado extends Model {
         return $this->hasMany(\App\Models\Medicamento::class, 'id_afiliado', 'id');
     }
 
-    /**
-     * Get usuario
-     */
-    public function usuario()
-    {
-        return $this->hasMany(\App\User::class, 'detalles_usuario_id', 'id');
-    }
-
 }

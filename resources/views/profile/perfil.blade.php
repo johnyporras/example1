@@ -1,21 +1,26 @@
 <div class="row">
     <!-- Customer Info -->
-    <div class="col-xs-4 borde">
+    <div class="col-xs-4">
         <div class="block-section text-right">
-            <img src="{{ url('images/avatar.jpg') }}" alt="avatar" class="img-thumbnail img-responsive">
+            
+            @if ($usuario->imagen_perfil == null)
+                <img src="{{ url('images/avatars/avatar.jpg') }}" width="100px" alt="avatar" class="img-thumbnail img-responsive">
+            @else
+                <img src="{{ url('images/avatars/'.$usuario->imagen_perfil) }}" width="100px" alt="avatar" class="img-thumbnail img-responsive">
+            @endif
         </div>
     </div>
 
-    <div class="col-xs-8 borde">
+    <div class="col-xs-8">
         <div class="row">
             <div class="col-xs-12">
                 <p>Pon tu foto. Una en la que salgas muy bien</p>
             </div>
-            <div class="col-md-6">
-                
+            <div class="col-lg-7">
 
+                {{ Form::open(['route'=>'perfil.image', 'files' => true, 'id' => 'imageForm']) }}
+        
                 <div class="form-group {{ $errors->has('image') ? ' has-error' : '' }}">
-                    
                     {{ Form::file('image', ['id' => 'image', 'required' ]) }}
                     <span class="help-block">
                         <strong>Permitido: jpg, png</strong>
@@ -25,13 +30,10 @@
                             <strong>{{ $errors->first('image') }}</strong>
                         </span>
                     @endif
-                    
                 </div>
-                <!-- End .form-group  --> 
+                <!-- End .form-group  -->
             </div>
-            <div class="col-md-6">
-                <button type="submit" class="btn btn-success btn-sm" title="Guardar"><span><i class="fa fa-save"></i></span> Guardar</button>
-            </div>
+            {{ Form::close() }}  
         </div> <!-- .row -->
     </div>
 
@@ -102,10 +104,23 @@ $(document).ready(function() {
     $('#image').fileinput({
         language: 'es',
         //showUpload: false,
+        showPreview: false,
         removeClass: 'btn btn-danger',
         browseClass: 'btn btn-primary',
+        uploadClass: 'btn btn-success',
         mainClass: "input-group-sm",
         allowedFileExtensions : ['jpg', 'jpeg', 'png','pdf'],
+        layoutTemplates: {
+            main1: "{preview}\n" +
+            "<div class=\'input-group {class}\'>\n" +
+            "   <div class=\'input-group-btn\'>\n" +
+            "       {browse}\n" +
+            "       {upload}\n" +
+            "       {remove}\n" +
+            "   </div>\n" +
+            "   {caption}\n" +
+            "</div>"
+        },
     });
     // para texto editable
     $('.xtext').editable({
