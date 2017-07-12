@@ -69,7 +69,7 @@ class AcCuenta extends Model
      */
     public function cuentaPlan()
     {
-        return $this->hasMany(\App\Models\AcCuentaplan::class, 'id_cuenta', 'id');
+        return $this->hasMany(\App\Models\AcCuentaPlan::class, 'id_cuenta', 'id');
     }
 
     /**
