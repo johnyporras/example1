@@ -67,7 +67,7 @@ class AcAfiliado extends Model {
     public function acTipoAfiliado() 
     {
         return $this->belongsTo(\App\Models\AcTipoAfiliado::class, 'tipo_afiliado', 'id');
-    }
+    } 
 
     /**
      * Get the contratos for the Afiliado.
@@ -99,6 +99,14 @@ class AcAfiliado extends Model {
     public function medicamentos()
     {
         return $this->hasMany(\App\Models\Medicamento::class, 'id_afiliado', 'id');
+    }
+
+    /**
+     * Get usuario
+     */
+    public function usuario()
+    {
+        return $this->hasMany(\App\User::class, 'detalles_usuario_id', 'id');
     }
 
 }

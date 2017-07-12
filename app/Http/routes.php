@@ -211,7 +211,15 @@ Route::group(['middleware' => ['auth']], function () {
  */
 Route::group(['middleware' => ['auth']], function () {
     
-    Route::resource('perfil', 'ProfileController');
+    Route::get('perfil', [
+        'uses' => 'ProfileController@index',
+        'as'   => 'perfil.index' 
+    ]);
+
+    Route::post('perfil', [
+        'uses' => 'ProfileController@editar',
+        'as'   => 'perfil.editar' 
+    ]);
 
 });
 /*=====================================================*/

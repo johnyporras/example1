@@ -434,12 +434,42 @@
 
             {!! Form::open(['url' => '/registro', 'class' => 'form-horizontal form-bordered form-control-borderless', 'id' => 'userForm']) !!}
 
+            <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                        {{ Form::password('password', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Clave', 'id' => 'password', 'minlength' => '6', 'maxlength' => '16', 'required']) }}  
+                    </div>
+                     @if ($errors->has('password'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('password') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="form-group {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                        {{ Form::password('password_confirmation', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Confirmar Clave', 'id' => 'password1', 'data-parsley-equalto' => '#password', 'minlength' => '6', 'maxlength' => '16', 'required']) }}
+                            
+                    </div>
+                    @if ($errors->has('password_confirmation'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('password_confirmation') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+
             <div class="form-group {{ $errors->has('pregunta1') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-circle_question_mark"></i></span>
                         {{ Form::select('pregunta1', $preguntas1, null, ['class' => 'usuario form-control input-lg', 'placeholder'=>'Seleccione Pregunta', 'required', 'id' => 'pregunta1']) }}
                     </div>
+                    
                     @if ($errors->has('pregunta1'))
                         <span class="help-block">
                             <strong>{{ $errors->first('pregunta1') }}</strong>
@@ -490,30 +520,32 @@
                 </div>
             </div>
 
-            <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
+            <div class="form-group {{ $errors->has('clave') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-                        {{ Form::password('password', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Clave', 'id' => 'password', 'minlength' => '6', 'maxlength' => '16', 'required']) }}  
+                        {{ Form::password('clave', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Clave Teléfonica', 'id' => 'clave', 'minlength' => '4', 'maxlength' => '6', 'pattern' => '[0-9]+', 'required']) }} 
+                        <span class="help-block"> Solo se permiten Números</span> 
                     </div>
-                     @if ($errors->has('password'))
+
+                     @if ($errors->has('clave'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('password') }}</strong>
+                            <strong>{{ $errors->first('clave') }}</strong>
                         </span>
                     @endif
                 </div>
             </div>
 
-            <div class="form-group {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+            <div class="form-group {{ $errors->has('clave_confirmation') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-                        {{ Form::password('password_confirmation', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Confirmar Clave', 'id' => 'password1', 'data-parsley-equalto' => '#password', 'minlength' => '6', 'maxlength' => '16', 'required']) }}
-                            
+                        {{ Form::password('clave_confirmation', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Confirmar Clave Telefonica', 'id' => 'clave1', 'data-parsley-equalto' => '#clave', 'minlength' => '4', 'maxlength' => '6', 'required']) }}
+                        <span class="help-block"> Solo se permiten Números</span>   
                     </div>
-                    @if ($errors->has('password_confirmation'))
+                    @if ($errors->has('clave_confirmation'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('password_confirmation') }}</strong>
+                            <strong>{{ $errors->first('clave_confirmation') }}</strong>
                         </span>
                     @endif
                 </div>

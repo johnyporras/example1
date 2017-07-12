@@ -18,6 +18,15 @@ li.dropdown-header,
     background-color: #6dcff6;
 }
 
+.borde{
+    border: 1px solid #9731ea;
+}
+
+.borde1{
+    border: 1px solid #1cedcd;
+}
+
+
 .themed-border-dark {
     border-color: #6dcff6;
 }
@@ -517,6 +526,44 @@ fieldset[disabled] .btn-primary:active:focus,
 fieldset[disabled] .btn-primary.active:focus {
     background-color: #33bcf2;
     border-color: #33bcf2;
+}
+
+/* Botones en circulo */
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.428571429;
+}
+
+.btn-circle.btn-sm {
+  width: 26px;
+  height: 26px;
+  padding: 5px 0;
+  border-radius: 13px;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.428571429;
+}
+
+.btn-circle.btn-lg {
+  width: 50px;
+  height: 50px;
+  padding: 10px 16px;
+  border-radius: 25px;
+  font-size: 18px;
+  line-height: 1.33;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 24px;
+  line-height: 1.33;
 }
 
 .text-white{

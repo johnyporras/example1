@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 
 use App\User;
+use App\Models\AcAfiliado;
 use Auth;
 
 class ProfileController extends Controller
@@ -19,12 +19,14 @@ class ProfileController extends Controller
     public function index()
     {   
         $id = Auth::user()->id;
-
+        // Cargo data del usuario
         $usuario = User::findOrfail($id);
+        // Cargo data del perfil
+        $perfil = AcAfiliado::findOrFail($usuario->detalles_usuario_id);
 
-       // dd($profile);
-
-        return view('profile.show', compact('usuario')); 
+        //dd($perfil);
+        // Retorno vista
+        return view('profile.index', compact('usuario', 'perfil')); 
     }
 
     /**

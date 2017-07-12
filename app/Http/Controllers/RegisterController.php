@@ -303,7 +303,8 @@ class RegisterController extends Controller
                                     'name'  => $name,
                                     'email' => Session::get('afiliado')->email,
                                     'user'  => Session::get('afiliado')->email,
-                                    'password'   => bcrypt($request->password),
+                                    'password' => bcrypt($request->password),
+                                    'clave'    => bcrypt($request->clave),
                                     'department' => 'cliente',
                                     'type'       => 5,
                                     'active'     => false,
@@ -313,7 +314,7 @@ class RegisterController extends Controller
                                     'respuesta_2' => bcrypt($request->respuesta2),
                                     'remember_token' => str_random(100),
                                     'confirm_token'  => str_random(100),
-                                    'detalles_usuario_id' => Session::get('cuenta')->id,
+                                    'detalles_usuario_id' => Session::get('afiliado')->id,
                                 ]);
                         // Cambio estatus a pendiente de la cuenta a la espera de confirmación de correo
                         $cuenta = AcCuenta::find($usuario->detalles_usuario_id);

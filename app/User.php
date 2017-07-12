@@ -34,6 +34,7 @@ class User extends Authenticatable{
         'email',
         'user',
         'password',
+        'clave',
         'department',
         'detalles_usuario_id',
         'imagen_perfil',
@@ -55,7 +56,7 @@ class User extends Authenticatable{
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'clave_telefono', 'respuesta_1', 'respuesta_2', 'remember_token', 'confirm_token'
     ];
 
     public static $login_validation_rules = [
@@ -84,6 +85,13 @@ class User extends Authenticatable{
      */
     public function acProveedor() {
         return $this->belongsTo(\App\Models\AcProveedoresExtranet::class, 'proveedor', 'codigo_proveedor');
+    }
+
+    /**
+     * Get Afiliado.
+     */
+    public function afiliado() {
+        return $this->belongsTo(\App\Models\AcAfiliado::class, 'detalles_usuario_id');
     }
     
     /**

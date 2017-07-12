@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration {
 			$table->string('email')->unique();
 			$table->string('user')->unique();
             $table->string('password');
+            $table->string('clave')->nullable();
 			$table->string('department', 50);
 			$table->string('imagen_perfil')->nullable();
 			$table->integer('type')->index('type');
@@ -30,9 +31,12 @@ class CreateUsersTable extends Migration {
 			$table->dateTime('ultimo_acceso')->nullable();
 			$table->integer('detalles_usuario_id')->nullable()->unsigned();
 			$table->string('confirm_token',100)->nullable();
-            	$table->rememberToken();
-            	$table->timestamps();
-            	$table->softDeletes();
+            $table->rememberToken();
+            $table->timestamps();
+            $table->softDeletes();
+            	$table->foreign('detalles_usuario_id')->references('id')->on('ac_afiliados')
+                ->onUpdate('cascade')->onDelete('cascade');
+
 		});
 	}
 

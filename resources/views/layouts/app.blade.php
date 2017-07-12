@@ -44,10 +44,8 @@
         <!-- Custom default Styles for plugins -->
         @stack('styles')
         <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
-
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
         <link rel="stylesheet" href="{{ asset('css/atiempo.css') }}">
-
         <!-- END Stylesheets -->
 
         <!-- Modernizr (browser feature detection library) -->
@@ -195,11 +193,12 @@ if(is_object(Auth::user()))
         <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
         <script src="{{ asset('plugins/parsley-js/parsley.min.js') }}"></script>
         <script src="{{ asset('plugins/parsley-js/i18n/es.js') }}"></script>
-        <!-- QUITAR CODIGO APLICAR SOLO EN LAS PAGINAS A UTILIZAR -->
-@yield('script')
+        
         <script src="{{ asset('js/plugins.js') }}"></script>
         @stack('scripts')
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/clock.js') }}"></script>
+        <!-- QUITAR CODIGO APLICAR SOLO EN LAS PAGINAS A UTILIZAR -->
+        @yield('script')
     </body>
 </html>

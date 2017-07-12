@@ -361,12 +361,12 @@
                             </div>
 
                         </div>
-                    </div>
+                     </div>
 
-                    <div class="col-xs-12">
-                    {{ Form::hidden('id', $solicitud->id) }}
-                    <button type="submit" class="btn btn-sm btn-success" title="Guardar"><span><i class="fa fa-save"></i></span> Guardar</button>
-                </div>
+                     <div class="col-xs-12">
+                        {{ Form::hidden('id', $solicitud->id) }}
+                        <button type="submit" class="btn btn-sm btn-success" title="Guardar"><span><i class="fa fa-save"></i></span> Guardar</button>
+                     </div>
                     
                 </div> <!-- row -->
               {{ Form::close() }}  
