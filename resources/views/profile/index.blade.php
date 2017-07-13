@@ -47,6 +47,7 @@
                 <li><a href="#1"><i class="gi gi-user fa-fw"></i> {{ strtoupper('Datos Personales') }}</a></li>
                 <li><a href="#2"><i class="fa fa-heartbeat fa-fw"></i> {{ strtoupper('Datos de Salud') }}</a></li>
                 <li><a href="#3"><i class="gi gi-qrcode fa-fw"></i> {{ strtoupper('Datos de Emergencia') }}</a></li>
+                <li><a href="#4"><i class="gi gi-keys fa-fw"></i> {{ strtoupper('Datos de Seguridad') }}</a></li>
             </ul>
         </div>
                             
@@ -59,11 +60,21 @@
             </div>
 
             <div class="tab-pane" id="2">
-               
+            <!-- incluye  profile table -->
+                @include('profile.salud')
+            <!-- incluye  profile table -->
             </div>
                 
             <div class="tab-pane" id="3">
-                
+            <!-- incluye  profile table -->
+                @include('profile.codigo')
+            <!-- incluye  profile table -->  
+            </div>
+
+            <div class="tab-pane" id="4">
+            <!-- incluye  profile table -->
+                @include('profile.seguridad')
+            <!-- incluye  profile table -->  
             </div>
             
         </div>
@@ -82,12 +93,25 @@
 <script>
 $(document).ready(function() {
 
-    var defaults = {
-        mode: 'inline', 
-        toggle: 'manual', 
-    };
-
-    $.extend($.fn.editable.defaults, defaults);
+    // Sweet alert
+    $('.sweet-danger').on( 'click', function (e) {
+        e.preventDefault();
+        var link = $(this).attr('href');
+        swal({   
+            title: "Advertencia",
+            text: "¿Esta seguro de continuar?",         
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonClass: "btn-danger btn-sm",
+            confirmButtonText: "Eliminar",
+            cancelButtonClass: "btn-sm",
+            cancelButtonText: "Cancelar", 
+            closeOnConfirm: false 
+            }, 
+            function(){  
+                window.location = link
+        });
+    });
 
 });
 </script>

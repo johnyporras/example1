@@ -32,9 +32,6 @@ class ProfileController extends Controller
 
     public function image(Request $request)
     {
-       // dd($request);
-
-        // Guardo facturas asociadas
         if ($request->hasFile('image')) 
         {
             // Selecciono usuario logueado
@@ -52,7 +49,7 @@ class ProfileController extends Controller
             $usuario->save();
         }
 
-        toast()->success(' Imagen Actualizada correctamente', 'Información:');
+        toast()->success('Imagen Actualizada correctamente', 'Información:');
         return redirect()->route('perfil.index');
     }
 

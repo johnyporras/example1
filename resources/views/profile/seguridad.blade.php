@@ -261,38 +261,43 @@
             <span>Contacto en caso de Emergencias</span>
         </h4>
 
-        <table class="table table-colored table-borderless table-striped table-vcenter">
-            <thead>
-                <tr>
-                    <th class="text-center" width="50"><span><i class="fa fa-trash"></i></span></th>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
-                </tr>
-            </thead>
+        <table class="tpersona table table-borderless table-striped table-vcenter">
             <tbody>
                 <tr>
-                    <td class="text-center" style="width: 50px;">
+                    <td class="text-right" style="width: 30%;">
+                        <strong>Nombre</strong>
+                    </td>
+                    <td><span class="xtext" 
+                            data-type="text"
+                            data-pk="{{ $perfil->id }}" 
+                            data-name="nombre"
+                            data-value="{{ $perfil->nombre }}"
+                            data-title="Ingrese Nombre"
+                            ></span>
+                    </td>
+                    <td style="width: 50px;">
                         <button type="button" data-toggle="tooltip" class="btn btn-sm btn-danger btn-circle sweet-danger" data-original-title="Eliminar">
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>
-                    <td><a class="xtext1" 
-                        data-type="text"
-                        data-pk="{{ $perfil->id }}" 
-                        data-name="nombre"
-                        data-value="{{ $perfil->nombre }}"
-                        data-title="Ingrese Nombre"
-                        ></a></td>
-                    <td><a class="xtext1" 
-                        data-type="text"
-                        data-pk="{{ $perfil->id }}" 
-                        data-name="nombre"
-                        data-value="{{ $perfil->nombre }}"
-                        data-title="Ingrese Nombre"
-                        ></a></td>
+                </tr>
+                <tr>
+                    <td class="text-right" style="width: 30%;">
+                        <strong>Teléfono</strong>
+                    </td>
+                    <td><span class="xtext" 
+                            data-type="text"
+                            data-pk="{{ $perfil->id }}" 
+                            data-name="nombre"
+                            data-value="{{ $perfil->nombre }}"
+                            data-title="Ingrese Nombre"
+                            ></span>
+                    </td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
+        <!-- END Customer Info -->
     </div>
 
     <!-- Pasatiempos -->
@@ -302,38 +307,33 @@
             <span>Pasatiempos</span>
         </h4>
 
-        <table class="table table-colored table-borderless table-striped table-vcenter">
-            <thead>
-                <tr>
-                    <th class="text-center" width="50"><span><i class="fa fa-trash"></i></span></th>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
-                </tr>
-            </thead>
+        <table class="tpersona table table-borderless table-striped table-vcenter">
             <tbody>
                 <tr>
-                    <td class="text-center" style="width: 50px;">
+                    <td class="text-right" style="width: 30%;">
+                        <strong>Nombre</strong>
+                    </td>
+                    <td><span class="xtext" 
+                            data-type="text"
+                            data-pk="{{ $perfil->id }}" 
+                            data-name="nombre"
+                            data-value="{{ $perfil->nombre }}"
+                            data-title="Ingrese Nombre"
+                            ></span>
+                    </td>
+                    <td style="width: 72px;">
+                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-primary btn-circle" data-original-title="Editar">
+                            <i class="fa fa-edit"></i>
+                        </button>
+
                         <button type="button" data-toggle="tooltip" class="btn btn-sm btn-danger btn-circle sweet-danger" data-original-title="Eliminar">
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>
-                    <td><a class="xtext1" 
-                        data-type="text"
-                        data-pk="{{ $perfil->id }}" 
-                        data-name="nombre"
-                        data-value="{{ $perfil->nombre }}"
-                        data-title="Ingrese Nombre"
-                        ></a></td>
-                    <td><a class="xtext1" 
-                        data-type="text"
-                        data-pk="{{ $perfil->id }}" 
-                        data-name="nombre"
-                        data-value="{{ $perfil->nombre }}"
-                        data-title="Ingrese Nombre"
-                        ></a></td>
                 </tr>
             </tbody>
         </table>
+        <!-- END Customer Info -->
     </div>
 
 </div>
@@ -341,58 +341,6 @@
 @push('persona')
 <script>
 $(document).ready(function() {
-
-    // Para subir imagen
-    $('#image').fileinput({
-        language: 'es',
-        //showUpload: false,
-        showPreview: false,
-        removeClass: 'btn btn-danger',
-        browseClass: 'btn btn-primary',
-        uploadClass: 'btn btn-success',
-        mainClass: "input-group-sm",
-        allowedFileExtensions : ['jpg', 'jpeg', 'png','pdf'],
-        layoutTemplates: {
-            main1: "{preview}\n" +
-            "<div class=\'input-group {class}\'>\n" +
-            "   <div class=\'input-group-btn\'>\n" +
-            "       {browse}\n" +
-            "       {upload}\n" +
-            "       {remove}\n" +
-            "   </div>\n" +
-            "   {caption}\n" +
-            "</div>"
-        },
-    });
-
-    // para texto editable
-    $('.xtext').editable({
-        mode: 'inline', 
-        toggle: 'manual',
-        validate: function(value) {
-            if($.trim(value) == '') {
-                return 'Valor es Requerido.';
-            }
-        },
-        url:'{{ route('perfil.editar') }}',
-    });
-
-    // para texto editable
-    $('.xtext1').editable({
-        validate: function(value) {
-            if($.trim(value) == '') {
-                return 'Valor es Requerido.';
-            }
-        },
-        url:'{{ route('perfil.editar') }}',
-    });
-
-    // Para seleccionar editable en la tabla
-    $('.tpersona tbody').on('click', '.b-edit', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-       $(this).closest('tr').find('.editable').editable('show');  
-    });
 
 });
 </script>
