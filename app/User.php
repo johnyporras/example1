@@ -56,7 +56,7 @@ class User extends Authenticatable{
      * @var array
      */
     protected $hidden = [
-        'password', 'clave_telefono', 'respuesta_1', 'respuesta_2', 'remember_token', 'confirm_token'
+        'password', 'clave', 'respuesta_1', 'respuesta_2', 'remember_token', 'confirm_token'
     ];
 
     public static $login_validation_rules = [

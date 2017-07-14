@@ -925,7 +925,8 @@ $(document).ready(function() {
         var respuesta1 = $('#respuesta1').val();
         var pregunta2  = $('#pregunta2').val();
         var respuesta2 = $('#respuesta2').val();
-        var clave      = $('#password').val();
+        var password   = $('#password').val();
+        var clave      = $('#clave').val();
   
         // Ejecuto la peticion para validar la tarjeta
         $.ajax({
@@ -937,7 +938,8 @@ $(document).ready(function() {
                 respuesta1: respuesta1,
                 pregunta2: pregunta2,
                 respuesta2: respuesta2,
-                password: clave,
+                password: password,
+                clave: clave,
             },
             beforeSend:function() { 
                $('#valid3').attr('disabled','disabled');
@@ -958,7 +960,7 @@ $(document).ready(function() {
                     $('#result3').removeClass('alert-success'); 
                     $('#result3').addClass('alert-danger'); 
                     $('#result3 .text').text(data.error);
-                    console.log(data.data);
+                    console.log(data.data); 
                 } else {
                     // Desabilito los campos paa evitar errores
                     $('#valid3').attr('disabled','disabled');
