@@ -38,7 +38,7 @@ class AcAfiliado extends Model {
         'sexo', 
         'telefono',
         'id_cuenta',
-        'id_estado', 
+        'id_estado',
         'ciudad', 
         'embarazada', 
         'tiempo_gestacion', 

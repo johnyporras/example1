@@ -59,9 +59,9 @@ class AcCuenta extends Model
      * Relación con tabla afiliados
      * @return [type] [description]
      */
-    public function afiliados()
+    public function afiliado()
     {
-        return $this->hasMany(\App\Models\AcAfiliado::class, 'id_cuenta', 'id');
+        return $this->hasOne(\App\Models\AcAfiliado::class, 'id_cuenta', 'id');
     }
 
     /**
@@ -69,7 +69,7 @@ class AcCuenta extends Model
      */
     public function cuentaPlan()
     {
-        return $this->hasMany(\App\Models\AcCuentaPlan::class, 'id_cuenta', 'id');
+        return $this->hasOne(\App\Models\AcCuentaPlan::class, 'id_cuenta', 'id');
     }
 
     /**

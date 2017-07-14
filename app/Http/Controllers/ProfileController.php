@@ -37,10 +37,12 @@ class ProfileController extends Controller
             // Selecciono usuario logueado
             $id = Auth::user()->id;
             $usuario = User::findOrFail($id);
+            //Borro imagen anterior
+            Storage::disk('avatar')->delete($usuario->imagen_perfil);
             // guardo en una variable la imagen
             $file = $file = $request->image;
             // Cambio nombre de la imagen
-            $filename = 'avatar_'.$usuario->id.'.'.$file->getClientOriginalExtension();
+            $filename = 'avatar_'.$usuario->id. time().'.'.$file->getClientOriginalExtension();
             // Guardo la imagen en el directorio 
             Storage::disk('avatar')->put($filename, file_get_contents($file));
 

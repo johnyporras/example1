@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration {
 			$table->string('pregunta_2')->nullable();
 			$table->string('respuesta_2')->nullable();
 			$table->dateTime('ultimo_acceso')->nullable();
-			$table->integer('detalles_usuario_id')->nullable()->unsigned();
+			$table->integer('detalles_usuario_id')->nullable()->unsigned()->comment('Afiliado ID o Proveedor ID - Depende del tipo de Usuario');
 			$table->string('confirm_token',100)->nullable();
             $table->rememberToken();
             $table->timestamps();

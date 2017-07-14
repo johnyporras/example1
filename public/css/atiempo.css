@@ -719,6 +719,8 @@ fieldset[disabled] .btn-primary.active:focus {
     border-color: #6DCFF6 !important;
     background-color: #6DCFF6 !important;
     color: #fff !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 tfoot input {

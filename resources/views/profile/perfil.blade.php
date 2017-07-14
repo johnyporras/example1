@@ -261,7 +261,7 @@
             <span>Contacto en caso de Emergencias</span>
         </h4>
 
-        <table class="table table-colored table-borderless table-striped table-vcenter">
+        <table class="table table-colored table-condensed table-borderless table-striped table-vcenter">
             <thead>
                 <tr>
                     <th class="text-center" width="50"><span><i class="fa fa-trash"></i></span></th>

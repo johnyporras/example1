@@ -5,14 +5,14 @@
             <tbody>
                 <tr>
                     <td class="text-right" style="width: 30%;">
-                        <strong>Nombre</strong>
+                        <strong>Altura (CM)</strong>
                     </td>
                     <td><span class="xtext" 
                             data-type="text"
                             data-pk="{{ $perfil->id }}" 
-                            data-name="nombre"
-                            data-value="{{ $perfil->nombre }}"
-                            data-title="Ingrese Nombre"
+                            data-name="altura"
+                            data-value="{{ $perfil->altura or null }}"
+                            data-title="Ingrese Altura"
                             ></span></td>
                     <td style="width: 50px;">
                         <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
@@ -22,14 +22,14 @@
                 </tr>
                 <tr>
                     <td class="text-right" style="width: 30%;">
-                        <strong>Apellido</strong>
+                        <strong>Peso (KG)</strong>
                     </td>
                     <td><span class="xtext" 
                             data-type="text"
                             data-pk="{{ $perfil->id }}" 
-                            data-name="apellido"
-                            data-value="{{ $perfil->apellido }}"
-                            data-title="Ingrese Apellido"
+                            data-name="peso"
+                            data-value="{{ $perfil->peso or null }}"
+                            data-title="Ingrese Peso"
                             ></span></td>
                     <td style="width: 50px;">
                         <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
@@ -39,28 +39,21 @@
                 </tr>
                 <tr>
                     <td class="text-right" style="width:30%;">
-                        <strong>Correo</strong>
+                        <strong>Índice de Masa Corporal (IMC)</strong>
                     </td>
-                    <td><span>{{ $perfil->email }}</span></td>
-                    <td style="width: 50px;"></td>
-                </tr>
-                <tr>
-                    <td class="text-right" style="width:30%;">
-                        <strong>Cédula</strong>
-                    </td>
-                    <td><span>{{ $perfil->cedula }}</span></td>
-                    <td style="width: 50px;"></td>
+                    <td><span>calculo</span></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td class="text-right" style="width: 30%;">
-                        <strong>Fecha Nacimiento</strong>
+                        <strong>Grupo Sanguíneo</strong>
                     </td>
                     <td><span class="xtext" 
                             data-type="text"
                             data-pk="{{ $perfil->id }}" 
-                            data-name="fecha_nacimiento"
-                            data-value="{{ $perfil->fecha_nacimiento->format('d/m/Y') }}"
-                            data-title="Ingrese Fecha Nacimiento"
+                            data-name="sangre"
+                            data-value="{{ $perfil->sangre or null }}"
+                            data-title="Ingrese Grupo Sanguineo"
                             ></span></td>
                     <td style="width: 50px;">
                         <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
@@ -68,235 +61,154 @@
                         </button>
                     </td>
                 </tr>
-                <tr>
-                    <td class="text-right" style="width: 30%;">
-                        <strong>Lugar Nacimiento</strong>
-                    </td>
-                    <td><span class="xtext" 
-                            data-type="text"
-                            data-pk="{{ $perfil->id }}" 
-                            data-name="fecha_nacimiento"
-                            data-value="{{ $perfil->estado->estado }}"
-                            data-title="Ingrese Lugar Nacimiento"
-                            ></span></td>
-                    <td style="width: 50px;">
-                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-right" style="width: 30%;">
-                        <strong>Ciudad</strong>
-                    </td>
-                    <td><span class="xtext" 
-                            data-type="text"
-                            data-pk="{{ $perfil->id }}" 
-                            data-name="fecha_nacimiento"
-                            data-value="{{ $perfil->ciudad }}"
-                            data-title="Ingrese Ciudad"
-                            ></span></td>
-                    <td style="width: 50px;">
-                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-right" style="width:30%;">
-                        <strong>Edad</strong>
-                    </td>
-                    <td><span>{{ $perfil->fecha_nacimiento->age }}</span></td>
-                    <td style="width: 50px;"></td>
-                </tr>
-                <tr>
-                    <td class="text-right" style="width: 30%;">
-                        <strong>Sexo</strong>
-                    </td>
-                    <td><span class="xtext" 
-                            data-type="text"
-                            data-pk="{{ $perfil->id }}" 
-                            data-name="sexo"
-                            data-value="{{ ($perfil->sexo == 'M')? 'Masculino' : 'Femenino' }}"
-                            data-title="Ingrese Sexo"
-                            ></span></td>
-                    <td style="width: 50px;">
-                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-right" style="width: 30%;">
-                        <strong>Estado Civil</strong>
-                    </td>
-                    <td><span class="xtext" 
-                            data-type="text"
-                            data-pk="{{ $perfil->id }}" 
-                            data-name="civil"
-                            data-value="{{ $perfil->civil or null }}"
-                            data-title="Ingrese Estado Civil"
-                            ></span></td>
-                    <td style="width: 50px;">
-                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-right" style="width: 30%;">
-                        <strong>Nro Hijos</strong>
-                    </td>
-                    <td><span class="xtext" 
-                            data-type="text"
-                            data-pk="{{ $perfil->id }}" 
-                            data-name="sexo"
-                            data-value="{{ $perfil->hijos or null }}"
-                            data-title="Ingrese nro Hijos"
-                            ></span></td>
-                    <td style="width: 50px;">
-                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-right" style="width: 30%;">
-                        <strong>Teléfono</strong>
-                    </td>
-                    <td><span class="xtext" 
-                            data-type="text"
-                            data-pk="{{ $perfil->id }}" 
-                            data-name="fecha_nacimiento"
-                            data-value="{{ $perfil->telefono }}"
-                            data-title="Ingrese telefono"
-                            ></span></td>
-                    <td style="width: 50px;">
-                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-right" style="width: 30%;">
-                        <strong>Ocupación</strong>
-                    </td>
-                    <td><span class="xtext" 
-                            data-type="text"
-                            data-pk="{{ $perfil->id }}" 
-                            data-name="ocupacion"
-                            data-value="{{ $perfil->ocupacion or null }}"
-                            data-title="Ingrese Ocupación"
-                            ></span></td>
-                    <td style="width: 50px;">
-                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-right" style="width: 30%;">
-                        <strong>Idioma</strong>
-                    </td>
-                    <td><span class="xtext" 
-                            data-type="text"
-                            data-pk="{{ $perfil->id }}" 
-                            data-name="idioma"
-                            data-value="{{ $perfil->idioma or null }}"
-                            data-title="Ingrese Fecha Nacimiento"
-                            ></span></td>
-                    <td style="width: 50px;">
-                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </td>
-                </tr>
+               @if ($perfil->sexo == 'M')
 
+               <tr>
+                    <td class="text-right" style="width: 30%;">
+                        <strong>¿Esta Embarazada?</strong>
+                    </td>
+                    <td><span class="xtext" 
+                            data-type="text"
+                            data-pk="{{ $perfil->id }}" 
+                            data-name="sangre"
+                            data-value="{{ ($perfil->embarazada == 'N')? 'No' : 'Si' }}"
+                            data-title="Ingrese un valor"
+                            ></span></td>
+                    <td style="width: 50px;">
+                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+                   
+               @endif
             </tbody>
         </table>
         <!-- END Customer Info -->   
-    </div> 
-    
-    <!-- Contactos -->
-    <div class="col-xs-12">
-        <h4 class="sub-header">
-            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="tooltip" data-original-title="Crear Nuevo"> <i class="fa fa-plus"></i></button> 
-            <span>Contacto en caso de Emergencias</span>
-        </h4>
-
-        <table class="tpersona table table-borderless table-striped table-vcenter">
-            <tbody>
-                <tr>
-                    <td class="text-right" style="width: 30%;">
-                        <strong>Nombre</strong>
-                    </td>
-                    <td><span class="xtext" 
-                            data-type="text"
-                            data-pk="{{ $perfil->id }}" 
-                            data-name="nombre"
-                            data-value="{{ $perfil->nombre }}"
-                            data-title="Ingrese Nombre"
-                            ></span>
-                    </td>
-                    <td style="width: 50px;">
-                        <button type="button" data-toggle="tooltip" class="btn btn-sm btn-danger btn-circle sweet-danger" data-original-title="Eliminar">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-right" style="width: 30%;">
-                        <strong>Teléfono</strong>
-                    </td>
-                    <td><span class="xtext" 
-                            data-type="text"
-                            data-pk="{{ $perfil->id }}" 
-                            data-name="nombre"
-                            data-value="{{ $perfil->nombre }}"
-                            data-title="Ingrese Nombre"
-                            ></span>
-                    </td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-        <!-- END Customer Info -->
     </div>
 
-    <!-- Pasatiempos -->
+    <!-- Vacunas -->
     <div class="col-xs-12">
         <h4 class="sub-header">
             <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="tooltip" data-original-title="Crear Nuevo"> <i class="fa fa-plus"></i></button> 
-            <span>Pasatiempos</span>
+            <span>Vacunas</span>
         </h4>
-
-        <table class="tpersona table table-borderless table-striped table-vcenter">
+        
+        <table class="table table-colored table-borderless table-striped table-vcenter">
+            <thead>
+                <tr>
+                    <th class="text-center" width="50"><span><i class="fa fa-trash"></i></span></th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
             <tbody>
                 <tr>
-                    <td class="text-right" style="width: 30%;">
-                        <strong>Nombre</strong>
-                    </td>
-                    <td><span class="xtext" 
-                            data-type="text"
-                            data-pk="{{ $perfil->id }}" 
-                            data-name="nombre"
-                            data-value="{{ $perfil->nombre }}"
-                            data-title="Ingrese Nombre"
-                            ></span>
-                    </td>
-                    <td style="width: 72px;">
-                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-primary btn-circle" data-original-title="Editar">
-                            <i class="fa fa-edit"></i>
-                        </button>
-
+                    <td class="text-center" style="width: 50px;">
                         <button type="button" data-toggle="tooltip" class="btn btn-sm btn-danger btn-circle sweet-danger" data-original-title="Eliminar">
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>
+                    <td><a class="xtext1" 
+                        data-type="text"
+                        data-pk="{{ $perfil->id }}" 
+                        data-name="nombre"
+                        data-value="{{ $perfil->nombre }}"
+                        data-title="Ingrese Nombre"
+                        ></a></td>
+                    <td><a class="xtext1" 
+                        data-type="text"
+                        data-pk="{{ $perfil->id }}" 
+                        data-name="nombre"
+                        data-value="{{ $perfil->nombre }}"
+                        data-title="Ingrese Nombre"
+                        ></a></td>
                 </tr>
             </tbody>
         </table>
-        <!-- END Customer Info -->
+    </div>
+
+    
+    <!-- Discapacidades -->
+    <div class="col-xs-12">
+        <h4 class="sub-header">
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="tooltip" data-original-title="Crear Nuevo"> <i class="fa fa-plus"></i></button> 
+            <span>Discapacidades</span>
+        </h4>
+        
+        <table class="table table-colored table-borderless table-striped table-vcenter">
+            <thead>
+                <tr>
+                    <th class="text-center" width="50"><span><i class="fa fa-trash"></i></span></th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center" style="width: 50px;">
+                        <button type="button" data-toggle="tooltip" class="btn btn-sm btn-danger btn-circle sweet-danger" data-original-title="Eliminar">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                    <td><a class="xtext1" 
+                        data-type="text"
+                        data-pk="{{ $perfil->id }}" 
+                        data-name="nombre"
+                        data-value="{{ $perfil->nombre }}"
+                        data-title="Ingrese Nombre"
+                        ></a></td>
+                    <td><a class="xtext1" 
+                        data-type="text"
+                        data-pk="{{ $perfil->id }}" 
+                        data-name="nombre"
+                        data-value="{{ $perfil->nombre }}"
+                        data-title="Ingrese Nombre"
+                        ></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Alergias -->
+    <div class="col-xs-12">
+        <h4 class="sub-header">
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="tooltip" data-original-title="Crear Nuevo"> <i class="fa fa-plus"></i></button> 
+            <span>Alergias</span>
+        </h4>
+
+        <table class="table table-colored table-borderless table-striped table-vcenter">
+            <thead>
+                <tr>
+                    <th class="text-center" width="50"><span><i class="fa fa-trash"></i></span></th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center" style="width: 50px;">
+                        <button type="button" data-toggle="tooltip" class="btn btn-sm btn-danger btn-circle sweet-danger" data-original-title="Eliminar">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                    <td><a class="xtext1" 
+                        data-type="text"
+                        data-pk="{{ $perfil->id }}" 
+                        data-name="nombre"
+                        data-value="{{ $perfil->nombre }}"
+                        data-title="Ingrese Nombre"
+                        ></a></td>
+                    <td><a class="xtext1" 
+                        data-type="text"
+                        data-pk="{{ $perfil->id }}" 
+                        data-name="nombre"
+                        data-value="{{ $perfil->nombre }}"
+                        data-title="Ingrese Nombre"
+                        ></a></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
 </div>

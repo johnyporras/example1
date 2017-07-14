@@ -41,7 +41,7 @@ class AcPlanesExtranet extends Model {
      */
     public function cuentaPlan()
     {
-        return $this->hasMany(\App\Models\AcCuentaplan::class, 'id_plan', 'codigo_plan');
+        return $this->hasMany(\App\Models\AcCuentaPlan::class, 'id_plan', 'codigo_plan');
     }
 
     /**

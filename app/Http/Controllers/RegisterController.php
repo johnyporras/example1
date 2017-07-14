@@ -85,11 +85,17 @@ class RegisterController extends Controller
                     // verifico si existe alguna cuanta con ese codigo...
                     if ($cuenta !== null) {
                         // valido el estatus de la cuenta
-                        //dd('la cuenta llega a este paso');
+                        // verifico estatus 5 (En Proceso) 
                         if ($cuenta->estatus == 5 ) {
-                            // verifico estatus 5 (En Proceso) 
-                            // Elimino la cuenta ya que se salio del registro por algun motivo...
-                            $cuenta->afiliados()->forcedelete();
+                            // Elimino usuario si tiene un usuario generado
+                            $user = User::where('detalles_usuario_id', '=', $cuenta->afiliado->id)->first();
+                            // valido si hay coincidencia
+                            if ($user != null) {
+                                $user->forcedelete();
+                            }
+                            // Elimino el afiliado
+                            $cuenta->afiliado()->forcedelete();
+                            // Elimino la cuenta y planes asociados
                             $cuenta->cuentaPlan()->delete();
                             $cuenta->forcedelete();
                             // Guardo la session codigo
@@ -268,11 +274,12 @@ class RegisterController extends Controller
     public function postRegister(Request $request)
     {
         $rules = [
-            'pregunta1' => 'required',
-            'pregunta2' => 'required',
+            'pregunta1'  => 'required',
+            'pregunta2'  => 'required',
             'respuesta1' => 'required',
             'respuesta2' => 'required',
-            'password'  => 'required|min:6|max:16',
+            'password'   => 'required|min:6|max:16',
+            'clave'      => 'required|min:4|max:6',
         ];
 
         $messages = [
@@ -280,6 +287,8 @@ class RegisterController extends Controller
             'password.min' => 'El mínimo de caracteres permitidos son 6',
             'password.max' => 'El máximo de caracteres permitidos son 18',
             'password.confirmed' => 'Los claves introducidas no coinciden',
+            'clave.min' => 'El mínimo de caracteres permitidos son 4',
+            'clave.max' => 'El máximo de caracteres permitidos son 6',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -317,9 +326,8 @@ class RegisterController extends Controller
                                     'detalles_usuario_id' => Session::get('afiliado')->id,
                                 ]);
                         // Cambio estatus a pendiente de la cuenta a la espera de confirmación de correo
-                        $cuenta = AcCuenta::find($usuario->detalles_usuario_id);
-                        $cuenta->estatus = 2;
-                        $cuenta->save();
+                        $afiliado = AcAfiliado::find(Session::get('afiliado')->id);
+                        $afiliado->cuenta()->update(['estatus' => 2]);
 
                         //Guardo data para enviar el correo
                         $data = ['name' => $usuario->name,
