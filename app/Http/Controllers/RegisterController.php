@@ -107,7 +107,7 @@ class RegisterController extends Controller
                         }
                         if ( $cuenta->estatus == 2 ) {
                             // retorno respuesta redirect
-                            return response()->json(['id' => $cuenta->id]);
+                            return response()->json(['id' => $cuenta->afiliado->id]);
                         }
                     }else{
                         // Guardo la session codigo
