@@ -7,6 +7,8 @@ use App\Http\Requests;
 
 use App\User;
 use App\Models\AcAfiliado;
+use App\Models\AcEstado;
+use App\Models\Contacto;
 use Auth;
 use Storage;
 
@@ -25,9 +27,18 @@ class ProfileController extends Controller
         // Cargo data del perfil
         $perfil = AcAfiliado::findOrFail($usuario->detalles_usuario_id);
 
+        $valores = AcEstado::orderBy('estado', 'ASC')->pluck('estado', 'id');
+
+        foreach ($valores as $key => $value) {
+            //paso a un array con nuevos indices
+            $estados[] = ["value" => $key , "text" => $value];
+        }
+        // Paso los valores a formato json
+        $estados = json_encode($estados);
+
         //dd($perfil);
         // Retorno vista
-        return view('profile.index', compact('usuario', 'perfil')); 
+        return view('profile.index', compact('usuario', 'perfil', 'estados')); 
     }
 
     public function image(Request $request)
@@ -56,46 +67,25 @@ class ProfileController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function editar(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        if ($request->ajax())
+        {
+            // Seleccion afiliado y actualizo el valor
+            $update = AcAfiliado::findOrFail($request->pk);
+            $update->update([$request->name => $request->value]);
+            
+            if ($update){
+                return response()->json(['status'=> true ]);
+            } else {
+                return response()->json(['status'=> false ]);
+            } 
+        }
     }
 
     /**
@@ -105,9 +95,53 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function contacto(Request $request)
     {
-        //
+        //dd($request);
+
+        // Guardo el nuevo contacto
+        $contacto = Contacto::create($request->all());
+
+        toast()->success(' Contacto guardado correctamente', 'Información:');
+        return redirect()->route('perfil.index');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function contactoEditar(Request $request)
+    {
+        if ($request->ajax())
+        {
+            // Seleccion afiliado y actualizo el valor
+            $update = Contacto::findOrFail($request->pk);
+            $update->update([$request->name => $request->value]);
+            
+            if ($update){
+                return response()->json(['status'=> true ]);
+            } else {
+                return response()->json(['status'=> false ]);
+            } 
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function contactoDelete($id)
+    {
+        // Selecciono contacto para eliminar
+        $contacto = Contacto::findOrfail($id);
+        $contacto->delete();
+
+        toast()->error(' Contacto eliminado correctamente', 'Información:');
+        return redirect()->route('perfil.index');
     }
 
     /**
@@ -120,4 +154,5 @@ class ProfileController extends Controller
     {
         //
     }
+
 }

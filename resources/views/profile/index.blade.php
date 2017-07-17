@@ -3,21 +3,19 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ url('plugins/x-editable/css/bootstrap-editable.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/stacktable/stacktable.css') }}">
 <link rel="stylesheet" href="{{ url('plugins/bootstrap-sweetalert/sweetalert.css')}}" >
 <link rel="stylesheet" href="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
-<link rel="stylesheet" href="{{ url('plugins/select2/css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ url('plugins/select2/css/select2-bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ url('plugins/bootstrap-fileinput/css/fileinput.min.css') }}">
 @endpush
 
 @push('scripts')
 <script src="{{ url('plugins/x-editable/js/bootstrap-editable.min.js') }}"></script>
 <script src="{{ url('plugins/x-editable/js/config-editable.js') }}"></script>
+<script src="{{ asset('plugins/stacktable/stacktable.js') }}"></script>
 <script src="{{ url('plugins/bootstrap-sweetalert/sweetalert.min.js')}}"></script> 
 <script src="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.es.min.js') }}"></script>
-<script src="{{ url('plugins/select2/js/select2.min.js') }}"></script>
-<script src="{{ url('plugins/select2/js/es.js') }}"></script>
 <script src="{{ url('plugins/parsley-js/parsley.min.js') }}"></script>
 <script src="{{ url('plugins/parsley-js/i18n/es.js') }}"></script>
 <script src="{{ url('plugins/bootstrap-fileinput/js/fileinput.min.js') }}"></script>
@@ -92,6 +90,26 @@
 <!-- Incluye las alertas end -->
 <script>
 $(document).ready(function() {
+
+    // Validar formulario
+    var parsleyOptions = {
+        errorClass: 'has-error',
+        successClass: 'has-success',
+        classHandler: function(el) {
+            return el.$element.parents('.form-group');
+        },
+        errorsContainer: function(el) {
+            return el.$element.closest('.form-group');
+        },
+        errorsWrapper: '<span class="help-block">',
+        errorTemplate: '<div class=" col-md-offset-3 col-md-9"></div>',
+    };
+
+    //Inicializo tabla responsive
+    $('.card').cardtable();
+
+    // Genero la validacion del formulario...
+    $('#contactoForm').parsley(parsleyOptions);
 
     // Sweet alert
     $('.sweet-danger').on( 'click', function (e) {

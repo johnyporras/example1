@@ -30,20 +30,28 @@ class AcAfiliado extends Model {
      * @var array
      */
     protected $fillable = [
-        'cedula', 
-        'nombre', 
-        'apellido', 
-        'fecha_nacimiento', 
-        'email', 
-        'sexo', 
-        'telefono',
-        'id_cuenta',
-        'id_estado',
-        'ciudad', 
-        'embarazada', 
-        'tiempo_gestacion', 
-        'deleted_at'
+        'cedula', 'nombre', 'apellido', 'email', 'fecha_nacimiento',
+        'sexo', 'telefono', 'id_cuenta', 'id_estado', 'ciudad', 
+        'civil', 'hijos', 'ocupacion', 'idioma', 'menstruacion', 
+        'abortos', 'partos', 'cesarea', 'perdidas', 'embarazada', 
+        'tiempo_gestacion', 'deleted_at'
     ];
+
+    /**
+     * Paso a Mayuscula el nombre
+     */
+    public function setNombreAttribute($value)
+    {
+        $this->attributes['nombre'] = strtoupper($value);
+    }
+
+    /**
+     * Paso a Mayuscula el Apellido
+     */
+    public function setApellidoAttribute($value)
+    {
+        $this->attributes['apellido'] = strtoupper($value);
+    }
 
     /**
      * Get the cuenta for the Afiliado.
@@ -83,6 +91,14 @@ class AcAfiliado extends Model {
     public function documentos()
     {
         return $this->hasMany(\App\Models\AcDocumento::class, 'id_afiliado', 'id');
+    }
+
+    /**
+     * Get the contactos for the Afiliado.
+     */
+    public function contactos()
+    {
+        return $this->hasMany(\App\Models\Contacto::class, 'id_afiliado', 'id');
     }
 
     /**

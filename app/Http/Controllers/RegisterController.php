@@ -238,8 +238,8 @@ class RegisterController extends Controller
 
                     $afiliado = AcAfiliado::create([
                                 'cedula'    => $request->cedula,
-                                'nombre'    => strtoupper($request->nombre),
-                                'apellido'  => strtoupper($request->apellido),
+                                'nombre'    => $request->nombre,
+                                'apellido'  => $request->apellido,
                                 'fecha_nacimiento' => $request->nacimiento,
                                 'email'     => $request->correo,
                                 'sexo'      => $request->sexo,
@@ -346,7 +346,7 @@ class RegisterController extends Controller
                         Session::forget('cuenta');
 
                         // Retorno mensaje de sastifactorio
-                        return response()->json(['success' => 'Hemos enviado un enlace de confirmación a su Cuenta de correo electrónico']);
+                        return response()->json(['success' => 'valido']);
 
                     }catch(QueryException $e){
                        return response()->json(['error' => '¡Ocurrio un error al generar Usuario!',
@@ -399,6 +399,11 @@ class RegisterController extends Controller
             // retorno msn de error
             return view('auth.verify')->with('error', 'Cuenta de usuario Incorrecta Intente Nuevamente');
         }
+    }
+
+    public function valido()
+    {
+        return view('auth.valido');
     }
 
     public function resend($id)

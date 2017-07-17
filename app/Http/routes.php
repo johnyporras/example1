@@ -58,6 +58,11 @@ Route::get('verify/{email}/{confirm_token}', [
     'as'   => 'register.confirm' 
 ]);
 
+Route::get('valido', [
+    'uses' => 'RegisterController@valido',
+    'as'   => 'register.valido' 
+]);
+
 Route::get('resend/{cuenta}', [
     'uses' => 'RegisterController@resend',
     'as'   => 'register.resend' 
@@ -224,6 +229,21 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('perfil/image', [
         'uses' => 'ProfileController@image',
         'as'   => 'perfil.image' 
+    ]);
+
+    Route::post('perfil/contacto', [
+        'uses' => 'ProfileController@contacto',
+        'as'   => 'perfil.contacto' 
+    ]);
+
+    Route::post('perfil/contacto/edit', [
+        'uses' => 'ProfileController@contactoEditar',
+        'as'   => 'perfil.contactoEditar' 
+    ]);
+
+    Route::get('perfil/contacto/{id}', [
+        'uses' => 'ProfileController@contactoDelete',
+        'as'   => 'perfil.contactoDelete' 
     ]);
 
 });

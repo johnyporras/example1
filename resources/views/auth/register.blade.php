@@ -963,14 +963,13 @@ $(document).ready(function() {
                     console.log(data.data); 
                 } else {
                     // Desabilito los campos paa evitar errores
-                    $('#valid3').attr('disabled','disabled');
                     $('.usuario').attr('disabled','disabled');
+                    $('#valid3').attr('disabled','disabled');
+                    $('#valid3').html("<i class='fa fa-refresh fa-spin fa-fw'></i> Cargando");
                     // Muestro mensaje de exito
-                    $('#result3').show(); 
-                    $('#result3').removeClass('alert-danger'); 
-                    $('#result3').addClass('alert-success'); 
-                    $('#result3 .text').text(data.success);
                     success = true;
+                    // Redirecciono a otra pagina
+                    window.location.href = "{{ url('/valido') }}";
                 }
             }
         });

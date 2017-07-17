@@ -18,22 +18,30 @@ class CreateAcAfiliadosTable extends Migration {
 			$table->string('cedula', 20)->unique();
 			$table->string('nombre');
 			$table->string('apellido');
-			$table->date('fecha_nacimiento');
 			$table->string('email');
+			$table->date('fecha_nacimiento');
 			$table->string('sexo', 10);
 			$table->string('telefono', 50)->nullable();
             $table->integer('id_cuenta')->unsigned();
             $table->integer('id_estado')->unsigned();
 			$table->string('ciudad')->nullable();
+			$table->string('civil')->nullable();
+			$table->integer('hijos')->unsigned()->nullable();
+			$table->string('ocupacion')->nullable();
+			$table->string('idioma')->default('es')->nullable();
+			$table->string('menstruacion')->nullable();
+			$table->integer('abortos')->unsigned()->nullable();
+			$table->integer('partos')->unsigned()->nullable();
+			$table->integer('cesarea')->unsigned()->nullable();
+			$table->integer('perdidas')->unsigned()->nullable();
 			$table->enum('embarazada', ['S', 'N'])->default('N');
-			$table->integer('tiempo_gestacion')->comment('Semanas')->nullable();
+			$table->integer('tiempo_gestacion')->comment('Semanas en gestación')->nullable();
             $table->timestamps();
             $table->softDeletes();
             	$table->foreign('id_cuenta')->references('id')->on('ac_cuenta')
                 ->onUpdate('cascade')->onDelete('cascade');
             	$table->foreign('id_estado')->references('id')->on('ac_estados')
                 ->onUpdate('cascade')->onDelete('cascade');
-
 		});
 	}
 
