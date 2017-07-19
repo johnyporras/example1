@@ -18,6 +18,11 @@ li.dropdown-header,
     background-color: #6dcff6;
 }
 
+.themed-buble {
+    background-color: #394263;
+    color: #1bbae1;
+}
+
 .borde{
     border: 1px solid #9731ea;
 }
@@ -366,6 +371,7 @@ div.tagsinput span.tag,
 .nav-horizontal a:hover,
 .nav-horizontal li.active a {
     background-color: #4bc4f4;
+    color: #fff;
 }
 
 .timeline-list .active .timeline-icon,

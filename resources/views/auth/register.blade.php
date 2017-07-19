@@ -359,7 +359,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-earphone"></i></span>
-                        {{ Form::text('telefono', null, ['class' => 'afiliado form-control input-lg', 'placeholder' => 'Teléfono', 'id' => 'telefono', 'pattern' => '^[0][24][1-9][0-9]+$', 'minlength' => "11", 'maxlength' => '11', 'required']) }}
+                        {{ Form::text('telefono', null, ['class' => 'afiliado form-control input-lg', 'placeholder' => 'Teléfono', 'id' => 'telefono', 'pattern' => '^0(?:2(?:12|4[0-9]|5[1-9]|6[0-9]|7[0-8]|8[1-35-8]|9[1-5]|3[45789])|4(?:1[246]|2[46]))\d{7}$', 'minlength' => "11", 'maxlength' => '11', 'required']) }}
                     </div>
                     @if ($errors->has('telefono'))
                         <span class="help-block">

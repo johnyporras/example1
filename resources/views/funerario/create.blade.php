@@ -138,7 +138,7 @@
                     <div class="form-group {{ $errors->has('contacto') ? ' has-error' : '' }}">
                         {{ Form::label('contacto', 'Teléfono Contacto', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
-                        {{ Form::text('contacto', null, ['class' => 'form-control', 'placeholder' => 'Ingrese teléfono contacto', 'pattern' => '^[0][24][1-9][0-9]+$', 'minlength' => "11", 'maxlength' => '11', 'required']) }}
+                        {{ Form::text('contacto', null, ['class' => 'form-control', 'placeholder' => 'Ingrese teléfono contacto', 'pattern' => '^0(?:2(?:12|4[0-9]|5[1-9]|6[0-9]|7[0-8]|8[1-35-8]|9[1-5]|3[45789])|4(?:1[246]|2[46]))\d{7}$', 'minlength' => "11", 'maxlength' => '11', 'required']) }}
                         <span class="help-block">
                             <strong>Ejemplo: 02121231122</strong>
                         </span>
