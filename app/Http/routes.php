@@ -246,6 +246,21 @@ Route::group(['middleware' => ['auth']], function () {
         'as'   => 'perfil.contactoDelete' 
     ]);
 
+    Route::post('perfil/motivo', [
+        'uses' => 'ProfileController@motivo',
+        'as'   => 'perfil.motivo' 
+    ]);
+
+    Route::post('perfil/motivo/edit', [
+        'uses' => 'ProfileController@motivoEditar',
+        'as'   => 'perfil.motivoEditar' 
+    ]);
+
+    Route::get('perfil/motivo/{id}', [
+        'uses' => 'ProfileController@motivoDelete',
+        'as'   => 'perfil.motivoDelete' 
+    ]);
+
 });
 /*=====================================================*/
 

@@ -32,7 +32,8 @@ class AcAfiliado extends Model {
     protected $fillable = [
         'cedula', 'nombre', 'apellido', 'email', 'fecha_nacimiento',
         'sexo', 'telefono', 'id_cuenta', 'id_estado', 'ciudad', 
-        'civil', 'hijos', 'ocupacion', 'idioma', 'menstruacion', 
+        'civil', 'hijos', 'ocupacion', 'idioma', 'altura', 
+        'peso', 'grupo_sangre', 'lentes', 'condicion_lentes', 'menstruacion', 
         'abortos', 'partos', 'cesarea', 'perdidas', 'embarazada', 
         'tiempo_gestacion', 'deleted_at'
     ];
@@ -107,6 +108,15 @@ class AcAfiliado extends Model {
     public function motivos()
     {
         return $this->hasMany(\App\Models\MotivoDetalle::class, 'id_afiliado', 'id');
+    }
+
+    /**
+     * Get the detalle del motivo for the Afiliado.
+     */
+    public function motivoSelect($id)
+    {
+        return $this->hasMany(\App\Models\MotivoDetalle::class, 'id_afiliado', 'id')
+                    ->where('id_motivo', $id);
     }
 
     /**

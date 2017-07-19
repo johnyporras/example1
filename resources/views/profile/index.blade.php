@@ -109,7 +109,29 @@ $(document).ready(function() {
     $('.card').cardtable();
 
     // Genero la validacion del formulario...
-    $('#contactoForm').parsley(parsleyOptions);
+    $('.motivoForm').parsley(parsleyOptions);
+
+    // Para fecha vacuna
+    $('#fechaV').datepicker({
+        language: "es",
+        format: 'yyyy-mm-dd',
+        startView: 2,
+        endDate: '0'
+    }).on('changeDate', function (selected) {     
+        //valida el campo al cambiar
+        $('#fechaV').parsley(parsleyOptions).validate();
+    });
+
+    // Para fecha alergia
+    $('#fechaA').datepicker({
+        language: "es",
+        format: 'yyyy-mm-dd',
+        startView: 2,
+        endDate: '0'
+    }).on('changeDate', function (selected) {     
+        //valida el campo al cambiar
+        $('#fechaA').parsley(parsleyOptions).validate();
+    });
 
     // Sweet alert
     $('.sweet-danger').on( 'click', function (e) {
@@ -122,19 +144,22 @@ $(document).ready(function() {
             showCancelButton: true,   
             confirmButtonClass: "btn-danger btn-sm",
             confirmButtonText: "Eliminar",
-            cancelButtonClass: "btn-sm",
+            cancelButtonClass: "btn-alt btn-default btn-sm",
             cancelButtonText: "Cancelar", 
             closeOnConfirm: false 
             }, 
-            function(){  
-                window.location = link
+        function(){  
+            window.location = link
         });
     });
 
+    // Para seleccionar editable en la tabla
+    $('.tEdit tbody').on('click', '.b-edit', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+       $(this).closest('tr').find('.editable').editable('show');  
+    });
 });
 </script>
-@stack('persona')
-@stack('salud')
-@stack('codigo')
-@stack('seguridad')
+@stack('sub-script')
 @endsection

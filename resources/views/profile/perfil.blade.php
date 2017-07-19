@@ -38,7 +38,7 @@
     </div>
 
     <div class="col-xs-12">
-        <table class="tpersona table table-borderless table-striped table-vcenter">
+        <table class="tEdit table table-borderless table-striped table-hover table-vcenter">
             <tbody>
                 <tr>
                     <td class="text-right" style="width: 30%;">
@@ -258,11 +258,11 @@
     <div class="col-xs-12">
         <h4 class="sub-header">
             <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
-               data-target="#modalContacto" title="Nuevo"> <i class="fa fa-plus"></i></button> 
+               data-target="#modalContacto" title="Agregar"> <i class="fa fa-plus"></i></button> 
             <span>Contacto en caso de Emergencias</span>
         </h4>
 
-        <table class="card table table-colored table-condensed table-borderless table-striped table-vcenter">
+        <table class="card table table-colored table-condensed table-borderless table-striped table-hover table-vcenter">
             <thead>
                 <tr>
                     <th class="text-center" width="35"><span><i class="fa fa-trash"></i></span></th>
@@ -275,7 +275,7 @@
 
                 @if (count($perfil->contactos) == 0 )
                     <tr class="text-center">
-                        <td colspan="4"><p>No posee contactos agregados</p></td>
+                        <td colspan="4"><span>No posee contactos agregados</span></td>
                     </tr>
                 @endif
             @foreach ($perfil->contactos as $contacto)
@@ -286,21 +286,21 @@
                             class="btn btn-danger btn-xs sweet-danger">
                         <i class="fa fa-trash"> </i></a>
                     </td>
-                    <td><a class="xtexto" 
+                    <td><a class="xtexto" href="#" 
                         data-type="text"
                         data-pk="{{ $contacto->id }}" 
                         data-name="nombre"
                         data-value="{{ $contacto->nombre }}"
                         data-title="Ingrese Nombre"
                         ></a></td>
-                    <td><a class="xtelefono" 
+                    <td><a class="xtelefono" href="#" 
                         data-type="number"
                         data-pk="{{ $contacto->id }}" 
                         data-name="telefono"
                         data-value="{{ $contacto->telefono }}"
                         data-title="Ingrese Teléfono"
                         ></a></td>
-                    <td><a class="xtexto" 
+                    <td><a class="xtexto" href="#"
                         data-type="text"
                         data-pk="{{ $contacto->id }}" 
                         data-name="parentesco"
@@ -316,45 +316,55 @@
     <!-- Pasatiempos -->
     <div class="col-xs-12">
         <h4 class="sub-header">
-            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="tooltip" data-original-title="Crear Nuevo"> <i class="fa fa-plus"></i></button> 
-            <span>Pasatiempos</span>
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
+               data-target="#modalPtiempo" title="Agregar"> <i class="fa fa-plus"></i></button> 
+            <span>Pasatiempo</span>
         </h4>
 
-        <table class="table table-colored table-borderless table-striped table-vcenter">
+        <table class="card table table-colored table-condensed table-borderless table-hover table-striped table-vcenter">
             <thead>
                 <tr>
-                    <th class="text-center" width="50"><span><i class="fa fa-trash"></i></span></th>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
+                    <th class="text-center" width="35"><span><i class="fa fa-trash"></i></span></th>
+                    <th>Pasatiempo</th>
+                    <th>Frecuencia</th>
                 </tr>
             </thead>
             <tbody>
+
+            @if (count($perfil->motivoSelect(3)->get()) == 0 )
+                <tr class="text-center">
+                    <td colspan="3"><span>No posee pasatiempos agregados</span></td>
+                </tr>
+            @endif
+            @foreach ($perfil->motivoSelect(3)->get() as $motivo)
                 <tr>
-                    <td class="text-center" style="width: 50px;">
-                        <button type="button" data-toggle="tooltip" class="btn btn-sm btn-danger btn-circle sweet-danger" data-original-title="Eliminar">
-                            <i class="fa fa-trash"></i>
-                        </button>
+                    <td>
+                        <a href="/perfil/motivo/{{ $motivo->id }}" 
+                            data-original-title="Eliminar" data-toggle="tooltip" 
+                            class="btn btn-danger btn-xs sweet-danger">
+                        <i class="fa fa-trash"> </i></a>
                     </td>
-                    <td><a class="xtext1" 
+                    <td><a class="xmotivo" href="#" 
                         data-type="text"
-                        data-pk="{{ $perfil->id }}" 
-                        data-name="nombre"
-                        data-value="{{ $perfil->nombre }}"
-                        data-title="Ingrese Nombre"
+                        data-pk="{{ $motivo->id }}" 
+                        data-name="tipo"
+                        data-value="{{ $motivo->tipo }}"
+                        data-title="Ingrese Pasatiempo"
                         ></a></td>
-                    <td><a class="xtext1" 
+                    <td><a class="xmotivo" href="#" 
                         data-type="text"
-                        data-pk="{{ $perfil->id }}" 
-                        data-name="nombre"
-                        data-value="{{ $perfil->nombre }}"
-                        data-title="Ingrese Nombre"
+                        data-pk="{{ $motivo->id }}" 
+                        data-name="frecuencia"
+                        data-value="{{ $motivo->frecuencia }}"
+                        data-title="Ingrese Frecuencia"
                         ></a></td>
                 </tr>
+            @endforeach
             </tbody>
         </table>
     </div>
-
-    <!--  El modal para crear presupuesto -->
+    
+    <!--  El modal para crear contacto -->
     <div class="modal fade" id="modalContacto" tabindex="-1" role="dialog" >
         <div class="modal-dialog">
             <div class="modal-content">
@@ -363,8 +373,8 @@
                     <h4 class="modal-title">Nuevo Contacto</h4>
                 </div>
                 <div class="modal-body">
-                    {{ Form::open(['route'=>'perfil.contacto', 'id' => 'contactoForm', 'class' => 'form-horizontal']) }}
-                        <!-- nombre - Telefono - Parentsco -->
+                    {{ Form::open(['route'=>'perfil.contacto', 'class' => 'motivoForm form-horizontal']) }}
+
                         <div class="form-group {{ $errors->has('nombre') ? ' has-error' : '' }}">
                             {{ Form::label('nombre', 'Nombre', ['class' => 'col-md-3 control-label']) }}
                             <div class="col-md-9">
@@ -416,12 +426,62 @@
         </div>
     </div>
 
+    <!--  El modal para crear pasatiempo -->
+    <div class="modal fade" id="modalPtiempo" tabindex="-1" role="dialog" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Nuevo Pasatiempo</h4>
+                </div>
+                <div class="modal-body">
+                    {{ Form::open(['route'=>'perfil.motivo', 'class' => 'motivoForm form-horizontal']) }}
+                    
+                        <div class="form-group {{ $errors->has('tipo') ? ' has-error' : '' }}">
+                            {{ Form::label('tipo', 'Pasatiempo', ['class' => 'col-md-3 control-label']) }}
+                            <div class="col-md-9">
+                                {{ Form::text('tipo', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Pasatiempo', 'required']) }}
+                                @if ($errors->has('tipo'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('tipo') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('frecuencia') ? ' has-error' : '' }}">
+                            {{ Form::label('frecuencia', 'Frecuencia', ['class' => 'col-md-3 control-label']) }}
+                            <div class="col-md-9">
+                                {{ Form::text('frecuencia', null, ['class' => 'form-control', 'placeholder' => 'Ingrese Frecuencia', 'required']) }}
+                                @if ($errors->has('frecuencia'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('frecuencia') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3 col-md-offset-3">
+                                {{ Form::hidden('id_motivo', 3) }}
+                                {{ Form::hidden('id_afiliado', $perfil->id) }}
+                                <button type="submit" class="btn btn-sm btn-success" title="Guardar"><span><i class="fa fa-save"></i></span> Guardar</button>
+                            </div>
+                        </div>
+                    {{ Form::close() }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><span><i class="fa fa-close"></i></span> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-@push('persona')
+@push('sub-script')
 <script>
 $(document).ready(function() {
-
     // Para subir imagen
     $('#image').fileinput({
         language: 'es',
@@ -444,7 +504,6 @@ $(document).ready(function() {
             "</div>"
         },
     });
-
     // para texto editable
     $('.xtext').editable({
         mode: 'inline', 
@@ -558,7 +617,6 @@ $(document).ready(function() {
     });
 
     /*********************************************************************************/
-
     // para texto editable
     $('.xtexto').editable({
         validate: function(value) {
@@ -581,13 +639,14 @@ $(document).ready(function() {
         },
         url:'{{ route('perfil.contactoEditar') }}',
     })
-
-
-    // Para seleccionar editable en la tabla
-    $('.tpersona tbody').on('click', '.b-edit', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-       $(this).closest('tr').find('.editable').editable('show');  
+    /*********************************************************************************/
+    $('.xmotivo').editable({
+        validate: function(value) {
+            if($.trim(value) == '') {
+                return 'Valor es Requerido.';
+            }
+        },
+        url:'{{ route('perfil.motivoEditar') }}',
     });
 
 });

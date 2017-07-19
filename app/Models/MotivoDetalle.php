@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MotivoDetalle extends Model
 {
@@ -47,7 +48,7 @@ class MotivoDetalle extends Model
      * Get the Motivo.
      */
     public function motivo() {
-        return $this->belongsTo(\App\Models\MOtivo::class, 'id_motivo', 'id');
+        return $this->belongsTo(\App\Models\Motivo::class, 'id_motivo', 'id');
     }
 
     /**

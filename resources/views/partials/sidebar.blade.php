@@ -31,10 +31,12 @@
 
             <!-- User Info -->
             <div class="sidebar-section sidebar-user clearfix sidebar-nav-mini-hide">
-                <div class="sidebar-user-avatar">
-                    <a href="{{ url('/') }}">
-                        <img src="{{ url('images/avatar.jpg') }}" alt="avatar">
-                    </a>
+                <div class="sidebar-user-avatar mt15">
+                    @if (Auth::user()->imagen_perfil == null)
+                        <img src="{{ url('images/avatars/avatar.jpg') }}" width="100px" alt="avatar" class="img-responsive">
+                    @else
+                        <img src="{{ url('images/avatars/'.Auth::user()->imagen_perfil) }}" width="100px" alt="avatar" class="img-responsive">
+                    @endif
                 </div>
                 <div class="sidebar-user-name">{{ Auth::user()->name }}</div>
                 <div class="sidebar-user-links">

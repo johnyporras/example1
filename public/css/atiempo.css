@@ -764,3 +764,35 @@ table.dataTable thead .sorting_desc:after {
     overflow-y: scroll;
     height: 300px;
 }
+
+/** Etilo de tarjeta en registro  **/
+#contentCard{
+   padding: 30px 60px 20px 60px;
+   position: relative;
+}
+
+#textCuenta{
+   position: absolute;
+   bottom: 45px;
+   right: 75px;
+   color: #fff;
+   font-weight: bold;
+   font-size: 17px;
+   letter-spacing: 5px;
+}
+
+@media screen and (max-width: 783px){
+   #contentCard{
+      padding: 20px 10px 20px 10px;
+      position: relative;
+   }
+   #textCuenta{
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      color: #fff;
+      font-weight: bold;
+      font-size: 12px;
+      letter-spacing: 2px;
+   }     
+}

@@ -9,6 +9,7 @@ use App\User;
 use App\Models\AcAfiliado;
 use App\Models\AcEstado;
 use App\Models\Contacto;
+use App\Models\MotivoDetalle;
 use Auth;
 use Storage;
 
@@ -145,14 +146,59 @@ class ProfileController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function motivo(Request $request)
+    {
+        //dd($request); 
+        
+        // Guardo el nuevo contacto
+        $detalle = MotivoDetalle::create($request->all());
+
+        toast()->success($detalle->motivo->nombre.' Actualizado correctamente', 'Información:');
+        return redirect()->route('perfil.index');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function motivoEditar(Request $request)
+    {
+        if ($request->ajax())
+        {
+            // Seleccion afiliado y actualizo el valor
+            $update = MotivoDetalle::findOrFail($request->pk);
+            $update->update([$request->name => $request->value]);
+            
+            if ($update){
+                return response()->json(['status'=> true ]);
+            } else {
+                return response()->json(['status'=> false ]);
+            } 
+        }
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function motivoDelete($id)
     {
-        //
+        // Selecciono contacto para eliminar
+        $detalle = MotivoDetalle::findOrfail($id);
+        $detalle->delete();
+
+        toast()->error($detalle->motivo->nombre.' - '.$detalle->tipo.' eliminado correctamente', 'Información:');
+        return redirect()->route('perfil.index');
     }
 
 }

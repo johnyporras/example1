@@ -7,7 +7,7 @@
 
 </div>
 
-@push('persona')
+@push('sub-script')
 <script>
 $(document).ready(function() {
 

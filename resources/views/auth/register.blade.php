@@ -86,6 +86,9 @@
 
             <div id="contTerminos">
 
+           <!-- Actualizar session codigo -->
+           {{-- Session::get('codigo') --}} 
+
                 <div id="pTerminos" class="text-justify"></div>
                 <hr>
                 <div id="bTerminos" class="mt20">
@@ -109,34 +112,41 @@
                 </p>
             </div>
 
-            {!! Form::open(['url' => '/cuenta', 'class' => 'form-horizontal form-bordered form-control-borderless', 'method' => 'get', 'id' => 'cuentaForm']) !!}
-                    
-            <div class="form-group {{ $errors->has('producto') ? ' has-error' : '' }}">
-                <div class="col-xs-12">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="gi gi-tag"></i></span>
-                        {{ Form::select('producto', $productos, null, ['class' => 'form-control input-lg', 'placeholder'=>'Seleccione Producto', 'required', 'id' => 'producto']) }}
-                    </div>
-                    @if ($errors->has('producto'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('producto') }}</strong>
-                        </span>
-                    @endif
-                </div>
+            <div id="contentCard">
+                <img class="img-responsive" src="{{ url('images/A-CARD.png') }}" alt="tarjeta">
+                <p id="textCuenta"></p>
             </div>
 
-            <div class="form-group {{ $errors->has('plan') ? ' has-error' : '' }}">
-                <div class="col-xs-12">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="gi gi-coins"></i></span>
-                        {{ Form::select('plan', $planes, null, ['class' => 'form-control input-lg', 'placeholder'=>'Seleccione Plan', 'required', 'id' => 'plan']) }}
+            {!! Form::open(['url' => '/cuenta', 'class' => 'form-horizontal form-bordered form-control-borderless', 'method' => 'get', 'id' => 'cuentaForm']) !!}
+                    
+            <div id="cPlan" class="hidden" >
+                <div class="form-group {{ $errors->has('producto') ? ' has-error' : '' }}">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="gi gi-tag"></i></span>
+                            {{ Form::select('producto', $productos, null, ['class' => 'form-control input-lg', 'placeholder'=>'Seleccione Producto', 'id' => 'producto']) }}
+                        </div>
+                        @if ($errors->has('producto'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('producto') }}</strong>
+                            </span>
+                        @endif
                     </div>
-                    @if ($errors->has('plan'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('plan') }}</strong>
-                        </span>
-                    @endif
                 </div>
+
+                <div class="form-group {{ $errors->has('plan') ? ' has-error' : '' }}">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="gi gi-coins"></i></span>
+                            {{ Form::select('plan', $planes, null, ['class' => 'form-control input-lg', 'placeholder'=>'Seleccione Plan', 'id' => 'plan']) }}
+                        </div>
+                        @if ($errors->has('plan'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('plan') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>  
             </div>
 
             <div id="mascotas" class="hidden">
@@ -237,7 +247,6 @@
                         @endif
                     </div>
                 </div>
-
             </div> <!-- .mascotas -->
 
             <div id="maternidad" class="hidden">
@@ -269,15 +278,15 @@
                         @endif
                     </div>
                 </div>
-
             </div> <!-- .maternidad -->
 
             <div class="form-group">
                 <div class="col-xs-12 text-center">
-                    <button type="submit" id="valid1" class="btn btn-success btn-md"><i class="fa fa-save fa-fw"></i> Guardar</button>
+                    <button type="submit" id="valid1" class="btn btn-success btn-md"><i class="fa fa-check-circle fa-fw"></i> Aceptar</button>
                 </div>
             </div>
         {!! Form::close() !!}
+
         </div>
 
         <div id="step-4">
@@ -786,11 +795,15 @@ $(document).ready(function() {
     }); 
 
     // Generar Cuenta
-    $('#cuentaForm').on('submit', function (e) {
+    //$('#cuentaForm').on('submit', function (e) {
+    $('#valid1').on('click', function (e) {
         e.preventDefault();
+
+        console.log('hizo el click');
+
         // Guardo el valor de la tarjeta ingresada..
+        var plan     = 25;
         var producto = $('#producto').val();
-        var plan     = $('#plan').val();
         var embarazada = $('#embarazada').val();
         var semanas = $('#semanas').val();
         var nombre  = $('#nmascota').val();
@@ -806,7 +819,6 @@ $(document).ready(function() {
             type: "POST",
             url:'{{ url('/cuenta') }}',
             data: {
-                producto: producto,
                 plan: plan,
                 embarazada: embarazada,
                 semanas: semanas,
@@ -992,6 +1004,8 @@ $(document).ready(function() {
                 $('#contTerminos').show();
                 // Muestro los terminos en pantalla.
                 $('#pTerminos').text(data.value.terminos);
+                // paso valor de la tarjeta Ingresada
+                $('#textCuenta').text(data.codigo);
             }
         });
     }); 
@@ -1015,7 +1029,7 @@ $(document).ready(function() {
     $('#clear').on('click', function (e) {
         // regreso al paso 1
         $('.sw-btn-prev').click();
-    });  
+    });
 
 });
 </script>

@@ -87,14 +87,17 @@ class RegisterController extends Controller
                         // valido el estatus de la cuenta
                         // verifico estatus 5 (En Proceso) 
                         if ($cuenta->estatus == 5 ) {
-                            // Elimino usuario si tiene un usuario generado
-                            $user = User::where('detalles_usuario_id', '=', $cuenta->afiliado->id)->first();
-                            // valido si hay coincidencia
-                            if ($user != null) {
-                                $user->forcedelete();
+                            // Verifico que tenga algun afiliado
+                            if ($cuenta->afiliado !== null) {
+                                // Elimino usuario si tiene un usuario generado
+                                $user = User::where('detalles_usuario_id', '=', $cuenta->afiliado->id)->first();
+                                // valido si hay coincidencia
+                                if ($user != null) {
+                                    $user->forcedelete();
+                                }
+                                // Elimino el afiliado
+                                $cuenta->afiliado()->forcedelete();
                             }
-                            // Elimino el afiliado
-                            $cuenta->afiliado()->forcedelete();
                             // Elimino la cuenta y planes asociados
                             $cuenta->cuentaPlan()->delete();
                             $cuenta->forcedelete();
@@ -141,15 +144,19 @@ class RegisterController extends Controller
             $pais = $request->pais;
             //realizo un filtro para buscar en la tabla terminos
             $terminos = Terminos::where('pais_id','=', $pais)->first();
+            // Envio codigo de tarjeta seleccionada
+            $codigo = chunk_split(Session::get('codigo'),4);
             // Verifico terminos del Pais seleccionado
             if ($terminos !== null) {
                 // Retorno los terminos..
-                return response()->json(['value' => $terminos ]);
+                return response()->json(['value' => $terminos,
+                                        'codigo' => $codigo ]);
             } else {
                 //terminos default
                 $terminos1 = Terminos::where('pais_id','=', 239)->first();
                 // Retorno los terminos default
-                return response()->json(['value' => $terminos1 ]);
+                return response()->json(['value' => $terminos1,
+                                        'codigo' => $codigo ]);
             }
         }
     }
@@ -159,13 +166,17 @@ class RegisterController extends Controller
         if ($request->ajax()) {
 
             if (Session::get('codigo')){
+                // 4 sera el producto a-member y el 9 sera el producto a-card
+                $firstLeter = substr(Session::get('codigo'), 0, 1);
+                // Selecciono producto dependiendo del codigo
+                $producto = ($firstLeter == 9)?1:3;
 
                 try{
                     //Guardo CuentaPlan
                     $cuenta = AcCuenta::create([
                                     'codigo_cuenta' => Session::get('codigo'),
                                     'fecha'         => Carbon::now(),
-                                    'id_producto'   => $request->producto,
+                                    'id_producto'   => $producto,
                                     'estatus'       => 5,
                                     'acepto_terminos' => Carbon::now()
                                 ]);

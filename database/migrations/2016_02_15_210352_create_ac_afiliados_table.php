@@ -29,6 +29,11 @@ class CreateAcAfiliadosTable extends Migration {
 			$table->integer('hijos')->unsigned()->nullable();
 			$table->string('ocupacion')->nullable();
 			$table->string('idioma')->default('es')->nullable();
+			$table->integer('altura')->unsigned()->nullable();
+			$table->integer('peso')->unsigned()->nullable();
+			$table->string('grupo_sangre')->nullable();
+			$table->enum('lentes', ['S', 'N'])->default('N');
+			$table->string('condicion_lentes')->comment('Condición uso de lentes')->nullable();
 			$table->string('menstruacion')->nullable();
 			$table->integer('abortos')->unsigned()->nullable();
 			$table->integer('partos')->unsigned()->nullable();

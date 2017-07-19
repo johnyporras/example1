@@ -466,7 +466,7 @@ $(document).ready(function() {
              return 'Valor es requerido.';
       },
       url:'{{ route('funerario.modify') }}',
-   })
+   });
 
   //Inicializo tabla responsive
   $('.card').cardtable();
