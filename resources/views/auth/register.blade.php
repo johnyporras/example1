@@ -113,7 +113,7 @@
             </div>
 
             <div id="contentCard">
-                <img class="img-responsive" src="{{ url('images/A-CARD.png') }}" alt="tarjeta">
+                <img class="img-responsive" src="{{ url('images/tarjeta-acard.png') }}" alt="tarjeta">
                 <p id="textCuenta"></p>
             </div>
 
