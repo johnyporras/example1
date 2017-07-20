@@ -55,6 +55,23 @@ class AcAfiliado extends Model {
     }
 
     /**
+     * Get the detalle del motivo for the Afiliado.
+     */
+    public static function imc($altura, $peso)
+    {
+        
+        if ($altura != 0 && $peso != 0 ) {
+
+            $alto = pow($altura / 100,2);
+            $value = number_format($peso / $alto,2);
+
+        } else {
+            $value = 'Peso / Altura debe ser diferente de 0 o Vacio';
+        }
+        return $value;   
+    }
+
+    /**
      * Get the cuenta for the Afiliado.
      */
     public function cuenta()

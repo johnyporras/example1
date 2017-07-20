@@ -148,23 +148,6 @@
                 </tr>
                 <tr>
                     <td class="text-right" style="width: 30%;">
-                        <strong>Sexo</strong>
-                    </td>
-                    <td><span class="xsexo" 
-                            data-type="select"
-                            data-pk="{{ $perfil->id }}" 
-                            data-name="sexo"
-                            data-value="{{ $perfil->sexo  }}"
-                            data-title="Ingrese Sexo"
-                            ></span></td>
-                    <td style="width: 50px;">
-                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-right" style="width: 30%;">
                         <strong>Estado Civil</strong>
                     </td>
                     <td><span class="xcivil" 
@@ -537,21 +520,6 @@ $(document).ready(function() {
         toggle: 'manual',
         mode: 'inline',
         source: {!! $estados !!}, 
-        url:'{{ route('perfil.editar') }}',
-    });
-    // Sexo
-    $('.xsexo').editable({
-        mode: 'inline', 
-        toggle: 'manual',
-        validate: function(value) {
-            if($.trim(value) == '') {
-                return 'Valor es requerido.';
-            }
-        },
-        source: [
-            {value: 'M', text: 'Masculino'},
-            {value: 'F', text: 'Femenino'},
-        ],  
         url:'{{ route('perfil.editar') }}',
     });
     // Nro de hijos
