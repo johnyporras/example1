@@ -92,19 +92,28 @@
             </tbody>
         </table>
     </div>
-    @if($user_type=='1' && $data_clave->estatus_clave==1)
+    
+    
+    @if($user_type=='3' && $data_clave->estatus_clave==1)
+    
+    <?php //dd($detalleProv->preferido); ?>
+    @if($detalleProv->preferido==1)
+    {{	$tipo=1 }}
+    @else
+    {{	$tipo=2 }}
+    @endif
        <table bgcolor="#6dcff6" border="0" cellspacing="0" cellpadding="0" class="buttonwrapper">
                         <tr>
                             <td align="center" height="50" style=" padding: 0 25px 0 25px; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;" class="button" bgcolor="#6dcff6">
                                 &nbsp;&nbsp;&nbsp;
-                                <a href="{{ route('claves.aceptar',['id' => $data_clave->id_clave, 'idprov' =>  $coduser ]) }}" style="color: #ffffff; text-align: center; text-decoration: none;">Aceptar</a>
+                                <a href="{{ route('claves.aceptar',['id' => $data_clave->id_clave, 'idprov' => $detalleProv->id_proveedor]) }}" style="color: #ffffff; text-align: center; text-decoration: none;">Aceptar</a>
                             </td>    
                             <td>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             </td>
                             <td align="center" height="50" style=" padding: 0 25px 0 25px; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;" class="button" bgcolor="#FF0000">
                                 &nbsp;&nbsp;&nbsp;
-                                <a href="{{ route('claves.rechazar',['id' => '1', 'idprov' => '1', 'tipo' => '1' ]) }}" style="color: #ffffff; text-align: center; text-decoration: none;">Rechazar</a>
+                                <a href="{{ route('claves.rechazar',['id' =>$data_clave->id_clave, 'idprov' => $detalleProv->id_proveedor, 'tipo' =>$tipo ]) }}" style="color: #ffffff; text-align: center; text-decoration: none;">Rechazar</a>
                             </td>
                         </tr>
        </table>

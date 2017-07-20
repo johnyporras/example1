@@ -6,7 +6,7 @@
 <hr/>
 
 
-<table border="0">
+<table border="1">
                         <tr>
                             <td>Cedula del afiliado</td>
                             <td>{{ $data['cedula'] }}</td>

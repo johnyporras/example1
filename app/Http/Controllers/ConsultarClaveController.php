@@ -54,16 +54,17 @@ class ConsultarClaveController extends Controller
 
 			   	$query = DB::table('ac_claves')
 			   	->where([['ac_cuenta.fecha','<=',date('Y-m-d').' 00:00:00'], ['ac_claves.estatus_clave', '!=', 5]])
-                ->where("ac_proveedores_extranet.codigo_proveedor","=",$user->detalles_usuario_id)
+                ->where("ac_clavedetalleprov.id_proveedor","=",$user->detalles_usuario_id)
 			   	->join('ac_claves_detalle'         , 'ac_claves.id',"=",'ac_claves_detalle.id_clave')
 			   	->join('ac_afiliados'              , 'ac_afiliados.cedula',"=", 'ac_claves.cedula_afiliado')
 			   	->join('ac_cuenta'              , 'ac_afiliados.id_cuenta',"=", 'ac_cuenta.id')
                 ->join('ac_cuentaplan'              , 'ac_afiliados.id_cuenta',"=", 'ac_cuentaplan.id_cuenta')
 			   	->join('ac_planes_extranet'        , 'ac_cuentaplan.id_plan',"=", 'ac_planes_extranet.codigo_plan')
 			   	->join('ac_estatus'                , 'ac_estatus.id',"=",'ac_claves.estatus_clave')
-			   	->join('ac_proveedores_extranet'   , 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')
+			   	->join('ac_clavedetalleprov'      , 'ac_claves.id',"=",'ac_clavedetalleprov.id_clave')
+			   	->leftJoin('ac_proveedores_extranet'   , 'ac_proveedores_extranet.codigo_proveedor',"=", 'ac_claves_detalle.codigo_proveedor')
 			   	->join('ac_especialidades_extranet', 'ac_especialidades_extranet.codigo_especialidad',"=", 'ac_claves_detalle.codigo_especialidad')
-			   	->select('ac_claves.id as id',
+			   	->select('ac_claves.id as id','ac_clavedetalleprov.pendiente',
 			   			'ac_claves.fecha_cita as fecha_citas',
 			   			'ac_claves.cedula_afiliado',
 			   			'ac_claves.clave as clave',
@@ -291,6 +292,8 @@ class ConsultarClaveController extends Controller
 
   public function show(Request $request, $id_clave='')
     {
+     $user = \Auth::user();
+        
     if (empty($clave)){
        $id['clave'] = $request->input('show');
     }else{
@@ -340,7 +343,22 @@ class ConsultarClaveController extends Controller
                              'ac_claves_detalle.detalle as detalle'
                             )
                     ->get(); // +++++++ array(StdClass)
-            return view('claves.consultarDetalle', compact('clave','clave_detalle'));
+            
+              $detalleProv="";
+             //dd($user->user_type);
+             if($user->type==3)
+             {
+                 $detProv = DB::table('ac_clavedetalleprov')
+                            ->where('id_clave', '=', $id['clave'])
+                            ->where("pendiente","=",1)->take(1)
+                            ->get();
+                 if(is_array($detProv) && count($detProv)>0)
+                 {
+                     $detalleProv =$detProv[0];
+                 }
+             }
+                    
+            return view('claves.consultarDetalle', compact('clave','clave_detalle','detalleProv'));
          }
      }
 

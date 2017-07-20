@@ -25,22 +25,61 @@
         </table>
     </div>
 @endif
-<h4>Datos de la Atención Médica</h4>
+<h4>Datos de la Atención</h4>
     {!! Form::open(['url' => 'claves/procesar', 'class' => 'form-horizontal', 'id' => 'procesar', 'name' => 'procesar', 'lang' => 'es', 'data-parsley-validate' => '']) !!}
     <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
+    {!! Form::label('Tipo', 'Tipo: ', ['class' => 'col-sm-2 control-label']) !!}
+        <div class="col-sm-3">
+            {{ Form::radio('tipoatencion', '1', true) }}M&eacute;dico
+            {{ Form::radio('tipoatencion', '2') }}Odontol&oacute;gico
+        </div>
         {!! Form::label('fecha_cita', 'Fecha de Atención: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-3">
             {!! Form::text('fecha_cita', null, ['class' => 'form-control input-sm','onchange'=>"validarFecha(this.value)", 'required' => 'required','placeholder' => 'dd-mm-aaaa']) !!}
             {!! $errors->first('fecha_cita', '<p class="help-block">:message</p>') !!}
         </div>
-        {!! Form::label('telefono', 'Teléfono Móvil: ', ['class' => 'col-sm-2 col-sm-offset-1 control-label']) !!}
+       
+    </div>
+    
+    
+    {!! Form::open(['url' => 'claves/procesar', 'class' => 'form-horizontal', 'id' => 'procesar', 'name' => 'procesar', 'lang' => 'es', 'data-parsley-validate' => '']) !!}
+    <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
+    {!! Form::label('Estado', 'Estado: ', ['class' => 'col-sm-2 control-label']) !!}
+        <div class="col-sm-3">
+             <select class="form-control" name="estado">
+                @foreach($items as $item)
+                  <option value="{{$item->est_id}}">{{$item->est_desc}}</option>
+                @endforeach
+              </select>
+                        
+            
+        </div>
+        {!! Form::label('ciudad', 'Ciudad: ', ['class' => 'col-sm-2 control-label']) !!}
+        <div class="col-sm-3">
+            {!! Form::text('fecha_cita', null, ['class' => 'form-control input-sm','onchange'=>"validarFecha(this.value)", 'required' => 'required','placeholder' => 'Ciudad']) !!}
+            {!! $errors->first('fecha_cita', '<p class="help-block">:message</p>') !!}
+        </div>
+       
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="form-group">
+    
+    	 {!! Form::label('telefono', 'Teléfono Móvil: ', ['class' => 'col-sm-1 col-sm-offset-1 control-label']) !!}
         <div class="col-sm-2">
 
-            {!! Form::select('codigocel', ['0414' => '0414', '0424' => '0424','0412' =>'0412', '0416' => '0416', '0426' => '0426'], null) !!}
+            {!! Form::select('codigocel', ['0414' => '0414', '0424' => '0424','0412' =>'0412', '0416' => '0416', '0426' => '0426']) !!}
             {!! Form::number('telefono', null, ['class' => 'form-control', 'required' => 'required']) !!}
             {!! $errors->first('telefono', '<p class="help-block">:message</p>') !!}
         </div>
     </div>
+    
     <div class="form-group {{ $errors->has('motivo') ? 'has-error' : ''}}">
         {!! Form::label('motivo', 'Motivo: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-8">

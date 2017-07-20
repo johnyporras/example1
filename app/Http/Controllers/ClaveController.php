@@ -10,6 +10,7 @@ use App\Models\AcClavesDetalle;
 use App\Models\AcClaveProv;
 use App\Models\AcAfiliado;
 use App\Models\AcAfiliadoTemporal;
+use App\Models\AcEstado;
 use App\Models\AcProveedoresExtranet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth;
@@ -143,6 +144,7 @@ class ClaveController extends Controller{
             $oDetalleP->id_clave=$claves->id;
             $oDetalleP->id_proveedor=$proveedor1;
             $oDetalleP->preferido=1;
+            $oDetalleP->pendiente=1;
             $oDetalleP->aceptado=0;
             $oDetalleP->incluir();
   
@@ -168,16 +170,17 @@ class ClaveController extends Controller{
 
            // dd($data['datosclave']->clave);
             // Envio de Correo para confirmar
-            Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
+         /*   Mail::send('mails.claveprove1', ['data' => $data], function($mail) use($data){
             	$mail->subject('Nueva solicitud de Servicios');
             	$mail->to($data['email'], $data['nombre']);
-            });
+            });*/
 //dd($proveedor2);
             	$oDetalleP= new AcClaveProv();
             	$oDetalleP->id_clave=$claves->id;
             	$oDetalleP->id_proveedor=$proveedor2;
             	$oDetalleP->preferido=0;
                 $oDetalleP->aceptado=0;
+                $oDetalleP->pendiente=0;
             	$oDetalleP->incluir();
           
  
@@ -200,8 +203,6 @@ class ClaveController extends Controller{
             
 */            
           
-
-
 
 
 
@@ -250,7 +251,7 @@ class ClaveController extends Controller{
                       ->where("id_proveedor","=",$request->idclaveprov)
                       ->update(["fechacita"=>$request->fechacita,"horacita"=>$request->horacita
                               ,"observacion"=>$request->observac,
-                              "aceptado"=>'1']);
+                          "aceptado"=>'1',"pendiente"=>'0']);
 
           AcClave::where("id","=",$request->id)
                 ->update(["codigo_proveedor_creador"=>$request->idclaveprov,"estatus_clave"=>5]);
@@ -318,7 +319,7 @@ class ClaveController extends Controller{
           AcClaveProv::where("id_clave","=",$request->id)
                       ->where("id_proveedor","=",$request->idclaveprov)
                       ->update(["observacion"=>$request->observac,
-                              "aceptado"=>'0']);
+                          "aceptado"=>'0',"pendiente"=>'0']);
 
 
 
@@ -336,6 +337,13 @@ class ClaveController extends Controller{
                     $oProv = new AcClaveProv();
                     $oProv->idclave =$request->id;
                     $rsProv2=$oProv->getProvSecundario();
+                  //  $rsProv2->pendiente=1;
+                   // $rsProv2->save();
+                    
+                 //   dd($rsProv2->id);
+                    AcClaveProv::where("id_clave","=",$request->id)
+                    ->where("id_proveedor","=",$rsProv2->codigo_proveedor)
+                    ->update(["pendiente"=>1]);
 
                   $data = [
                     'nombre' =>$rsProv2->nombre,
@@ -409,7 +417,21 @@ class ClaveController extends Controller{
               $oClave=new AcClave();
               $oClave->id=$id;
               $rsClave = $oClave->getClave();
-              return view("claves.aceptarClave",compact('id','idclaveprov','rsClave'));
+              
+              $data = [
+                  'nombreafiliado'=>$rsClave->nombre,
+                  'apafiliado'=>$rsClave->apellido,
+                  'cedula'=>$rsClave->cedula_afiliado,
+                  'fecha_cita'=>$rsClave->fecha_cita,
+                  'telefono'=>$rsClave->telefono,
+                  'obser'=>$rsClave->observaciones,
+                  'motivo'=>$rsClave->motivo,
+                  'servicio'=>$rsClave->servicio,
+                  'especialidad'=>$rsClave->especialidad,
+                  'procedimiento'=>$rsClave->procedimiento,
+                  'idclave'=>$rsClave->id
+              ];
+              return view("claves.aceptarClave",compact('id','idclaveprov','rsClave','data'));
       }
     }
 
@@ -418,7 +440,24 @@ class ClaveController extends Controller{
     {
       if($id!="" && $idclaveprov!="")
       {
-              return view("claves.rechazarClave1",compact('id','idclaveprov','tipo'));
+          $oClave=new AcClave();
+          $oClave->id=$id;
+          $rsClave = $oClave->getClave();
+          
+          $data = [
+              'nombreafiliado'=>$rsClave->nombre,
+              'apafiliado'=>$rsClave->apellido,
+              'cedula'=>$rsClave->cedula_afiliado,
+              'fecha_cita'=>$rsClave->fecha_cita,
+              'telefono'=>$rsClave->telefono,
+              'obser'=>$rsClave->observaciones,
+              'motivo'=>$rsClave->motivo,
+              'servicio'=>$rsClave->servicio,
+              'especialidad'=>$rsClave->especialidad,
+              'procedimiento'=>$rsClave->procedimiento,
+              'idclave'=>$rsClave->id
+          ];
+            return view("claves.rechazarClave1",compact('id','idclaveprov','tipo','rsClave','data'));
       }
     }
 
@@ -523,6 +562,7 @@ class ClaveController extends Controller{
 	        $especialidades_cobertura = array_pluck($coberturas,'especialidad','id_especialidad'); // ++++++++++++++++ ARRAY
 
           $servicios = array_pluck($coberturas,'servicio','id_servicio');
+          $items = AcEstado::pluck('es_desc', 'es_id');
 	        return view('claves.generarFinal', compact('beneficiario','especialidades_cobertura','servicios','proveedor'));
     	}
     }

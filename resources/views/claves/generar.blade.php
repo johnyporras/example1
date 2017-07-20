@@ -63,9 +63,10 @@
     @endif
 @endsection
 @section('script')
-    <script>
+    
         $("#beneficiario").submit();
         $(function(){
+       
             $("#seleccionar").click(function(e){
                 entro = false;
                 $(":checked").each(function(index){
@@ -80,5 +81,5 @@
                 }
             });
         });
-    </script>
+    
 @endsection
