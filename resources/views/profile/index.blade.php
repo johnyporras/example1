@@ -133,6 +133,28 @@ $(document).ready(function() {
         $('#fechaA').parsley(parsleyOptions).validate();
     });
 
+    // Para fecha alergia
+    $('#fechaH').datepicker({
+        language: "es",
+        format: 'yyyy-mm-dd',
+        startView: 2,
+        endDate: '0'
+    }).on('changeDate', function (selected) {     
+        //valida el campo al cambiar
+        $('#fechaH').parsley(parsleyOptions).validate();
+    });
+
+    // Para fecha alergia
+    $('#fechaO').datepicker({
+        language: "es",
+        format: 'yyyy-mm-dd',
+        startView: 2,
+        endDate: '0'
+    }).on('changeDate', function (selected) {     
+        //valida el campo al cambiar
+        $('#fechaO').parsley(parsleyOptions).validate();
+    });
+
     // Sweet alert
     $('.sweet-danger').on( 'click', function (e) {
         e.preventDefault();

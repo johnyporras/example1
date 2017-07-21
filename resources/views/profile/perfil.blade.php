@@ -38,6 +38,10 @@
     </div>
 
     <div class="col-xs-12">
+        <h4 class="sub-header">
+            <span><i class="fa fa-user fa-fw"></i></span> <span>Datos Basicos</span>
+        </h4>
+
         <table class="tEdit table table-borderless table-striped table-hover table-vcenter">
             <tbody>
                 <tr>
@@ -236,12 +240,14 @@
         </table>
         <!-- END Customer Info -->   
     </div> 
+
+    <div class="clearfix"></div>
     
     <!-- Contactos -->
-    <div class="col-xs-12">
+    <div class="col-md-6">
         <h4 class="sub-header">
             <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
-               data-target="#modalContacto" title="Agregar"> <i class="fa fa-plus"></i></button> 
+               data-target="#modalContactoo" title="Agregar"> <i class="fa fa-plus"></i></button> 
             <span>Contacto en caso de Emergencias</span>
         </h4>
 
@@ -297,7 +303,7 @@
     </div>
 
     <!-- Pasatiempos -->
-    <div class="col-xs-12">
+    <div class="col-md-6">
         <h4 class="sub-header">
             <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
                data-target="#modalPtiempo" title="Agregar"> <i class="fa fa-plus"></i></button> 
