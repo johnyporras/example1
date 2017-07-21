@@ -247,7 +247,7 @@
     <div class="col-md-6">
         <h4 class="sub-header">
             <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
-               data-target="#modalContactoo" title="Agregar"> <i class="fa fa-plus"></i></button> 
+               data-target="#modalContacto" title="Agregar"> <i class="fa fa-plus"></i></button> 
             <span>Contacto en caso de Emergencias</span>
         </h4>
 
