@@ -211,11 +211,15 @@ class ProfileController extends Controller
     {
         if ($request->ajax())
         { 
-            // Realizo calculo IMC
-            $calculo = AcAfiliado::imc($request->altura, $request->peso);
+            if ($request->altura != 0 && $request->peso != 0) {
+                // Realizo calculo IMC
+                $calculo = AcAfiliado::imc($request->altura, $request->peso);
+            } else {
+                $calculo = 'Peso / Altura debe ser diferente de 0 o Vacio';
+            }
             // retorno valor
             return response()->json(['imc' => $calculo]);
-        }
+         }   
     }
 
 }

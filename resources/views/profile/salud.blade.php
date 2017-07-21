@@ -59,8 +59,7 @@
                         <strong>Índice de Masa Corporal (IMC)</strong>
                     </td>
                     <td><span class="calculo">
-                    
-                    {{ $perfil->imc($perfil->altura, $perfil->peso ) }}</span>
+                        {{ $perfil->imc($perfil->altura, $perfil->peso ) }}</span>
                     </td>
                     <td></td>
                 </tr>
@@ -769,13 +768,14 @@ $(document).ready(function() {
     $('.xpeso').on('save', function(e, params) {
         $('.calculo').html('<i class="fa fa-spinner fa-pulse fa-fw"></i> cargando');
         var peso = params.newValue;
-        var altura = {{ $perfil->altura or 0 }};
+        var altura = $('.xaltura').editable('getValue',true);
         $.ajax({
             type: "GET",
             url:'{{ url('calculo') }}',
             data: {peso: peso, altura: altura },
             success: function(data) {
                 $('.calculo').text(data.imc);
+                console.log('valor de peso '+peso +' valor altura '+ altura);
             }
         });
     });
@@ -798,7 +798,7 @@ $(document).ready(function() {
     // Valida el valor de campa 
     $('.xaltura').on('save', function(e, params) {
         $('.calculo').html('<i class="fa fa-spinner fa-pulse fa-fw"></i> cargando');
-        var peso = {{ $perfil->peso or 0 }};
+        var peso = $('.xpeso').editable('getValue',true);
         var altura = params.newValue;
         $.ajax({
             type: "GET",
@@ -806,6 +806,7 @@ $(document).ready(function() {
             data: {peso: peso, altura: altura },
             success: function(data) {
                 $('.calculo').text(data.imc);
+                console.log('valor de peso '+ peso +' valor altura '+ altura);
             }
         });
     });

@@ -59,16 +59,13 @@ class AcAfiliado extends Model {
      */
     public static function imc($altura, $peso)
     {
-        
-        if ($altura != 0 && $peso != 0 ) {
-
+        if ($altura != null && $peso != null) {
             $alto = pow($altura / 100,2);
             $value = number_format($peso / $alto,2);
-
         } else {
-            $value = 'Peso / Altura debe ser diferente de 0 o Vacio';
+            $value = 'Ingrese valores Peso y Altura ';
         }
-        return $value;   
+        return $value;  
     }
 
     /**
