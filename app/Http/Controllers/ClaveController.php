@@ -557,13 +557,11 @@ class ClaveController extends Controller{
 	                        'id_especialidad','ac_especialidades_extranet.descripcion as especialidad')
 	                ->distinct()->get();
 
-
-
-	        $especialidades_cobertura = array_pluck($coberturas,'especialidad','id_especialidad'); // ++++++++++++++++ ARRAY
+	      $especialidades_cobertura = array_pluck($coberturas,'especialidad','id_especialidad'); // ++++++++++++++++ ARRAY
 
           $servicios = array_pluck($coberturas,'servicio','id_servicio');
-          $items = AcEstado::pluck('es_desc', 'es_id');
-	        return view('claves.generarFinal', compact('beneficiario','especialidades_cobertura','servicios','proveedor'));
+          $items = AcEstado::get();
+	        return view('claves.generarFinal', compact('beneficiario','especialidades_cobertura','servicios','proveedor','items'));
     	}
     }
 

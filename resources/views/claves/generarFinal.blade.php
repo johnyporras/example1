@@ -30,8 +30,8 @@
     <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
     {!! Form::label('Tipo', 'Tipo: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-3">
-            {{ Form::radio('tipoatencion', '1', true) }}M&eacute;dico
-            {{ Form::radio('tipoatencion', '2') }}Odontol&oacute;gico
+            {{ Form::radio('tipoatencion', '2', true,['id' => 'tipoatencion']) }}M&eacute;dico
+            {{ Form::radio('tipoatencion', '1',false,['id' => 'tipoatencion']) }}Odontol&oacute;gico
         </div>
         {!! Form::label('fecha_cita', 'Fecha de Atención: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-3">
@@ -48,7 +48,7 @@
         <div class="col-sm-3">
              <select class="form-control" name="estado">
                 @foreach($items as $item)
-                  <option value="{{$item->est_id}}">{{$item->est_desc}}</option>
+                  <option value="{{$item->es_id}}">{{$item->es_desc}}</option>
                 @endforeach
               </select>
                         
@@ -102,7 +102,7 @@
     </div>
     <div class="form-group {{ $errors->has('codigo_especialidad') ? 'has-error' : ''}}">
         {!! Form::label('codigo_especialidad', 'Especialidad: ', ['class' => 'col-sm-2 control-label']) !!}
-        <div class="col-sm-5">
+        <div class="col-sm-5" id='div_especialidad'>
             {!! Form::select('codigo_especialidad', $especialidades_cobertura,null, ['class' => 'form-control','placeholder' => 'Seleccione una opción']) !!}
             {!! $errors->first('codigo_especialidad', '<p class="help-block">:message</p>') !!}
         </div>
@@ -197,12 +197,18 @@
         $(function(){
             $( "#fecha_cita" ).datepicker({ minDate: -0, maxDate: "+4D", dateFormat: "dd-mm-yy", changeYear: true });
             $('#procesar').parsley();
+
+            
             $("#codigo_especialidad").on('change',function(){
                 getProcedimientos($(this).val(),$('#codigo_servicio').val());
             });
+
+            
             $("#codigo_servicio").on('change',function(){
                 getProcedimientos($('#codigo_especialidad').val(),$(this).val());
             });
+
+            
             function getProcedimientos(especialidad,servicio){
                 if(especialidad !== "" && servicio !== ""){
                     var data = {
@@ -228,6 +234,40 @@
                     });
                 }
             }
+
+
+			$("[name='tipoatencion']").on("click",function(){
+				tipo = $(this).val();
+				getEspecialidad(tipo);
+			});
+			
+            function getEspecialidad(tipo){
+                if(tipo !== ""){
+                    var data = {
+                        'contrato': {{ $beneficiario['contrato'] }},
+                        'tipo': tipo,
+                        '_token': $('[name="_token"]').val()
+                    };
+                    
+                    var select = "";
+                    $.post("{{url('selectEspecialidades')}}", data, function(data,select){
+                        select = "<select class='form-control' id='codigo_especialidad' name='codigo_especialidad'>\n\
+                                    <option selected='selected' value=''>Selecione una opción</option>";
+                            $.each( data, function( key, val ) {
+                                select = select + "<option value='" + key + "'>" + val + "</option>";
+                              });
+                            select = select + "</select>";
+                            $("#div_especialidad").html(select);
+//                            $("#procedimiento_medico").on('change',function(){
+//                                getProveedor($('#codigo_especialidad').val(),$('#codigo_servicio').val(),$(this).val());
+//                            });
+                    });
+                }
+            }
+
+
+
+            
             $( "#codigo_proveedor" ).autocomplete({
 
                 delay: 0,

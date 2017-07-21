@@ -191,4 +191,28 @@ class SelectController  extends Controller{
         $aseguradoras = \App\Models\AcAseguradora::get();
         return response()->json($aseguradoras->pluck('nombre','codigo_aseguradora'));
     }
+    
+    
+    
+    public function getEspecialidades()
+    {
+       // return "hola";
+        $coberturas = DB::table('ac_cuenta')
+        ->where('codigo_cuenta', '=', \Input::get('contrato'))
+        ->join('ac_cuentaplan', 'ac_cuentaplan.id_cuenta',"=", 'ac_cuenta.id')
+        ->join('ac_planes_extranet', 'ac_planes_extranet.codigo_plan',"=", 'ac_cuentaplan.id_plan')
+        ->join('ac_cobertura_extranet', 'ac_cobertura_extranet.id_plan',"=", 'ac_planes_extranet.codigo_plan')
+        ->join('ac_procedimientos_medicos', function($join){
+            $join->on('ac_procedimientos_medicos.codigo_examen',"=", 'ac_cobertura_extranet.id_procedimiento')
+            ->on('ac_procedimientos_medicos.codigo_especialidad',"=", 'ac_cobertura_extranet.id_especialidad')
+            ->on('ac_procedimientos_medicos.codigo_servicio',"=", 'ac_cobertura_extranet.id_servicio');
+        })
+        ->join("ac_especialidades_extranet","ac_procedimientos_medicos.codigo_especialidad","=","ac_especialidades_extranet.id")
+        ->where("ac_especialidades_extranet.rama","=",\Input::get('tipo'))
+        ->select('ac_especialidades_extranet.codigo_especialidad','ac_especialidades_extranet.descripcion as especialidad');
+   //     return "hola11";
+        return response()->json($coberturas->pluck('especialidad','codigo_especialidad')); 
+    }
+    
+    
 }

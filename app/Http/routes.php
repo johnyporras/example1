@@ -447,6 +447,7 @@ Route::group(['middleware' => ['auth']], function () {
     // Consultar Ajax
     Route::post('selectColectivos'    , 'Ajax\SelectController@getColectivos');
     Route::post('selectProcedimientos', 'Ajax\SelectController@getProcedimientos');
+    Route::post('selectEspecialidades', 'Ajax\SelectController@getEspecialidades');
     Route::post('selectProveedores'   , 'Ajax\SelectController@getProveedores');
     Route::post('getTitular'          , 'Ajax\SelectController@getTitular');
     
