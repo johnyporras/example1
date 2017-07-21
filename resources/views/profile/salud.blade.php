@@ -1,17 +1,34 @@
 <div class="row">
     
     <div class="col-xs-12">
-        <table class="tpersona table table-borderless table-striped table-hover table-vcenter">
+        <table class="tEdit table table-borderless table-striped table-hover table-vcenter">
             <tbody>
+                <tr>
+                    <td class="text-right" style="width: 30%;">
+                        <strong>Sexo</strong>
+                    </td>
+                    <td><span class="xsexo" 
+                            data-type="select"
+                            data-pk="{{ $perfil->id }}" 
+                            data-name="sexo"
+                            data-value="{{ $perfil->sexo  }}"
+                            data-title="Ingrese Sexo"
+                            ></span></td>
+                    <td style="width: 50px;">
+                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
                 <tr>
                     <td class="text-right" style="width: 30%;">
                         <strong>Altura (CM)</strong>
                     </td>
-                    <td><span class="xtext" 
-                            data-type="text"
+                    <td><span class="xaltura" 
+                            data-type="number"
                             data-pk="{{ $perfil->id }}" 
                             data-name="altura"
-                            data-value="{{ $perfil->altura or null }}"
+                            data-value="{{ $perfil->altura }}"
                             data-title="Ingrese Altura"
                             ></span></td>
                     <td style="width: 50px;">
@@ -24,11 +41,11 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Peso (KG)</strong>
                     </td>
-                    <td><span class="xtext" 
-                            data-type="text"
+                    <td><span class="xpeso" 
+                            data-type="number"
                             data-pk="{{ $perfil->id }}" 
                             data-name="peso"
-                            data-value="{{ $perfil->peso or null }}"
+                            data-value="{{ $perfil->peso }}"
                             data-title="Ingrese Peso"
                             ></span></td>
                     <td style="width: 50px;">
@@ -41,7 +58,10 @@
                     <td class="text-right" style="width:30%;">
                         <strong>Índice de Masa Corporal (IMC)</strong>
                     </td>
-                    <td><span>calculo</span></td>
+                    <td><span class="calculo">
+                    
+                    {{ $perfil->imc($perfil->altura, $perfil->peso ) }}</span>
+                    </td>
                     <td></td>
                 </tr>
                 <tr>
@@ -51,8 +71,8 @@
                     <td><span class="xtext" 
                             data-type="text"
                             data-pk="{{ $perfil->id }}" 
-                            data-name="sangre"
-                            data-value="{{ $perfil->sangre or null }}"
+                            data-name="grupo_sangre"
+                            data-value="{{ $perfil->grupo_sangre }}"
                             data-title="Ingrese Grupo Sanguineo"
                             ></span></td>
                     <td style="width: 50px;">
@@ -61,18 +81,153 @@
                         </button>
                     </td>
                 </tr>
-               @if ($perfil->sexo == 'M')
-
-               <tr>
+                <tr>
                     <td class="text-right" style="width: 30%;">
-                        <strong>¿Esta Embarazada?</strong>
+                        <strong>¿Usa Lentes?</strong>
+                    </td>
+                    <td><span class="xchoice" 
+                            data-type="select"
+                            data-pk="{{ $perfil->id }}" 
+                            data-name="lentes"
+                            data-value="{{ $perfil->lentes }}"
+                            data-title="¿Usa Lentes o Anteojos?"
+                            ></span></td>
+                    <td style="width: 50px;">
+                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr class="trl {{ ($perfil->lentes == 'N')? 'hidden' : 'visible' }}">
+                    <td class="text-right" style="width: 30%;">
+                        <strong>Condición uso de Lentes</strong>
                     </td>
                     <td><span class="xtext" 
                             data-type="text"
                             data-pk="{{ $perfil->id }}" 
-                            data-name="sangre"
-                            data-value="{{ ($perfil->embarazada == 'N')? 'No' : 'Si' }}"
+                            data-name="condicion_lentes"
+                            data-value="{{ $perfil->condicion_lentes }}"
+                            data-title="Ingrese ´condición uso lentes"
+                            ></span></td>
+                    <td style="width: 50px;">
+                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+                @if ($perfil->sexo == 'F')
+                <tr>
+                    <td class="text-right" style="width: 30%;">
+                        <strong>¿Esta Embarazada?</strong>
+                    </td>
+                    <td><span class="xembarazo" 
+                            data-type="select"
+                            data-pk="{{ $perfil->id }}" 
+                            data-name="embarazada"
+                            data-value="{{ $perfil->embarazada }}"
                             data-title="Ingrese un valor"
+                            ></span></td>
+                    <td style="width: 50px;">
+                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr class="trh {{ ($perfil->embarazada == 'N')? 'hidden' : 'visible' }}">
+                    <td class="text-right" style="width: 30%;">
+                        <strong>Semanas Embarazo</strong>
+                    </td>
+                    <td><span class="xsemanas" 
+                            data-type="number"
+                            data-pk="{{ $perfil->id }}" 
+                            data-name="tiempo_gestacion"
+                            data-value="{{ $perfil->tiempo_gestacion }}"
+                            data-title="Ingrese semanas de embarazo"
+                            ></span></td>
+                    <td style="width: 50px;">
+                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right" style="width: 30%;">
+                        <strong>Ultima Menstruación</strong>
+                    </td>
+                    <td><span class="xtext" 
+                            data-type="text"
+                            data-pk="{{ $perfil->id }}" 
+                            data-name="menstruacion"
+                            data-value="{{ $perfil->menstruacion }}"
+                            data-title="Ingrese ultima menstruación"
+                            ></span></td>
+                    <td style="width: 50px;">
+                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right" style="width: 30%;">
+                        <strong>Cantidad de Partos</strong>
+                    </td>
+                    <td><span class="xnumber" 
+                            data-type="number"
+                            data-pk="{{ $perfil->id }}" 
+                            data-name="partos"
+                            data-value="{{ $perfil->partos }}"
+                            data-title="Ingrese Nro Partos"
+                            ></span></td>
+                    <td style="width: 50px;">
+                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right" style="width: 30%;">
+                        <strong>Cantidad de Cesareas</strong>
+                    </td>
+                    <td><span class="xnumber" 
+                            data-type="number"
+                            data-pk="{{ $perfil->id }}" 
+                            data-name="cesarea"
+                            data-value="{{ $perfil->cesarea }}"
+                            data-title="Ingrese Cantidad de Cesareas"
+                            ></span></td>
+                    <td style="width: 50px;">
+                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right" style="width: 30%;">
+                        <strong>Cantidad de Perdidas</strong>
+                    </td>
+                    <td><span class="xnumber" 
+                            data-type="number"
+                            data-pk="{{ $perfil->id }}" 
+                            data-name="perdidas"
+                            data-value="{{ $perfil->perdidas }}"
+                            data-title="Ingrese Cantidad de Perdidas"
+                            ></span></td>
+                    <td style="width: 50px;">
+                        <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right" style="width: 30%;">
+                        <strong>Cantidad de Abortos</strong>
+                    </td>
+                    <td><span class="xnumber" 
+                            data-type="number"
+                            data-pk="{{ $perfil->id }}" 
+                            data-name="abortos"
+                            data-value="{{ $perfil->abortos }}"
+                            data-title="Ingrese cantidad de Abortos"
                             ></span></td>
                     <td style="width: 50px;">
                         <button type="button" data-toggle="tooltip" class="b-edit btn btn-sm btn-warning btn-circle" data-original-title="Editar">
@@ -486,6 +641,22 @@
 @push('sub-script')
 <script>
 $(document).ready(function() {
+    // Sexo
+    $('.xsexo').editable({
+        mode: 'inline', 
+        toggle: 'manual',
+        validate: function(value) {
+            if($.trim(value) == '') {
+                return 'Valor es requerido.';
+            }
+        },
+        source: [
+            {value: 'M', text: 'Masculino'},
+            {value: 'F', text: 'Femenino'},
+        ],  
+        url:'{{ route('perfil.editar') }}',
+    });
+    
     //Fecha Nacimiento
     $('.xfecha').editable({
         format: 'yyyy-mm-dd',    
@@ -496,6 +667,147 @@ $(document).ready(function() {
             endDate: '0',
         },
         url:'{{ route('perfil.motivoEditar') }}',
+    });
+    // Para valores con numeros
+    $('.xnumber').editable({
+        validate: function(value) {
+            if($.trim(value) == '') {
+                return 'Valor es requerido.';
+            }
+            if($.isNumeric(value) == '') {
+              return 'Solo se permiten numeros.';
+            }
+        },
+        mode: 'inline', 
+        toggle: 'manual',
+        url:'{{ route('perfil.editar') }}',
+    });
+    // Semanas de embarazo
+    $('.xsemanas').editable({
+        validate: function(value) {
+            if($.trim(value) == '') {
+                return 'Valor es requerido.';
+            }
+            if($.isNumeric(value) == '') {
+              return 'Solo se permiten numeros.';
+            }
+            if(value < 1 || value > 40) {
+              return 'Valor entre 1 y 40 Semanas';
+            }
+        },
+        mode: 'inline', 
+        toggle: 'manual',
+        url:'{{ route('perfil.editar') }}',
+    });
+    // Para valor si o no
+    $('.xchoice').editable({
+        mode: 'inline', 
+        toggle: 'manual',
+        validate: function(value) {
+            if($.trim(value) == '') {
+                return 'Valor es requerido.';
+            }
+        },
+        source: [
+            {value: 'S', text: 'Si'},
+            {value: 'N', text: 'No'},
+        ],  
+        url:'{{ route('perfil.editar') }}',
+    });
+    // Valida el valor de campa 
+    $('.xchoice').on('save', function(e, params) {
+        if (params.newValue == 'S'){
+            $(".trl").removeClass('hidden');
+            $(".trl").addClass("visible");
+        }else{
+            $(".trl").removeClass("visible");
+            $(".trl").addClass("hidden");
+        }
+    });
+    //------------------------------------------------//
+    // Para valor si o no
+    $('.xembarazo').editable({
+        mode: 'inline', 
+        toggle: 'manual',
+        validate: function(value) {
+            if($.trim(value) == '') {
+                return 'Valor es requerido.';
+            }
+        },
+        source: [
+            {value: 'S', text: 'Si'},
+            {value: 'N', text: 'No'},
+        ],  
+        url:'{{ route('perfil.editar') }}',
+    });
+    // Valida el valor de campa 
+    $('.xembarazo').on('save', function(e, params) {
+        if (params.newValue == 'S'){
+            $(".trh").removeClass('hidden');
+            $(".trh").addClass("visible");
+        }else{
+            $(".trh").removeClass("visible");
+            $(".trh").addClass("hidden");
+        }
+    });
+    //----------------------------------------------------//
+    // para calculo IMC
+    $('.xpeso').editable({
+        validate: function(value) {
+            if($.trim(value) == '') {
+                return 'Valor es requerido.';
+            }
+            if($.isNumeric(value) == '') {
+              return 'Solo se permiten numeros.';
+            }
+        },
+        mode: 'inline', 
+        toggle: 'manual',
+        url:'{{ route('perfil.editar') }}',
+    });
+    // Valida el valor de campa 
+    $('.xpeso').on('save', function(e, params) {
+        $('.calculo').html('<i class="fa fa-spinner fa-pulse fa-fw"></i> cargando');
+        var peso = params.newValue;
+        var altura = {{ $perfil->altura or 0 }};
+        $.ajax({
+            type: "GET",
+            url:'{{ url('calculo') }}',
+            data: {peso: peso, altura: altura },
+            success: function(data) {
+                $('.calculo').text(data.imc);
+            }
+        });
+    });
+
+    //----------------------------------------------------//
+    // para calculo IMC
+    $('.xaltura').editable({
+        validate: function(value) {
+            if($.trim(value) == '') {
+                return 'Valor es requerido.';
+            }
+            if($.isNumeric(value) == '') {
+              return 'Solo se permiten numeros.';
+            }
+        },
+        mode: 'inline', 
+        toggle: 'manual',
+        url:'{{ route('perfil.editar') }}',
+    });
+    // Valida el valor de campa 
+    $('.xaltura').on('save', function(e, params) {
+        $('.calculo').html('<i class="fa fa-spinner fa-pulse fa-fw"></i> cargando');
+        var peso = {{ $perfil->peso or 0 }};
+        var altura = params.newValue;
+        $.ajax({
+            type: "GET",
+            url:'{{ url('calculo') }}',
+            data: {peso: peso, altura: altura },
+            success: function(data) {
+                $('.calculo').text(data.imc);
+            }
+        });
     });
 
 });

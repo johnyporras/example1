@@ -201,4 +201,21 @@ class ProfileController extends Controller
         return redirect()->route('perfil.index');
     }
 
+    /**
+     * Calculo IMC
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function calculo(Request $request)
+    {
+        if ($request->ajax())
+        { 
+            // Realizo calculo IMC
+            $calculo = AcAfiliado::imc($request->altura, $request->peso);
+            // retorno valor
+            return response()->json(['imc' => $calculo]);
+        }
+    }
+
 }

@@ -215,6 +215,11 @@ Route::group(['middleware' => ['auth']], function () {
  * rutas para el perfil
  */
 Route::group(['middleware' => ['auth']], function () {
+
+    Route::get('calculo', [
+        'uses' => 'ProfileController@calculo',
+        'as'   => 'perfil.calculo' 
+    ]);
     
     Route::get('perfil', [
         'uses' => 'ProfileController@index',

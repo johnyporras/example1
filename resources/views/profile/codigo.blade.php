@@ -1,8 +1,9 @@
 <div class="row">
     <!-- Customer Info -->
     <div class="col-xs-12">
-        <h4 class="sub-header text-center pt0 mt0 mb0">Codigo QR para Emergencias</h4>
+        <h4 class="sub-header text-center mt0">Codigo QR para Emergencias</h4>
     </div>
+
     <div class="col-sm-4">
         <div class="block-section text-right hidden-xs">
             {!! QrCode::backgroundColor(57,66,99)
@@ -27,7 +28,6 @@
     <div class="col-sm-8">
         <div class="row">
             <div class="col-xs-12">
-
                 <div class="widget">
                     <div class="widget-simple themed-background-dark">
                         <a href="javascript:void(0)" class="widget-icon pull-right animation-fadeIn themed-buble">
@@ -53,15 +53,13 @@
                     </div>
                     <!-- END Widget -->
                 </div>
-            <div class="col-lg-7">
-
-               
             </div>
         </div> <!-- .row -->
     </div>
 
-    <div class="col-xs-12">
-        
+    <div class="col-xs-12 text-center">
+       <h4 class="sub-header m0">Configura tu Codigo QR</h4>
+       <p>Puedes seleccionar la información que quieres mostrar cuando alguien accede a tu QR.</p> 
     </div> 
     
 </div>
