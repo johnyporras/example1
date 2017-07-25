@@ -197,6 +197,7 @@ class SelectController  extends Controller{
     public function getEspecialidades()
     {
        // return "hola";
+        $detser = \Input::get('detser');
         $coberturas = DB::table('ac_cuenta')
         ->where('codigo_cuenta', '=', \Input::get('contrato'))
         ->join('ac_cuentaplan', 'ac_cuentaplan.id_cuenta',"=", 'ac_cuenta.id')
@@ -210,6 +211,26 @@ class SelectController  extends Controller{
         ->join("ac_especialidades_extranet","ac_procedimientos_medicos.codigo_especialidad","=","ac_especialidades_extranet.id")
         ->where("ac_especialidades_extranet.rama","=",\Input::get('tipo'))
         ->select('ac_especialidades_extranet.codigo_especialidad','ac_especialidades_extranet.descripcion as especialidad');
+       // echo $detser;die();
+        if($detser=!"")
+        {
+            $user = $user = \Auth::user();
+            $regUser = AcAfiliado::findOrFail($user->detalles_usuario_id);
+            $edad = intval(date('Y', time() - strtotime($regUser->fecha_nacimiento))) - 1970;
+            $genero= $regUser->sexo;
+            if($edad<18)
+            {
+                $coberturas = $coberturas->where('ac_procedimientos_medicos.codigo_especialidad',"=",36);
+            }
+            
+            if($edad<=10 && $genero=='M')
+            {
+                $coberturas = $coberturas->where('ac_procedimientos_medicos.codigo_especialidad',"<>",43);
+            }
+           
+        }
+        
+        
    //     return "hola11";
         return response()->json($coberturas->pluck('especialidad','codigo_especialidad')); 
     }

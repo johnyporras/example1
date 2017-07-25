@@ -95,7 +95,7 @@
         </div>
         {!! Form::label('detalle_servicio', 'Detalle Servicio: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-2">
-            {!! Form::select('detalle_servicio', ['Primera Vez' => 'Primera Vez', 'Control' => 'Control'], null, ['class' => 'form-control',
+            {!! Form::select('detalle_servicio', ['1' => 'Primera Vez', '2' => 'Control'], null, ['class' => 'form-control',
                             'placeholder' => 'Seleccione una opción']) !!}
             {!! $errors->first('detalle_servicio', '<p class="help-block">:message</p>') !!}
         </div>
@@ -190,6 +190,50 @@
             {!! Form::submit('Generar Clave', ['class' => 'btn btn-primary form-control', 'disabled' => 'disabled', 'id' => 'enviar_clave']) !!}
         </div>
     </div>
+    
+    
+    
+    
+    
+    
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Historial de consultas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+		
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     {!! Form::close() !!}
 @endsection
 @section('script')
@@ -238,15 +282,64 @@
 
 			$("[name='tipoatencion']").on("click",function(){
 				tipo = $(this).val();
-				getEspecialidad(tipo);
+				tipo2="";
+				getEspecialidad(tipo,tipo2);
 			});
+
+
+			$("[name='detalle_servicio']").on("change",function(){
+				detalleser = $(this).val();
+				tipo = $("[name='tipoatencion']").val();
+				getEspecialidad(tipo,detalleser);
+
+				if(detalleser==2)
+				{
+					//alert("aqui");
+					mostrarHistorial();
+				}
+			});
+
+
+			function mostrarHistorial()
+			{
+				//alert("llegate");
+				$('#myModal').modal("show");
+
+				var data = {
+                        '_token': $('[name="_token"]').val() 
+                    };
+                    
+                    var select = "";
+                    $.post("{{url('selectHistorico')}}", data, function(data,select){
+                        if(data.success==1)
+                        {
+                        	select = "<select class='form-control' id='codigo_especialidad' name='codigo_especialidad'>\n\
+                                <option selected='selected' value=''>Selecione una opción</option>";
+                                $.each( data, function( key, val ) {
+                                    select = select + "<option value='" + key + "'>" + val + "</option>";
+                                  });
+                    		select = select + "</select>";
+                         }
+                        else
+                        {
+                            select  = "No tiene";
+                        }
+                        $("#div_especialidad").html(select);
+
+                });
+			}
+
 			
-            function getEspecialidad(tipo){
+            function getEspecialidad(tipo,detser){
+                //alert(tipo);
+                //alert(detser);
+                //return false; 
                 if(tipo !== ""){
                     var data = {
                         'contrato': {{ $beneficiario['contrato'] }},
                         'tipo': tipo,
-                        '_token': $('[name="_token"]').val()
+                        '_token': $('[name="_token"]').val(),
+                        'detser':detser
                     };
                     
                     var select = "";
