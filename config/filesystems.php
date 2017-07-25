@@ -64,6 +64,12 @@ return [
             'visibility' => 'public',
         ],
 
+        'documento' => [
+            'driver' => 'local',
+            'root' => storage_path('app/documento'),
+            'visibility' => 'public',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

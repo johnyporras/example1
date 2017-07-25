@@ -266,6 +266,32 @@ Route::group(['middleware' => ['auth']], function () {
         'as'   => 'perfil.motivoDelete' 
     ]);
 
+    Route::post('perfil/medicamento', [
+        'uses' => 'ProfileController@medicamento',
+        'as'   => 'perfil.medicamento' 
+    ]);
+
+    Route::post('perfil/medicamento/edit', [
+        'uses' => 'ProfileController@medicamentoEditar',
+        'as'   => 'perfil.medicoEditar' 
+    ]);
+
+    Route::get('perfil/medicamento/{id}', [
+        'uses' => 'ProfileController@medicamentoDelete',
+        'as'   => 'perfil.medicoDelete' 
+    ]);
+
+    //ruta para descargar archivos modulo funerario
+    Route::get('file/{file}', [
+        'uses' => 'ProfileController@file',
+        'as'   => 'profile.file' 
+    ]);
+
+    Route::post('perfil/upload', [
+        'uses' => 'ProfileController@upload',
+        'as'   => 'perfil.upload' 
+    ]);
+
 });
 /*=====================================================*/
 
