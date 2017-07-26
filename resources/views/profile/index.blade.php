@@ -90,7 +90,6 @@
 <!-- Incluye las alertas end -->
 <script>
 $(document).ready(function() {
-
     // Validar formulario
     var parsleyOptions = {
         errorClass: 'has-error',
@@ -105,11 +104,42 @@ $(document).ready(function() {
         errorTemplate: '<div class=" col-md-offset-3 col-md-9"></div>',
     };
 
+    // Validar formulario
+    var parsleyOptions1 = {
+        errorClass: 'has-error',
+        successClass: 'has-success',
+        classHandler: function(el) {
+            return el.$element.parents('.form-group');
+        },
+        errorsContainer: function(el) {
+            return el.$element.closest('.form-group');
+        },
+        errorsWrapper: '<span class="help-block">',
+        errorTemplate: '<div></div>',
+    };
+
     //Inicializo tabla responsive
     $('.card').cardtable();
-
     // Genero la validacion del formulario...
     $('.motivoForm').parsley(parsleyOptions);
+    // Modal medicamento
+    $('#medicamentoForm').parsley(parsleyOptions1);
+
+    /*Para subir files*/
+    $('#file').fileinput({
+        language: 'es',
+        showUpload: false,
+        removeClass: 'btn btn-danger',
+        allowedFileExtensions : ['jpg', 'jpeg', 'png'],
+    });
+
+    /*Para subir files*/
+    $('#files').fileinput({
+        language: 'es',
+        showUpload: false,
+        removeClass: 'btn btn-danger',
+        allowedFileExtensions : ['jpg', 'jpeg', 'png'],
+    });
 
     // Para fecha vacuna
     $('#fechaV').datepicker({
@@ -144,7 +174,18 @@ $(document).ready(function() {
         $('#fechaH').parsley(parsleyOptions).validate();
     });
 
-    // Para fecha alergia
+    // Para fecha Enfermedad
+    $('#fechaE').datepicker({
+        language: "es",
+        format: 'yyyy-mm-dd',
+        startView: 2,
+        endDate: '0'
+    }).on('changeDate', function (selected) {     
+        //valida el campo al cambiar
+        $('#fechaE').parsley(parsleyOptions).validate();
+    });
+
+    // Para fecha operación
     $('#fechaO').datepicker({
         language: "es",
         format: 'yyyy-mm-dd',

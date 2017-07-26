@@ -771,6 +771,281 @@
     </div>
 
     <div class="clearfix"></div>
+
+    <!-- Enfermedades Cronicas -->
+    <div class="col-xs-12">
+        <h4 class="sub-header">
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
+               data-target="#modalEnfermedad" title="Agregar"> <i class="fa fa-plus"></i></button> 
+            <span>Enfermedades Cronicas</span>
+        </h4>
+
+        <table class="card table table-colored table-condensed table-borderless table-hover table-striped table-vcenter">
+            <thead>
+                <tr>
+                    <th class="text-center" width="35"><span><i class="fa fa-trash"></i></span></th>
+                    <th>Enfermedad</th>
+                    <th>Fecha Aparición</th>
+                    <th>Tratamiento</th>
+                    <th>Frecuencia Consulta</th>
+                    <th>Profesional / Médico</th>
+                    <th>Comentarios</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            @if (count($perfil->motivoSelect(10)->get()) == 0 )
+                <tr class="text-center">
+                    <td colspan="7"><span>No posee enfermedades cronicas agregadas</span></td>
+                </tr>
+            @endif
+            @foreach ($perfil->motivoSelect(10)->get() as $motivo)
+                <tr>
+                    <td>
+                        <a href="/perfil/motivo/{{ $motivo->id }}" 
+                            data-original-title="Eliminar" data-toggle="tooltip" 
+                            class="btn btn-danger btn-xs sweet-danger">
+                        <i class="fa fa-trash"> </i></a>
+                    </td>
+                    <td><a class="xmotivo" href="#" 
+                        data-type="text"
+                        data-pk="{{ $motivo->id }}" 
+                        data-name="tipo"
+                        data-value="{{ $motivo->tipo }}"
+                        data-title="Ingrese Enfermedad"
+                        ></a></td>
+                    <td><a class="xfecha" href="#" 
+                        data-type="date"
+                        data-pk="{{ $motivo->id }}" 
+                        data-name="fecha"
+                        data-value="{{ $motivo->fecha }}"
+                        data-title="Ingrese Fecha Aparición"
+                        ></a></td>
+                    <td><a class="xmotivo" href="#" 
+                        data-type="text"
+                        data-pk="{{ $motivo->id }}" 
+                        data-name="tratamiento"
+                        data-value="{{ $motivo->tratamiento }}"
+                        data-title="Ingrese Tratamiento"
+                        ></a></td>
+                    <td><a class="xmotivo" href="#" 
+                        data-type="text"
+                        data-pk="{{ $motivo->id }}" 
+                        data-name="frecuencia"
+                        data-value="{{ $motivo->frecuencia }}"
+                        data-title="Ingrese Frecuencia de Consulta"
+                        ></a></td>
+                    <td><a class="xmotivo" href="#" 
+                        data-type="text"
+                        data-pk="{{ $motivo->id }}" 
+                        data-name="profecional"
+                        data-value="{{ $motivo->profecional }}"
+                        data-title="Ingrese profesional que lo atiende"
+                        ></a></td>
+                    <td><a class="xmotivo" href="#" 
+                        data-type="textarea"
+                        data-pk="{{ $motivo->id }}" 
+                        data-name="comentarios"
+                        data-value="{{ $motivo->comentarios }}"
+                        data-title="Ingrese comentarios"
+                        ></a></td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="col-xs-12">
+        <h4 class="sub-header">
+            <span><i class="fa fa-stethoscope fa-fw"></i></span> <span>Antecedentes Medicos</span>
+        </h4>
+    </div>
+
+    <!-- Medicamentos -->
+    <div class="col-xs-12">
+        <h4 class="sub-header">
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
+               data-target="#modalMedicamento" title="Agregar"> <i class="fa fa-plus"></i></button> 
+            <span>Medicamentos</span>
+        </h4>
+
+        <table class="card table table-colored table-condensed table-borderless table-hover table-striped table-vcenter">
+            <thead>
+                <tr>
+                    <th class="text-center" width="35"><span><i class="fa fa-trash"></i></span></th>
+                    <th>Tipo Medicamento</th>
+                    <th>Medicamento</th>
+                    <th>Dosis</th>
+                    <th>Frecuencia</th>
+                    <th>Duración</th>
+                    <th>Diagnostico</th>
+                    <th>Recetado por</th>
+                    <th>Archivo</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            @if (count($perfil->medicamentos) == 0 )
+                <tr class="text-center">
+                    <td colspan="9"><span>No posee medicamentos agregados</span></td>
+                </tr>
+            @endif
+            @foreach ($perfil->medicamentos as $medicamento)
+                <tr>
+                    <td>
+                        <a href="/perfil/medicamento/{{ $motivo->id }}" 
+                            data-original-title="Eliminar" data-toggle="tooltip" 
+                            class="btn btn-danger btn-xs sweet-danger">
+                        <i class="fa fa-trash"> </i></a>
+                    </td>
+                    <td><a class="xtipo" href="#" 
+                        data-type="select"
+                        data-pk="{{ $medicamento->id }}" 
+                        data-name="id_tipo_medicamento"
+                        data-value="{{ $medicamento->id_tipo_medicamento }}"
+                        data-title="Ingrese Tipo Medicamento"
+                        ></a></td>
+                    <td><a class="xmedico" href="#" 
+                        data-type="text"
+                        data-pk="{{ $medicamento->id }}" 
+                        data-name="nombre"
+                        data-value="{{ $medicamento->nombre }}"
+                        data-title="Ingrese Medicamento"
+                        ></a></td>
+                    <td><a class="xdosis" href="#" 
+                        data-type="number"
+                        data-pk="{{ $medicamento->id }}" 
+                        data-name="dosis"
+                        data-value="{{ $medicamento->dosis }}"
+                        data-title="Ingrese Dosis"
+                        ></a></td>
+                    <td><a class="xmedico" href="#" 
+                        data-type="text"
+                        data-pk="{{ $medicamento->id }}" 
+                        data-name="frecuencia"
+                        data-value="{{ $medicamento->frecuencia }}"
+                        data-title="Ingrese Frecuencia"
+                        ></a></td>
+                    <td><a class="xmedico" href="#" 
+                        data-type="text"
+                        data-pk="{{ $medicamento->id }}" 
+                        data-name="duracion"
+                        data-value="{{ $medicamento->duracion }}"
+                        data-title="Ingrese Duración"
+                        ></a></td>
+                    <td><a class="xmedico" href="#" 
+                        data-type="text"
+                        data-pk="{{ $medicamento->id }}" 
+                        data-name="diagnostico"
+                        data-value="{{ $medicamento->diagnostico }}"
+                        data-title="Ingrese Diagnostico"
+                        ></a></td>
+                    <td><a class="xmedico" href="#" 
+                        data-type="text"
+                        data-pk="{{ $medicamento->id }}" 
+                        data-name="recetado"
+                        data-value="{{ $medicamento->recetado }}"
+                        data-title="Ingrese Recetado por"
+                        ></a></td>
+                    <td class="text-center">
+
+                    @if ($medicamento->file != null)
+                        <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" 
+                            data-target="#modal" 
+                            data-title="{{ $medicamento->file }}"
+                            data-mime="{{ Storage::disk('documento')->mimeType($medicamento->file) }}" 
+                            data-url="{{ route('profile.file', ['file' => $medicamento->file]) }}" 
+                            title="Ver"><i class="fa fa-eye"></i>
+                        </button>
+                        <a class="btn btn-info btn-xs" 
+                            href="{{ route('profile.file', ['file' => $medicamento->file]) }}" 
+                            download="{{ $medicamento->file }}" 
+                            title="Descargar"><i class="fa fa-download"></i>
+                        </a>
+                    @else
+                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" 
+                            data-target="#modalUpload" 
+                            data-id="{{ $medicamento->id }}" 
+                            title="Subir"> <i class="fa fa-upload"></i>
+                        </button>
+                    @endif
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Examenes y estudios -->
+    <div class="col-xs-12">
+        <h4 class="sub-header">
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
+               data-target="#modalAlergia" title="Agregar"> <i class="fa fa-plus"></i></button> 
+            <span>Examenes / Estudios</span>
+        </h4>
+
+        <table class="card table table-colored table-condensed table-borderless table-hover table-striped table-vcenter">
+            <thead>
+                <tr>
+                    <th class="text-center" width="35"><span><i class="fa fa-trash"></i></span></th>
+                    <th>Alergia</th>
+                    <th>Fecha Aparición</th>
+                    <th>Tratamiento</th>
+                    <th>Comentarios</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            @if (count($perfil->motivoSelect(5)->get()) == 0 )
+                <tr class="text-center">
+                    <td colspan="5"><span>No posee alergias agregadas</span></td>
+                </tr>
+            @endif
+            @foreach ($perfil->motivoSelect(5)->get() as $motivo)
+                <tr>
+                    <td>
+                        <a href="/perfil/motivo/{{ $motivo->id }}" 
+                            data-original-title="Eliminar" data-toggle="tooltip" 
+                            class="btn btn-danger btn-xs sweet-danger">
+                        <i class="fa fa-trash"> </i></a>
+                    </td>
+                    <td><a class="xmotivo" href="#" 
+                        data-type="text"
+                        data-pk="{{ $motivo->id }}" 
+                        data-name="tipo"
+                        data-value="{{ $motivo->tipo }}"
+                        data-title="Ingrese Alergia"
+                        ></a></td>
+                    <td><a class="xfecha" href="#" 
+                        data-type="date"
+                        data-pk="{{ $motivo->id }}" 
+                        data-name="fecha"
+                        data-value="{{ $motivo->fecha }}"
+                        data-title="Ingrese Fecha"
+                        ></a></td>
+                    <td><a class="xmotivo" href="#" 
+                        data-type="text"
+                        data-pk="{{ $motivo->id }}" 
+                        data-name="tratamiento"
+                        data-value="{{ $motivo->tratamiento }}"
+                        data-title="Ingrese Tratamiento"
+                        ></a></td>
+                    <td><a class="xmotivo" href="#" 
+                        data-type="textarea"
+                        data-pk="{{ $motivo->id }}" 
+                        data-name="comentarios"
+                        data-value="{{ $motivo->comentarios }}"
+                        data-title="Ingrese comentarios"
+                        ></a></td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ////////////////////////////////////////////////////////////////////// -->
     
     <!-- Modal vacunas -->
     <div class="modal fade" id="modalVacuna" tabindex="-1" role="dialog" >
@@ -1338,6 +1613,290 @@
         </div>
     </div>
 
+    <!-- modal Enfermedades Cronicas -->
+    <div class="modal fade" id="modalEnfermedad" tabindex="-1" role="dialog" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Ingrese Enfermedad Cronica</h4>
+                </div>
+                <div class="modal-body">
+                    {{ Form::open(['route'=>'perfil.motivo', 'class' => 'motivoForm form-horizontal']) }}
+                        <div class="form-group {{ $errors->has('tipo') ? ' has-error' : '' }}">
+                            {{ Form::label('tipo', 'Enfermedad', ['class' => 'col-md-3 control-label']) }}
+                            <div class="col-md-9">
+                                {{ Form::text('tipo', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Alergia', 'required']) }}
+                                @if ($errors->has('tipo'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('tipo') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('fecha') ? ' has-error' : '' }}">
+                            {{ Form::label('fecha', 'Fecha Aparición', ['class' => 'col-md-3 control-label']) }}
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    {{ Form::text('fecha', null , ['class' => 'form-control', 'id' => 'fechaE', 'placeholder' => 'Ingrese fecha aparición de la Enfermedad', 'required']) }}
+                                    <div class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </div>
+                                </div>
+                                @if ($errors->has('fecha'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('fecha') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('tratamiento') ? ' has-error' : '' }}">
+                            {{ Form::label('tratamiento', 'Tratamiento', ['class' => 'col-md-3 control-label']) }}
+                            <div class="col-md-9">
+                                {{ Form::text('tratamiento', null , ['class' => 'form-control', 'required', 'placeholder' => 'Ingrese Tratamiento de la enfermedad']) }}
+                                @if ($errors->has('tratamiento'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('tratamiento') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('frecuencia') ? ' has-error' : '' }}">
+                            {{ Form::label('frecuencia', 'Frecuencia Consulta', ['class' => 'col-md-3 control-label']) }}
+                            <div class="col-md-9">
+                                {{ Form::text('frecuencia', null , ['class' => 'form-control', 'required', 'placeholder' => 'Ingrese frecuencia de consulta medica']) }}
+                                @if ($errors->has('frecuencia'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('frecuencia') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('profecional') ? ' has-error' : '' }}">
+                            {{ Form::label('profecional', 'Profesional / Médico', ['class' => 'col-md-3 control-label']) }}
+                            <div class="col-md-9">
+                                {{ Form::text('profecional', null , ['class' => 'form-control', 'required', 'placeholder' => 'Ingrese Nombre profesional o médico que lo atiende']) }}
+                                @if ($errors->has('profecional'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('profecional') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('comentarios') ? ' has-error' : '' }}">
+                            {{ Form::label('comentarios', 'Comentarios', ['class' => 'col-md-3 control-label']) }}
+                            <div class="col-md-9">
+                                {{ Form::textArea('comentarios', null, ['class' => 'form-control', 'placeholder' => 'Ingrese Comentarios', 'rows' => '5']) }}
+                                @if ($errors->has('comentarios'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('comentarios') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3 col-md-offset-3">
+                                {{ Form::hidden('id_motivo', 10) }}
+                                {{ Form::hidden('id_afiliado', $perfil->id) }}
+                                <button type="submit" class="btn btn-sm btn-success" title="Guardar"><span><i class="fa fa-save"></i></span> Guardar</button>
+                            </div>
+                        </div>
+                    {{ Form::close() }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><span><i class="fa fa-close"></i></span> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal Medicamentos -->
+    <div class="modal fade" id="modalMedicamento" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Ingrese Medicamento</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                    {{ Form::open(['route'=>'perfil.medicamento', 'files' => true, 'id' => 'medicamentoForm']) }}
+                        <div class="col-md-6">
+
+                            <div class="form-group {{ $errors->has('id_tipo_medicamento') ? ' has-error' : '' }}">
+                                {{ Form::label('id_tipo_medicamento', 'Tipo Medicamento', ['class' => 'control-label']) }}
+                                {{ Form::select('id_tipo_medicamento', $tipo, null, ['class' => 'form-control', 'placeholder'=>'Seleccione Tipo Medicamento', 'required']) }}
+                                @if ($errors->has('id_tipo_medicamento'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('id_tipo_medicamento') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <!-- End .form-group  -->
+
+                            <div class="form-group {{ $errors->has('nombre') ? ' has-error' : '' }}">
+                                {{ Form::label('nombre', 'Medicamento', ['class' => 'control-label']) }}
+                                {{ Form::text('nombre', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Medicamento', 'required']) }}
+                                @if ($errors->has('nombre'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('nombre') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                            <div class="form-group {{ $errors->has('dosis') ? ' has-error' : '' }}">
+                                {{ Form::label('dosis', 'Dosis', ['class' => 'control-label']) }}
+                                {{ Form::text('dosis', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Dosis', 'minlength' => '1', 'maxlength' => '5', 'pattern' => '[0-9]+', 'required']) }}
+                                @if ($errors->has('dosis'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('dosis') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                            <div class="form-group {{ $errors->has('frecuencia') ? ' has-error' : '' }}">
+                                {{ Form::label('frecuencia', 'Frecuencia', ['class' => 'control-label']) }}
+                                {{ Form::text('frecuencia', null, ['class' => 'form-control', 'required', 'placeholder' => 'Ingrese frecuencia medicamento']) }}
+                                @if ($errors->has('frecuencia'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('frecuencia') }}</strong>
+                                    </span>
+                                @endif
+                            </div> 
+
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group {{ $errors->has('duracion') ? ' has-error' : '' }}">
+                                {{ Form::label('duracion', 'Duración', ['class' => 'control-label']) }}
+                                {{ Form::text('duracion', null , ['class' => 'form-control', 'required', 'placeholder' => 'Ingrese Duración']) }}
+                                @if ($errors->has('duracion'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('duracion') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                            <div class="form-group {{ $errors->has('diagnostico') ? ' has-error' : '' }}">
+                                {{ Form::label('diagnostico', 'Diagnostico', ['class' => 'control-label']) }}
+                                {{ Form::text('diagnostico', null , ['class' => 'form-control', 'required', 'placeholder' => 'Ingrese Duración']) }}
+                                @if ($errors->has('diagnostico'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('diagnostico') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                            <div class="form-group {{ $errors->has('recetado') ? ' has-error' : '' }}">
+                                {{ Form::label('recetado', 'Recetado por:', ['class' => 'control-label']) }}
+                                {{ Form::text('recetado', null , ['class' => 'form-control', 'required', 'placeholder' => 'Ingrese Nombre que recetó el medicamento']) }}
+                                @if ($errors->has('recetado'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('recetado') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                            <div class="form-group {{ $errors->has('file') ? ' has-error' : '' }}">
+                                {{ Form::label('file', 'Récipe / Informe Medico', ['class' => 'control-label']) }}
+                                    {{ Form::file('file', ['id' => 'file']) }}
+                                <span class="help-block">
+                                        <strong>Permitido: JPG,PNG, JEPG</strong>
+                                </span>
+                                @if ($errors->has('file'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('file') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                {{ Form::hidden('id_afiliado', $perfil->id) }}
+                                <button type="submit" class="btn btn-sm btn-success" title="Guardar"><span><i class="fa fa-save"></i></span> Guardar</button>
+                            </div> 
+                        </div>
+
+                    {{ Form::close() }}
+                    </div>  
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><span><i class="fa fa-close"></i></span> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  El modal para mostrar los archivos -->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal Upload file -->
+    <div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Ingrese Documento</h4>
+                </div>
+                <div class="modal-body">
+                    {{ Form::open(['route'=>'perfil.upload', 'files' => true, 'class' => 'motivoForm form-horizontal']) }}
+                        
+                        <div class="form-group {{ $errors->has('tipo') ? ' has-error' : '' }}">
+                            {{ Form::label('file', 'Informe Medico / Récipe', ['class' => 'col-md-3 control-label']) }}
+                            <div class="col-md-9">
+                                {{ Form::file('file', ['id' => 'files']) }}
+                                <span class="help-block">
+                                    <strong>Permitido: JPG,PNG, JEPG</strong>
+                                </span>
+                                @if ($errors->has('file'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('file') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div id="contId"></div>
+
+                        <div class="form-group">
+                            <div class="col-md-3 col-md-offset-3">
+                                <button type="submit" class="btn btn-sm btn-success" title="Guardar"><span><i class="fa fa-save"></i></span> Guardar</button>
+                            </div>
+                        </div>
+
+                    {{ Form::close() }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><span><i class="fa fa-close"></i></span> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 @push('sub-script')
@@ -1482,7 +2041,6 @@ $(document).ready(function() {
             }
         });
     });
-
     //----------------------------------------------------//
     // para calculo IMC
     $('.xaltura').editable({
@@ -1512,6 +2070,84 @@ $(document).ready(function() {
                 console.log('valor de peso '+ peso +' valor altura '+ altura);
             }
         });
+    });
+
+    /*********************************************************************************/
+    // para editar valores en medicamentos
+    $('.xmedico').editable({
+        validate: function(value) {
+            if($.trim(value) == '') {
+                return 'Valor es Requerido.';
+            }
+        },
+        url:'{{ route('perfil.medicoEditar') }}',
+    });
+    
+    $('.xdosis').editable({
+        validate: function(value) {
+            if($.trim(value) == '') {
+                return 'Valor es requerido.';
+            }
+            if($.isNumeric(value) == '') {
+              return 'Solo se permiten numeros.';
+            }
+        },
+        url:'{{ route('perfil.medicoEditar') }}',
+    });
+
+    $('.xtipo').editable({
+        validate: function(value) {
+            if($.trim(value) == '') {
+                return 'Valor es requerido.';
+            }
+        },
+        source: {!! $tipom !!}, 
+        url:'{{ route('perfil.medicoEditar') }}',
+    });
+
+    /******************************************************************************/
+    // para editar valores en estudios y exaamenes
+    $('.xestudio').editable({
+        validate: function(value) {
+            if($.trim(value) == '') {
+                return 'Valor es Requerido.';
+            }
+        },
+        url:'{{ route('perfil.medicoEditar') }}',
+    });
+
+    // Show documento
+    $('#modal').on('show.bs.modal', function (event) { // id of the modal with event
+        var button = $(event.relatedTarget);// Button that triggered the modal
+        var title = button.data('title'); // Extract info from data-* attributes
+        var mime = button.data('mime');
+        var url = button.data('url');
+     
+        var titulo = 'Documento';
+
+        if (mime == 'application/pdf' ) 
+        {
+            var content = '<p><embed width="100%" height="400" src="'+url+'"></embed></p>';
+        }else
+        {
+            var content = '<p class="text-center"><img class="img-responsive" src="'+url+'" alt=""></p>';
+        }
+
+      // Update the modal's content.
+      var modal = $(this);
+      modal.find('.modal-title').text(titulo);
+      modal.find('.modal-body').html(content);
+    });
+
+    // Show documento
+    $('#modalUpload').on('show.bs.modal', function (event) { // id of the modal with event
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var content = '<input name="id" type="hidden" value="'+id+'">';
+
+        // Update the modal's content.
+        var modal = $(this);
+         modal.find('.modal-body #contId').append(content);
     });
 
 });

@@ -72,6 +72,20 @@ class User extends Authenticatable{
         'type' => 'required',
         'user' => 'required|unique:users'
     ];
+
+    // Formato para utilizar editable plugin
+    public static function editableFormat($array)
+    {
+        // recibe el array 
+        foreach ($array as $key => $value) {
+            //paso a un array con nuevos indices
+            $result[] = ["value" => $key , "text" => $value];
+        }
+        // Paso los valores a formato json
+        $result = json_encode($result);
+        // retorno el array
+        return $result;
+    }
     
     /**
      * Get the Type User.
