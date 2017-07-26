@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Models\AcAfiliado;
+use App\Models\AcClave;
 use App\Http\Controllers\Controller;
 
 class SelectController  extends Controller{
@@ -228,12 +229,36 @@ class SelectController  extends Controller{
                 $coberturas = $coberturas->where('ac_procedimientos_medicos.codigo_especialidad',"<>",43);
             }
            
-        }
-        
+        } 
         
    //     return "hola11";
         return response()->json($coberturas->pluck('especialidad','codigo_especialidad')); 
     }
     
     
+    
+    public function getHistorico()
+    {
+        $user = $user = \Auth::user();
+        $regUser = AcAfiliado::findOrFail($user->detalles_usuario_id);
+        $nuevafecha = strtotime ( '-6 month' , strtotime ( date("Y-m-d") ) ) ;
+        $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+        $oClave = new AcClave();
+        $oClave->afiliado =$regUser->cedula;
+        $oClave->fecha=$nuevafecha;
+        $oClave->rama=\Input::get('tipo');
+        $rsHis = $oClave->getHistoricoCitas();   
+        if($rsHis!="0")
+        {
+            return response()->json($rsHis);
+        }
+        else
+        {
+            return "0";
+        }
+        //     return "hola11";
+        
+    }
+    
+
 }

@@ -455,6 +455,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('selectEspecialidades', 'Ajax\SelectController@getEspecialidades');
     Route::post('selectProveedores'   , 'Ajax\SelectController@getProveedores');
     Route::post('getTitular'          , 'Ajax\SelectController@getTitular');
+    Route::post('selectHistorico',      'Ajax\SelectController@getHistorico');
     
     Route::get('/server/php/', function () {
         return view('server.php.index.php');

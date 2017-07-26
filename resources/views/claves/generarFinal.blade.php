@@ -126,7 +126,7 @@
             @else
             <div id='div_proveedor'>
                 <!--{!! Form::select('codigo_proveedor',[''=>'Seleccione una opciÃ³n'],null, ['class' => 'form-control']) !!}-->
-                {!! Form::text('codigo_proveedor', null, ['class' => 'form-control']) !!}
+                {!! Form::text('codigo_proveedor', null, ['class' => 'form-control','id'=>'codigo_proveedor']) !!}
                 {!! Form::hidden('codigo_proveedor_creador', null, ['id' => 'codigo_proveedor_creador', 'required' => 'required']) !!}
             </div>
             @endif
@@ -205,7 +205,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="historicoCitas">
         
 		
 
@@ -304,27 +304,46 @@
 			{
 				//alert("llegate");
 				$('#myModal').modal("show");
+				tipo = $("[name='tipoatencion']").val();
+				
 
 				var data = {
-                        '_token': $('[name="_token"]').val() 
+                        '_token': $('[name="_token"]').val(),
+                        'tipo':tipo 
                     };
                     
                     var select = "";
                     $.post("{{url('selectHistorico')}}", data, function(data,select){
-                        if(data.success==1)
+				
+                        if(data!="0")
                         {
-                        	select = "<select class='form-control' id='codigo_especialidad' name='codigo_especialidad'>\n\
-                                <option selected='selected' value=''>Selecione una opciÃ³n</option>";
-                                $.each( data, function( key, val ) {
-                                    select = select + "<option value='" + key + "'>" + val + "</option>";
-                                  });
-                    		select = select + "</select>";
+                        	table = "<table class='table table responsive' id='table1' name='table1'>\n\
+                                <tr><td>Fecha</td><td>Especialidad</td><td>Servicio</td><td>Motivo</td></tr>";
+                                
+                                $.each( data, function(k,key) {
+                                    //alert(key);
+                                	table = table + "<tr data-esp='"+key.codigo_especialidad+"' data-prov='"+key.codigo_proveedor+"' data-descesp='"+key.especialidad+"' data-descprov='"+key.proveedor+"' class='tr1'><td>"+key.fecha_cita+"</td><td>"+key.especialidad+"</td><td>"+key.servicio+"</td><td>"+key.proveedor+"</td></tr>";		
+                                });
+                                table = table + "</table>";
                          }
                         else
                         {
-                            select  = "No tiene";
+                            table  = "<p>No existe registro de una consulta de 1era. Vez con especialista de primer nivel atención médica de nuestra red. Por favor gestionar cita de primer nivel de atención para su evaluación previo a la atención de un especialista de segundo nivel de atención</p>";
                         }
-                        $("#div_especialidad").html(select);
+                        
+                        $("#historicoCitas").html(table);
+
+                        $('.tr1').on("click",function(){
+							//alert(this('data').esp);
+							
+							$("#codigo_especialidad").empty();
+							esp1="<option value='"+$(this).data('esp')+"'>"+$(this).data('descesp')+"</option>";
+							$("#codigo_especialidad").append(esp1);
+							 $( "#codigo_proveedor" ).val($(this).data('descprov'));
+			                 $( "#codigo_proveedor_creador" ).val($(this).data('prov'));
+			                 $('#myModal').modal('hide');
+							
+						})
 
                 });
 			}

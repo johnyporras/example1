@@ -49,26 +49,29 @@ class AcClave extends Model {
     }
     
     
-    public function getClaveAfiliado()
+    public function getHistoricoCitas()
     {
         $res = $this->select("ac_claves.id","ac_claves.clave","ac_claves.observaciones","ac_claves.codigo_contrato","ac_afiliados.nombre",
             "ac_afiliados.apellido","cedula_afiliado","ac_afiliados.email as emailafiliado",
-            "ac_claves.motivo","ac_claves.costo_total"
+            "ac_claves.motivo","ac_claves.costo_total","ac_proveedores_extranet.codigo_proveedor","ac_proveedores_extranet.nombre as proveedor"
             ,"ac_claves.telefono","ac_claves_detalle.detalle","ac_servicios_extranet.descripcion as servicio",
-            "ac_especialidades_extranet.descripcion as especialidad","ac_procedimientos_medicos.tipo_examen as procedimiento")
+            "ac_especialidades_extranet.descripcion as especialidad","ac_especialidades_extranet.codigo_especialidad","ac_procedimientos_medicos.tipo_examen as procedimiento")
             ->selectRaw("to_char(ac_claves.fecha_cita, 'dd/MM/YYYY') as fecha_cita")
             ->join("ac_claves_detalle","ac_claves.id","=","ac_claves_detalle.id_clave")
             ->join("ac_afiliados","ac_claves.cedula_afiliado","=","ac_afiliados.cedula")
             ->join("ac_servicios_extranet","ac_claves_detalle.codigo_servicio","=","ac_servicios_extranet.id")
             ->join("ac_especialidades_extranet","ac_claves_detalle.codigo_especialidad","=","ac_especialidades_extranet.codigo_especialidad")
             ->join("ac_procedimientos_medicos","ac_claves_detalle.id_procedimiento","=","ac_procedimientos_medicos.id")
+            ->join("ac_proveedores_extranet","ac_claves_detalle.codigo_proveedor","=","ac_proveedores_extranet.codigo_proveedor")
             ->where("ac_claves.cedula_afiliado","=",$this->afiliado)
-            ->where("ac_claves.fechacita","=",$this->fecha)
-            ->where("ac_claves_detalle.detalle","=","2")
+            ->where("ac_claves.fecha_cita",">",$this->fecha)
+            //->where("ac_claves.estatus_clave","=",7)
+            ->where("ac_claves_detalle.detalle","=","1")
+            ->orderBy("ac_claves.fecha_cita","desc")
             ->get();
             if($res->count()>0)
             {
-                return $res[0];
+                return $res;
             }
             else
             {
