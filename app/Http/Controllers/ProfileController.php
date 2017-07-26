@@ -15,14 +15,14 @@ use App\Models\MotivoDetalle;
 use App\Models\Medicamento;
 use App\Models\TipoMedicamento;
 use Auth;
+use DB;
+use Hash;
 use Storage;
 
 class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {   
@@ -43,10 +43,16 @@ class ProfileController extends Controller
         $tipom = User::editableFormat($tipo);
         // Tipo documentos formato json
         $tipoDoc = User::editableFormat($acTipoDoc);
+        //Preguntas 
+        $preguntas1 = DB::table('preguntas')->take(10)->orderBy('id','asc')->pluck('pregunta', 'pregunta');
+        $preguntas2 = DB::table('preguntas')->take(10)->orderBy('id','desc')->pluck('pregunta', 'pregunta');
         // Retorno vista
-        return view('profile.index', compact('usuario', 'perfil', 'estados', 'acTipoDoc', 'tipoDoc', 'tipo', 'tipom')); 
+        return view('profile.index', compact('usuario', 'perfil', 'estados', 'acTipoDoc', 'tipoDoc', 'tipo', 'tipom', 'preguntas1', 'preguntas2')); 
     }
 
+    /**
+     * Cambio imagen del perfil
+     */
     public function image(Request $request)
     {
         if ($request->hasFile('image')) 
@@ -62,7 +68,6 @@ class ProfileController extends Controller
             $filename = 'avatar_'.$usuario->id. time().'.'.$file->getClientOriginalExtension();
             // Guardo la imagen en el directorio 
             Storage::disk('avatar')->put($filename, file_get_contents($file));
-
             // Guardo el registro en la base de datos
             $usuario->imagen_perfil = $filename;
             $usuario->save();
@@ -74,9 +79,6 @@ class ProfileController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function editar(Request $request)
     {
@@ -96,10 +98,6 @@ class ProfileController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function contacto(Request $request)
     {
@@ -111,10 +109,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Edit a newly created resource in storage.
      */
     public function contactoEditar(Request $request)
     {
@@ -134,9 +129,6 @@ class ProfileController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function contactoDelete($id)
     {
@@ -150,10 +142,6 @@ class ProfileController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function motivo(Request $request)
     {
@@ -166,9 +154,6 @@ class ProfileController extends Controller
 
     /**
      * edit resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function motivoEditar(Request $request)
     {
@@ -188,9 +173,6 @@ class ProfileController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function motivoDelete($id)
     {
@@ -204,10 +186,6 @@ class ProfileController extends Controller
 
     /**
      * store the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function medicamento(Request $request)
     {
@@ -234,9 +212,6 @@ class ProfileController extends Controller
 
     /**
      * edit resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function medicamentoEditar(Request $request)
     {
@@ -256,25 +231,76 @@ class ProfileController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function medicamentoDelete($id)
     {
         // Selecciono medicamento para eliminar
-        $detalle = MotivoDetalle::findOrfail($id);
-        $detalle->delete();
+        $medicamento = Medicamento::findOrfail($id);
+        $medicamento->delete();
 
-        toast()->error($detalle->motivo->nombre.' - '.$detalle->tipo.' eliminado correctamente', 'Información:');
+        toast()->error($medicamento->nombre.' eliminado correctamente', 'Información:');
+        return redirect()->route('perfil.index');
+    }
+
+    /**
+     * store the specified resource in storage.
+     */
+    public function documento(Request $request)
+    {
+        // Guardo el documento
+        $documento = AcDocumento::create($request->all());
+        // Guardo Cedula fallecido
+        if ($request->hasFile('file'))
+        {
+            // guardo en una variable la imagen
+            $file = $request->file('file');
+            // Cambio nombre de la imagen
+            $filename = 'doc_'.$documento->id. time().'.'.$file->getClientOriginalExtension();
+            // Guardo la imagen en el directorio 
+            Storage::disk('documento')->put($filename, file_get_contents($file));
+            // Guardo el registro en la base de datos
+            $documento->file = $filename;
+            $documento->save();
+        }
+
+        toast()->success('Examen / Estudio Cargado correctamente', 'Información:');
+        return redirect()->route('perfil.index');
+    }
+
+    /**
+     * edit resource in storage.
+     */
+    public function documentoEditar(Request $request)
+    {
+        if ($request->ajax())
+        {
+            // Seleccion afiliado y actualizo el valor
+            $update = AcDocumento::findOrFail($request->pk);
+            $update->update([$request->name => $request->value]);
+            
+            if ($update){
+                return response()->json(['status'=> true ]);
+            } else {
+                return response()->json(['status'=> false ]);
+            } 
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function documentoDelete($id)
+    {
+        // Selecciono medicamento para eliminar
+        $documento = AcDocumento::findOrfail($id);
+        $documento->delete();
+
+        toast()->error('Examen / Estudio eliminado correctamente', 'Información:');
         return redirect()->route('perfil.index');
     }
 
     /**
      * Calculo IMC
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function calculo(Request $request)
     {
@@ -293,9 +319,6 @@ class ProfileController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function file($file)
     {
@@ -314,32 +337,89 @@ class ProfileController extends Controller
 
     /**
      * Upload documento
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function upload(Request $request)
     {
-        // Selecciono el medicamento
-        $medicamento = Medicamento::findOrFail($request->id);
+
+        if ($request->type == 'medicamento') {
+            $result = Medicamento::findOrFail($request->id);
+            $prefix = 'recipe';
+        } elseif ($request->type == 'documento') {
+            $result = AcDocumento::findOrFail($request->id);
+            $prefix = 'doc';
+        }
 
         // Guardo Cedula fallecido
         if ($request->hasFile('file')) 
         {
             // Elimino archivo anterior
-            Storage::disk('documento')->delete($medicamento->file);
+            Storage::disk('documento')->delete($result->file);
             // guardo en una variable la imagen
             $file = $request->file('file');
             // Cambio nombre de la imagen
-            $filename = 'recipe_'.$medicamento->id. time().'.'.$file->getClientOriginalExtension();
+            $filename = $prefix.'_'.$result->id. time().'.'.$file->getClientOriginalExtension();
             // Guardo la imagen en el directorio 
             Storage::disk('documento')->put($filename, file_get_contents($file));
             // Guardo el registro en la base de datos
-            $medicamento->file = $filename;
-            $medicamento->save();
+            $result->file = $filename;
+            $result->save();
         }
         toast()->success('Documento cargado correctamente', 'Información:');
         return redirect()->route('perfil.index'); 
     }
-    
+
+    /**
+     * Change Password and Security questions
+     */
+    public function change(Request $request)
+    {
+        $this->validate($request, [
+            'current_password' => 'required'
+        ]);
+
+        if(Auth::Check())
+        {
+            // Clave Actual
+            $current_password = Auth::User()->password; 
+
+            //Valido si la clave actual coincide con la clave ingresada          
+            if (Hash::check($request->current_password, $current_password))
+            {        
+                // Selecciono el usuario actual
+                $user = User::findOrFail(Auth::User()->id);
+                // Cambio Contraseña
+                if (isset($request->password))
+                {
+                    $user->password = bcrypt($request->password);
+                    $user->save(); 
+                }
+                // Cambio  Clave telefonica
+                if (isset($request->clave))
+                {
+                    $user->clave = bcrypt($request->clave);
+                    $user->save(); 
+                }
+                // Cambio Pregunta y respuesta 1
+                if (isset($request->pregunta_1))
+                {
+                    $user->pregunta_1 = $request->pregunta_1;
+                    $user->respuesta_1 = bcrypt($request->respuesta_1);
+                    $user->save(); 
+                }
+                // Cambio Pregunta y respuesta 2
+                if (isset($request->pregunta_2))
+                {
+                    $user->pregunta_2 = $request->pregunta_2;
+                    $user->respuesta_2 = bcrypt($request->respuesta_2);
+                    $user->save(); 
+                }
+
+                toast()->info('Cambios realizados Correctamente', 'Información:');
+                return redirect()->route('perfil.index');
+
+            } else { 
+                return redirect()->route('perfil.index')->with('error', 'Estas credenciales no coinciden con nuestros registros.');
+            }
+        }  
+    }
 }
