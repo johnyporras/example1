@@ -31,6 +31,7 @@
     {!! Form::label('Tipo', 'Tipo: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-3">
             {{ Form::radio('tipoatencion', '2', true,['id' => 'tipoatencion']) }}M&eacute;dico
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{ Form::radio('tipoatencion', '1',false,['id' => 'tipoatencion']) }}Odontol&oacute;gico
         </div>
         {!! Form::label('fecha_cita', 'Fecha de AtenciÃ³n: ', ['class' => 'col-sm-2 control-label']) !!}
@@ -46,9 +47,9 @@
     <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
     {!! Form::label('Estado', 'Estado: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-3">
-             <select class="form-control" name="estado">
+             <select class="form-control" name="estado" id="estado">
                 @foreach($items as $item)
-                  <option value="{{$item->es_id}}">{{$item->es_desc}}</option>
+                  <option value="{{$item->id}}">{{$item->estado}}</option>
                 @endforeach
               </select>
                         
@@ -56,7 +57,7 @@
         </div>
         {!! Form::label('ciudad', 'Ciudad: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-3">
-            {!! Form::text('fecha_cita', null, ['class' => 'form-control input-sm','onchange'=>"validarFecha(this.value)", 'required' => 'required','placeholder' => 'Ciudad']) !!}
+            {!! Form::text('ciudad', null, ['class' => 'form-control input-sm','onchange'=>"validarFecha(this.value)", 'required' => 'required','placeholder' => 'Ciudad','id'=>'ciudad']) !!}
             {!! $errors->first('fecha_cita', '<p class="help-block">:message</p>') !!}
         </div>
        
@@ -79,6 +80,18 @@
             {!! $errors->first('telefono', '<p class="help-block">:message</p>') !!}
         </div>
     </div>
+    
+     
+    <div class="form-group">
+    
+    	 {!! Form::label('turno', 'Turno: ', ['class' => 'col-sm-1 col-sm-offset-1 control-label']) !!}
+        <div class="col-sm-2">
+            {!! Form::select('turno', ['AM' => 'AM', 'PM' => 'PM','AMBOS' =>'AMBOS'],['id'=>'turno']) !!}
+            {!! $errors->first('turno', '<p class="help-block">:message</p>') !!}
+        </div>
+    </div>
+    
+    
     
     <div class="form-group {{ $errors->has('motivo') ? 'has-error' : ''}}">
         {!! Form::label('motivo', 'Motivo: ', ['class' => 'col-sm-2 control-label']) !!}
@@ -328,7 +341,7 @@
                          }
                         else
                         {
-                            table  = "<p>No existe registro de una consulta de 1era. Vez con especialista de primer nivel atención médica de nuestra red. Por favor gestionar cita de primer nivel de atención para su evaluación previo a la atención de un especialista de segundo nivel de atención</p>";
+                            table  = "<p>No existe registro de una consulta de 1era. Vez con especialista de primer nivel atenci&oacute;n m&eacute;dica de nuestra red. Por favor gestionar cita de primer nivel de atenci&oacute;n para su evaluaci&oacute;n previo a la atenci&oacute;n de un especialista de segundo nivel de atenci&oacute;n</p>";
                         }
                         
                         $("#historicoCitas").html(table);
@@ -533,6 +546,10 @@
                     $("#resultproc").html("No puede agregar mÃ¡s de  un procedimientos.");
                     return false;
                 }
+
+                alert($('#estado').val());
+                alert($('#ciudad').val());
+                alert($('#turno').val());
                 if($('#codigo_especialidad').val() !== "" && $('#codigo_servicio').val() !== "" && $('#procedimiento_medico').val() !== "" && $('#codigo_proveedor_creador').val() !== ""){
                     var especialidad = "<input type='hidden' value='"+ $('#codigo_especialidad').val() +"' name='id_especialidad" + x +"' id='id_especialidad" + x +"'>";
                     var servicio     = "<input type='hidden' value='"+ $('#codigo_servicio').val() +"' name='id_servicio" + x +"' id='id_servicio" + x +"'>";
@@ -540,6 +557,9 @@
                     var proveedor    = "<input type='hidden' value='"+ $('#codigo_proveedor_creador').val() +"' name='id_proveedor" + x +"'>";
                     var proveedor2    = "<input type='hidden' value='"+ $('#codigo_proveedor_creador2').val() +"' name='id_proveedor2" + x +"'>";
                     var detalle      = "<input type='hidden' value='"+ $('#detalle').val() +"' name='detalle" + x +"'>";
+                    var estado      = "<input type='hidden' value='"+ $('#estado').val() +"' name='estado" + x +"'>";
+                    var ciudad      = "<input type='hidden' value='"+ $('#ciudad').val() +"' name='ciudad" + x +"'>";
+                    var turno      = "<input type='hidden' value='"+ $('#turno').val() +"' name='turno" + x +"'>";
                     proveedorX       = $('#codigo_proveedor_creador').val();
                     $('#procedimientos').append("<tr class='fila" + x +"'><td>"+$("#codigo_servicio option:selected").text()+"</td>"+
                                                 "<td>"+$("#codigo_especialidad option:selected").text()+"</td>"+
@@ -547,7 +567,7 @@
                                                 "<td>"+$("#codigo_proveedor").val()+"</td>"+
                                                 "<td><button type='button' class='btn btn-sm btn-danger btn-del-procedimiento'"+
                                                 ">Quitar</button></td>"
-                                                +especialidad+servicio+tratamiento+proveedor+proveedor2+detalle+"</tr>");
+                                                +especialidad+servicio+tratamiento+proveedor+proveedor2+detalle+estado+ciudad+turno+"</tr>");
                     x++;
                     if($('#codigo_servicio :selected').val() != 2 && $('#codigo_servicio :selected').val() != 3){ // Si no es laboratorio
                         if($('#codigo_servicio :selected').val() == 1){

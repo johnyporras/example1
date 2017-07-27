@@ -126,6 +126,9 @@ class ClaveController extends Controller{
                 $clavesDetalle->costo                = $monto[$i];
                 $clavesDetalle->codigo_proveedor     = $request->input(['id_proveedor'.$i]);
                 $clavesDetalle->detalle              = $request->detalle_servicio;
+                $clavesDetalle->ciudad     = $request->input(['ciudad'.$i]);
+                $clavesDetalle->estado     = $request->input(['estado'.$i]);
+                $clavesDetalle->turno     = $request->input(['turno'.$i]);
                 $proveedor1 = $request->input(['id_proveedor'.$i]);
                 $proveedor2 = $request->input(['id_proveedor2'.$i]);
                 $clavesDetalle->estatus              = 1 /* Pendiente de Atencion*/;
@@ -481,7 +484,7 @@ class ClaveController extends Controller{
                 	$afiliadoIni->cedula=0;
                     //dd(get_class_methods($e)); // lists all available methods for exception object
                     $tipoAfiliado = \App\Models\AcTipoAfiliado::pluck('nombre', 'id')->toArray();
-                    $estado = \App\Models\AcEstado::pluck('es_desc', 'es_id')->toArray();
+                    $estado = \App\Models\AcEstado::pluck('estado', 'id')->toArray();
                     $aseguradora = \App\Models\AcAseguradora::pluck('nombre', 'codigo_aseguradora')->toArray();
                 }
                 $contratos = DB::table('ac_cuenta')

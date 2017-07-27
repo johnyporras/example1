@@ -66,7 +66,7 @@ class AcClave extends Model {
             ->where("ac_claves.cedula_afiliado","=",$this->afiliado)
             ->where("ac_claves.fecha_cita",">",$this->fecha)
             //->where("ac_claves.estatus_clave","=",7)
-            ->where("ac_claves_detalle.detalle","=","1")
+            ->where("ac_claves_detalle.detalle","=","2")
             ->orderBy("ac_claves.fecha_cita","desc")
             ->get();
             if($res->count()>0)
