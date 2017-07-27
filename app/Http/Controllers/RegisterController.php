@@ -310,8 +310,10 @@ class RegisterController extends Controller
         }else{
 
             if(Session::get('afiliado')){
-
+                // Selecciono el lusuario
                 $user = User::where('user','=', Session::get('afiliado')->email )->first();
+                // Selecciono tipo de usuario dependiento del producto de la cuenta
+                $typeUser = (Session::get('cuenta')->id_producto == 1)?5:8;
 
                 if($user == null){
                     // Guardo el nombre del usuario
@@ -326,7 +328,7 @@ class RegisterController extends Controller
                                     'password' => bcrypt($request->password),
                                     'clave'    => bcrypt($request->clave),
                                     'department' => 'cliente',
-                                    'type'       => 5,
+                                    'type'       => $typeUser,
                                     'active'     => false,
                                     'pregunta_1'  => $request->pregunta1,
                                     'respuesta_1' => bcrypt($request->respuesta1),

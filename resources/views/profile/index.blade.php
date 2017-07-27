@@ -36,6 +36,16 @@
 
 @section('content')
 <div class="col-xs-12">
+
+    @if (Session::has('error'))
+        <div id="result" class="alert alert-danger">
+            <p><i class="fa fa-exclamation-triangle"></i> <span> {{ Session::get('error') }} </span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </p>
+        </div>
+    @endif
+
     <!-- Example Block -->
     <div class="block full">
 
@@ -135,6 +145,14 @@ $(document).ready(function() {
 
     /*Para subir files*/
     $('#files').fileinput({
+        language: 'es',
+        showUpload: false,
+        removeClass: 'btn btn-danger',
+        allowedFileExtensions : ['jpg', 'jpeg', 'png'],
+    });
+
+    /*Para subir files*/
+    $('#filed').fileinput({
         language: 'es',
         showUpload: false,
         removeClass: 'btn btn-danger',

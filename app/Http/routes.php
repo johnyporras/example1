@@ -281,6 +281,21 @@ Route::group(['middleware' => ['auth']], function () {
         'as'   => 'perfil.medicoDelete' 
     ]);
 
+    Route::post('perfil/documento', [
+        'uses' => 'ProfileController@documento',
+        'as'   => 'perfil.documento' 
+    ]);
+
+    Route::post('perfil/documento/edit', [
+        'uses' => 'ProfileController@documentoEditar',
+        'as'   => 'perfil.documentoEditar' 
+    ]);
+
+    Route::get('perfil/documento/{id}', [
+        'uses' => 'ProfileController@documentoDelete',
+        'as'   => 'perfil.documentoDelete' 
+    ]);
+
     //ruta para descargar archivos modulo funerario
     Route::get('file/{file}', [
         'uses' => 'ProfileController@file',
@@ -290,6 +305,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('perfil/upload', [
         'uses' => 'ProfileController@upload',
         'as'   => 'perfil.upload' 
+    ]);
+
+    Route::post('perfil/change', [
+        'uses' => 'ProfileController@change',
+        'as'   => 'perfil.change' 
+    ]);
+
+    Route::post('perfil/codigo', [
+        'uses' => 'ProfileController@codigo',
+        'as'   => 'perfil.codigo' 
     ]);
 
 });

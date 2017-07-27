@@ -895,7 +895,7 @@
             @foreach ($perfil->medicamentos as $medicamento)
                 <tr>
                     <td>
-                        <a href="/perfil/medicamento/{{ $motivo->id }}" 
+                        <a href="/perfil/medicamento/{{ $medicamento->id }}" 
                             data-original-title="Eliminar" data-toggle="tooltip" 
                             class="btn btn-danger btn-xs sweet-danger">
                         <i class="fa fa-trash"> </i></a>
@@ -950,7 +950,6 @@
                         data-title="Ingrese Recetado por"
                         ></a></td>
                     <td class="text-center">
-
                     @if ($medicamento->file != null)
                         <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" 
                             data-target="#modal" 
@@ -967,7 +966,8 @@
                     @else
                         <button type="button" class="btn btn-success btn-xs" data-toggle="modal" 
                             data-target="#modalUpload" 
-                            data-id="{{ $medicamento->id }}" 
+                            data-id="{{ $medicamento->id }}"
+                            data-tipo="medicamento"  
                             title="Subir"> <i class="fa fa-upload"></i>
                         </button>
                     @endif
@@ -982,7 +982,7 @@
     <div class="col-xs-12">
         <h4 class="sub-header">
             <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
-               data-target="#modalAlergia" title="Agregar"> <i class="fa fa-plus"></i></button> 
+               data-target="#modalEstudio" title="Agregar"> <i class="fa fa-plus"></i></button> 
             <span>Examenes / Estudios</span>
         </h4>
 
@@ -990,55 +990,63 @@
             <thead>
                 <tr>
                     <th class="text-center" width="35"><span><i class="fa fa-trash"></i></span></th>
-                    <th>Alergia</th>
-                    <th>Fecha Aparición</th>
-                    <th>Tratamiento</th>
-                    <th>Comentarios</th>
+                    <th>Tipo</th>
+                    <th>Detalle</th>
+                    <th class="text-center">Archivo</th>
                 </tr>
             </thead>
             <tbody>
 
-            @if (count($perfil->motivoSelect(5)->get()) == 0 )
+            @if (count($perfil->documentos) == 0 )
                 <tr class="text-center">
-                    <td colspan="5"><span>No posee alergias agregadas</span></td>
+                    <td colspan="4"><span>No posee valores agregados</span></td>
                 </tr>
             @endif
-            @foreach ($perfil->motivoSelect(5)->get() as $motivo)
+            @foreach ($perfil->documentos as $documento)
                 <tr>
                     <td>
-                        <a href="/perfil/motivo/{{ $motivo->id }}" 
+                        <a href="/perfil/documento/{{ $documento->id }}" 
                             data-original-title="Eliminar" data-toggle="tooltip" 
                             class="btn btn-danger btn-xs sweet-danger">
                         <i class="fa fa-trash"> </i></a>
                     </td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xtype" href="#" 
+                        data-type="select"
+                        data-pk="{{ $documento->id }}" 
+                        data-name="id_tipo_documento"
+                        data-value="{{ $documento->id_tipo_documento }}"
+                        data-title="Ingrese Tipo"
+                        ></a></td>
+                    <td><a class="xdocumento" href="#" 
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
-                        data-name="tipo"
-                        data-value="{{ $motivo->tipo }}"
-                        data-title="Ingrese Alergia"
+                        data-pk="{{ $documento->id }}" 
+                        data-name="detalle"
+                        data-value="{{ $documento->detalle }}"
+                        data-title="Ingrese Detalle"
                         ></a></td>
-                    <td><a class="xfecha" href="#" 
-                        data-type="date"
-                        data-pk="{{ $motivo->id }}" 
-                        data-name="fecha"
-                        data-value="{{ $motivo->fecha }}"
-                        data-title="Ingrese Fecha"
-                        ></a></td>
-                    <td><a class="xmotivo" href="#" 
-                        data-type="text"
-                        data-pk="{{ $motivo->id }}" 
-                        data-name="tratamiento"
-                        data-value="{{ $motivo->tratamiento }}"
-                        data-title="Ingrese Tratamiento"
-                        ></a></td>
-                    <td><a class="xmotivo" href="#" 
-                        data-type="textarea"
-                        data-pk="{{ $motivo->id }}" 
-                        data-name="comentarios"
-                        data-value="{{ $motivo->comentarios }}"
-                        data-title="Ingrese comentarios"
-                        ></a></td>
+                    <td class="text-center">
+                    @if ($documento->file != null)
+                        <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" 
+                            data-target="#modal" 
+                            data-title="{{ $documento->file }}"
+                            data-mime="{{ Storage::disk('documento')->mimeType($documento->file) }}" 
+                            data-url="{{ route('profile.file', ['file' => $documento->file]) }}" 
+                            title="Ver"><i class="fa fa-eye"></i>
+                        </button>
+                        <a class="btn btn-info btn-xs" 
+                            href="{{ route('profile.file', ['file' => $documento->file]) }}" 
+                            download="{{ $documento->file }}" 
+                            title="Descargar"><i class="fa fa-download"></i>
+                        </a>
+                    @else
+                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" 
+                            data-target="#modalUpload" 
+                            data-id="{{ $documento->id }}"
+                            data-tipo="documento" 
+                            title="Subir"> <i class="fa fa-upload"></i>
+                        </button>
+                    @endif
+                    </td>
                 </tr>
             @endforeach
             </tbody>
@@ -1837,6 +1845,69 @@
         </div>
     </div>
 
+    <!-- modal estudios / Examenes -->
+    <div class="modal fade" id="modalEstudio" tabindex="-1" role="dialog" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Ingrese Examen / Estudio</h4>
+                </div>
+                <div class="modal-body">
+                    {{ Form::open(['route'=>'perfil.documento', 'files' => true, 'class' => 'motivoForm form-horizontal']) }}
+                        
+                        <div class="form-group {{ $errors->has('id_tipo_documento') ? ' has-error' : '' }}">
+                            {{ Form::label('id_tipo_documento', 'Tipo', ['class' => 'col-md-3 control-label']) }}
+                            <div class="col-md-9">
+                                {{ Form::select('id_tipo_documento', $acTipoDoc, null, ['class' => 'form-control', 'placeholder'=>'Seleccione Tipo', 'required']) }}
+                                @if ($errors->has('id_tipo_documento'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('id_tipo_documento') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('detalle') ? ' has-error' : '' }}">
+                            {{ Form::label('detalle', 'Detalle', ['class' => 'col-md-3 control-label']) }}
+                            <div class="col-md-9">
+                                {{ Form::text('detalle', null , ['class' => 'form-control', 'required', 'placeholder' => 'Ingrese Detalle']) }}
+                                @if ($errors->has('detalle'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('detalle') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('file') ? ' has-error' : '' }}">
+                            {{ Form::label('file', 'Documento', ['class' => 'col-md-3 control-label']) }}
+                            <div class="col-md-9">
+                                {{ Form::file('file', ['id' => 'filed']) }}
+                                @if ($errors->has('file'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('file') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3 col-md-offset-3">
+                                {{ Form::hidden('id_afiliado', $perfil->id) }}
+                                <button type="submit" class="btn btn-sm btn-success" title="Guardar"><span><i class="fa fa-save"></i></span> Guardar</button>
+                            </div>
+                        </div>
+
+                    {{ Form::close() }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><span><i class="fa fa-close"></i></span> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!--  El modal para mostrar los archivos -->
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" >
         <div class="modal-dialog">
@@ -2107,14 +2178,25 @@ $(document).ready(function() {
 
     /******************************************************************************/
     // para editar valores en estudios y exaamenes
-    $('.xestudio').editable({
+    $('.xdocumento').editable({
         validate: function(value) {
             if($.trim(value) == '') {
                 return 'Valor es Requerido.';
             }
         },
-        url:'{{ route('perfil.medicoEditar') }}',
+        url:'{{ route('perfil.documentoEditar') }}',
     });
+
+    $('.xtype').editable({
+        validate: function(value) {
+            if($.trim(value) == '') {
+                return 'Valor es requerido.';
+            }
+        },
+        source: {!! $tipoDoc !!}, 
+        url:'{{ route('perfil.documentoEditar') }}',
+    });
+    /******************************************************************************/
 
     // Show documento
     $('#modal').on('show.bs.modal', function (event) { // id of the modal with event
@@ -2133,7 +2215,7 @@ $(document).ready(function() {
             var content = '<p class="text-center"><img class="img-responsive" src="'+url+'" alt=""></p>';
         }
 
-      // Update the modal's content.
+      // Update the modal content.
       var modal = $(this);
       modal.find('.modal-title').text(titulo);
       modal.find('.modal-body').html(content);
@@ -2142,10 +2224,11 @@ $(document).ready(function() {
     // Show documento
     $('#modalUpload').on('show.bs.modal', function (event) { // id of the modal with event
         var button = $(event.relatedTarget);
-        var id = button.data('id');
-        var content = '<input name="id" type="hidden" value="'+id+'">';
+        var id   = button.data('id');
+        var type = button.data('tipo');
+        var content = '<input name="id" type="hidden" value="'+id+'"> <input name="type" type="hidden" value="'+type+'">';
 
-        // Update the modal's content.
+        // Update the modal content.
         var modal = $(this);
          modal.find('.modal-body #contId').append(content);
     });
