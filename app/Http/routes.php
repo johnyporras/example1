@@ -312,6 +312,11 @@ Route::group(['middleware' => ['auth']], function () {
         'as'   => 'perfil.change' 
     ]);
 
+    Route::post('perfil/codigo', [
+        'uses' => 'ProfileController@codigo',
+        'as'   => 'perfil.codigo' 
+    ]);
+
 });
 /*=====================================================*/
 

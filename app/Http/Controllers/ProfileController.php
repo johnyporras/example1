@@ -422,4 +422,15 @@ class ProfileController extends Controller
             }
         }  
     }
+
+    /**
+     * Actualizacion de Vista Codigo QR
+     */
+    public function codigo(Request $request)
+    {
+        dd($request);
+
+        toast()->info('Cambios realizados Correctamente', 'Información:');
+                return redirect()->route('perfil.index');
+    }
 }
