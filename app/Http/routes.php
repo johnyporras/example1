@@ -18,7 +18,11 @@ Route::get('/send', 'EmailController@send');
 
 /** Rutas de Inicio */
 Route::get('/', 'HomeController@index');
-Route::get('/home', 'HomeController@index');
+Route::get('home', 'HomeController@index');
+// Generar tarjetas de prueba
+Route::get('generar/tarjetas', 'HomeController@generar');
+// M;ostrar perfil usuario con sus preferencias
+Route::get('my-card/{card}', 'HomeController@mycard');
 
 /** Rutas de Registro  */
 /**--------------------------------------------*/

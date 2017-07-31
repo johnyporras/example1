@@ -11,7 +11,7 @@
                     ->size(150)
                     ->generate(Request::url()) !!} 
             <div class="m0 pr15">
-                <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-print fa-fw"></i> Imprimir</button>
+                <button type="button" class="btn btn-primary btn-sm hidden-print" onclick="window.print()"><i class="fa fa-print fa-fw"></i> Imprimir</button>
             </div>
         </div>
         <div class="block-section text-center visible-xs">
@@ -20,9 +20,10 @@
                     ->size(150)
                     ->generate(Request::url()) !!} 
             <div class="m0 pr15">
-                <button type="button" class="btn btn-primary"><i class="fa fa-print"></i> Imprimir</button>
+                <button type="button" class="btn btn-primary btn-sm hidden-print" onclick="window.print()"><i class="fa fa-print"></i> Imprimir</button>
             </div>
         </div>
+
     </div> 
 
     <div class="col-sm-8">
@@ -57,12 +58,12 @@
         </div> <!-- .row -->
     </div>
 
-    <div class="col-xs-12 text-center">
+    <div class="col-xs-12 text-center hidden-print">
        <h4 class="sub-header m0">Configura tu Codigo QR</h4>
        <p>Puedes seleccionar la información que quieres mostrar cuando alguien accede a tu QR.</p> 
     </div>
 
-    <div class="col-xs-12">
+    <div class="col-xs-12 hidden-print">
          <div class="row">
             {{ Form::open(['route'=>'perfil.codigo', 'class' => 'form-horizontal']) }}
 
@@ -333,6 +334,7 @@
                 <div class="form-group">
                     <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
                         {{ Form::hidden('id_afiliado', $perfil->id) }}
+                        {{ Form::hidden('codigo', $perfil->cuenta->codigo_cuenta) }}
                         <button type="submit" class="btn btn-sm btn-success btn-block" title="Guardar"><span><i class="fa fa-edit"></i></span> Actualizar Preferencias</button>
                     </div>
                 </div>

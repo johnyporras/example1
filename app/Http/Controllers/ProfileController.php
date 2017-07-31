@@ -13,6 +13,7 @@ use App\Models\AcTipoDocumento;
 use App\Models\Contacto;
 use App\Models\MotivoDetalle;
 use App\Models\Medicamento;
+use App\Models\Preferencia;
 use App\Models\TipoMedicamento;
 use Auth;
 use DB;
@@ -43,11 +44,16 @@ class ProfileController extends Controller
         $tipom = User::editableFormat($tipo);
         // Tipo documentos formato json
         $tipoDoc = User::editableFormat($acTipoDoc);
-        //Preguntas 
+         //Preguntas 
         $preguntas1 = DB::table('preguntas')->take(10)->orderBy('id','asc')->pluck('pregunta', 'pregunta');
         $preguntas2 = DB::table('preguntas')->take(10)->orderBy('id','desc')->pluck('pregunta', 'pregunta');
+        // Selecciono las Preferencias del perfil
+        $preferencia = Preferencia::where('codigo', '=',$perfil->cuenta->codigo_cuenta)->first();
+        // Retorno json o valor null
+        $preferencias = ($preferencia != null) ? json_decode($preferencia->datos) : null;
+
         // Retorno vista
-        return view('profile.index', compact('usuario', 'perfil', 'estados', 'acTipoDoc', 'tipoDoc', 'tipo', 'tipom', 'preguntas1', 'preguntas2')); 
+        return view('profile.index', compact('usuario', 'perfil', 'estados', 'acTipoDoc', 'tipoDoc', 'tipo', 'tipom', 'preguntas1', 'preguntas2','preferencias')); 
     }
 
     /**
@@ -428,8 +434,23 @@ class ProfileController extends Controller
      */
     public function codigo(Request $request)
     {
-        dd($request);
+    
+        $preferencias = Preferencia::where('codigo', '=', $request->codigo)->first();
 
+        if ($preferencias != null) {
+
+            $preferencias->update([
+                'codigo' => $request->codigo,
+                'preferencias' => json_encode($request->all())
+            ]);
+
+        } else {
+            $preferencia = Preferencia::create([
+                'codigo' => $request->codigo,
+                'datos' => json_encode($request->all())
+            ]);
+        }
+    
         toast()->info('Cambios realizados Correctamente', 'Información:');
                 return redirect()->route('perfil.index');
     }

@@ -49,7 +49,7 @@
     <!-- Example Block -->
     <div class="block full">
 
-        <div class="block-title">
+        <div class="block-title hidden-print">
             <!-- Default Tabs -->
             <ul class="nav nav-tabs" data-toggle="tabs">
                 <li><a href="#1"><i class="gi gi-user fa-fw"></i> {{ strtoupper('Datos Personales') }}</a></li>

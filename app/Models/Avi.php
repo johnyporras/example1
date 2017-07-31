@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Avi extends Model 
+class Avi extends Model
 {
 	/**
 	 * Para usar borrado suave en la base de datos*
