@@ -11,6 +11,7 @@ use App\Models\AcDocumento;
 use App\Models\AcEstado;
 use App\Models\AcTipoDocumento;
 use App\Models\Contacto;
+use App\Models\Motivo;
 use App\Models\MotivoDetalle;
 use App\Models\Medicamento;
 use App\Models\Preferencia;
@@ -51,9 +52,11 @@ class ProfileController extends Controller
         $preferencia = Preferencia::where('codigo', '=',$perfil->cuenta->codigo_cuenta)->first();
         // Retorno json o valor null
         $preferencias = ($preferencia != null) ? json_decode($preferencia->datos) : null;
+        // Motivos de perfil
+        $motivos = Motivo::all();
 
         // Retorno vista
-        return view('profile.index', compact('usuario', 'perfil', 'estados', 'acTipoDoc', 'tipoDoc', 'tipo', 'tipom', 'preguntas1', 'preguntas2','preferencias')); 
+        return view('profile.index', compact('usuario', 'perfil', 'estados', 'acTipoDoc', 'tipoDoc', 'tipo', 'tipom', 'preguntas1', 'preguntas2', 'motivos', 'preferencias')); 
     }
 
     /**
@@ -434,14 +437,13 @@ class ProfileController extends Controller
      */
     public function codigo(Request $request)
     {
-    
         $preferencias = Preferencia::where('codigo', '=', $request->codigo)->first();
 
         if ($preferencias != null) {
 
             $preferencias->update([
                 'codigo' => $request->codigo,
-                'preferencias' => json_encode($request->all())
+                'datos' => json_encode($request->all())
             ]);
 
         } else {

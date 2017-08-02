@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Models\AcAfiliado;
 use App\Models\Preferencia;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -59,12 +61,20 @@ class HomeController extends Controller
     // Vista de preferencias del Afiliado
     public function mycard($card)
     {
+        // Selecciono las Preferencias del perfil
+        $preferencia = Preferencia::where('codigo', '=', $card)->first();
 
-        $preferencias = Preferencia::where('codigo', '=', $card)->first();
+        if ($preferencia != null) {
+            // Retorno json o valor null
+            $preferencias =  json_decode($preferencia->datos);
+            // Selecciono valores del afiliado
+            $perfil = AcAfiliado::findOrFail($preferencias->id_afiliado);
 
-        dd($preferencias);
-
-        return view('mycard', compact('preferencias'));
-
+            return view('mycard', compact('preferencias', 'perfil'));
+        } else {
+            // Retorno vista con error
+            return view('mycard')->whith('error', 'Cuenta op tarjeta invalida');
+        }
+        
     }
 }

@@ -55,6 +55,14 @@ class AcAfiliado extends Model {
     }
 
     /**
+     * [getFullName description]
+     * @return [type] [description]
+     */
+    public function getFullNameAttribute() {
+        return ucfirst($this->nombre) . ' ' . ucfirst($this->apellido);
+    }
+
+    /**
      * Get the detalle del motivo for the Afiliado.
      */
     public static function imc($altura, $peso)

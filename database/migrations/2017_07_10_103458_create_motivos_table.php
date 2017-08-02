@@ -15,6 +15,7 @@ class CreateMotivosTable extends Migration
         Schema::create('motivos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
+            $table->string('slug');
             $table->string('descripcion')->nullable();
             $table->timestamps();
             $table->softDeletes();

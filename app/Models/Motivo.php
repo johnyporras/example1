@@ -32,6 +32,7 @@ class Motivo extends Model
      */
     protected $fillable = [
         'nombre',
+        'slug',
         'descripcion',
         'deleted_at'
     ];

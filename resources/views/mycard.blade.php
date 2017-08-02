@@ -28,7 +28,36 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <h1>Hola Mundo</h1>
+            <h1 class="text-center pb50"><span><i class="fa fa-user fa-fw"></i></span>  Información Personal</h1>
+
+        </div>
+
+        <div class="col-xs-12">
+            <table class="table table-striped table-hover">
+                <tbody>
+                    <tr>
+                        <td class="text-right" style="width: 30%;">
+                            <strong>Nombre:</strong>
+                        </td>
+                        <td>{{ $perfil->fullname }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 30%;">
+                            <strong>Fecha de Nacimieto:</strong>
+                        </td>
+                        <td> {{ $perfil->fecha_nacimiento->format('d/m/Y') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 30%;">
+                            <strong>Edad:</strong>
+                        </td>
+                        <td> {{ $perfil->fecha_nacimiento->age }}</td>
+                    </tr>
+
+                
+                </tbody>
+            </table>
+            <!-- END Customer Info --> 
             
         </div>
     </div>  
