@@ -317,7 +317,7 @@
         <h4 class="sub-header">
             <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
                data-target="#modalActividad" title="Agregar"> <i class="fa fa-plus"></i></button> 
-            <span>Atividad Fisica</span>
+            <span>Actividad Fisica</span>
         </h4>
 
         <table class="card table table-colored table-condensed table-borderless table-hover table-striped table-vcenter">
