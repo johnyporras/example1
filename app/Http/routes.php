@@ -18,11 +18,18 @@ Route::get('/send', 'EmailController@send');
 
 /** Rutas de Inicio */
 Route::get('/', 'HomeController@index');
-Route::get('home', 'HomeController@index');
+Route::get('/home', 'HomeController@index');
+
 // Generar tarjetas de prueba
-Route::get('generar/tarjetas', 'HomeController@generar');
-// M;ostrar perfil usuario con sus preferencias
-Route::get('my-card/{card}', 'HomeController@mycard');
+Route::get('/generar/tarjetas', [
+    'uses' => 'HomeController@generar',
+    'as'   => 'page.generar' 
+]);
+// Mostrar perfil usuario con sus preferencias
+Route::get('/my-card/{card}', [
+    'uses' => 'HomeController@mycard',
+    'as'   => 'page.mycard' 
+]);
 
 /** Rutas de Registro  */
 /**--------------------------------------------*/
@@ -57,22 +64,22 @@ Route::post('/pais', [
     'as'   => 'register.checkTerminos' 
 ]);
 
-Route::get('verify/{email}/{confirm_token}', [
+Route::get('/verify/{email}/{confirm_token}', [
     'uses' => 'RegisterController@confirmRegister',
     'as'   => 'register.confirm' 
 ]);
 
-Route::get('valido', [
+Route::get('/valido', [
     'uses' => 'RegisterController@valido',
     'as'   => 'register.valido' 
 ]);
 
-Route::get('resend/{cuenta}', [
+Route::get('/resend/{cuenta}', [
     'uses' => 'RegisterController@resend',
     'as'   => 'register.resend' 
 ]);
 
-Route::get('resend/email/{id}', [
+Route::get('/resend/email/{id}', [
     'uses' => 'RegisterController@resendEmail',
     'as'   => 'register.resendEmail' 
 ]);
