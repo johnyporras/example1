@@ -9,7 +9,7 @@
             {!! QrCode::backgroundColor(57,66,99)
                     ->color(255,255,255)
                     ->size(150)
-                    ->generate(Request::url()) !!} 
+                    ->generate(route('page.mycard',$perfil->cuenta->codigo_cuenta)) !!} 
             <div class="m0 pr15">
                 <button type="button" class="btn btn-primary btn-sm hidden-print" onclick="window.print()"><i class="fa fa-print fa-fw"></i> Imprimir</button>
             </div>
@@ -18,7 +18,7 @@
             {!! QrCode::backgroundColor(57,66,99)
                     ->color(255,255,255)
                     ->size(150)
-                    ->generate(Request::url()) !!} 
+                    ->generate(route('page.mycard',$perfil->cuenta->codigo_cuenta)) !!} 
             <div class="m0 pr15">
                 <button type="button" class="btn btn-primary btn-sm hidden-print" onclick="window.print()"><i class="fa fa-print"></i> Imprimir</button>
             </div>
@@ -338,6 +338,7 @@
                     <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
                         {{ Form::hidden('id_afiliado', $perfil->id) }}
                         {{ Form::hidden('codigo', $perfil->cuenta->codigo_cuenta) }}
+                        {{ Form::hidden('imagen', ($usuario->imagen_perfil == null)?'images/avatars/avatar.jpg':'images/avatars/'.$usuario->imagen_perfil ) }}
                         <button type="submit" class="btn btn-sm btn-success btn-block" title="Guardar"><span><i class="fa fa-edit"></i></span> Actualizar Preferencias</button>
                     </div>
                 </div>
