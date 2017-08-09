@@ -52,13 +52,15 @@ class ClaveController extends Controller{
         $costo       = 0;
         $monto       = array();
         $ValidarFecha = new ValidarFechaController();
-        if (!($ValidarFecha->validarFecha($request)) ){
+        
+       /* if (!($ValidarFecha->validarFecha($request)) ){
            Session::flash('result', 'No se encuentra dentro del las Fecha Autorizada.');
                       // return redirect('home')->with('message', );
            return redirect::to('claves/generarFinal')->with('result', 'Debe agregar al menu un procedimiento');
            //return redirect()->to($this->getRedirectUrl())->withInput();
 
         }
+        */
 
 
 //       if (isset($request->max) &&($request->max == 0)){
@@ -70,6 +72,8 @@ class ClaveController extends Controller{
        * Se Obtiene el id del Usuario y el codigo del Proveedor  de la Session
        */
         $user = \Auth::user();
+        $request->fecha_cita = functions::uf_convertirdatetobd($request->fecha_cita);
+        
         if($user->type == 3){//TIPO PROVEEDOR
             $request = array_add($request, 'codigo_proveedor_creador', $user->proveedor);
         }

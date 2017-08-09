@@ -46,7 +46,7 @@
           {!! Form::label('ac_estatus.id', 'Estatus: ', ['class' => 'col-sm-2 control-label']) !!}
           <div class="col-sm-3">
               <select name="codestatus" id="codestatus">
-              <option value=''>Seleccione una opción</option>
+              <option value=''>Seleccione una opciÃ³n</option>
               <?php
                 foreach ($estatus as $key=>$value)
                 {
@@ -73,7 +73,7 @@
           {!! Form::label('user_types.id', 'Proveedores: ', ['class' => 'col-sm-2 control-label']) !!}
           <div class="col-sm-3">
               <select name="proveedor" id="proveedor">
-              <option value=''>Seleccione una opción</option>
+              <option value=''>Seleccione una opciÃ³n</option>
               <?php
                 foreach ($prov as $key=>$value)
                 {
@@ -92,6 +92,7 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
+                	<th>Pendientes</th>
                     <th>Otorgadas</th>
                     <th>Aprobadas</th>
                     <th>Rechazadas</th>                    
@@ -102,6 +103,7 @@
             </thead>
             <tbody>
                 <tr>
+                	<td >{{$claves['pendientes']}}</td>
                     <td >{{$claves['otorgadas']}}</td>
                     <td>{{ $claves['aprobadas']}}</td>
                     <td>{{ $claves['rechazadas']}}</td>
@@ -143,14 +145,14 @@ $( function() {
   });
 
  function ValidarAlpha(valor,campo){
-     var charRegExp = /^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/;
+     var charRegExp = /^([a-zA-ZÃ±Ã‘Ã¡Ã©Ã­Ã³ÃºÃ�Ã‰Ã�Ã“Ãš_-])+((\s*)+([a-zA-ZÃ±Ã‘Ã¡Ã©Ã­Ã³ÃºÃ�Ã‰Ã�Ã“Ãš_-]*)*)+$/;
      var valor1 = valor;
              if (charRegExp.test(valor1)== true)
              {
                   return true;
               }else{ 
                   $("#result").addClass("alert alert-danger");
-                  $("#result").html("Debe introducir solo carácteres Alfabéticos"); 
+                  $("#result").html("Debe introducir solo carÃ¡cteres AlfabÃ©ticos"); 
                   $("#"+campo).focus(); 
                    return false;
                }       

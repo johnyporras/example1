@@ -273,6 +273,12 @@ class ConsultarClaveController extends Controller
             foreach ($clavesAprobadas as $clave) {
                    $claves['rechazadas'] = $clave->cuantos;
             }
+            
+            $clavesPendientes = $this->clavesEstatus(1);// Pendiente
+            //dd($clavesPendientes);
+            foreach ($clavesPendientes as $clave) {
+                $claves['pendientes'] = $clave->cuantos;
+            }
             $servicio = $this->clavesDetalleEstatus(1);// Comsulta
             foreach ($servicio  as $servicios) {
                    $claves['consultas'] = $servicios->cuantos;
@@ -467,23 +473,46 @@ class ConsultarClaveController extends Controller
 
   public function clavesEstatus($estatus)
  {
+     
    $user = \Auth::user();
-   if ($user->type == 3){
-       $query = DB::select('SELECT count(*) as cuantos FROM '
+  // echo $estatus;
+   
+   if ($user->type == 3)
+   {
+       //dd($estatus);
+       
+       if($estatus=="1")
+       {
+       //    dd("asdsd");
+           
+           $query = DB::select('SELECT count(*) as cuantos FROM '
                . '                      ac_claves '
                . '                    WHERE ac_claves.estatus_clave = :estatus'
                . '                      AND EXISTS (SELECT 1'
-               . '                          FROM ac_claves_detalle,'
-               . '                               ac_proveedores_extranet,'
-               . '                               users,'
-               . '                               user_types'
-               . '                    WHERE ac_claves.id = ac_claves_detalle.id_clave '
-               . '                      AND ac_proveedores_extranet.codigo_proveedor = ac_claves_detalle.codigo_proveedor '
-               . '                      AND users.detalles_usuario_id =  ac_proveedores_extranet.codigo_proveedor '
-               . '                      AND users.type  = user_types.id'
-               . '                      AND users.id    = :usuario)', array('usuario' => $user->id, 'estatus'=> $estatus));
-   }elseif ($user->type == 4) // Analista Aseguradora
-     {
+               . '                          FROM ac_clavedetalleprov'
+               . '                    WHERE ac_claves.id = ac_clavedetalleprov.id_clave '
+               .'                       and pendiente=1 '
+               . '                      AND ac_clavedetalleprov.id_proveedor  = :usuario)', array('usuario' => $user->detalles_usuario_id,'estatus'=> $estatus));  
+       }
+       else 
+       {
+           $query = DB::select('SELECT count(*) as cuantos FROM '
+                   . '                      ac_claves '
+                   . '                    WHERE ac_claves.estatus_clave = :estatus'
+                   . '                      AND EXISTS (SELECT 1'
+                   . '                          FROM ac_claves_detalle,'
+                   . '                               ac_proveedores_extranet,'
+                   . '                               users,'
+                   . '                               user_types'
+                   . '                    WHERE ac_claves.id = ac_claves_detalle.id_clave '
+                   . '                      AND ac_proveedores_extranet.codigo_proveedor = ac_claves_detalle.codigo_proveedor '
+                   . '                      AND users.detalles_usuario_id =  ac_proveedores_extranet.codigo_proveedor '
+                   . '                      AND users.type  = user_types.id'
+                   . '                      AND users.id    = :usuario)', array('usuario' => $user->id, 'estatus'=> $estatus));
+       }
+  }
+   elseif ($user->type == 4) // Analista Aseguradora
+   {
        $query = DB::select('SELECT count(*) as cuantos FROM '
                . '                      ac_claves '
                . '                    WHERE ac_claves.estatus_clave = :estatus'

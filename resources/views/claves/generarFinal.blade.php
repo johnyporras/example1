@@ -34,10 +34,10 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{ Form::radio('tipoatencion', '1',false,['id' => 'tipoatencion']) }}Odontol&oacute;gico
         </div>
-        {!! Form::label('fecha_cita', 'Fecha de Atención: ', ['class' => 'col-sm-2 control-label']) !!}
+        {!! Form::label('faecha_cita', 'Fecha de Atención: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-3">
-            {!! Form::text('fecha_cita', null, ['class' => 'form-control input-sm','onchange'=>"validarFecha(this.value)", 'required' => 'required','placeholder' => 'dd-mm-aaaa']) !!}
-            {!! $errors->first('fecha_cita', '<p class="help-block">:message</p>') !!}
+            {!! Form::text('fecha_cita', null, ['class' => 'form-control input-sm', 'required' => 'required','placeholder' => 'dd-mm-aaaa','id'=>'fecha_cita2']) !!}
+            {!! $errors->first('fecha_jcita', '<p class="help-block">:message</p>') !!}
         </div>
        
     </div>
@@ -251,8 +251,40 @@
 @endsection
 @section('script')
     <script>
-        $(function(){
-            $( "#fecha_cita" ).datepicker({ minDate: -0, maxDate: "+4D", dateFormat: "dd-mm-yy", changeYear: true });
+
+       
+            //$( "#fecha_cita" ).datepicker({ minDate: -0, maxDate: "+4D", dateFormat: "dd-mm-yy", changeYear: true });
+            $( "#fecha_cita2" ).datepicker({ minDate: -0, maxDate: "+4D", dateFormat: "dd-mm-yy", changeYear: true });
+
+          $('#fecha_cita2').blur(function () 
+		  {
+		          var currentDate = $(this).val();
+		          arr=currentDate.split("/");
+		          newDate=arr[1]+"/"+arr[0]+"/"+arr[2]; 
+		          $(this).val(newDate);
+		  });
+
+		  $('#fecha_cita2').change(function () 
+		  {
+		          var currentDate = $(this).val();
+
+				if(new Date(currentDate)<new Date())
+				{
+					alert("Fecha invalida, la fecha debe ser mayor a la fecha de hoy");
+					$(this).val('');
+					return false;
+				}
+		          
+		          
+
+		          
+		          arr=currentDate.split("/");
+		          newDate=arr[1]+"/"+arr[0]+"/"+arr[2]; 
+		          $(this).val(newDate);
+		          
+		          //alert(newDate);
+		  });
+
             $('#procesar').parsley();
 
             
@@ -424,8 +456,16 @@
                     return false;
                 },
                 select: function( event, ui ) {
-                    $( "#codigo_proveedor" ).val( ui.item.nombre );
-                    $( "#codigo_proveedor_creador" ).val( ui.item.codigo_proveedor );
+                	if(ui.item.codigo_proveedor==$( "#codigo_proveedor_creador2" ).val())
+                	{
+                    	alert('Disculpe, los proveedores son pueden ser iguales');
+                    }
+                	else
+                	{
+                        $( "#codigo_proveedor" ).val( ui.item.nombre );
+                        $( "#codigo_proveedor_creador" ).val( ui.item.codigo_proveedor );
+                	}
+                    return false;
                     return false;
                 }
             })
@@ -469,8 +509,15 @@
                     return false;
                 },
                 select: function( event, ui ) {
-                    $( "#codigo_proveedor2" ).val( ui.item.nombre );
-                    $( "#codigo_proveedor_creador2" ).val( ui.item.codigo_proveedor );
+                	if(ui.item.codigo_proveedor==$("#codigo_proveedor_creador").val())
+                	{
+                    	alert('Disculpe, los proveedores son pueden ser iguales');
+                    }
+                	else
+                	{
+                        $( "#codigo_proveedor2" ).val( ui.item.nombre );
+                        $( "#codigo_proveedor_creador2" ).val( ui.item.codigo_proveedor );
+                	}
                     return false;
                 }
             })
@@ -547,10 +594,12 @@
                     return false;
                 }
 
-                alert($('#estado').val());
+                
+                /*alert($('#estado').val());
                 alert($('#ciudad').val());
-                alert($('#turno').val());
-                if($('#codigo_especialidad').val() !== "" && $('#codigo_servicio').val() !== "" && $('#procedimiento_medico').val() !== "" && $('#codigo_proveedor_creador').val() !== ""){
+                alert($('#turno').val());*/
+
+                 if($('#codigo_especialidad').val() !== "" && $('#codigo_servicio').val() !== "" && $('#procedimiento_medico').val() !== "" && $('#codigo_proveedor_creador').val() !== ""){
                     var especialidad = "<input type='hidden' value='"+ $('#codigo_especialidad').val() +"' name='id_especialidad" + x +"' id='id_especialidad" + x +"'>";
                     var servicio     = "<input type='hidden' value='"+ $('#codigo_servicio').val() +"' name='id_servicio" + x +"' id='id_servicio" + x +"'>";
                     var tratamiento  = "<input type='hidden' value='"+ $('#procedimiento_medico').val() +"' name='id_tratamiento" + x +"'>";
@@ -595,7 +644,7 @@
                     $("#resultproc").html("Debe seleccionar todos los campos para agregar un Procedimiento.");
                 }
             });
-        });
+        
 
         function validarFecha(fechaCita){
                 var fechaArr = fechaCita.split('-');
