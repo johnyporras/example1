@@ -20,8 +20,10 @@
         <link rel="icon" href="{{ asset('/images/favicon.ico') }}" type="image/x-icon">
         <link rel="stylesheet" href="{{ url('plugins/font-awesome/css/font-awesome.min.css') }}">
         <link rel="stylesheet" href="{{ url('plugins/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('plugins/stacktable/stacktable.css') }}">
         <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('plugins/stacktable/stacktable.js') }}"></script>
     </head>
 <body>
     <div class="container">
@@ -300,14 +302,16 @@
             @if (isset($preferencias->motivo->habito))
             <div class="col-xs-12">
                 <h4>Habitos de Consumo, Cigarros, Café, Etc...</h4>
-                <table class="table table-striped table-hover">
+                <table class="card table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Sustancia</th>
+                            <th>Cantidad</th>
+                            <th>Frecuencia</th>            
+                        </tr>
+                    </thead>
                     <tbody>
                     @if (count($perfil->motivoSelect(1)->get()) > 0)
-                        <tr>
-                            <td>Sustancia</td>
-                            <td>Cantidad</td>
-                            <td>Frecuencia</td>            
-                        </tr>
                         @foreach ($perfil->motivoSelect(1)->get() as $motivo)
                             <tr>
                                 <td>{{ $motivo->tipo }}</td>
@@ -328,14 +332,16 @@
             @if (isset($preferencias->motivo->actividad_fisica))
             <div class="col-xs-12">
                 <h4>Actividad Fisica</h4>
-                <table class="table table-striped table-hover">
+                <table class="card table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Actividad</th>
+                            <th>Frecuencia</th>
+                            <th>Comentarios</th> 
+                        </tr>
+                    </thead>
                     <tbody>
                     @if (count($perfil->motivoSelect(2)->get()) > 0)
-                        <tr>
-                            <td>Actividad</td>
-                            <td>Frecuencia</td>
-                            <td>Comentarios</td> 
-                        </tr>
                         @foreach ($perfil->motivoSelect(2)->get() as $motivo)
                             <tr>
                                 <td>{{ $motivo->tipo }}</td>
@@ -356,13 +362,15 @@
             @if (isset($preferencias->motivo->pasatiempo))
             <div class="col-xs-12">
                 <h4>Pasatiempos</h4>
-                <table class="table table-striped table-hover">
+                <table class="card table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Actividad</th>
+                            <th>Frecuencia</th>
+                        </tr>
+                    </thead>
                     <tbody>
                     @if (count($perfil->motivoSelect(3)->get()) > 0)
-                        <tr>
-                            <td>Actividad</td>
-                            <td>Frecuencia</td>
-                        </tr>
                         @foreach ($perfil->motivoSelect(3)->get() as $motivo)
                             <tr>
                                 <td>{{ $motivo->tipo }}</td>
@@ -371,7 +379,7 @@
                         @endforeach 
                     @else
                         <tr>
-                             <td colspan="2" class="text-center">No se encontraron resultadoss</td>
+                            <td colspan="2" class="text-center">No se encontraron resultadoss</td>
                         </tr>    
                     @endif
                     </tbody>
@@ -382,15 +390,17 @@
             @if (isset($preferencias->motivo->alimentacion))
             <div class="col-xs-12">
                 <h4>Alimentación, Dietas, Etc..</h4>
-                <table class="table table-striped table-hover">
+                <table class="card table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Descripción</th>
+                            <th>Causa</th>
+                            <th>Frecuencia</th>
+                            <th>Comentarios</th> 
+                        </tr>
+                    </thead>
                     <tbody>
                     @if (count($perfil->motivoSelect(4)->get()) > 0)
-                        <tr>
-                            <td>Descripción</td>
-                            <td>Causa</td>
-                            <td>Frecuencia</td>
-                            <td>Comentarios</td> 
-                        </tr>
                         @foreach ($perfil->motivoSelect(4)->get() as $motivo)
                             <tr>
                                 <td>{{ $motivo->tipo }}</td>
@@ -412,15 +422,17 @@
             @if (isset($preferencias->motivo->alergia))
             <div class="col-xs-12">
                 <h4>Alergias</h4>
-                <table class="table table-striped table-hover">
+                <table class="card table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Alergia</th>
+                            <th>Fecha Aparición</th>
+                            <th>Tratamiento</th>
+                            <th>Comentarios</th> 
+                        </tr>
+                    </thead>
                     <tbody>
                     @if (count($perfil->motivoSelect(5)->get()) > 0)
-                        <tr>
-                            <td>Alergia</td>
-                            <td>Fecha Aparición</td>
-                            <td>Tratamiento</td>
-                            <td>Comentarios</td> 
-                        </tr>
                         @foreach ($perfil->motivoSelect(5)->get() as $motivo)
                             <tr>
                                 <td>{{ $motivo->tipo }}</td>
@@ -442,14 +454,16 @@
             @if (isset($preferencias->motivo->vacuna))
             <div class="col-xs-12">
                 <h4>Vacunas</h4>
-                <table class="table table-striped table-hover">
+                <table class="card table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Vacuna</th>
+                            <th>Fecha</th>
+                            <th>Comentarios</th> 
+                        </tr>
+                    </thead>
                     <tbody>
                     @if (count($perfil->motivoSelect(6)->get()) > 0)
-                        <tr>
-                            <td>Vacuna</td>
-                            <td>Fecha</td>
-                            <td>Comentarios</td> 
-                        </tr>
                         @foreach ($perfil->motivoSelect(6)->get() as $motivo)
                             <tr>
                                 <td>{{ $motivo->tipo }}</td>
@@ -474,14 +488,16 @@
             @if (isset($preferencias->motivo->discapacidad))
             <div class="col-xs-12">
                 <h4>Discapacidades</h4>
-                <table class="table table-striped table-hover">
+                <table class="card table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Discapacidad</th>
+                            <th>Causa</th>
+                            <th>Comentarios</th> 
+                        </tr>
+                    </thead>
                     <tbody>
                     @if (count($perfil->motivoSelect(7)->get()) > 0)
-                        <tr>
-                            <td>Discapacidad</td>
-                            <td>Causa</td>
-                            <td>Comentarios</td> 
-                        </tr>
                         @foreach ($perfil->motivoSelect(7)->get() as $motivo)
                             <tr>
                                 <td>{{ $motivo->tipo }}</td>
@@ -502,15 +518,17 @@
             @if (isset($preferencias->motivo->hospitalizacion))
             <div class="col-xs-12">
                 <h4>Hospitalizaciones</h4>
-                <table class="table table-striped table-hover">
+                <table class="card table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Descripción</th>
+                            <th>Fecha</th>
+                            <th>Causa</th>
+                            <th>Comentarios</th> 
+                        </tr>
+                    </thead>
                     <tbody>
                     @if (count($perfil->motivoSelect(8)->get()) > 0)
-                        <tr>
-                            <td>Descripción</td>
-                            <td>Fecha</td>
-                            <td>Causa</td>
-                            <td>Comentarios</td> 
-                        </tr>
                         @foreach ($perfil->motivoSelect(8)->get() as $motivo)
                             <tr>
                                 <td>{{ $motivo->tipo }}</td>
@@ -521,7 +539,7 @@
                         @endforeach 
                     @else
                         <tr>
-                             <td colspan="4" class="text-center">No se encontraron resultadoss</td>
+                            <td colspan="4" class="text-center">No se encontraron resultadoss</td>
                         </tr>    
                     @endif
                     </tbody>
@@ -532,15 +550,17 @@
             @if (isset($preferencias->motivo->operacion))
             <div class="col-xs-12">
                 <h4>Operaciones</h4>
-                <table class="table table-striped table-hover">
+                <table class="card table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Operación</th>
+                            <th>Fecha</th>
+                            <th>Causa</th>
+                            <th>Comentarios</th> 
+                        </tr>
+                    </thead>
                     <tbody>
                     @if (count($perfil->motivoSelect(9)->get()) > 0)
-                        <tr>
-                            <td>Operación</td>
-                            <td>Fecha</td>
-                            <td>Causa</td>
-                            <td>Comentarios</td> 
-                        </tr>
                         @foreach ($perfil->motivoSelect(9)->get() as $motivo)
                             <tr>
                                 <td>{{ $motivo->tipo }}</td>
@@ -562,17 +582,19 @@
             @if (isset($preferencias->motivo->enfermedad_cronica))
             <div class="col-xs-12">
                 <h4>Enfermedades Cronicas</h4>
-                <table class="table table-striped table-hover">
+                <table class="card table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Enfermedad</th>
+                            <th>Fecha Aparición</th>
+                            <th>Tratamiento</th>
+                            <th>Frecuencia Consulta</th>
+                            <th>Profesional / Médico</th>
+                            <th>Comentarios</th> 
+                        </tr>
+                    </thead>
                     <tbody>
                     @if (count($perfil->motivoSelect(10)->get()) > 0)
-                        <tr>
-                            <td>Enfermedad</td>
-                            <td>Fecha Aparición</td>
-                            <td>Tratamiento</td>
-                            <td>Frecuencia Consulta</td>
-                            <td>Profesional / Médico</td>
-                            <td>Comentarios</td> 
-                        </tr>
                         @foreach ($perfil->motivoSelect(10)->get() as $motivo)
                             <tr>
                                 <td>{{ $motivo->tipo }}</td>
@@ -596,18 +618,20 @@
             @if (isset($preferencias->medicamentos))
             <div class="col-xs-12">
                 <h4>Medicamentos</h4>
-                <table class="table table-striped table-hover">
+                <table class="card table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Tipo Medicamento</th>
+                            <th>Medicamento</th>
+                            <th>Dosis</th>
+                            <th>Frecuencia</th>
+                            <th>Duración</th>
+                            <th>Diagnostico</th>
+                            <th>Recetado por</th> 
+                        </tr>
+                    </thead>
                     <tbody>
                     @if (count($perfil->medicamentos) > 0)
-                        <tr>
-                            <td>Tipo Medicamento</td>
-                            <td>Medicamento</td>
-                            <td>Dosis</td>
-                            <td>Frecuencia</td>
-                            <td>Duración</td>
-                            <td>Diagnostico</td>
-                            <td>Recetado por</td> 
-                        </tr>
                         @foreach ($perfil->medicamentos as $medicamento)
                             <tr>
                                 <td>{{ $medicamento->tipo->descripcion }}</td>
@@ -632,13 +656,15 @@
             @if (isset($preferencias->ac_documentos))
             <div class="col-xs-12">
                 <h4>Examenes / Estudios</h4>
-                <table class="table table-striped table-hover">
+                <table class="card table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Detalle</th>
+                        </tr>
+                    </thead>
                     <tbody>
                     @if (count($perfil->documentos) > 0)
-                        <tr>
-                            <td>Tipo</td>
-                            <td>Detalle</td>
-                        </tr>
                         @foreach ($perfil->documentos as $documento)
                             <tr>
                                 <td>{{ $documento->tipo->descripcion }}</td>
@@ -663,5 +689,12 @@
 
         </div><!--/.row -->
     </div><!--/.container -->
+
+    <script>
+    $(document).ready(function() {
+        //Inicializo tabla responsive
+        $('.card').cardtable();
+    });    
+    </script>
 </body>
 </html>

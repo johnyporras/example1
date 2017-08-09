@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class Authenticate
 {
@@ -17,6 +18,7 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
+
         if (Auth::guard($guard)->guest()) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
@@ -25,6 +27,12 @@ class Authenticate
             }
         }
 
-        return $next($request);
+        if (Auth::user()->active) {
+            return $next($request);
+        } else {
+            Auth::logout();
+            return back()->with('message', 'Debe Confirmar Correo Electronico para poder Ingresar al Sistema.');
+        }
+        // return $next($request);
     }
 }

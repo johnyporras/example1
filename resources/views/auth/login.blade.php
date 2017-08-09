@@ -16,8 +16,10 @@
     {!! Form::open(['url' => '/login', 'class' => 'form-horizontal form-bordered form-control-borderless', 'id' => 'loginForm' ]) !!}
 
         @if (session('message'))
-            <div class="alert alert-danger">
-                    {{ session('message') }}
+            <div class="form-group">
+                <div class="alert alert-danger">
+                    <p><i class="fa fa-exclamation-triangle"></i> <span>{{ session('message') }}</span></p>
+                </div>
             </div>
         @endif
                 
