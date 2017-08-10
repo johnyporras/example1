@@ -30,7 +30,7 @@
     <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
     {!! Form::label('Tipo', 'Tipo: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-3">
-            {{ Form::radio('tipoatencion', '2', true,['id' => 'tipoatencion']) }}M&eacute;dico
+            {{ Form::radio('tipoatencion', '2', false,['id' => 'tipoatenci']) }}M&eacute;dico
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{ Form::radio('tipoatencion', '1',false,['id' => 'tipoatencion']) }}Odontol&oacute;gico
         </div>
@@ -327,6 +327,7 @@
 
 			$("[name='tipoatencion']").on("click",function(){
 				tipo = $(this).val();
+				//alert(tipo);
 				tipo2="";
 				getEspecialidad(tipo,tipo2);
 			});
@@ -334,7 +335,8 @@
 
 			$("[name='detalle_servicio']").on("change",function(){
 				detalleser = $(this).val();
-				tipo = $("[name='tipoatencion']").val();
+				tipo = $("[name='tipoatencion']:checked").val();
+				//alert(tipo);
 				getEspecialidad(tipo,detalleser);
 
 				if(detalleser==2)

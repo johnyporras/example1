@@ -209,25 +209,39 @@ class SelectController  extends Controller{
             ->on('ac_procedimientos_medicos.codigo_especialidad',"=", 'ac_cobertura_extranet.id_especialidad')
             ->on('ac_procedimientos_medicos.codigo_servicio',"=", 'ac_cobertura_extranet.id_servicio');
         })
-        ->join("ac_especialidades_extranet","ac_procedimientos_medicos.codigo_especialidad","=","ac_especialidades_extranet.id")
+        ->join("ac_especialidades_extranet","ac_procedimientos_medicos.codigo_especialidad","=","ac_especialidades_extranet.codigo_especialidad")
         ->where("ac_especialidades_extranet.rama","=",\Input::get('tipo'))
         ->select('ac_especialidades_extranet.codigo_especialidad','ac_especialidades_extranet.descripcion as especialidad');
        // echo $detser;die();
         if($detser=!"")
-        {
+        {       
             $user = $user = \Auth::user();
             $regUser = AcAfiliado::findOrFail($user->detalles_usuario_id);
             $edad = intval(date('Y', time() - strtotime($regUser->fecha_nacimiento))) - 1970;
             $genero= $regUser->sexo;
-            if($edad<18)
+            //echo $edad;die();
+            if(\Input::get('tipo')==2)
             {
-                $coberturas = $coberturas->where('ac_procedimientos_medicos.codigo_especialidad',"=",36);
+                if($edad<18)
+                {
+                    $coberturas = $coberturas->where('ac_procedimientos_medicos.codigo_especialidad',"=",36);
+                }
+                //echo $genero;die();
+                if ($genero=='M' || ($edad<=10 && $genero=='F'))
+                {
+                    //echo "asdsad";die();
+                    $coberturas = $coberturas->where('ac_procedimientos_medicos.codigo_especialidad',"<>",43);
+                }
+            }
+            else 
+            {
+                if($edad<18)
+                {
+                    $coberturas = $coberturas->where('ac_procedimientos_medicos.codigo_especialidad',"=",52);
+                }
             }
             
-            if($edad<=10 && $genero=='M')
-            {
-                $coberturas = $coberturas->where('ac_procedimientos_medicos.codigo_especialidad',"<>",43);
-            }
+            
            
         } 
         
