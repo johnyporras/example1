@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 
 class CheckDatosUsuario
@@ -18,8 +18,7 @@ class CheckDatosUsuario
     public function handle($request, Closure $next)
     {
         if (Auth::check()) {
-            // return redirect()->route('perfil.index'); 
-        } else {
+            // return redirect()->to('/perfil'); 
             return $next($request);
         }
         
