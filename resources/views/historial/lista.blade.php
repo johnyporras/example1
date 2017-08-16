@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Asistencia al Viajero Internacional')
+@section('title','Historial Médico')
 
 @push('styles')
 <link rel="stylesheet" href="{{ url('plugins/datatables/css/dataTables.bootstrap.min.css') }}">
@@ -20,12 +20,12 @@
 @section('breadcrumb')
     <div class="content-header">
         <div class="header-section">
-            <h1><i class="gi gi-airplane"></i> Asistencia al Viajero Internacional <br> <small class="text-white">subtitle</small></h1>
+            <h1><i class="gi gi-notes"></i> Historial Médico <br> <small class="text-white">subtitle</small></h1>
         </div>
     </div>
     <ul class="breadcrumb breadcrumb-top">
         <li><a href="{{ url('/') }}">Inicio</a></li>
-        <li>Asistencia al Viajero Internacional</li>
+        <li>Historial Médico</li>
     </ul>
 @endsection
 
@@ -34,7 +34,7 @@
 <div class="col-xs-12">
     <div class="row">
         <div class="col-xs-12">
-            <p><a href="{{ url('/avi') }}" title="Generar otra Solicitud" class="btn btn-success btn-sm"><span class="pr5"><i class="fa fa-plus"></i></span> Generar</a></p>
+            <p><a href="{{ url('/historial') }}" title="Generar otra Solicitud" class="btn btn-success btn-sm"><span class="pr5"><i class="fa fa-plus"></i></span> Generar</a></p>
         </div>
     </div> <!-- row -->
     <div class="row">

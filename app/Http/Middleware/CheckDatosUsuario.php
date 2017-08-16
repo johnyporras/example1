@@ -17,11 +17,14 @@ class CheckDatosUsuario
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check()) {
-            // return redirect()->to('/perfil'); 
-            return $next($request);
+        $tipo = $request->user()->detalles_usuario_id;
+
+        if ($tipo == 3 ) {
+
+            return redirect()->to('/avi'); 
+            //return $next($request);
         }
         
-        return $next($request);
+        // return $next($request);
     }
 }

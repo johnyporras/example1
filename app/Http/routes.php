@@ -221,6 +221,56 @@ Route::group(['middleware' => ['auth']], function () {
     ]);
 
 });
+
+/**
+* rutas modulo Historial Médico
+*/
+Route::group(['middleware' => ['auth']], function () {
+
+    // Rutas para la lista de solicitudes
+    Route::get('api/historiales', 'HistorialMedicoController@historiales');
+    
+    Route::get('historial/lista', [
+            'uses' => 'HistorialMedicoController@lista',
+            'as'   => 'historial.lista' 
+    ]);
+    
+    Route::get('historial', [
+            'uses' => 'HistorialMedicoController@index',
+            'as'   => 'historial.index' 
+    ]);
+
+    Route::get('historial/create', [
+            'uses' => 'HistorialMedicoController@create',
+            'as'   => 'historial.create' 
+    ]);
+
+    Route::post('historial/store', [
+            'uses' => 'HistorialMedicoController@store',
+            'as'   => 'historial.store' 
+    ]);
+
+    Route::get('historial/{id}/edit', [
+            'uses' => 'HistorialMedicoController@edit',
+            'as'   => 'historial.edit' 
+    ]);
+
+    Route::put('historial/{id}', [
+            'uses' => 'HistorialMedicoController@update',
+            'as'   => 'historial.update' 
+    ]);
+
+    Route::get('historial/{id}', [
+            'uses' => 'HistorialMedicoController@show',
+            'as'   => 'historial.show' 
+    ]);
+
+    Route::get('historial/{id}/destroy', [
+            'uses' => 'HistorialMedicoController@destroy',
+            'as'   => 'historial.destroy' 
+    ]);
+    
+});
 /*=====================================================*/
 /**
  * rutas para el perfil

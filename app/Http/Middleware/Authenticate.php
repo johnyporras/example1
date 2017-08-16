@@ -27,12 +27,12 @@ class Authenticate
             }
         }
 
-        if (Auth::user()->active) {
+       /* if (Auth::user()->active) {
             return $next($request);
         } else {
             Auth::logout();
             return back()->with('message', 'Debe Confirmar Correo Electronico para poder Ingresar al Sistema.');
-        }
-        // return $next($request);
+        } */
+        return $next($request);
     }
 }
