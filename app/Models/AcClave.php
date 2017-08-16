@@ -83,9 +83,6 @@ class AcClave extends Model {
     
     
     
-    function setFechaCitaAttribute($date) {
-        $this->attributes['fecha_cita'] = new Carbon($date);
-    }
 //    public function acAfiliado() {
 //        return $this->belongsTo(\App\Models\AcAfiliado::class, 'cedula_afiliado', 'cedula');
 //    }
