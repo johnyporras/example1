@@ -135,6 +135,7 @@ class SelectController  extends Controller{
             }else{
                 $proveedores = DB::table('ac_procedimientos_medicos')
                     ->where([['ac_procedimientos_medicos.id', '=', \Input::get('procedimiento')]])
+                    ->where('ac_proveedores_extranet.estado_id', '=', \Input::get('estado'))
                     ->join('ac_baremos', 'ac_procedimientos_medicos.id',"=", 'ac_baremos.id_procedimiento')
                     ->join('ac_proveedores_extranet', function($join){
                         $term = \Input::get('q');

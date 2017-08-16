@@ -254,12 +254,27 @@
 
        
             //$( "#fecha_cita" ).datepicker({ minDate: -0, maxDate: "+4D", dateFormat: "dd-mm-yy", changeYear: true });
-            $( "#fecha_cita2" ).datepicker({ minDate: -0, maxDate: "+4D", dateFormat: "dd-mm-yy", changeYear: true });
+            $( "#fecha_cita2" ).datepicker();
 
           $('#fecha_cita2').blur(function () 
 		  {
-		          var currentDate = $(this).val();
-		          arr=currentDate.split("/");
+		          var currentDate = new Date($(this).val());
+		          dia = currentDate.getDay();
+		          if(dia==0 || dia==6)
+		          {
+						alert("Fecha invalida, No puede seleecionar los sabados o domingos para la cita");
+						$(this).val('');
+						return false;
+			      }
+		          if(currentDate<new Date())
+					{
+						alert("Fecha invalida, la fecha debe ser mayor a la fecha de hoy");
+						$(this).val('');
+						return false;
+					}
+
+		          
+		          arr=$(this).val().split("/");
 		          newDate=arr[1]+"/"+arr[0]+"/"+arr[2]; 
 		          $(this).val(newDate);
 		  });
@@ -268,19 +283,12 @@
 		  {
 		          var currentDate = $(this).val();
 
-				if(new Date(currentDate)<new Date())
-				{
-					alert("Fecha invalida, la fecha debe ser mayor a la fecha de hoy");
-					$(this).val('');
-					return false;
-				}
-		          
-		          
-
-		          
+  
 		          arr=currentDate.split("/");
 		          newDate=arr[1]+"/"+arr[0]+"/"+arr[2]; 
 		          $(this).val(newDate);
+
+		         
 		          
 		          //alert(newDate);
 		  });
@@ -441,6 +449,7 @@
                             q: request.term.toUpperCase(),
                             'procedimiento' : $('#procedimiento_medico').val(),
                             'proveedor'     : proveedorX,
+                            'estado'     : $('#estado').val(),
                             '_token'        : $('[name="_token"]').val()
                           },
                           success: function( data ) {
@@ -494,6 +503,7 @@
                             q: request.term.toUpperCase(),
                             'procedimiento' : $('#procedimiento_medico').val(),
                             'proveedor'     : proveedorX,
+                            'estado'     : $('#estado').val(),
                             '_token'        : $('[name="_token"]').val()
                           },
                           success: function( data ) {
