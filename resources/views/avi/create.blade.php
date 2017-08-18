@@ -187,8 +187,7 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
-                    <!-- End .form-group  -->
+                    </div><!-- End .form-group  -->
                 </div>
                 
                 <div class="col-xs-12">

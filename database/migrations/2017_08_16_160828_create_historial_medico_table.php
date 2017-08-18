@@ -14,7 +14,8 @@ class CreateHistorialMedicoTable extends Migration
     {
         Schema::create('historial_medico', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_proveedor')->unsigned();
+            $table->integer('id_user')->unsigned();
+            $table->integer('id_afiliado')->unsigned();
             $table->date('fecha')->nullable()->comment('Fecha de Atención');
             $table->string('motivo')->nullable()->comment('Motivo de Atención');
             $table->string('especialidad')->nullable();
@@ -25,8 +26,11 @@ class CreateHistorialMedicoTable extends Migration
             $table->string('archivos')->nullable()->comment('Examenes Realizados');
             $table->timestamps();
             $table->softDeletes();
-                $table->foreign('id_proveedor')->references('id')->on('ac_proveedores_extranet')
+                $table->foreign('id_user')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('id_afiliado')->references('id')->on('ac_afiliados')
+                ->onUpdate('cascade')->onDelete('cascade');
+
         });
     }
 

@@ -1,6 +1,17 @@
 @extends('layouts.app')
 @section('title','Historial Médico')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
+@endpush
+
+@push('scripts')
+    <script src="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.es.min.js') }}"></script>
+    <script src="{{ url('plugins/parsley-js/parsley.min.js') }}"></script>
+    <script src="{{ url('plugins/parsley-js/i18n/es.js') }}"></script>
+@endpush
+
 @section('breadcrumb')
     <div class="content-header">
         <div class="header-section">
@@ -10,26 +21,79 @@
     <ul class="breadcrumb breadcrumb-top">
         <li><a href="{{ url('/') }}">Inicio</a></li>
         <li><a href="{{ url('/historial/lista') }}">Historial Médico</a></li>
-        <li>Consultar Cédula</li> 
+        <li>Buscar Afiliado</li> 
     </ul>
 @endsection
 
 @section('content')
 
-{!! Form::open(['route' => 'historial.create', 'class' => 'form-horizontal', 'name' => 'buscar', 'lang' => 'es', 'method' => 'GET']) !!}
+    {!! Form::open(['route' => 'historial.index', 'id' => 'buscarForm', 'lang' => 'es', 'method' => 'GET']) !!}
         
-        <div class="form-group {{ $errors->has('cedula') ? 'has-error' : ''}}">
-            {!! Form::label('cedula', 'Cédula Afiliado: ', ['class' => 'col-sm-2 control-label']) !!}
-            <div class="col-sm-2">
-                {!! Form::number('cedula', Input::old('cedula'), ['class' => 'form-control', 'min' => '0', 'placeholder' => 'Ej:12345678']) !!}
-                {!! $errors->first('cedula', '<p class="help-block">:message</p>') !!}
-            </div>
-            <div class="col-sm-2">
-                {!! Form::submit('Buscar', ['class' => 'btn btn-primary btn-block']) !!}
-            </div>
-        </div>
+    <div class="col-md-3">
+        <div class="form-group {{ $errors->has('nombre') ? ' has-error' : '' }}">
+            {{ Form::label('nombre', 'Nombre:', ['class' => 'control-label']) }}
+            {{ Form::text('nombre', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Nombre', 'required']) }}
+            @if ($errors->has('nombre'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('nombre') }}</strong>
+                </span>
+            @endif
+        </div> <!-- End .form-group  -->
+    </div>
 
-    {!! Form::close() !!}
+    <div class="col-md-3">
+        <div class="form-group {{ $errors->has('apellido') ? ' has-error' : '' }}">
+            {{ Form::label('apellido', 'Apellido:', ['class' => 'control-label']) }}
+            {{ Form::text('apellido', null , ['class' => 'form-control', 'placeholder' => 'Ingrese apellido']) }}
+            @if ($errors->has('apellido'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('apellido') }}</strong>
+                </span>
+            @endif
+        </div> <!-- End .form-group  -->
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-group {{ $errors->has('cedula') ? ' has-error' : '' }}">
+            {!! Form::label('cedula', 'Cédula: ', ['class' => 'control-label']) !!}
+            {!! Form::number('cedula', null, ['class' => 'form-control', 'min' => '0', 'placeholder' => 'Ej:12345678']) !!}
+            @if ($errors->has('cedula'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('cedula') }}</strong>
+                </span>
+            @endif
+        </div> <!-- End .form-group  -->
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-group {{ $errors->has('fecha') ? ' has-error' : '' }}">
+            {{ Form::label('fecha', 'Fecha Nacimiento', ['class' => 'control-label']) }}
+
+            <div class="input-group">
+                {{ Form::text('fecha', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Nacimiento', 'id' => 'date']) }}
+                <div class="input-group-addon">
+                    <span class="fa fa-calendar"></span>
+                </div>
+            </div>
+            @if ($errors->has('fecha'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('fecha') }}</strong>
+                </span>
+            @endif
+        </div><!-- End .form-group  -->
+    </div>
+    
+    <div class="clearfix"></div>          
+
+    <div class="col-xs-12">
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary"> <i class="fa fa-search"></i>
+                Buscar </button>
+        </div>    
+    </div>
+
+{!! Form::close() !!}
+
 
     @if (Session::has('respuesta'))
         <div id="result" class="alert alert-warning">
@@ -40,4 +104,39 @@
         </div>
     @endif
     
+@endsection
+
+@section('script')
+<script>
+$(document).ready(function() {
+
+    /** Validar formulario **/
+    var parsleyOptions = {
+        errorClass: 'has-error',
+        successClass: 'has-success',
+        classHandler: function(el) {
+            return el.$element.parents('.form-group');
+        },
+        errorsContainer: function(el) {
+            return el.$element.closest('.form-group');
+        },
+        errorsWrapper: '<span class="help-block">',
+        errorTemplate: '<div></div>',
+    };
+
+    // Genero la validacion del formulario...
+    $('#buscarForm').parsley(parsleyOptions);
+
+    /* Para fecha de nacimiento*/
+    $("#date").datepicker({
+        language: "es",
+        startDate: '0',
+        format: 'yyyy-mm-dd',
+    }).on('changeDate', function () {   
+        // Valida campo al cambiar valor
+        $("#iniDate").parsley(parsleyOptions).validate();
+    });
+
+});    
+</script>
 @endsection

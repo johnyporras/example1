@@ -240,6 +240,11 @@ Route::group(['middleware' => ['auth']], function () {
             'as'   => 'historial.index' 
     ]);
 
+    Route::get('historial/search', [
+            'uses' => 'HistorialMedicoController@search',
+            'as'   => 'historial.search' 
+    ]);
+
     Route::get('historial/create', [
             'uses' => 'HistorialMedicoController@create',
             'as'   => 'historial.create' 

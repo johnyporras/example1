@@ -16,14 +16,14 @@ class HistorialMedico extends Model
      *  Name of database
      * @var string
      */
-    protected $table = 'avi';
+    protected $table = 'historial_medico';
 
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ['fecha', 'deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -31,23 +31,34 @@ class HistorialMedico extends Model
      * @var array
      */
     protected $fillable = [
-        'afiliado_id',
-    	'codigo_solicitud', 
-        'codigo_contrato', 
-        'cobertura_monto', 
-        'nro_cronograma',  
-        'observaciones',     
-        'creador',
+        'id_user',
+        'id-afiliado'
+    	'fecha', 
+        'motivo', 
+        'especialidad', 
+        'tratamiento',  
+        'procedimiento',     
+        'observaciones',
+        'recomendaciones',
+        'archivos',
         'deleted_at'
     ];
 
-
     /**
-     * Relación can tabla de funerario_detalle
+     * Relación can tabla afiliado
      * @return [type] [description]
      */
     public function afiliado()
     {
-        return $this->belongsTo(\App\Models\AcAfiliado::class);
+        return $this->belongsTo(\App\Models\AcAfiliado::class, 'id_afiliado');
+    }
+
+    /**
+     * Relación can tabla usuarios
+     * @return [type] [description]
+     */
+    public function usuario()
+    {
+        return $this->belongsTo(\App\User::class, 'id_user');
     }
 }

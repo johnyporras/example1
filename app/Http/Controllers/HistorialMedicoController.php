@@ -23,6 +23,12 @@ class HistorialMedicoController extends Controller
      */
     public function index(Request $request)
     {
+        if($request->has('nombre')){
+
+            dd($request);
+
+        }
+
         return view('historial.index');
     }
 
