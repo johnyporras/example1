@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use Auth;
-use App\User;
+use App\Models\AcAfiliado;
 use App\Models\HistorialMedico;
+use App\User;
 use Carbon\Carbon;
 use DB;
 use Session;
 use Yajra\Datatables\Datatables;
-
 
 class HistorialMedicoController extends Controller
 {
@@ -23,12 +23,32 @@ class HistorialMedicoController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->has('nombre')){
 
-            dd($request);
+        if ($request->has('nombre')) {
+
+            $nombre = strtoupper($request->nombre);
+            $apellido = strtoupper($request->apellido);
+
+            $query = AcAfiliado::query();
+
+            $query = $query->where('nombre', 'LIKE', '%'.$nombre.'%');
+
+            if ($request->has('apellido')) {
+                $query = $query->orwhere('apellido', 'LIKE', '%'.$apellido.'%');
+            }
+            if ($request->has('cedula')) {
+                $query = $query->orwhere('cedula', 'LIKE', '%'.$request->cedula.'%');
+            }
+            if ($request->has('fecha')) {
+                $query = $query->orwhere('fecha_nacimiento', $request->fecha);
+            }
+
+            $afiliados = $query->get();
+                
+            return view('historial.index',compact('afiliados'));
 
         }
-
+        
         return view('historial.index');
     }
 
@@ -114,11 +134,14 @@ class HistorialMedicoController extends Controller
      */
     public function show($id)
     {
-        // selecciono solicitud
-        $solicitud = HistorialMedico::findOrFail($id);
+        
+        $afiliado = AcAfiliado::findOrFail($id);
+
+
+       // dd($afiliado);
 
         // Retorno la vista
-        return view('historial.show',compact('solicitud'));
+        return view('historial.show',compact('afiliado'));
     }
 
     /**

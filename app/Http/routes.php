@@ -245,7 +245,7 @@ Route::group(['middleware' => ['auth']], function () {
             'as'   => 'historial.search' 
     ]);
 
-    Route::get('historial/create', [
+    Route::get('historial/create/{id}', [
             'uses' => 'HistorialMedicoController@create',
             'as'   => 'historial.create' 
     ]);

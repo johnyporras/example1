@@ -3,11 +3,13 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/stacktable/stacktable.css') }}">
 @endpush
 
 @push('scripts')
     <script src="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.es.min.js') }}"></script>
+    <script src="{{ asset('plugins/stacktable/stacktable.js') }}"></script>
     <script src="{{ url('plugins/parsley-js/parsley.min.js') }}"></script>
     <script src="{{ url('plugins/parsley-js/i18n/es.js') }}"></script>
 @endpush
@@ -103,7 +105,38 @@
             </p>
         </div>
     @endif
-    
+
+    @if (isset($afiliados))
+        <div class="col-xs-12 mt25 mb25">
+            <table class="card table table-hover table-striped table-bordered table-colored nowrap">
+                 <thead>
+                    <tr>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Apellido</th>
+                        <th class="text-center">Cuenta</th>
+                        <th width="80">Seleccionar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (count($afiliados) > 0)
+                        @foreach ($afiliados as $afiliado)
+                        <tr class="text-center">
+                            <td>{{ $afiliado->nombre }}</td>
+                            <td>{{ $afiliado->apellido }}</td>
+                            <td>{{ $afiliado->cuenta->codigo_cuenta }}</td>
+                            <td><a href="{{ route('historial.show', $afiliado->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-check"></i></a></td>
+                        </tr>
+                        @endforeach
+                    @else
+                    <tr>
+                        <td colspan="4"><p class="m0 text-center">No se encontraron resultados</></td>
+                    </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+        
+    @endif
 @endsection
 
 @section('script')
@@ -127,10 +160,13 @@ $(document).ready(function() {
     // Genero la validacion del formulario...
     $('#buscarForm').parsley(parsleyOptions);
 
+    //Inicializo tabla responsive
+    $('.card').cardtable();
+
     /* Para fecha de nacimiento*/
     $("#date").datepicker({
         language: "es",
-        startDate: '0',
+        endDate: '-18y',
         format: 'yyyy-mm-dd',
     }).on('changeDate', function () {   
         // Valida campo al cambiar valor

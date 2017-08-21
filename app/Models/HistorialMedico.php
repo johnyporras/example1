@@ -32,7 +32,7 @@ class HistorialMedico extends Model
      */
     protected $fillable = [
         'id_user',
-        'id-afiliado'
+        'id-afiliado',
     	'fecha', 
         'motivo', 
         'especialidad', 
