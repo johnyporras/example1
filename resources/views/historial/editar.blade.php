@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Asistencia al Viajero Internacional')
+@section('title','Historial Médico')
 
 @push('styles')
     <link rel="stylesheet" href="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
@@ -19,13 +19,13 @@
 @section('breadcrumb')
     <div class="content-header">
         <div class="header-section">
-            <h1><i class="gi gi-airplane"></i> Asistencia al Viajero Internacional <br> <small class="text-white">subtitle</small></h1>
+            <h1><i class="gi gi-notes"></i> Historial Médico <br> <small class="text-white">subtitle</small></h1>
         </div>
     </div>
     <ul class="breadcrumb breadcrumb-top">
         <li><a href="{{ url('/') }}">Inicio</a></li>
-        <li><a href="{{ url('/avi/lista') }}">Asistencia al Viajero Internacional</a></li>
-        <li>Generar Solicitud</li>
+        <li><a href="{{ url('/historial/lista') }}">Historial Médico</a></li>
+        <li>Editar</li>
     </ul>
 @endsection
 
@@ -33,32 +33,53 @@
 <div class="col-xs-12">
     <div class="row">
         <div class="col-xs-12">
-            <p><a href="{{ url('/avi') }}" title="Buscar otro beneficiario" class="btn btn-info"><span class="pr5"><i class="fa fa-search"></i></span> Beneficiario</a></p>
+            <p><a href="{{ url('/historial/lista') }}" title="Listado Solicitudes" class="btn btn-success"><span class="pr5"><i class="fa fa-table"></i></span> Listado</a></p>
         </div>
     </div> <!-- row -->
-</div> <!-- .col-12 -->
 
-<div class="col-xs-12">
     <div class="row">
-        <div class="col-md-6 col-lg-5">
-            @if (isset($afiliado))
+        <div class="col-xs-12">
+            <h2 class="pt10 pb10 m0">Solicitud: {{ $solicitud->codigo_solicitud }}</h2>
+        </div>
+    </div> <!-- row -->
+
+    <div class="row">
+
+        <div class="col-md-4">
             <div class="panel panel-warning">
+               <!-- Default panel contents -->
+               <div class="panel-heading">
+                     <span class="pr-1"><i class="fa fa-plane"></i></span> Datos Solicitud
+               </div>
+                 <!-- List group -->
+               <ul class="list-group">
+                     <li class="list-group-item"><span class="text-warning"><b>Nro Cronograma:</b></span> {{ $solicitud->nro_cronograma }}</li>
+                     <li class="list-group-item"><span class="text-warning"><b>Contrato:</b></span> {{ $solicitud->codigo_contrato }} </li>
+                     <li class="list-group-item"><span class="text-warning"><b>Monto Cobertura:</b></span> {{ $solicitud->cobertura_monto }}</li>
+                     <li class="list-group-item"><span class="text-warning"><b>Observaciones:</b></span> {{ $solicitud->observaciones }}</li>
+               </ul>
+            </div>
+      </div>
+
+      <div class="col-md-4">
+         
+            <div class="panel panel-success">
                 <!-- Default panel contents -->
                 <div class="panel-heading">
                     <span class="pr-1"><i class="fa fa-user"></i></span> Afiliado
                 </div>
                  <!-- List group -->
                 <ul class="list-group">
-                    <li class="list-group-item"><span class="text-warning"><b>Cédula:</b></span> {{ $afiliado->cedula }}</li>
-                    <li class="list-group-item"><span class="text-warning"><b>Nombre:</b></span> {{ $afiliado->nombre }} {{ $afiliado->apellido }} </li>
-                    <li class="list-group-item"><span class="text-warning"><b>Edad:</b></span> {{ $afiliado->fecha_nacimiento->age }}</li>
-                    <li class="list-group-item"><span class="text-warning"><b>Sexo:</b></span> {{ ($afiliado->sexo == 'M')?'Masculino':'Femenino' }}</li>
+                    <li class="list-group-item"><span class="text-success"><b>Cédula:</b></span> {{ $solicitud->afiliado->cedula }}</li>
+                    <li class="list-group-item"><span class="text-success"><b>Nombre:</b></span> {{ $solicitud->afiliado->nombre }} {{ $solicitud->afiliado->apellido }} </li>
+                    <li class="list-group-item"><span class="text-success"><b>Edad:</b></span> {{ $solicitud->afiliado->fecha_nacimiento->age }}</li>
+                    <li class="list-group-item"><span class="text-success"><b>Sexo:</b></span> {{ ($solicitud->afiliado->sexo == 'M')?'Masculino':'Femenino' }}</li>
                 </ul>
             </div>
-            @endif 
+           
         </div>
 
-        <div class="col-md-6 col-lg-5 col-lg-offset-2">
+      <div class="col-md-4">
             @if (isset($cuenta))
             <div class="panel panel-primary">
                 <!-- Default panel contents -->
@@ -75,90 +96,21 @@
             </div>
             @endif
         </div>
+
+      <div class="clearfix"></div>
     </div> <!-- .row -->
-</div>
+
+</div> <!-- .col-12 -->
 
 
 <div class="col-xs-12">
-    {!! Form::open(['route'=>'avi.store', 'id' => 'destinoForm', 'class' => 'form-horizontal', 'name' => 'afiliado']) !!}
+    {!! Form::open(['route'=>['historial.update', $solicitud->id], 'id' => 'destinoForm', 'class' => 'form-horizontal', 'name' => 'destinos']) !!}
     <div class="row">
         <div class="col-xs-12">
             <div class="pb25">
                 <h3>Intinerario de viajes</h3>
             </div>
         </div>
-    </div> <!-- row -->
-    
-    <div class="row">
-        <div class="col-md-6">
-            <div class="row">
-
-                <div class="col-xs-12">
-                    <div class="form-group {{ $errors->has('desde') ? ' has-error' : '' }}">
-                        {{ Form::label('desde', 'Fecha Salida', ['class' => 'col-md-3 control-label']) }}
-                        <div class="col-md-9">
-                            <div class="input-group">
-                                {{ Form::text('desde[]', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Salida', 'id' => 'iniDate', 'required']) }}
-                                <div class="input-group-addon">
-                                    <span class="fa fa-calendar"></span>
-                                </div>
-                            </div>
-                            @if ($errors->has('desde'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('desde') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-                    <!-- End .form-group  -->
-                </div>
-                
-                <div class="col-xs-12">
-                    <div class="form-group {{ $errors->has('hasta') ? ' has-error' : '' }}">
-                        {{ Form::label('hasta', 'Fecha Retono', ['class' => 'col-md-3 control-label']) }}
-                        <div class="col-md-9">
-                            <div class="input-group">
-                                {{ Form::text('hasta[]', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Retorno', 'id' => 'finDate', 'required']) }}
-                                <div class="input-group-addon">
-                                    <span class="fa fa-calendar"></span>
-                                </div>
-                            </div>
-                            @if ($errors->has('hasta'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('hasta') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-                    <!-- End .form-group  -->
-                </div> 
-
-            </div>
-        </div>
-        
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group {{ $errors->has('destino') ? ' has-error' : '' }}">
-                        {{ Form::label('destino', 'Destino', ['class' => 'col-md-3 control-label']) }}
-                        <div class="col-md-9">
-                        {{ Form::select('destino[]', $paises, null, ['class' => 'form-control', 'id' => 'destino', 'placeholder'=>'Seleccione Pais Destino', 'required']) }}
-                        @if ($errors->has('destino'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('destino') }}</strong>
-                            </span>
-                        @endif
-                        </div>
-                    </div>
-                    <!-- End .form-group  -->
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <h4><span id="dias" class="label label-info"></span></h4>
-        </div>
-
     </div> <!-- row -->
 
     <div class="row">
@@ -187,7 +139,8 @@
                                 </span>
                             @endif
                         </div>
-                    </div><!-- End .form-group  -->
+                    </div>
+                    <!-- End .form-group  -->
                 </div>
                 
                 <div class="col-xs-12">
@@ -262,7 +215,7 @@
                     <div class="form-group {{ $errors->has('cronograma') ? ' has-error' : '' }}">
                         {{ Form::label('cronograma', 'Número de cronograma ', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
-                        {{ Form::text('cronograma', null, ['class' => 'form-control', 'placeholder' => 'Ingrese número de cronograma', 'required']) }}
+                        {{ Form::text('cronograma', $solicitud->nro_cronograma, ['class' => 'form-control', 'placeholder' => 'Ingrese número de cronograma', 'required']) }}
                         @if ($errors->has('cronograma'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('cronograma') }}</strong>
@@ -281,7 +234,7 @@
                     <div class="form-group {{ $errors->has('observaciones') ? ' has-error' : '' }}">
                         {{ Form::label('observaciones', 'Observaciones', ['class' => 'col-md-3 control-label']) }}
                         <div class="col-md-9">
-                        {{ Form::textArea('observaciones', null, ['class' => 'form-control', 'placeholder' => 'Ingrese sus observaciones', 'rows' => 4,'minlength' => "10" ]) }}
+                        {{ Form::textArea('observaciones', $solicitud->observaciones, ['class' => 'form-control', 'placeholder' => 'Ingrese sus observaciones', 'rows' => 4,'minlength' => "10" ]) }}
                         @if ($errors->has('observaciones'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('observaciones') }}</strong>
@@ -290,8 +243,6 @@
                         </div>
                     </div>
                     <!-- End .form-group  -->
-                    <!-- Campos ocultos necesarios para cargar la solicitud -->
-                    {{ Form::hidden('afiliado', $afiliado->id) }}
                 </div>
             </div>
         </div>
@@ -301,7 +252,7 @@
     <div class="row">
        <div class="col-xs-12 col-md-2">
             <p>
-                {!! Form::submit('Generar', ['class' => 'btn btn-primary btn-block', 'id' => 'generar']) !!}
+                {!! Form::submit('Editar', ['class' => 'btn btn-warning btn-block', 'id' => 'editar']) !!}
             </p>
         </div>
     
@@ -313,13 +264,12 @@
 @endsection
 
 @section('script')
+<!-- Incluye las alertas start -->
+<!-- ================ -->
+@include('partials.alert-toast')
+<!-- Incluye las alertas end -->
 <script>
-
 $(document).ready(function() {
-
-    // Contador
-    var contador = 1;
-
     /** Validar formulario **/
     var parsleyOptions = {
         errorClass: 'has-error',
@@ -337,10 +287,32 @@ $(document).ready(function() {
     // Genero la validacion del formulario...
     $('#destinoForm').parsley(parsleyOptions);
 
-    /************************************************************************/
-    //funcion para colocar valores Dinamicos
-    function setIntinerario(index) {
+    /****** Bucle total de destinos cargados ******/
+    // variables para configurar funcion
+    var fecha1 = new Array(),
+        fecha2 = new Array(),
+        destino = new Array(),
+        limit = {{ count($solicitud->destinos) }},
+        contador = 1;
 
+    // Lleno el array con los datos que vienen de BD...
+    @foreach ($solicitud->destinos as $destino)
+        fecha1.push("{{ $destino->fecha_desde->format('Y-m-d') }}");
+        fecha2.push("{{ $destino->fecha_hasta->format('Y-m-d') }}");
+        destino.push({{ $destino->pais_id }}); 
+    @endforeach
+
+    // Realizo el bucle con jquery para cargar los campos defaults
+    for (var i = 0; i < limit; i++) {
+        //Ejecuto la funcion para generar los campos
+        setDestino(contador,fecha1[i],fecha2[i],destino[i]);
+        contador++;
+    }
+    /****** Bucle total de destinos generados ******/
+ 
+    /*funcion para colocar valores Dinamicos*/
+    function setDestino(index,fecha1 = null, fecha2 = null, destino = null) {
+        
         var $template = $('#template'),
             $clone    = $template
                             .clone()
@@ -386,6 +358,8 @@ $(document).ready(function() {
                 $('#finDate'+index).datepicker('setStartDate', null);
             });
 
+            $('#iniDate'+index).val(fecha1).trigger("change");
+
             // adicionar campo requerido
             $("#finDate"+index).parsley(parsleyOptions).addConstraint("required", "true");
 
@@ -413,6 +387,8 @@ $(document).ready(function() {
                 $('#iniDate'+index).datepicker('setEndDate', null);
             });
 
+            $('#finDate'+index).val(fecha2).trigger("change");
+
             // adicionar campo requerido
             $("#destino"+index).parsley(parsleyOptions).addConstraint("required", "true");
 
@@ -426,13 +402,16 @@ $(document).ready(function() {
                 $("#destino"+index).parsley(parsleyOptions).validate();
             });
 
+            // Valido que le pase parametro para cargarlo automaticamente
+            if (destino != null) {
+                $("#destino"+index).val(destino).trigger("change");
+            } 
     }
 
     /*************************************************************************/
-
     // Add button click handler
     $('#destinoForm').on('click', '.addButton', function() {
-        setIntinerario(contador++);
+        setDestino(contador++);
     });
 
     // Remove button click handler
@@ -440,77 +419,21 @@ $(document).ready(function() {
 
         var $row  = $(this).parents('.padre'),
             index = $row.attr('data-index');
+
             // Remove element containing the fields
             $row.remove();
+            alert(count);
     });
-
     /*************************************************************************/
 
-        /* Para fecha de salida y retorno*/
-        $("#iniDate").datepicker({
-            language: "es",
-            startDate: '0',
-            format: 'yyyy-mm-dd',
-        }).on('changeDate', function (selected) {
-            var startDate = new Date(selected.date.valueOf());
-            $('#finDate').datepicker('setStartDate', startDate);
-
-            /* Diferencias de dias*/
-            var diff = diffDates($("#iniDate").val(), $("#finDate").val());
-
-            if(diff > 0)
-            {
-              $("#dias").text(diff + ' días');
-            }
-
-            // Valida campo al cambiar valor
-            $("#iniDate").parsley(parsleyOptions).validate();
-
-        }).on('clearDate', function (selected) {
-            $('#finDate').datepicker('setStartDate', null);
-        });
-
-        $("#finDate").datepicker({
-            language: "es",
-            startDate: '0',
-            format: 'yyyy-mm-dd',
-        }).on('changeDate', function (selected) {
-            var endDate = new Date(selected.date.valueOf());
-            $('#iniDate').datepicker('setEndDate', endDate);
-
-            /* Diferencias de dias*/
-            var diff = diffDates($("#iniDate").val(), $("#finDate").val());
-
-            if (diff > 0)
-            {
-              $("#dias").text(diff + ' días');
-            }
-
-            // Valida campo al cambiar valor
-            $("#finDate").parsley(parsleyOptions).validate();
-
-        }).on('clearDate', function (selected) {
-            $('#iniDate').datepicker('setEndDate', null);
-        });
-
-        /*Para Destino select2*/
-        $("#destino").select2({
-            language: "es",
-            placeholder: "Seleccione pais destino",
-            theme: "bootstrap",
-        }).on("change", function (e) { 
-            // Valida campo al cambiar valor
-            $("#destino").parsley(parsleyOptions).validate();
-        });
-
-        /**** Funcion recupera diferencias de dias ***/
-        function diffDates(dateIni,dateEnd){
-            var start = new Date(dateIni);
-            var end = new Date(dateEnd);
-            var diff = parseInt((end.getTime()-start.getTime())/(24*3600*1000));
-
-            return diff;
-        };
+    /**** Funcion recupera diferencias de dias ***/
+    function diffDates(dateIni,dateEnd){
+        var start = new Date(dateIni);
+        var end = new Date(dateEnd);
+        var diff = parseInt((end.getTime()-start.getTime())/(24*3600*1000));
+        // retorna los dias de diferencia
+        return diff;
+    };
 
 });    
 </script>

@@ -150,4 +150,12 @@ class AcAfiliado extends Model {
         return $this->hasMany(\App\Models\Medicamento::class, 'id_afiliado', 'id');
     }
 
+    /**
+     * Get the Historias medicas for the Afiliado.
+     */
+    public function historiales()
+    {
+        return $this->hasMany(\App\Models\HistorialMedico::class, 'id_user', 'id');
+    }
+
 }

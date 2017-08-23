@@ -107,4 +107,11 @@ class User extends Authenticatable{
     public function claves() {
         return $this->hasMany(\App\Models\AcProveedoresExtranet::class, 'id', 'creador');
     }
+
+    /**
+     * Get Historiales Medicos.
+     */
+    public function historiales() {
+        return $this->hasMany(\App\Models\HistorialMedico::class, 'id_user', 'id');
+    }
 }

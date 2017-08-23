@@ -95,7 +95,7 @@ $(document).ready(function() {
         serverSide: true,
         ajax: "{{ url('api/funerarios') }}",
         language: {
-            url: '/plugins/datatables/language/Spanish.json',
+            url: '{{ url('/plugins/datatables/language/Spanish.json') }}',
         },
         columns: [
             {data: 'id', name: 'id'},

@@ -26,13 +26,14 @@ class Authenticate
                 return redirect()->guest('login');
             }
         }
-
-        if (Auth::user()->active) {
+        // Redirect to login if not activate account
+        if (Auth::user()->active) { 
             return $next($request);
         } else {
-            Auth::logout();
-            return back()->with('message', 'Debe Confirmar Correo Electronico para poder Ingresar al Sistema.');
+                Auth::logout();
+                return back()->with('message', 'Debe Confirmar Correo Electronico para poder Ingresar al Sistema.'); 
         }
-        // return $next($request);
+
+        return $next($request);
     }
 }
