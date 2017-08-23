@@ -79,6 +79,7 @@ class AcAfiliado extends Model {
     /**
      * Get the cuenta for the Afiliado.
      */
+   
     public function cuenta()
     {
         return $this->belongsTo(\App\Models\AcCuenta::class, 'id_cuenta', 'id');

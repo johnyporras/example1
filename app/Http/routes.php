@@ -475,6 +475,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('pagos/aprobarProg'       , 'AprobarProgPagoCotroller@aprobarProg');
     Route::post('pagos/aprobarProg'       , 'AprobarProgPagoCotroller@aprobarProg');
     
+    
+    
+    // recargas
+    Route::get('recargas/pendiente'            , 'ProcesarPagosController@index');
+    Route::get('recargas/hacerpago'            , 'ProcesarPagosController@mercadoPago');
+    Route::get('recargas/historial'            , 'PagosController@getFilter2');
 
     // GESTIONAR CLAVE ODONTOLOGICA dontologica\GenerarController@getProveedores');
     Route::get('clavesOdonto/gestionar'            , 'ClaveOdontologica\GenerarController@buscar');
