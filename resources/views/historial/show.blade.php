@@ -6,12 +6,14 @@
 <link rel="stylesheet" href="{{ url('plugins/bootstrap-sweetalert/sweetalert.css')}}" >
 <link rel="stylesheet" href="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
 <link rel="stylesheet" href="{{ url('plugins/bootstrap-fileinput/css/fileinput.min.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/stacktable/stacktable.css') }}">
 @endpush
 
 @push('scripts')
 
 <script src="{{ asset('plugins/stacktable/stacktable.js') }}"></script>
 <script src="{{ url('plugins/bootstrap-sweetalert/sweetalert.min.js')}}"></script> 
+<script src="{{ asset('plugins/stacktable/stacktable.js') }}"></script>
 <script src="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ url('plugins/bootstrap-datepicker/bootstrap-datepicker.es.min.js') }}"></script>
 <script src="{{ url('plugins/parsley-js/parsley.min.js') }}"></script>
@@ -72,7 +74,7 @@
                 
             <div class="tab-pane" id="3">
             <!-- incluye  profile table -->
-               
+                @include('historial.listado') 
             <!-- incluye  profile table -->  
             </div>
 
@@ -87,7 +89,8 @@
 @section('script')
 <script>
 $(document).ready(function() {
-    
+    //Inicializo tabla responsive
+    $('.card').cardtable();
 }); 
 </script>
 @endsection

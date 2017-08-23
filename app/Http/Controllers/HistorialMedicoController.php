@@ -137,11 +137,10 @@ class HistorialMedicoController extends Controller
         
         $afiliado = AcAfiliado::findOrFail($id);
 
-
-       // dd($afiliado);
+        $listado = HistorialMedico::where('id_afiliado', $id)->get();
 
         // Retorno la vista
-        return view('historial.show',compact('afiliado'));
+        return view('historial.show',compact('afiliado', 'listado'));
     }
 
     /**
