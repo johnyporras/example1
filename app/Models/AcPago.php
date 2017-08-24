@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,7 +14,8 @@ class AcPago extends Model
     public function getPagos()
     {
         $res = $this->select("id","created_at as fechapago","estatuspago")
-        ->where("id_cuenta","=",$this->cuenta);
+        ->where("id_cuenta","=",$this->id_cuenta);
+        
         if($this->estatuspago!="")
         {
             $res=$res->where("estatuspago","=",1);

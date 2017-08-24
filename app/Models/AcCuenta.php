@@ -52,7 +52,7 @@ class AcCuenta extends Model
      */
     public function producto()
     {
-        return $this->belongsTo(\App\Models\AcProducto::class); 
+        return $this->belongsTo(\App\Models\AcProducto::class, 'id_producto'); 
     }
 
     /**
