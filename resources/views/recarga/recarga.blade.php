@@ -3,7 +3,7 @@
 @section('content') 
 
 <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
-<script>Mercadopago.setPublishableKey("TEST-cf00d9f5-9636-49cf-87e0-fc1ec125f600");</script>
+<script>Mercadopago.setPublishableKey("TEST-aae00c59-e71b-4ffb-ae6c-010859b6713d");</script>
 
 
    
@@ -19,78 +19,76 @@
      
 
  
-{!! Form::open(['url' => 'pagos/procesarPago', 'class' => 'form-horizontal', 'id' => 'procesarpago', 'name' => 'procesarpago', 'lang' => 'es', 'data-parsley-validate' => '']) !!}
-    <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
-    {!! Form::label('Email', 'Email: ', ['class' => 'col-sm-2 control-label']) !!}
-        <div class="col-sm-3">
-             
-        {!! Form::text('email', null, ['class' => 'form-control input-sm', 'required' => 'required','placeholder' => 'Email','id'=>'email']) !!}
-        {!! $errors->first('email', '<p class="help-block">:message</p>') !!}         
-            
-        </div>
-        {!! Form::label('numtarjeta', 'Numero de Tarjeta: ', ['class' => 'col-sm-2 control-label']) !!}
-        <div class="col-sm-3">
-            {!! Form::text('cardNumber', null, ['class' => 'form-control input-sm', 'required' => 'required','data-checkout'=>'cardNumber','placeholder'=>'4509 9535 6623 3704','id'=>'cardNumber']) !!}
-            {!! $errors->first('fecha_cita', '<p class="help-block">:message</p>') !!}
-        </div>
-       
-    </div>
-    
-   
+<form action="procesarPago" method="post" id="pay" name="pay" >
+    <fieldset>
+        <ul>
+            <li>
+                <label for="email">Email</label>
+                <input id="email" name="email" value="test_user_19653727@testuser.com" type="email" placeholder="your email"/>
+            </li>
+            <li>
+                <label for="cardNumber">Credit card number:</label>
+                <input type="text" id="cardNumber" data-checkout="cardNumber" placeholder="4509 9535 6623 3704" />
+            </li>
+            <li>
+                <label for="securityCode">Security code:</label>
+                <input type="text" id="securityCode" data-checkout="securityCode" placeholder="123" />
+            </li>
+            <li>
+                <label for="cardExpirationMonth">Expiration month:</label>
+                <input type="text" id="cardExpirationMonth" data-checkout="cardExpirationMonth" placeholder="12" />
+            </li>
+            <li>
+                <label for="cardExpirationYear">Expiration year:</label>
+                <input type="text" id="cardExpirationYear" data-checkout="cardExpirationYear" placeholder="2015" />
+            </li>
+            <li>
+                <label for="cardholderName">Card holder name:</label>
+                <input type="text" id="cardholderName" data-checkout="cardholderName" placeholder="APRO" />
+            </li>
+            <li>
+                <label for="docNumber">Document number:</label>
+                <input type="text" id="docNumber" data-checkout="docNumber" placeholder="12345678" />
+            </li>
+                      <li>
+                <!--<label for="docType">Document type:</label>-->
+                <!--<select id="docType" data-checkout="docType"></select>-->
+                <input data-checkout="docType" type="hidden" value="CI-V"/>
+            </li>
   
-    <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
-    {!! Form::label('codseg', 'Codigo de Seguridad: ', ['class' => 'col-sm-2 control-label']) !!}
-        <div class="col-sm-3">
-             
-        {!! Form::text('securityCode', null, ['class' => 'form-control input-sm', 'required' => 'required','placeholder' => 'Código de Seguridad','id'=>'securityCode']) !!}
-        {!! $errors->first('emails', '<p class="help-block">:message</p>') !!}         
             
-        </div>
-        {!! Form::label('expdate', 'Mes de Expiracin: ', ['class' => 'col-sm-2 control-label']) !!}
-        <div class="col-sm-3">
-            {!! Form::text('cardExpirationMonth', null, ['class' => 'form-control input-sm', 'required' => 'required','data-checkout'=>'cardExpirationMonth','placeholder'=>'Mes de Expiración','id'=>'cardExpirationMonth']) !!}
-            {!! $errors->first('fecha_citad', '<p class="help-block">:message</p>') !!}
-        </div>
-    </div>
-    
-    
-    
-   <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
-    {!! Form::label('codsegq', 'Aioo de expiracion: ', ['class' => 'col-sm-2 control-label']) !!}
-        <div class="col-sm-3">
-             
-        {!! Form::text('cardExpirationYear', null, ['class' => 'form-control input-sm', 'required' => 'required','placeholder' => 'Año de expiración','id'=>'cardExpirationYear','data-checkout'=>'cardExpirationYear']) !!}
-        {!! $errors->first('emaisl', '<p class="help-block">:message</p>') !!}         
+            <!-- inicio cÃ³digo opcional para vender parcelado -->
+            <input type="hidden" id="amount" name="amount" value="100" />
             
-        </div>
-        {!! Form::label('expdate', 'Nombre del Titular: ', ['class' => 'col-sm-2 control-label']) !!}
-        <div class="col-sm-3">
-            {!! Form::text('cardholderName', null, ['class' => 'form-control input-sm', 'required' => 'required','data-checkout'=>'cardholderName','placeholder'=>'Mes de Expiración','id'=>'cardholderName']) !!}
-            {!! $errors->first('fecha_citasd', '<p class="help-block">:message</p>') !!}
-        </div>
-    </div>
-    
-    
-    <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
-    {!! Form::label('codsergq', 'Nmero de Cdula: ', ['class' => 'col-sm-2 control-label']) !!}
-     <div class="col-sm-3">
-        {!! Form::text('docNumber', null, ['class' => 'form-control input-sm', 'required' => 'required','placeholder' => 'Número de Cédula','id'=>'docNumber','data-checkout'=>'docNumber']) !!}
-        {!! $errors->first('emaissl', '<p class="help-block">:message</p>') !!}
-    </div>
-    </div>
-               
-     <input data-checkout="docType" type="hidden" value="CPF"/>
-     <input data-checkout="installment" type="hidden" id="installments" name="installments"/>        
-     <input id="issuer" name="issuer" type="hidden"> 
-          
-    
-        
-    <div class="col-sm-offset-2 col-sm-3"><!--   -->
-            {!! Form::submit('Pagar Ahora', ['class' => 'btn btn-primary form-control', 'id' => 'pagar']) !!}
-    </div>
-    
-                               
- {!! Form::close() !!}
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+            <li>
+                <label for="installments">Installments:</label>
+                <select id="installments" name="installments"></select>
+            </li>
+            <li>
+                <!-- bancos emissores, nÃ£o Ã© necessÃ¡rio no brasil -->
+                <!--<label for="issuer">Issuer:</label>-->
+                <select id="issuer" name="issuer"></select>
+            </li>
+            <!-- fim cÃ³digo opcional para vender parcelado -->
+            
+        </ul>
+        <input type="submit" value="Pay!" />
+    </fieldset>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -98,7 +96,13 @@
 @endsection
 @section('script')
 <script>
-
+/*Mercadopago.getIdentificationTypes(function(estatus,response1){
+	$.each(response1, function(key2, value2){
+		$.each(value2, function(key3, value3){
+		    console.log(key3 + ": " + value3);
+		});
+	});
+});*/
 
 function addEvent(el, eventName, handler){
     if (el.addEventListener) {
@@ -136,6 +140,7 @@ function guessingPaymentMethod(event) {
 };
 
 function setPaymentMethodInfo(status, response) {
+	
     if (status == 200) {
         // do somethings ex: show logo of the payment method
         var form = document.querySelector('#pay');
@@ -153,6 +158,8 @@ function setPaymentMethodInfo(status, response) {
     }
 };
 
+
+
 addEvent(document.querySelector('input[data-checkout="cardNumber"]'), 'keyup', guessingPaymentMethod);
 addEvent(document.querySelector('input[data-checkout="cardNumber"]'), 'change', guessingPaymentMethod);
 
@@ -163,9 +170,9 @@ addEvent(document.querySelector('#pay'),'submit',doPay);
 function doPay(event){
     event.preventDefault();
     if(!doSubmit){
-        var $form = document.querySelector('#pay');
+        var form = document.querySelector('#pay');
         
-        Mercadopago.createToken($form, sdkResponseHandler); // The function "sdkResponseHandler" is defined below
+        Mercadopago.createToken(form, sdkResponseHandler); // The function "sdkResponseHandler" is defined below
 
         return false;
     }
@@ -174,6 +181,14 @@ function doPay(event){
 
 //verificar dados preenchidos e inserir token no form
 function sdkResponseHandler(status, response) {
+	alert(status);
+
+	$.each(response.cause, function(key, value){
+		$.each(response.cause[key], function(key1, value1){
+		    console.log(key1 + ": " + value1);
+		});
+	});
+	
     if (status != 200 && status != 201) {
         alert("Preencha os campos corretamente");
     }else{
@@ -207,14 +222,14 @@ function clearOptions() {
         document.querySelector("#issuer").style.display = 'none';
         document.querySelector("#issuer").innerHTML = "";
 
-        var selectorInstallments = document.querySelector("#installments"),
+       // var selectorInstallments = document.querySelector("#installments"),
             fragment = document.createDocumentFragment(),
             option = new Option("Choose...", '-1');
 
-        selectorInstallments.options.length = 0;
+       // selectorInstallments.options.length = 0;
         fragment.appendChild(option);
-        selectorInstallments.appendChild(fragment);
-        selectorInstallments.setAttribute('disabled', 'disabled');
+       // selectorInstallments.appendChild(fragment);
+        //selectorInstallments.setAttribute('disabled', 'disabled');
     }
 }
 
@@ -272,11 +287,11 @@ function setPaymentMethodInfo(status, response) {
             }
         }
 
-        Mercadopago.getInstallments({
+/*        Mercadopago.getInstallments({
             "bin": bin,
             "amount": amount
         }, setInstallmentInfo);
-
+*/
         // check if the issuer is necessary to pay
         var issuerMandatory = false,
             additionalInfo = response[0].additional_info_needed;
@@ -286,13 +301,13 @@ function setPaymentMethodInfo(status, response) {
                 issuerMandatory = true;
             }
         };
-        if (issuerMandatory) {
+       /* if (issuerMandatory) {
             Mercadopago.getIssuers(response[0].id, showCardIssuers);
             addEvent(document.querySelector('#issuer'), 'change', setInstallmentsByIssuerId);
         } else {
             document.querySelector("#issuer").style.display = 'none';
             document.querySelector("#issuer").options.length = 0;
-        }
+        }*/
     }
 };
 
@@ -333,7 +348,7 @@ function setInstallmentsByIssuerId(status, response) {
 };
 
 function setInstallmentInfo(status, response) {
-    var selectorInstallments = document.querySelector("#installments"),
+   /* var selectorInstallments = document.querySelector("#installments"),
         fragment = document.createDocumentFragment();
 
     selectorInstallments.options.length = 0;
@@ -349,10 +364,11 @@ function setInstallmentInfo(status, response) {
         }
         selectorInstallments.appendChild(fragment);
         selectorInstallments.removeAttribute('disabled');
-    }
+    } */
 };
 
 function cardsHandler() {
+	
     clearOptions();
     var cardSelector = document.querySelector("#cardId"),
         amount = document.querySelector('#amount').value;

@@ -534,7 +534,7 @@ Route::group(['middleware' => ['auth']], function () {
     
     // recargas
     Route::get('recargas/pendiente'            , 'ProcesarPagosController@index');
-    Route::get('recargas/hacerpago'            , 'ProcesarPagosController@mercadoPago');
+    Route::post('recargas/procesarPago'            , 'ProcesarPagosController@mercadoPago');
     Route::get('recargas/historial'            , 'PagosController@getFilter2');
 
     // GESTIONAR CLAVE ODONTOLOGICA dontologica\GenerarController@getProveedores');
