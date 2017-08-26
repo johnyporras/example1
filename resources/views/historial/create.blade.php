@@ -124,7 +124,7 @@
                     <div class="form-group {{ $errors->has('procedimiento') ? ' has-error' : '' }}">
                         {{ Form::label('procedimiento', 'Procedimiento o Examen', ['class' => 'col-md-4 control-label']) }}
                         <div class="col-md-8">
-                            {{ Form::text('procedimiento', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Retorno', 'id' => 'finDate', 'required']) }}
+                            {{ Form::text('procedimiento', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Procedimiento o Examen', 'id' => 'finDate', 'required']) }}
                         
                         @if ($errors->has('procedimiento'))
                             <span class="help-block">
