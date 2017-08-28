@@ -3,81 +3,130 @@
 @section('content') 
 
 <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
-<script>Mercadopago.setPublishableKey("TEST-aae00c59-e71b-4ffb-ae6c-010859b6713d");</script>
+<!--<script>Mercadopago.setPublishableKey("TEST-aae00c59-e71b-4ffb-ae6c-010859b6713d");</script>-->
+<script>Mercadopago.setPublishableKey("TEST-150ab2b6-bd3f-444b-ace5-952efb10d132");</script>
 
 
-   
-  <p> Monto correspondiente al mes 01</p>
-  <p> Total a Pagar <span>10.000,00</span></p>
+
+
+
+<script src="//code.jquery.com/jquery-1.12.3.js"></script>
+<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script
+    src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+<link rel="stylesheet"
+    href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet"
+    href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+    
+    <table class="table" id="table">
+    <thead>
+        <tr>
+            <th class="text-center">Id</th>
+            <th class="text-center">Fecha de Corte</th>
+            <th class="text-center">Estatus</th>
+            <th class="text-center">Monto</th>
+            <th class="text-center">Seleccione</th>
+        </tr>
+    </thead>
+    <tbody>
+ @foreach($rsPagos as $item)
+<tr id="{{$item->id}}" class="row1"  data-montimp="" data-idprov="">
+    <td>{{$item->id}}</td>
+    <td id="numfact{{$item->id}}">{{$item->fechacorte}}</td>
+    <td id="numcon{{$item->id}}">{{$item->estatus}}</td>
+    <td id="cant{{$item->id}}">{{$item->monto}}</td>
+    <td>
+    	<input type="checkbox" name="{{$item->id}}" id="{{$item->id}}" data-monto="{{$item->monto}}" class="checkpago">    
+    </td>
+</tr>
+@endforeach
+    </tbody>
+</table>
+
+  <p> Total a Pagar <span id="montopago"></span></p>
  <br>
  
  <br> 
   
-
-
-
-     
-
- 
-<form action="procesarPago" method="post" id="pay" name="pay" >
-    <fieldset>
-        <ul>
-            <li>
-                <label for="email">Email</label>
-                <input id="email" name="email" value="test_user_19653727@testuser.com" type="email" placeholder="your email"/>
-            </li>
-            <li>
-                <label for="cardNumber">Credit card number:</label>
-                <input type="text" id="cardNumber" data-checkout="cardNumber" placeholder="4509 9535 6623 3704" />
-            </li>
-            <li>
-                <label for="securityCode">Security code:</label>
-                <input type="text" id="securityCode" data-checkout="securityCode" placeholder="123" />
-            </li>
-            <li>
-                <label for="cardExpirationMonth">Expiration month:</label>
-                <input type="text" id="cardExpirationMonth" data-checkout="cardExpirationMonth" placeholder="12" />
-            </li>
-            <li>
-                <label for="cardExpirationYear">Expiration year:</label>
-                <input type="text" id="cardExpirationYear" data-checkout="cardExpirationYear" placeholder="2015" />
-            </li>
-            <li>
-                <label for="cardholderName">Card holder name:</label>
-                <input type="text" id="cardholderName" data-checkout="cardholderName" placeholder="APRO" />
-            </li>
-            <li>
-                <label for="docNumber">Document number:</label>
-                <input type="text" id="docNumber" data-checkout="docNumber" placeholder="12345678" />
-            </li>
-                      <li>
-                <!--<label for="docType">Document type:</label>-->
-                <!--<select id="docType" data-checkout="docType"></select>-->
-                <input data-checkout="docType" type="hidden" value="CI-V"/>
-            </li>
   
-            
-            <!-- inicio cÃ³digo opcional para vender parcelado -->
-            <input type="hidden" id="amount" name="amount" value="100" />
-            
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+  
+  
 
-            <li>
-                <label for="installments">Installments:</label>
-                <select id="installments" name="installments"></select>
-            </li>
-            <li>
-                <!-- bancos emissores, nÃ£o Ã© necessÃ¡rio no brasil -->
-                <!--<label for="issuer">Issuer:</label>-->
-                <select id="issuer" name="issuer"></select>
-            </li>
-            <!-- fim cÃ³digo opcional para vender parcelado -->
+{!! Form::open(['url' => 'recargas/procesarPago', 'class' => 'form-horizontal', 'id' => 'pay', 'name' => 'procesarpago', 'lang' => 'es', 'data-parsley-validate' => '']) !!}
+    <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
+    {!! Form::label('Email', 'Email: ', ['class' => 'col-sm-2 control-label']) !!}
+        <div class="col-sm-3">
+             
+        {!! Form::text('email', null, ['class' => 'form-control input-sm', 'required' => 'required','placeholder' => 'Email','id'=>'email']) !!}
+        {!! $errors->first('email', '<p class="help-block">:message</p>') !!}         
             
-        </ul>
-        <input type="submit" value="Pay!" />
-    </fieldset>
-</form>
-
+        </div>
+        {!! Form::label('numtarjeta', 'Numero de Tarjeta: ', ['class' => 'col-sm-2 control-label']) !!}
+        <div class="col-sm-3">
+            {!! Form::text('cardNumber', null, ['class' => 'form-control input-sm', 'required' => 'required','data-checkout'=>'cardNumber','placeholder'=>'4509 9535 6623 3704','id'=>'cardNumber']) !!}
+            {!! $errors->first('fecha_cita', '<p class="help-block">:message</p>') !!}
+        </div>
+       
+    </div>
+    
+   
+  
+    <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
+    {!! Form::label('codseg', 'Codigo de Seguridad: ', ['class' => 'col-sm-2 control-label']) !!}
+        <div class="col-sm-3">
+             
+        {!! Form::text('securityCode', null, ['class' => 'form-control input-sm', 'required' => 'required','placeholder' => 'Código de Seguridad','id'=>'securityCode','data-checkout'=>'securityCode']) !!}
+        {!! $errors->first('emails', '<p class="help-block">:message</p>') !!}         
+            
+        </div>
+        {!! Form::label('expdate', 'Mes de Expiracin: ', ['class' => 'col-sm-2 control-label']) !!}
+        <div class="col-sm-3">
+            {!! Form::text('cardExpirationMonth', null, ['class' => 'form-control input-sm', 'required' => 'required','data-checkout'=>'cardExpirationMonth','placeholder'=>'Mes de Expiración','id'=>'cardExpirationMonth']) !!}
+            {!! $errors->first('fecha_citad', '<p class="help-block">:message</p>') !!}
+        </div>
+    </div>
+    
+    
+    
+   <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
+    {!! Form::label('codsegq', 'Aioo de expiracion: ', ['class' => 'col-sm-2 control-label']) !!}
+        <div class="col-sm-3">
+             
+        {!! Form::text('cardExpirationYear', null, ['class' => 'form-control input-sm', 'required' => 'required','placeholder' => 'Año de expiración','id'=>'cardExpirationYear','data-checkout'=>'cardExpirationYear']) !!}
+        {!! $errors->first('emaisl', '<p class="help-block">:message</p>') !!}         
+            
+        </div>
+        {!! Form::label('expdate', 'Nombre del Titular: ', ['class' => 'col-sm-2 control-label']) !!}
+        <div class="col-sm-3">
+            {!! Form::text('cardholderName', null, ['class' => 'form-control input-sm', 'required' => 'required','data-checkout'=>'cardholderName','placeholder'=>'Mes de Expiración','id'=>'cardholderName']) !!}
+            {!! $errors->first('fecha_citasd', '<p class="help-block">:message</p>') !!}
+        </div>
+    </div>
+    
+    
+    <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
+    {!! Form::label('codsergq', 'Nmero de Cdula: ', ['class' => 'col-sm-2 control-label']) !!}
+     <div class="col-sm-3">
+        {!! Form::text('docNumber', null, ['class' => 'form-control input-sm', 'required' => 'required','placeholder' => 'Número de Cédula','id'=>'docNumber','data-checkout'=>'docNumber']) !!}
+        {!! $errors->first('emaissl', '<p class="help-block">:message</p>') !!}
+    </div>
+    </div>
+               
+     <input data-checkout="docType" type="hidden" value="CI-V"/>
+     <select id="issuer" name="issuer"></select>        
+     <select id="installments" name="installments"></select>
+     <input id="amount" name="amount" type="hidden">
+     <input id="monto" name="monto" type="hidden"> 
+     <input id="idpago" name="idpago" type="hidden" value="1">    
+    
+        
+    <div class="col-sm-offset-2 col-sm-3"><!--   -->
+            {!! Form::submit('Pagar Ahora', ['class' => 'btn btn-primary form-control', 'id' => 'pagar']) !!}
+    </div>
+    
+                               
+ {!! Form::close() !!}
 
 
 
@@ -103,6 +152,48 @@
 		});
 	});
 });*/
+
+var montotal=0;
+$('.checkpago').on('click',function(){
+	
+	monto = parseInt($(this).data('monto'));
+	if(monto>0)
+	{
+		montotal=montotal+monto;
+		actMonto();
+	}
+})
+
+
+function actMonto()
+{
+	//alert(montotal);
+	$("#montopago").html(montotal);
+	$("#amount").val(montotal);
+	$("#monto").val(montotal);
+}
+
+$('#table').DataTable({
+
+	  "language": {
+  	  	"search": "Buscar:",
+	        "paginate": {
+	            "first":    '',
+	            "previous": '',
+	            "next":     '',
+	            "last":     ''
+	        },
+	        "aria": {
+	            "paginate": {
+	                "first":    'First',
+	                "previous": 'Previous',
+	                "next":     'Next',
+	                "last":     'Last'
+	            }
+	        }
+	    }
+});
+
 
 function addEvent(el, eventName, handler){
     if (el.addEventListener) {
@@ -140,6 +231,7 @@ function guessingPaymentMethod(event) {
 };
 
 function setPaymentMethodInfo(status, response) {
+
 	
     if (status == 200) {
         // do somethings ex: show logo of the payment method
@@ -181,7 +273,7 @@ function doPay(event){
 
 //verificar dados preenchidos e inserir token no form
 function sdkResponseHandler(status, response) {
-	alert(status);
+	//alert(status);
 
 	$.each(response.cause, function(key, value){
 		$.each(response.cause[key], function(key1, value1){
@@ -190,7 +282,7 @@ function sdkResponseHandler(status, response) {
 	});
 	
     if (status != 200 && status != 201) {
-        alert("Preencha os campos corretamente");
+        alert("Introduzca los campos correctamente");
     }else{
        
         var form = document.querySelector('#pay');

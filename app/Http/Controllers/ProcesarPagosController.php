@@ -16,7 +16,6 @@ class ProcesarPagosController extends Controller
         $oAfiliado =AcAfiliado::findOrFail($user->detalles_usuario_id);
         $oPago= new AcPago();
         $oPago->id_cuenta = $oAfiliado->id_cuenta;
-        $oPago->estatuspago = "1";
         $rsPagos = $oPago->getPagos();
         if($rsPagos=="0")
         {
@@ -26,28 +25,65 @@ class ProcesarPagosController extends Controller
             $oPago->estatuspago= "1";
             $oPago->save();
         }
-        return view("recarga.recarga",compact('oPago'));
+        else 
+        {
+            $oPago->estatuspago = "1";
+            $rsPagos = $oPago->getPagos();
+        }
+        
+        return view("recarga.recarga",compact('rsPagos'));
     }
     
+   
     public function mercadoPago(Request $request1)
     {
-       // dd($request1);
-        $mp = new MP('TEST-4388033907515043-072820-53369c38e02589311ffe7655e269bc7f__LB_LD__-91609941'); //insira aqui o access token
-        
+      // dd($request1->paymentMethodId);
+       // $mp = new MP('TEST-4388033907515043-072820-53369c38e02589311ffe7655e269bc7f__LB_LD__-91609941'); 
+        $mp = new MP('TEST-4268578252492942-082417-17db3f4279462eb42cfae6f00f2398da__LC_LB__-265132865');
+        //dd($request1->paymentMethodId);
         $payment_data = array(
-            "transaction_amount"   => 100, //valor da compra
+            "transaction_amount"   => intval($request1->monto), //valor da compra
             "token"                => $request1->token, //token gerado pelo javascript da index.php
-            "description"          => "Prueba de pago", //descrição da compra
+            "description"          => "Pago de Servicios a tiempo", //descrição da compra
             "installments"         => 1, //parcelas
-            "payment_method_id"    => $request1->paymentMethodId, //forma de pagamento (visa, master, amex...)
+            "payment_method_id"    =>"visa", //forma de pagamento (visa, master, amex...)
             "payer"                => array ("email" => $request1->email), //e-mail do comprador
-            "statement_descriptor" => "atiempo" //nome para aparecer na fatura do cartão do cliente
+            "statement_descriptor" => "sistema on line atiempo" //nome para aparecer na fatura do cartão do cliente
         );
         
-        $payment = $mp->post("/v1/payments", $payment_data);
+         $payment = $mp->post("/v1/payments", $payment_data);
+         $estatus = $payment["status"];
+         if($estatus==201 || $estatus==200)
+        {
+            $oPago= AcPago::findOrFail($request1->idpago);
+            $oPago->estatuspago = "2";
+            $oPago->observacion = "Pago realizado con exito";
+            $oPago->fechapago = \date("Y-m-d");
+            $oPago->hora= \date('H:i');
+            if($oPago->save())
+            {
+                $user = \Auth::user();
+                $oAfiliado =AcAfiliado::findOrFail($user->detalles_usuario_id);
+                $nuevoPago = new AcPago();
+                $oPago->id_cuenta = $oAfiliado->id_cuenta;
+                $oPago->estatuspago = "1";
+                $rsPagos = $oPago->getPagos();
+                if($rsPagos=="0")
+                {
+                    $oCuenta=AcCuenta::findOrFail($oAfiliado->id_cuenta);
+                    $oPago->fechacorte =date('Y-m-j',strtotime( '+1 month' , strtotime ( $oCuenta->fecha )));
+                    $oPago->monto= $oCuenta->producto->costo;
+                    $oPago->estatuspago= "1";
+                    $oPago->save();
+                    $response["pagoexitoso"]= true;
+                }
+            }
+            else 
+            {
+                $response["pagoexitoso"]= false;    
+            }
+         }
         
-        echo "<pre>";
-        print_r($payment);
-        
+        return view("recarga.respuestapago",compact('response'));
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AcPago extends Model
 {
+    protected $table = 'ac_pagos';
     public function cuenta()
     {
         return $this->belongsTo(\App\Models\AcCuenta::class);
@@ -13,7 +14,7 @@ class AcPago extends Model
     
     public function getPagos()
     {
-        $res = $this->select("id","created_at as fechapago","estatuspago")
+        $res = $this->select("id","created_at as fechapago","estatuspago","monto","fechacorte")
         ->where("id_cuenta","=",$this->id_cuenta);
         
         if($this->estatuspago!="")
@@ -22,7 +23,6 @@ class AcPago extends Model
             
         }
         $res = $res->get();
-        
         if($res->count()>0)
         {
             return $res;
