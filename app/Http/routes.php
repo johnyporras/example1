@@ -270,10 +270,26 @@ Route::group(['middleware' => ['auth']], function () {
             'as'   => 'historial.show' 
     ]);
 
+    Route::get('historial/{id}/view', [
+            'uses' => 'HistorialMedicoController@view',
+            'as'   => 'historial.view' 
+    ]);
+
     Route::get('historial/{id}/destroy', [
             'uses' => 'HistorialMedicoController@destroy',
             'as'   => 'historial.destroy' 
     ]);
+
+    Route::post('historial/store/item', [
+            'uses' => 'HistorialMedicoController@save',
+            'as'   => 'historial.save' 
+    ]);
+
+    Route::get('historial/delete/{id}', [
+            'uses' => 'HistorialMedicoController@delete',
+            'as'   => 'historial.delete' 
+    ]);
+
     
 });
 /*=====================================================*/

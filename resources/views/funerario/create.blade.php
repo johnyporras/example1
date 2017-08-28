@@ -444,7 +444,7 @@
 
     <div class="row">
        <div class="col-xs-12 col-md-2 pb15">
-            <button type="button" class="btn btn-info btn-sm addButton" title="Agragar otro destino"><span><i class="fa fa-plus"></i></span> Presupuesto</button>
+            <button type="button" class="btn btn-info btn-sm addButton" title="Agregar otro presupuesto"><span><i class="fa fa-plus"></i></span> Presupuesto</button>
         </div>
     </div> <!-- row -->
 
@@ -496,7 +496,7 @@
 
         <div class="col-xs-12">
             <!-- Campos ocultos necesarios para cargar la solicitud -->
-            {{ Form::hidden('afiliado_id', $afiliado->id) }}
+            {{ Form::hidden('afiliado_id', $id) }}
             <hr>
         </div>
 

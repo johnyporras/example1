@@ -32,15 +32,15 @@ class HistorialMedico extends Model
      */
     protected $fillable = [
         'id_user',
-        'id-afiliado',
+        'id_afiliado',
     	'fecha', 
         'motivo', 
         'especialidad', 
-        'tratamiento',  
+        'tratamiento',
+        'medico',  
         'procedimiento',     
         'observaciones',
         'recomendaciones',
-        'archivos',
         'deleted_at'
     ];
 
@@ -60,5 +60,14 @@ class HistorialMedico extends Model
     public function usuario()
     {
         return $this->belongsTo(\App\User::class, 'id_user');
+    }
+
+    /**
+     * Relación can tabla de destinos
+     * @return [type] [description]
+     */
+    public function examenes()
+    {
+        return $this->hasMany(\App\Models\HistorialExamen::class, 'id_historial');
     }
 }

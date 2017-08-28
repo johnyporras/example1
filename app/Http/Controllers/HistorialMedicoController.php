@@ -8,9 +8,12 @@ use App\Http\Requests;
 use Auth;
 use App\Models\AcAfiliado;
 use App\Models\HistorialMedico;
+use App\Models\HistorialExamen;
 use App\User;
 use Carbon\Carbon;
 use DB;
+use File;
+use Storage;
 use Session;
 use Yajra\Datatables\Datatables;
 
@@ -63,7 +66,6 @@ class HistorialMedicoController extends Controller
         return view('historial.lista');
     }
 
-
     public function historiales()
     {
 
@@ -72,11 +74,14 @@ class HistorialMedicoController extends Controller
         return Datatables::of($historiales)
         ->addColumn('action', function ($historial) {
                 return '
-                <a href="/historial/'.$historial->id.'" title="Ver Detalles" class="btn btn-warning btn-xs"> <i class="fa fa-eye"> </i></a>
+                <a href="/historial/'.$historial->id.'/view" title="Ver Detalles" class="btn btn-warning btn-xs"> <i class="fa fa-eye"> </i></a>
                 <a href="/historial/'.$historial->id.'/edit" title="Editar Solicitud" class="btn btn-info btn-xs"> <i class="fa fa-edit"> </i></a>
-                <a href="/historial/'.$historial->id.'" title="Eliminar Solicitud" class="btn btn-danger btn-xs sweet-danger"> <i class="fa fa-trash"> </i></a>';
+                <a href="/historial/'.$historial->id.'" title="Eliminar Historial" class="btn btn-danger btn-xs sweet-danger"> <i class="fa fa-trash"> </i></a>';
             })
-        ->editColumn('created_at', function ($solicitud) {
+        ->editColumn('fecha', function ($historial) {
+                return $historial->fecha->format('d/m/Y');
+            })
+        ->editColumn('created_at', function ($historial) {
                 return $historial->created_at->format('d/m/Y');
             })
         ->make(true);
@@ -87,13 +92,13 @@ class HistorialMedicoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
 
         $historial = HistorialMedico::all();
 
         //Retorno la vista
-        return view('historial.create', compact('historial'));
+        return view('historial.create', compact('historial', 'id'));
     }
 
     /**
@@ -104,25 +109,56 @@ class HistorialMedicoController extends Controller
      */
     public function store(Request $request)
     {
-        /**valida los campos del formulario **/
+        // valida los campos del formulario
         $this->validate($request, [
-            'hasta'         => 'required',
-            'destino'       => 'required',
-            'cronograma'    => 'required',
-            'observaciones' => 'min:10'
+            'fecha'         => 'required',
+            'motivo'        => 'required',
+            'especialidad'  => 'required',
+            'procedimiento' => 'required',
+            'tratamiento'   => 'required',
+            'recomendaciones' => 'min:10',
+            'observaciones'   => 'min:10'
         ]);
 
-        $avi = HistorialMedico::create([
-            'afiliado_id'    => $request->afiliado,
-            'codigo_solicitud' => $codigo,
-            'codigo_contrato'  => '555',
-            'cobertura_monto'  => 0,
-            'nro_cronograma'   => $request->cronograma,  
-            'observaciones'    => $request->observaciones,     
-            'creador'          => Auth::user()->id
+        // Guardo el historial medico
+        $historial = HistorialMedico::create([
+            'id_user'     => Auth::user()->id,
+            'id_afiliado' => $request->id_afiliado,
+            'fecha'       => $request->fecha,
+            'motivo'      => $request->motivo,
+            'especialidad'  => $request->especialidad,
+            'tratamiento'   => $request->tratamiento,
+            'procedimiento' => $request->procedimiento,
+            'observaciones'   => $request->observaciones,
+            'recomendaciones' => $request->recomendaciones  
         ]);
 
-        toast()->info('Solicitud generada sastifactoriamente', 'Información:');
+        // Guardo Exmenes asociadas al historial medico
+        if (count($request->examen) > 0) 
+        {
+            // Total de examenes para realizar bucle
+            $total = count($request->examen);
+
+            // Aqui se guardan todos los presupuestos da la solicitud
+            for ($i = 0; $i < $total; $i++) {
+
+                // guardo en una variable el archivo
+                $file = $request['examen'][$i];
+
+                // Cambio nombre de la imagen
+                $filename = 'examen'.'_'.$request->id_afiliado.$i.time().'.'.$file->getClientOriginalExtension();
+                // Guardo la imagen en el directorio 
+                Storage::disk('documento')->put($filename, file_get_contents($file));
+
+                // Guardo el exmen seleccionado
+                $examen = $historial->examenes()->create([
+                    'examen' => $filename,
+                ]);
+            }
+
+        }
+
+        toast()->info('Historial generado sastifactoriamente', 'Información:');
         return redirect()->route('historial.lista');
     }
 
@@ -144,6 +180,20 @@ class HistorialMedicoController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function view($id)
+    {
+        $historial = HistorialMedico::findOrFail($id);
+
+        // Retorno la vista
+        return view('historial.detalle',compact('historial'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -152,10 +202,10 @@ class HistorialMedicoController extends Controller
     public function edit($id)
     {
         // selecciono solicitud
-        $solicitud = HistorialMedico::findOrFail($id);
+        $historial = HistorialMedico::findOrFail($id);
 
         // Retorno la vista
-        return view('historial.edit',compact('solicitud'));
+        return view('historial.editar',compact('historial'));
     }
 
     /**
@@ -167,20 +217,30 @@ class HistorialMedicoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        /**valida los campos del formulario **/
+        // valida los campos del formulario
         $this->validate($request, [
-            'hasta'         => 'required',
-            'destino'       => 'required',
-            'cronograma'    => 'required',
-            'observaciones' => 'min:10'
+            'fecha'         => 'required',
+            'motivo'        => 'required',
+            'especialidad'  => 'required',
+            'procedimiento' => 'required',
+            'tratamiento'   => 'required',
+            'recomendaciones' => 'min:10',
+            'observaciones'   => 'min:10'
         ]);
 
-        $solicitud->update([
-            'nro_cronograma' => $request->cronograma,
-            'observaciones' => $request->observaciones,
+        $historial = HistorialMedico::findOrFail($id);
+
+        $historial->update([
+            'fecha'       => $request->fecha,
+            'motivo'      => $request->motivo,
+            'especialidad'  => $request->especialidad,
+            'tratamiento'   => $request->tratamiento,
+            'procedimiento' => $request->procedimiento,
+            'observaciones'   => $request->observaciones,
+            'recomendaciones' => $request->recomendaciones  
         ]);
 
-        toast()->info(' Solicitud: '.$solicitud->codigo_solicitud.' modificada Correctamente', 'Alerta:');
+        toast()->info('Historial Medico modificado Correctamente', 'Alerta:');
         return redirect()->route('historial.lista');
     }
 
@@ -192,14 +252,56 @@ class HistorialMedicoController extends Controller
      */
     public function destroy($id)
     {
-        $solicitud = HistorialMedico::findOrFail($id);
+        $historial = HistorialMedico::findOrFail($id);
 
         // Elimino la solicitud y sus relaciones
-        //$solicitud->destinos()->delete();
-        $solicitud->delete();
+        $historial->examenes()->delete();
+        $historial->delete();
 
-        toast()->error(' Solicitud: '.$solicitud->codigo_solicitud.' Eliminada Correctamente', 'Alerta:');
+        toast()->error(' Historial Medico Eliminado Correctamente', 'Alerta:');
         // Retorno a la lista de solicitudes
-        return redirect()->route('solicitud.lista');
+        return redirect()->route('historial.lista');
     }
+
+    /**
+     * Metodo para agregar examenes al historial medico
+     */
+    public function save(Request $request)
+    {
+        $historial = HistorialMedico::findOrFail($request->id);
+
+        if ($request->hasFile('examen')) 
+        {
+            // guardo en una variable la imagen
+            $file = $request->file('examen');
+            // Cambio nombre de la imagen
+            $filename = 'examen'.'_'.$request->id_afiliado.time().'.'.$file->getClientOriginalExtension();
+            // Guardo la imagen en el directorio 
+            Storage::disk('documento')->put($filename, file_get_contents($file));
+        }
+
+        // Guardo el exmen seleccionado
+        $examen = $historial->examenes()->create([
+            'examen' => $filename,
+        ]);
+        
+        
+        toast()->info(' Examen guardado sastifactoriamente', 'Información:');
+        return redirect()->route('historial.view', $historial->id);
+    }
+
+    public function delete($id)
+    {
+        //Selecciono el examen   
+        $examen = HistorialExamen::findOrFail($id);   
+
+        // dd($examen->historial->id);  
+        //Elimino el examen
+        $examen->delete();
+
+        toast()->error(' Examen Eliminado Correctamente', 'Alerta:');
+        // Retorno a la lista de solicitudes
+        return redirect()->route('historial.view',$examen->historial->id);
+    }
+
 }

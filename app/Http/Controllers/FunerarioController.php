@@ -206,7 +206,7 @@ class FunerarioController extends Controller
             if ($request->hasFile('envoice')) 
             {
                 // guardo en una variable la imagen
-                $file = $file = $request['envoice'][$i];
+                $file = $request['envoice'][$i];
                 // Cambio nombre de la imagen
                 $filename = 'fact'.'_'.$codigo.'_'.$i.'.'.$file->getClientOriginalExtension();
                 //Directorio

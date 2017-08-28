@@ -21,9 +21,9 @@ class CreateHistorialMedicoTable extends Migration
             $table->string('especialidad')->nullable();
             $table->string('tratamiento')->nullable();
             $table->string('procedimiento')->nullable()->comment('Procedimiento o Examen medico realizado');
+            $table->text('medico')->nullable();
             $table->text('observaciones')->nullable();
             $table->text('recomendaciones')->nullable();
-            $table->string('archivos')->nullable()->comment('Examenes Realizados');
             $table->timestamps();
             $table->softDeletes();
                 $table->foreign('id_user')->references('id')->on('users')

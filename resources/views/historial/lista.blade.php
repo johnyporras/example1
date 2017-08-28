@@ -34,12 +34,12 @@
 <div class="col-xs-12">
     <div class="row">
         <div class="col-xs-12">
-            <p><a href="{{ url('/historial') }}" title="Generar otra Solicitud" class="btn btn-success btn-sm"><span class="pr5"><i class="fa fa-plus"></i></span> Generar</a></p>
+            <p><a href="{{ url('/historial') }}" title="Generar historial" class="btn btn-success btn-sm"><span class="pr5"><i class="fa fa-plus"></i></span> Generar</a></p>
         </div>
     </div> <!-- row -->
     <div class="row">
         <div class="col-xs-12">
-            <h1 class="pt10 pb10 m0">Listado de Solicitudes</h1>
+            <h1 class="pt10 pb10 m0">Listado de Historiales Medicos</h1>
         </div>
     </div> <!-- row -->
 </div>
@@ -51,11 +51,11 @@
                 <thead>
                     <tr>
                         <th width="20">Id</th>
-                        <th width="50">Solicitud</th>
-                        <th>Contrato</th>
-                        <th>Cobertura</th>
-                        <th>Cronograma</th>
-                        <th>Observaciones</th>
+                        <th width="50">Fecha Atención</th>
+                        <th>Motivo Atención</th>
+                        <th>Especialidad</th>
+                        <th>Procedimiento</th>
+                        <th>Tratamiento</th>
                         <th>Creado</th>
                         <th width="80">Acciones</th>
                     </tr>
@@ -92,17 +92,17 @@ $(document).ready(function() {
         responsive: true,
         processing: true,
         serverSide: true,
-        ajax: '{{ url('api/solicitudes') }}',
+        ajax: '{{ url('api/historiales') }}',
         language: {
             url: '{{ url('/plugins/datatables/language/Spanish.json') }}',
         },
         columns: [
             {data: 'id'},
-            {data: 'codigo_solicitud'},
-            {data: 'codigo_contrato' },
-            {data: 'cobertura_monto' },
-            {data: 'nro_cronograma' },
-            {data: 'observaciones' },
+            {data: 'fecha'},
+            {data: 'motivo' },
+            {data: 'especialidad' },
+            {data: 'procedimiento' },
+            {data: 'tratamiento' },
             {data: 'created_at'},
             {data: 'action', orderable: false, searchable: false}
         ],
