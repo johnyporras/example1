@@ -31,7 +31,9 @@ class ProcesarPagosController extends Controller
             $rsPagos = $oPago->getPagos();
         }
         
-        return view("recarga.recarga",compact('rsPagos'));
+        
+        
+        return view("recarga.recargapaypal",compact('rsPagos'));
     }
     
    
