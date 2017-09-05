@@ -450,6 +450,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('Seguridad/incPermiso'   ,'PermisosController@incPermiso');
     Route::get('Seguridad/evalPermiso'   ,'PermisosController@evalPermiso');
     Route::get('Seguridad/nopermiso'   ,'PermisosController@nopermiso');
+    
+    
+    //paypal
+    
+    Route::get('Paypal/test1','PaypalPaymentController@store');
+    Route::post('paypal/procesarPago','PaypalPaymentController@store');
+    
+    
+    
  
     // CONFIRMACION DE CLAVES DE ATENCION ESPECIAL
     Route::get( 'clavesEspeciales/confirmarEspeciales','ConfirmarClaveEspecialController@getFilter');

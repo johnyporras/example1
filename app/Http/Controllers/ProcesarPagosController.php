@@ -33,7 +33,7 @@ class ProcesarPagosController extends Controller
         
         
         
-        return view("recarga.recargapaypal",compact('rsPagos'));
+        return view("recarga.recargapaypalform",compact('rsPagos'));
     }
     
    
