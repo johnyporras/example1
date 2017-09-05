@@ -164,6 +164,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Anouar\Paypalpayment\PaypalpaymentServiceProvider::class,
 
     ],
 
@@ -217,6 +218,7 @@ return [
         'Toast' => Grimthorr\LaravelToast\Facade::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'Paypalpayment'  => Anouar\Paypalpayment\Facades\PaypalPayment::class,
     ],
 
 ];
