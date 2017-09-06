@@ -14,7 +14,8 @@ class AcPago extends Model
     
     public function getPagos()
     {
-        $res = $this->select("id","created_at as fechapago","estatuspago","monto","fechacorte")
+        $res = $this->select("id","created_at as fechapago","estatuspago","monto")
+        ->selectRaw("to_char(ac_pagos.fechacorte, 'dd/MM/YYYY') as fechacorte")
         ->where("id_cuenta","=",$this->id_cuenta);
         
         if($this->estatuspago!="")
