@@ -16,10 +16,12 @@ class ProcesarPagosController extends Controller
         $oAfiliado =AcAfiliado::findOrFail($user->detalles_usuario_id);
         $oPago= new AcPago();
         $oPago->id_cuenta = $oAfiliado->id_cuenta;
+        $oCuenta=AcCuenta::findOrFail($oAfiliado->id_cuenta);
+        $codigoCuenta = substr($oCuenta->codigo_cuenta, 2,3);
+        //dd($codigoCuenta);
         $rsPagos = $oPago->getPagos();
         if($rsPagos=="0")
         {
-            $oCuenta=AcCuenta::findOrFail($oAfiliado->id_cuenta);
             $oPago->fechacorte =date('Y-m-j',strtotime( '+1 month' , strtotime ( $oCuenta->fecha )));
             $oPago->monto= $oCuenta->producto->costo;
             $oPago->estatuspago= "1";
@@ -32,8 +34,16 @@ class ProcesarPagosController extends Controller
         }
         
         
+        if($codigoCuenta=="058")
+        {
+            return view("recarga.recarga",compact('rsPagos'));
+        }
+        else 
+        {
+            return view("recarga.recargapaypalform",compact('rsPagos'));
+        }
         
-        return view("recarga.recargapaypalform",compact('rsPagos'));
+        //return view("recarga.recargapaypalform",compact('rsPagos'));
     }
     
    
@@ -57,28 +67,20 @@ class ProcesarPagosController extends Controller
          $estatus = $payment["status"];
          if($estatus==201 || $estatus==200)
         {
-            $oPago= AcPago::findOrFail($request1->idpago);
-            $oPago->estatuspago = "2";
-            $oPago->observacion = "Pago realizado con exito";
-            $oPago->fechapago = \date("Y-m-d");
-            $oPago->hora= \date('H:i');
-            if($oPago->save())
+            $pagos = explode("|",$request1->idpago);
+            $cantPagos=count($pagos);
+            for($i=1;$i<$cantPagos;$i++)
             {
-                $user = \Auth::user();
-                $oAfiliado =AcAfiliado::findOrFail($user->detalles_usuario_id);
-                $nuevoPago = new AcPago();
-                $oPago->id_cuenta = $oAfiliado->id_cuenta;
-                $oPago->estatuspago = "1";
-                $rsPagos = $oPago->getPagos();
-                if($rsPagos=="0")
-                {
-                    $oCuenta=AcCuenta::findOrFail($oAfiliado->id_cuenta);
-                    $oPago->fechacorte =date('Y-m-j',strtotime( '+1 month' , strtotime ( $oCuenta->fecha )));
-                    $oPago->monto= $oCuenta->producto->costo;
-                    $oPago->estatuspago= "1";
-                    $oPago->save();
-                    $response["pagoexitoso"]= true;
-                }
+                $oPago= AcPago::findOrFail($pagos[$i]);
+                $oPago->estatuspago = "2";
+                $oPago->observacion = "Pago realizado con exito";
+                $oPago->fechapago = \date("Y-m-d");
+                $oPago->hora= \date('H:i');
+                $res = $oPago->save();
+            } 
+            if($res)
+            {
+                $response["pagoexitoso"]= true;    
             }
             else 
             {

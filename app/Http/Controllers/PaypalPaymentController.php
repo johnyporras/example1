@@ -136,15 +136,24 @@ class PaypalPaymentController extends Controller {
                 // The return object contains the status;
                 $payment->create($this->_apiContext);
             } catch (\PPConnectionException $ex) {
+                
+                echo "aqui";die();
                 return  "Exception: " . $ex->getMessage() . PHP_EOL;
                 exit(1);
             }
-            
+            if($payment->state==null)
+            {
+                //echo "aqui";die();
+            }
                  //var_dump($payment->state);die();
             $estado = $payment->state;
             if($estado=="approved")
             {
                 return view("recarga.respuestapago");
+            }
+            elseif($payment->state==null)
+            {
+                return view("recarga.respuestapagoerror");
             }
         }
     } 

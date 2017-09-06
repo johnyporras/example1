@@ -41,7 +41,22 @@
         </div>
         {!! Form::label('expdate', 'Mes de Expiracin: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-3">
-            {!! Form::text('cardExpirationMonth', null, ['class' => 'form-control input-sm', 'required' => 'required','data-checkout'=>'cardExpirationMonth','placeholder'=>'Mes de Expiración','id'=>'cardExpirationMonth']) !!}
+        
+        
+        {!! Form::select('cardExpirationMonth',
+            	array('01' =>'01',
+            		  '02'=>'02',
+            		  '03'=>'03',
+            		  '04' =>'04',
+            		  '05'=>'05',
+            		  '06'=>'06',
+            		  '07' =>'08',
+            		  '09'=>'09',
+            		  '10'=>'10',
+            		  '11' =>'11',
+            		  '12'=>'12'), ['class' => 'form-control input-sm', 'required' => 'required','data-checkout'=>'cardExpirationMonth','placeholder'=>'Mes de Expiración','id'=>'cardExpirationMonth']) !!}
+            		  
+            
             {!! $errors->first('fecha_citad', '<p class="help-block">:message</p>') !!}
         </div>
     </div>
@@ -52,7 +67,25 @@
     {!! Form::label('codsegq', 'Aioo de expiracion: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-3">
              
-        {!! Form::text('cardExpirationYear', null, ['class' => 'form-control input-sm', 'required' => 'required','placeholder' => 'Año de expiración','id'=>'cardExpirationYear','data-checkout'=>'cardExpirationYear']) !!}
+
+{!! Form::select('cardExpirationYear',
+            	array('17' =>'2017',
+            		  '18'=>'2018',
+            		  '19'=>'2019',
+            		  '20' =>'2020',
+            		  '21'=>'2021',
+            		  '22'=>'2022',
+            		  '23' =>'2023',
+            		  '24'=>'2024',
+            		  '25'=>'2025',
+            		  '26' =>'2026',
+            		  '27'=>'2027',
+            		  '28'=>'2028',
+            		  '29'=>'2029'),['class' => 'form-control input-sm', 'required' => 'required','placeholder' => 'Año de expiración','id'=>'cardExpirationYear','data-checkout'=>'cardExpirationYear']) !!}
+    		             
+     
+       
+       
         {!! $errors->first('emaisl', '<p class="help-block">:message</p>') !!}         
             
         </div>
@@ -73,11 +106,11 @@
     </div>
                
      <input data-checkout="docType" type="hidden" value="CI-V"/>
-     <select id="issuer" name="issuer"></select>        
-     <select id="installments" name="installments"></select>
+     <input type="hidden" id="issuer" name="issuer">        
+     <input type="hidden" id="installments" name="installments">
      <input id="amount" name="amount" type="hidden">
-     <input id="monto" name="monto" type="hidden"> 
-     <input id="idpago" name="idpago" type="hidden" value="1">    
+     <input id="monto" name="monto" type="hidden"> 	
+     <input id="idpago" name="idpago" type="hidden">    
     
         
     <div class="col-sm-offset-2 col-sm-3"><!--   -->
@@ -116,6 +149,7 @@ var montotal=0;
 $('.checkpago').on('click',function(){	
 	var montotal=0;
 	var acuImp=0;
+	var idpagos = "0";
 	var indexes = t1.rows().eq(0).filter( function (rowIdx)
 	{
 		obj = t1.cell( rowIdx, 4 ).nodes();
@@ -124,12 +158,15 @@ $('.checkpago').on('click',function(){
 		if(chec)
 		{
 			montotal+= parseFloat(t1.cell( rowIdx, 3 ).data());
+			idpagos=idpagos+"|"+t1.cell( rowIdx, 0 ).data();
 		}
 	});	
-	//alert(acuMonto);
+	//alert(idpagos);
 	$("#montopago").html(montotal);
 	$("#amount").val(montotal);
 	$("#monto").val(montotal);
+	$("#idpago").val(idpagos);
+	
 
 })
 
