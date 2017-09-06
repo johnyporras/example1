@@ -31,6 +31,7 @@ class ProcesarPagosController extends Controller
         {
             $oPago->estatuspago = "1";
             $rsPagos = $oPago->getPagos();
+           // dd($rsPagos);
         }
         
         

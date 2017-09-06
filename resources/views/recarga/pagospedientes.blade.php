@@ -22,6 +22,7 @@
             </tr>
         </thead>
         <tbody>
+   @if(is_object($rsPagos))
      @foreach($rsPagos as $item)
     <tr id="{{$item->id}}" class="row1"  data-montimp="" data-idprov="">
         <td>{{$item->id}}</td>
@@ -33,6 +34,7 @@
         </td>
     </tr>
     @endforeach
+    @endif
         </tbody>
     </table>
     

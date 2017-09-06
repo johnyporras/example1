@@ -43,18 +43,8 @@
         <div class="col-sm-3">
         
         
-        {!! Form::select('cardExpirationMonth',
-            	array('01' =>'01',
-            		  '02'=>'02',
-            		  '03'=>'03',
-            		  '04' =>'04',
-            		  '05'=>'05',
-            		  '06'=>'06',
-            		  '07' =>'08',
-            		  '09'=>'09',
-            		  '10'=>'10',
-            		  '11' =>'11',
-            		  '12'=>'12'), ['class' => 'form-control input-sm', 'required' => 'required','data-checkout'=>'cardExpirationMonth','placeholder'=>'Mes de Expiración','id'=>'cardExpirationMonth']) !!}
+        
+        {!! Form::number('cardExpirationMonth', null, ['class' => 'form-control input-sm', 'required' => 'required','placeholder' => '01','id'=>'cardExpirationMonth','data-checkout'=>'cardExpirationMonth','maxlength'=>'2','size'=>'2','style'=>'width:60px;','min'=>'1','max'=>'99','oninput'=>'maxLengthCheck(this)']) !!}
             		  
             
             {!! $errors->first('fecha_citad', '<p class="help-block">:message</p>') !!}
@@ -68,23 +58,7 @@
         <div class="col-sm-3">
              
 
-{!! Form::select('cardExpirationYear',
-            	array('17' =>'2017',
-            		  '18'=>'2018',
-            		  '19'=>'2019',
-            		  '20' =>'2020',
-            		  '21'=>'2021',
-            		  '22'=>'2022',
-            		  '23' =>'2023',
-            		  '24'=>'2024',
-            		  '25'=>'2025',
-            		  '26' =>'2026',
-            		  '27'=>'2027',
-            		  '28'=>'2028',
-            		  '29'=>'2029'),['class' => 'form-control input-sm', 'required' => 'required','placeholder' => 'Año de expiración','id'=>'cardExpirationYear','data-checkout'=>'cardExpirationYear']) !!}
-    		             
-     
-       
+       {!! Form::number('cardExpirationYear', null, ['class' => 'form-control input-sm', 'required' => 'required','placeholder' => '01','id'=>'cardExpirationYear','data-checkout'=>'cardExpirationYear','maxlength'=>'2','size'=>'2','style'=>'width:60px;','oninput'=>'maxLengthCheck(this)']) !!}
        
         {!! $errors->first('emaisl', '<p class="help-block">:message</p>') !!}         
             
@@ -144,7 +118,11 @@
 		});
 	});
 });*/
-
+function maxLengthCheck(object)
+{
+  if (object.value.length > object.maxLength)
+    object.value = object.value.slice(0, object.maxLength)
+}
 var montotal=0;
 $('.checkpago').on('click',function(){	
 	var montotal=0;

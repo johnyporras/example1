@@ -100,7 +100,7 @@ th.dt-center, td.dt-center { text-align: center; }
 <div class="col-sm-offset-2 col-sm-3">
             {!! Form::submit('Pagar Ahora', ['class' => 'btn btn-primary form-control', 'id' => 'pagar']) !!}
 </div>
-    
+     <input id="idpago" name="idpago" type="hidden"> 
                                
  {!! Form::close() !!}
 
@@ -132,6 +132,7 @@ var montotal=0;
 $('.checkpago').on('click',function(){	
 	var montotal=0;
 	var acuImp=0;
+	var idpagos="";
 	var indexes = t1.rows().eq(0).filter( function (rowIdx)
 	{
 		obj = t1.cell( rowIdx, 4 ).nodes();
@@ -140,11 +141,13 @@ $('.checkpago').on('click',function(){
 		if(chec)
 		{
 			montotal+= parseFloat(t1.cell( rowIdx, 3 ).data());
+			idpagos=idpagos+"|"+t1.cell( rowIdx, 0 ).data();
 		}
 	});	
 	//alert(acuMonto);
 	$("#montopago").html(montotal);
 	$("#monto").val(montotal);
+	$("#idpago").val(idpagos);
 
 })
 
