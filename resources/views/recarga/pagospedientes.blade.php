@@ -28,7 +28,7 @@
         <td>{{$item->id}}</td>
         <td id="numfact{{$item->id}}">{{$item->fechacorte}}</td>
         <td id="numcon{{$item->id}}">{{$item->estatus}}</td>
-        <td id="cant{{$item->id}}">{{$item->monto}}</td>
+        <td id="cant{{$item->id}}">{{ number_format ($item->monto ,2 , "," , "." )}}</td>
         <td>
         	<input type="checkbox" name="{{$item->id}}" id="{{$item->id}}" data-monto="{{$item->monto}}" class="checkpago">    
         </td>

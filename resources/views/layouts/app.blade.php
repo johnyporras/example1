@@ -182,7 +182,7 @@ if(is_object(Auth::user()))
 
         <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
         <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-        <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('plugins/jquery-ui/jquery-ui.js') }}"></script>
         <script src="{{ asset('plugins/metisMenu/metisMenu.js') }}"></script>
         <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('plugins/typeahead/typeahead.bundle.js') }}"></script>
@@ -195,6 +195,7 @@ if(is_object(Auth::user()))
         <script src="{{ asset('plugins/parsley-js/i18n/es.js') }}"></script>
         
         <script src="{{ asset('js/plugins.js') }}"></script>
+        <script src="{{ asset('js/functions.js') }}"></script>
         @stack('scripts')
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/clock.js') }}"></script>

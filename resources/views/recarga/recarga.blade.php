@@ -21,7 +21,7 @@
         {!! $errors->first('email', '<p class="help-block">:message</p>') !!}         
             
         </div>
-        {!! Form::label('numtarjeta', 'Numero de Tarjeta: ', ['class' => 'col-sm-2 control-label']) !!}
+        {!! Form::label('numtarjeta', 'N&uacute;mero de Tarjeta: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-3">
             {!! Form::text('cardNumber', null, ['class' => 'form-control input-sm', 'required' => 'required','data-checkout'=>'cardNumber','placeholder'=>'4509 9535 6623 3704','id'=>'cardNumber']) !!}
             {!! $errors->first('fecha_cita', '<p class="help-block">:message</p>') !!}
@@ -32,14 +32,14 @@
    
   
     <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
-    {!! Form::label('codseg', 'Codigo de Seguridad: ', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('codseg', 'C&oacute;digo de Seguridad: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-3">
              
         {!! Form::text('securityCode', null, ['class' => 'form-control input-sm', 'required' => 'required','placeholder' => 'Código de Seguridad','id'=>'securityCode','data-checkout'=>'securityCode']) !!}
         {!! $errors->first('emails', '<p class="help-block">:message</p>') !!}         
             
         </div>
-        {!! Form::label('expdate', 'Mes de Expiracin: ', ['class' => 'col-sm-2 control-label']) !!}
+        {!! Form::label('expdate', 'Mes de Expiraci&oacute;n: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-3">
         
         
@@ -54,7 +54,7 @@
     
     
    <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
-    {!! Form::label('codsegq', 'Aioo de expiracion: ', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('codsegq', 'A&ntilde;o de expiraci&oacute;n: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-3">
              
 
@@ -72,7 +72,7 @@
     
     
     <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
-    {!! Form::label('codsergq', 'Nmero de Cdula: ', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('codsergq', 'N&uacute;mero de C&eacute;dula: ', ['class' => 'col-sm-2 control-label']) !!}
      <div class="col-sm-3">
         {!! Form::text('docNumber', null, ['class' => 'form-control input-sm', 'required' => 'required','placeholder' => 'Número de Cédula','id'=>'docNumber','data-checkout'=>'docNumber']) !!}
         {!! $errors->first('emaissl', '<p class="help-block">:message</p>') !!}
@@ -135,12 +135,14 @@ $('.checkpago').on('click',function(){
 		chec = obj1[1].checked;
 		if(chec)
 		{
-			montotal+= parseFloat(t1.cell( rowIdx, 3 ).data());
+			
+			numero =uf_convertir_monto(t1.cell( rowIdx, 3 ).data());
+			montotal+= parseFloat(numero);
 			idpagos=idpagos+"|"+t1.cell( rowIdx, 0 ).data();
 		}
-	});	
+	});		
 	//alert(idpagos);
-	$("#montopago").html(montotal);
+	$("#montopago").html(montotal.toLocaleString());
 	$("#amount").val(montotal);
 	$("#monto").val(montotal);
 	$("#idpago").val(idpagos);
