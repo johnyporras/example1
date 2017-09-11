@@ -562,6 +562,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('recargas/procesarPago'            , 'ProcesarPagosController@mercadoPago');
     Route::get('recargas/historial'            , 'HistorialRecargasController@index');
 
+    
+    // Calendario
+    
+    Route::get('calendario/mostrar'            , 'CalendarioController@index');
     // GESTIONAR CLAVE ODONTOLOGICA dontologica\GenerarController@getProveedores');
     Route::get('clavesOdonto/gestionar'            , 'ClaveOdontologica\GenerarController@buscar');
     Route::post('clavesOdonto/buscar'              , 'ClaveOdontologica\GenerarController@buscar');
