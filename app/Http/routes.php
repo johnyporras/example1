@@ -566,6 +566,8 @@ Route::group(['middleware' => ['auth']], function () {
     // Calendario
     
     Route::get('calendario/mostrar'            , 'CalendarioController@index');
+    Route::get('calendario/getcitas'            , 'CalendarioController@leerCitas');
+    
     // GESTIONAR CLAVE ODONTOLOGICA dontologica\GenerarController@getProveedores');
     Route::get('clavesOdonto/gestionar'            , 'ClaveOdontologica\GenerarController@buscar');
     Route::post('clavesOdonto/buscar'              , 'ClaveOdontologica\GenerarController@buscar');

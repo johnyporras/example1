@@ -51,7 +51,7 @@ class AcClave extends Model {
     
     public function getHistoricoCitas()
     {
-        $res = $this->select("ac_claves.id","ac_claves.clave","ac_claves.observaciones","ac_claves.codigo_contrato","ac_afiliados.nombre",
+        $res = $this->select("ac_claves.fecha_cita as fecha","ac_claves.id","ac_claves.clave","ac_claves.observaciones","ac_claves.codigo_contrato","ac_afiliados.nombre",
             "ac_afiliados.apellido","cedula_afiliado","ac_afiliados.email as emailafiliado",
             "ac_claves.motivo","ac_claves.costo_total","ac_proveedores_extranet.codigo_proveedor","ac_proveedores_extranet.nombre as proveedor"
             ,"ac_claves.telefono","ac_claves_detalle.detalle","ac_servicios_extranet.descripcion as servicio",
@@ -64,11 +64,17 @@ class AcClave extends Model {
             ->join("ac_procedimientos_medicos","ac_claves_detalle.id_procedimiento","=","ac_procedimientos_medicos.id")
             ->join("ac_proveedores_extranet","ac_claves_detalle.codigo_proveedor","=","ac_proveedores_extranet.codigo_proveedor")
             ->where("ac_claves.cedula_afiliado","=",$this->afiliado)
-            ->where("ac_claves.fecha_cita",">",$this->fecha)
+            ->where("ac_claves.fecha_cita",">=",$this->fecha)
             //->where("ac_claves.estatus_clave","=",7)
             ->where("ac_claves_detalle.detalle","=","2")
-            ->orderBy("ac_claves.fecha_cita","desc")
-            ->get();
+            ->orderBy("ac_claves.fecha_cita","desc");
+            if($this->estatus!="")
+            {
+                $res=$res->where("ac_claves.estatus_clave","=",$this->estatus);
+            }
+                
+            $res=$res->get();
+            //dd($res);
             if($res->count()>0)
             {
                 return $res;
