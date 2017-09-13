@@ -27,10 +27,4 @@ class Terminos extends Model
     	'pais_id', 'terminos'
     ];
 
-    /**
-	 * Relación con la tabla pais
-	 */
-	public function pais() {
-        return $this->belongsTo(\App\Models\Pais::class);
-    }
 }

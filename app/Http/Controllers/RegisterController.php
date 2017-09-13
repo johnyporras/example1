@@ -44,14 +44,8 @@ class RegisterController extends Controller
         //Preguntas 
         $preguntas1 = DB::table('preguntas')->take(10)->orderBy('id','asc')->pluck('pregunta', 'pregunta');
         $preguntas2 = DB::table('preguntas')->take(10)->orderBy('id','desc')->pluck('pregunta', 'pregunta');
-        // Selecciono paises con terminos
-        $terminos = Terminos::orderBy('pais_id','ASC')->get();
-        // Genero los paises con terminos agregados
-        /*foreach ($terminos as $termino) {
-            $paises[$termino->pais->id] = $termino->pais->name_es;
-        }*/
          // Cargo los paises
-        $paises = Pais::orderBy('name_es','ASC')->pluck('name_es', 'id');
+        $paises = Pais::orderBy('name_es','ASC')->pluck('name_es', 'codigo');
 
         // Retorno la vista
         return view('auth.register', compact('productos', 'planes','estados', 'tamanos','preguntas1','preguntas2','paises'));
@@ -143,7 +137,7 @@ class RegisterController extends Controller
             // Guardo el valor del formulario para comparar
             $pais = $request->pais;
             //realizo un filtro para buscar en la tabla terminos
-            $terminos = Terminos::where('pais_id','=', $pais)->first();
+            $terminos = Terminos::where('codigo','=', $pais)->first();
             // Envio codigo de tarjeta seleccionada
             $codigo = chunk_split(Session::get('codigo'),4);
             // Verifico terminos del Pais seleccionado
@@ -153,7 +147,7 @@ class RegisterController extends Controller
                                         'codigo' => $codigo ]);
             } else {
                 //terminos default
-                $terminos1 = Terminos::where('pais_id','=', 239)->first();
+                $terminos1 = Terminos::where('codigo','=', 058)->first();
                 // Retorno los terminos default
                 return response()->json(['value' => $terminos1,
                                         'codigo' => $codigo ]);
@@ -167,10 +161,16 @@ class RegisterController extends Controller
 
             if (Session::get('codigo')){
                 // 4 sera el producto a-member y el 9 sera el producto a-card
-                $firstLeter = substr(Session::get('codigo'), 0, 1);
+                $code = substr(Session::get('codigo'), 0, 2);
                 // Selecciono producto dependiendo del codigo
-                $producto = ($firstLeter == 9)?1:3;
-
+                if ($code == 90 || $code == 40) {
+                    // Producto a-card / a-member
+                    $producto = ($code == 90)?1:3;
+                } else {
+                    // producto a-doctor
+                    $producto = 2;
+                }
+                
                 try{
                     //Guardo CuentaPlan
                     $cuenta = AcCuenta::create([

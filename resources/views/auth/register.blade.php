@@ -42,7 +42,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-credit_card"></i></span>
-                        {{ Form::text('tarjeta', null, ['class' => 'form-control input-lg', 'placeholder' => 'Codigo Tarjeta', 'id' => 'tarjeta','minlength' => '16', 'maxlength' => '16', 'pattern' => '[0-9]+', 'required']) }}
+                        {{ Form::text('tarjeta', null, ['class' => 'form-control input-lg', 'placeholder' => 'Codigo Tarjeta', 'id' => 'tarjeta','minlength' => '20', 'maxlength' => '20', 'pattern' => '[0-9]+', 'required']) }}
                     </div>
                     @if ($errors->has('tarjeta'))
                         <span class="help-block">
@@ -766,6 +766,7 @@ $(document).ready(function() {
                     $('#result').addClass('alert-warning '); 
                     $('#result .text').text(data.error)
                     validate = false;
+                    //console.log(data.error);
                 }
                 // Verifica si existe cuenta generada en estatus pendiente
                 if(data.id) {
@@ -785,6 +786,7 @@ $(document).ready(function() {
                     // Permito pasar al otro step del registro
                     submitt = true;
                     validate = true;
+                    //console.log(data.success);
                     // paso el siguiente punto
                     setTimeout(function() {
                             $('.sw-btn-next').click();

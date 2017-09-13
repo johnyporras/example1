@@ -14,10 +14,8 @@ class CreateTerminosTable extends Migration
     {
         Schema::create('terminos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('pais_id')->nullable()->unsigned();
+            $table->string('codigo')->nullable();
             $table->text('terminos')->nullable();
-                $table->foreign('pais_id')->references('id')->on('paises')
-                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

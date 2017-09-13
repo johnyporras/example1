@@ -773,17 +773,17 @@ table.dataTable thead .sorting_desc:after {
 
 /** Etilo de tarjeta en registro  **/
 #contentCard{
-   padding: 30px 60px 20px 60px;
+   padding: 30px 45px 20px 45px;
    position: relative;
 }
 
 #textCuenta{
    position: absolute;
    bottom: 20px;
-   right: 82px;
+   right: 59px;
    color: #fff;
    font-weight: bold;
-   font-size: 16px;
+   font-size: 15px;
    letter-spacing: 4px;
 }
 
