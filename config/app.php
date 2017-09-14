@@ -165,6 +165,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Anouar\Paypalpayment\PaypalpaymentServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        \InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
+        \InfyOm\AdminLTETemplates\AdminLTETemplatesServiceProvider::class, 
+        Laracasts\Flash\FlashServiceProvider::class,
 
     ],
 
@@ -219,6 +223,7 @@ return [
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Paypalpayment'  => Anouar\Paypalpayment\Facades\PaypalPayment::class,
+        'Flash'     => Laracasts\Flash\Flash::class,
     ],
 
 ];

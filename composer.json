@@ -20,7 +20,9 @@
 		"yajra/laravel-datatables-oracle" : "^6.27",
 		"doctrine/dbal" : "^2.5",
 		"simplesoftwareio/simple-qrcode" : "^1.5",
-		"anouar/paypalpayment" : "~2.0"
+		"anouar/paypalpayment" : "~2.0",
+		"infyomlabs/laravel-generator" : "5.2.x-dev",
+		"infyomlabs/adminlte-templates" : "5.2.x-dev"
 	},
 	"require-dev" : {
 		"fzaninotto/faker" : "~1.4",

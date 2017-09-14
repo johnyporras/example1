@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AcClave;
+use App\Models\Eventos;
 use App\Models\AcAfiliado;
 
 use App\Http\Requests;
@@ -33,8 +34,20 @@ class CalendarioController extends Controller
             {
                 foreach ($res as $item)
                 {
-                    $cita=array("id"=>$item->id,"title"=>$item->observaciones,"start"=>$item->fecha);
+                    $cita=array("id"=>$item->id,"title"=>$item->observaciones,"start"=>$item->fecha,'url'=>'/atiempo/public/claves/consultarDetalle?show='.$item->id);
                     array_push($result, $cita);    
+                }
+            }
+            
+            $oEvento = new Eventos();
+            $oEvento->user=$user->id;
+            $rsEventos = $oEvento->leerEventos();
+            if($rsEventos!="0")
+            {
+                foreach ($rsEventos as $item)
+                {
+                    $cita=array("id"=>$item->id,"title"=>$item->titulo,"start"=>$item->fechainicio,"end"=>$item->fechafin,'url'=>'/atiempo/public/eventos/'.$item->id);
+                    array_push($result, $cita);
                 }
             }
         }

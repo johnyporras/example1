@@ -567,6 +567,7 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::get('calendario/mostrar'            , 'CalendarioController@index');
     Route::get('calendario/getcitas'            , 'CalendarioController@leerCitas');
+    Route::get('calendario/vereventos'            , 'CalendarioController@leerCitas');
     
     // GESTIONAR CLAVE ODONTOLOGICA dontologica\GenerarController@getProveedores');
     Route::get('clavesOdonto/gestionar'            , 'ClaveOdontologica\GenerarController@buscar');
@@ -619,3 +620,5 @@ Route::group(['middleware' => ['auth']], function () {
 //Archivo XML
 Route::get('dataXml', 'GenerateXmlController@getData');
 Route::get('procesarResponseXml', 'GenerateXmlController@procesarResponseXml');
+
+Route::resource('eventos', 'EventosController');
