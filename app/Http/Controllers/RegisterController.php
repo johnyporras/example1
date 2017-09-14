@@ -99,6 +99,12 @@ class RegisterController extends Controller
                             Session::set('codigo', $codigo);
                             //Guardo id tarjeta
                             Session::set('tarjeta', $tarjeta->id);
+                            // Guardo el valor del formulario para comparar
+                            $code = substr(Session::get('codigo'), 2, 3);
+                            //realizo un filtro para buscar en la tabla terminos
+                            $terminos = Terminos::where('codigo','=', $code)->first();
+                            //Guardo session terminos 
+                            Session::set('terminos', ['code' => $terminos->codigo ,'terminos' => $terminos->terminos]);
                             // retorno respuesta
                             return response()->json(['success' => 'Tarjeta Valida']);
                         }
@@ -111,6 +117,12 @@ class RegisterController extends Controller
                         Session::set('codigo', $codigo);
                         //Guardo id tarjeta
                         Session::set('tarjeta', $tarjeta->id);
+                        // Guardo el valor del formulario para comparar
+                        $code = substr(Session::get('codigo'), 2, 3);
+                        //realizo un filtro para buscar en la tabla terminos
+                        $terminos = Terminos::where('codigo','=', $code)->first();
+                        //Guardo session terminos 
+                        Session::set('terminos', ['code' => $terminos->codigo ,'terminos' => $terminos->terminos]);
                         // retorno respuesta
                         return response()->json(['success' => 'Tarjeta Valida']);
                     }
@@ -134,24 +146,10 @@ class RegisterController extends Controller
     public function checkTerminos(Request $request)
     {   
         if($request->ajax()){
-            // Guardo el valor del formulario para comparar
-            $pais = $request->pais;
-            //realizo un filtro para buscar en la tabla terminos
-            $terminos = Terminos::where('codigo','=', $pais)->first();
             // Envio codigo de tarjeta seleccionada
             $codigo = chunk_split(Session::get('codigo'),4);
-            // Verifico terminos del Pais seleccionado
-            if ($terminos !== null) {
-                // Retorno los terminos..
-                return response()->json(['value' => $terminos,
-                                        'codigo' => $codigo ]);
-            } else {
-                //terminos default
-                $terminos1 = Terminos::where('codigo','=', 058)->first();
-                // Retorno los terminos default
-                return response()->json(['value' => $terminos1,
-                                        'codigo' => $codigo ]);
-            }
+            // Retorno los terminos..
+            return response()->json(['codigo' => $codigo ]);
         }
     }
 
@@ -353,10 +351,11 @@ class RegisterController extends Controller
                             $mail->to($data['email'], $data['name']);
                         });
 
-                        // borro las sessiones afiliado, tarjeta y cuenta               
+                        // borro las sessiones afiliado, tarjeta, cuenta, terminos             
                         Session::forget('afiliado');
                         Session::forget('tarjeta');
                         Session::forget('cuenta');
+                        Session::forget('terminos');
 
                         // Retorno mensaje de sastifactorio
                         return response()->json(['success' => 'valido']);

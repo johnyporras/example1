@@ -74,7 +74,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-credit_card"></i></span>
-                        {{ Form::select('pais', $paises, null, ['class' => 'form-control input-lg', 'placeholder'=>'Seleccione Pais', 'required', 'id' => 'pais']) }}
+                        {{ Form::select('pais', $paises, Session::get('terminos.code'), ['class' => 'form-control input-lg', 'placeholder'=>'Seleccione Pais', 'required', 'id' => 'pais','disabled']) }}
                     </div>
                     @if ($errors->has('pais'))
                         <span class="help-block">
@@ -86,10 +86,7 @@
 
             <div id="contTerminos">
 
-           <!-- Actualizar session codigo -->
-           {{-- Session::get('codigo') --}} 
-
-                <div id="pTerminos" class="text-justify"></div>
+                <div id="pTerminos" class="text-justify">{!! Session::get('terminos.terminos') !!}</div>
                 <hr>
                 <div id="bTerminos" class="mt20">
                     <div class="col-xs-6 text-center">
@@ -596,7 +593,7 @@ $(document).ready(function() {
     $('#result2').hide();
     $('#result3').hide();
     // Para los terminos
-    $('#contTerminos').hide();
+   // $('#contTerminos').hide();
     $('#rAccept').hide();
     
     /** Variable Config parsley **/
@@ -992,34 +989,25 @@ $(document).ready(function() {
     /************************************************************************/
     // Terminos y Condiciones
 
-    // Generar Afiliado
-    $('#pais').on('change', function (e) {
-        // Guardo el valor del pais ingresada..
-        var pais = $('#pais').val();
+    // Al aceptar las condiciones
+    $('#accept').on('click', function (e) {
         // Ejecuto la peticion para validar la tarjeta
         $.ajax({
             type: "POST",
             url:'{{ url('/pais') }}',
-            data: {pais: pais},
             success: function(data) {
-                // Muestro contendor de terminos
-                $('#contTerminos').show();
-                // Muestro los terminos en pantalla.
-                $('#pTerminos').text(data.value.terminos);
                 // paso valor de la tarjeta Ingresada
                 $('#textCuenta').text(data.codigo);
             }
         });
-    }); 
 
-    // Al aceptar las condiciones
-    $('#accept').on('click', function (e) {
-        // Muestro mensaje de acceptacion
-        $('#rAccept').show();
-        $('#pais').attr('disabled','disabled');
         // valido los terminos
         accept = true;
         validate = true;
+
+        // Muestro mensaje de acceptacion
+        $('#rAccept').show();
+
         // paso el siguiente punto
         setTimeout(function() {
             $('.sw-btn-next').click();
