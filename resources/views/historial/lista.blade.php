@@ -122,7 +122,7 @@ $(document).ready(function() {
 
     $('#tsolicitud tbody').on( 'click', '.sweet-danger', function (e) {
         e.preventDefault();
-        var link = $(this).attr('href')+'/destroy';
+        var link = $(this).attr('href');
         swal({   
             title: "Advertencia",
             text: "¿Esta seguro de continuar?",         

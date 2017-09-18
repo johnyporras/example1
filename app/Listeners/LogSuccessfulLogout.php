@@ -28,6 +28,10 @@ class LogSuccessfulLogout
      */
     public function handle(Logout $event)
     {
+        if (!$this->request->session()->has('user')) {
+            // user value cannot be found in session
+            return redirect()->to('/login');
+        } 
         $user = $event->user;
         $user->ultimo_acceso = Carbon::now();
         $user->save();

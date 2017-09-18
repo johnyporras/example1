@@ -63,7 +63,17 @@ class HistorialMedicoController extends Controller
      */
     public function lista()
     {
-        return view('historial.lista');
+        if (Auth::user()->type == 5 || Auth::user()->type == 8 ) {
+
+            $id = Auth::user()->detalles_usuario_id;
+            $afiliado = AcAfiliado::findOrFail($id);
+            $listado = HistorialMedico::where('id_afiliado', $id)->get();
+
+            return view('historial.historiales', compact('afiliado', 'listado'));
+        } else {
+            return view('historial.lista');
+        }
+        
     }
 
     public function historiales()
@@ -74,9 +84,9 @@ class HistorialMedicoController extends Controller
         return Datatables::of($historiales)
         ->addColumn('action', function ($historial) {
                 return '
-                <a href="/historial/'.$historial->id.'/view" title="Ver Detalles" class="btn btn-warning btn-xs"> <i class="fa fa-eye"> </i></a>
-                <a href="/historial/'.$historial->id.'/edit" title="Editar Solicitud" class="btn btn-info btn-xs"> <i class="fa fa-edit"> </i></a>
-                <a href="/historial/'.$historial->id.'" title="Eliminar Historial" class="btn btn-danger btn-xs sweet-danger"> <i class="fa fa-trash"> </i></a>';
+                <a href="'.route("historial.view",$historial->id).'" title="Ver Detalles" class="btn btn-warning btn-xs"> <i class="fa fa-eye"> </i></a>
+                <a href="'.route("historial.edit",$historial->id).'" title="Editar Solicitud" class="btn btn-info btn-xs"> <i class="fa fa-edit"> </i></a>
+                <a href="'.route("historial.destroy",$historial->id).'" title="Eliminar Historial" class="btn btn-danger btn-xs sweet-danger"> <i class="fa fa-trash"> </i></a>';
             })
         ->editColumn('fecha', function ($historial) {
                 return $historial->fecha->format('d/m/Y');
@@ -94,7 +104,6 @@ class HistorialMedicoController extends Controller
      */
     public function create($id)
     {
-
         $historial = HistorialMedico::all();
 
         //Retorno la vista
