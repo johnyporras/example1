@@ -43,6 +43,7 @@ class customResetPass extends Controller
             $user = User::findOrFail($request->id);
             if(!$ouser->validaRespuestas())
             {
+                //dd("aa");
                 return view('auth.passwords.preguntas',compact('user'));
             }
             else
@@ -65,7 +66,7 @@ class customResetPass extends Controller
                     $mail->to($user->email, $user->nombre);
                 });
                     
-                //return view('auth.passwords.preguntas',compact('user'));
+                return view('auth.passwords.confirmacion');
             }
         }
     }
