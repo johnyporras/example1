@@ -86,7 +86,23 @@ class User extends Authenticatable{
         // retorno el array
         return $result;
     }
-    
+
+    /**
+     * Always lower text respuesta .
+     */
+    public function setRespuesta1Attribute($value)
+    {
+        $this->attributes['respuesta_1'] = strtolower($value);
+    }
+
+    /**
+     * Always lower text respuesta .
+     */
+    public function setRespuesta2Attribute($value)
+    {
+        $this->attributes['respuesta_2'] = strtolower($value);
+    }
+
     /**
      * Get the Type User.
      */
