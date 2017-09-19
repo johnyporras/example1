@@ -30,7 +30,10 @@
                 	<h2>Bienvenid@ {{$data['nombre']}}</h2>
                     <p>
                     
-                    <a href="34.210.249.162/password/reset/{{ $data['token'] }}?email={{ $data['email'] }} ">Haz Click aqu&iacute;­ para reiniciar tu clave</a>
+                    <?php 
+                        $ruta=url("/password/reset/{$data['token']}?email={$data['email']}");
+                    ?>
+                    <a href="{{ $ruta }}">Haz Click aqu&iacute;­ para reiniciar tu clave</a>
                     
                     </p>
                 </td>

@@ -133,13 +133,15 @@ class User extends Authenticatable{
     
     public function validaRespuestas()
     {
+        
+       // dd($this->respuesta1);
         //$this->respuesta1=bcrypt(strtolower($this->respuesta1));
-        $this->respuesta1=strtolower($this->respuesta1);
+        $this->respuesta_1=strtolower($this->respuesta_1);
         //$this->respuesta2=bcrypt(strtolower($this->respuesta2));
-        $this->respuesta2=strtolower($this->respuesta2);
+        $this->respuesta_2=strtolower($this->respuesta_2);
         $res = $this->select("id")
-              ->where("respuesta_1","=",$this->respuesta1)
-              ->where("respuesta_2","=",$this->respuesta2)
+              ->where("respuesta_1","=",$this->respuesta_1)
+              ->where("respuesta_2","=",$this->respuesta_2)
               ->where("id","=",$this->id)
               ->get();
         if($res->count()>0)

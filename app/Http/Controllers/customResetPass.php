@@ -37,13 +37,16 @@ class customResetPass extends Controller
         if($request->respuesta1!="" && $request->respuesta2!="")
         {
             $ouser= new User();
-            $ouser->respuesta1=$request->respuesta1;
-            $ouser->respuesta2=$request->respuesta2;
+            $ouser->respuesta_1=$request->respuesta1;
+            //dd($ouser->respuesta_1);
+            $ouser->respuesta_2=$request->respuesta2;
             $ouser->id=$request->id;
             $user = User::findOrFail($request->id);
+            
             if(!$ouser->validaRespuestas())
             {
                 //dd("aa");
+                
                 return view('auth.passwords.preguntas',compact('user'));
             }
             else
