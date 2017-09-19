@@ -6,15 +6,18 @@
 
 <div class="block push-bit">
 
-    {!! Form::open(['url' => '/password/reset', 'class' => 'form-horizontal form-bordered form-control-borderless' ]) !!}
+    {!! Form::open(['url' => 'resclave/valrespuestas', 'class' => 'form-horizontal form-bordered form-control-borderless' ]) !!}
 
-        <input type="hidden" name="token" value="{{ $token }}">
+       
 
         <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+           <p>{{ $user->pregunta_1 }}</p>
             <div class="col-xs-12">
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-                    <input type="email" class="form-control input-lg" name="email" value="{{ old('email') }}" placeholder="Email" >
+                
+                    <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                    <input type="text" class="form-control input-lg" name="respuesta1" value="" placeholder="Respuesta 1" >
+                	<input type="hidden" name="id" value="{{ $user->id }}">
                 </div>
                 @if ($errors->has('email'))
                     <span class="help-block">
@@ -25,10 +28,12 @@
         </div>
 
         <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
+           <p>{{ $user->pregunta_2 }}</p>
             <div class="col-xs-12">
                 <div class="input-group">
+                
                     <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-                    <input type="password" class="form-control input-lg" name="password" placeholder="Clave" >
+                    <input type="text" class="form-control input-lg" name="respuesta2" placeholder="Respuesta 2" >
                 </div>
                 @if ($errors->has('password'))
                     <span class="help-block">
@@ -38,23 +43,11 @@
             </div>
         </div>
 
-        <div class="form-group {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-            <div class="col-xs-12">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-                    <input type="password" class="form-control input-lg" name="password_confirmation" placeholder="Confirmar Clave" >
-                </div>
-                @if ($errors->has('password_confirmation'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                    </span>
-                @endif
-            </div>
-        </div>
+        
 
         <div class="form-group form-actions">
             <div class="col-xs-12 text-center">
-                <button type="submit" class="btn btn-primary btn-md"><i class="fa fa-refresh fa-fw"></i> Reiniciar Clave</button>
+                <button type="submit" class="btn btn-primary btn-md"><i class="fa fa-refresh fa-fw"></i> Enviar respuestas</button>
             </div>
         </div>
 

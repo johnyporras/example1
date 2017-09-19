@@ -19,11 +19,14 @@ class Authenticate
     public function handle($request, Closure $next, $guard = null)
     {
 
-        if (Auth::guard($guard)->guest()) {
+        if (Auth::guard($guard)->guest()){
+           // return $next($request);
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('login');
+                //echo "asd";die();
+                return  $next($request);
+           //     return redirect()->guest('login');
             }
         }
         // Redirect to login if not activate account

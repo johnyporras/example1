@@ -114,4 +114,25 @@ class User extends Authenticatable{
     public function historiales() {
         return $this->hasMany(\App\Models\HistorialMedico::class, 'id_user', 'id');
     }
+    
+    public function validaRespuestas()
+    {
+        //$this->respuesta1=bcrypt(strtolower($this->respuesta1));
+        $this->respuesta1=strtolower($this->respuesta1);
+        //$this->respuesta2=bcrypt(strtolower($this->respuesta2));
+        $this->respuesta2=strtolower($this->respuesta2);
+        $res = $this->select("id")
+              ->where("respuesta_1","=",$this->respuesta1)
+              ->where("respuesta_2","=",$this->respuesta2)
+              ->where("id","=",$this->id)
+              ->get();
+        if($res->count()>0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

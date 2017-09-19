@@ -11,19 +11,21 @@
         </div>
     @endif
 
-    {!! Form::open(['url' => '/password/email', 'class' => 'form-horizontal form-bordered form-control-borderless' ]) !!}
+    {!! Form::open(['url' => 'resclave/valemail', 'class' => 'form-horizontal form-bordered form-control-borderless' ]) !!}
                 
         <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
             <div class="col-xs-12">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-                    <input type="email" class="form-control input-lg" name="user" value="{{ old('email') }}" placeholder="Email" >
+                    <input type="email" class="form-control input-lg" name="email" value="{{ old('email') }}" placeholder="Email" >
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 </div>
                 @if ($errors->has('email'))
                     <span class="help-block">
                         <strong>{{ $errors->first('email') }}</strong>
                     </span>
                 @endif
+               
             </div>
         </div>
 

@@ -456,7 +456,8 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::get('Paypal/test1','PaypalPaymentController@store');
     Route::post('paypal/procesarPago','PaypalPaymentController@store');
-    
+    Route::post('resclave/valemail','customResetPass@validarEmail');
+    Route::post('resclave/valrespuestas','customResetPass@validarResp');
     
     
  
