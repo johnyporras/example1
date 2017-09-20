@@ -67,8 +67,8 @@
     {!! Form::close() !!}
 </div>
 <div class="no-member-container">
-<h1>Aun no estas afiliado?</h1>
-<center><span><a href="http://www.corporacionatiempo.com/beta/tienda">Adquiere tu productos</a></span></center>
+<h1>¿Aun no estas afiliado?</h1>
+<center><span><a href="http://www.corporacionatiempo.com/beta/tienda">Adquiere nuestros productos</a></span></center>
 
 </div>
 @endsection

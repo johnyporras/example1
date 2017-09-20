@@ -1,6 +1,9 @@
+#login-container .push-bit{
+  margin-bottom:0 !important;
+}
 #login-container .no-member-container{
- background-color:rgb(30, 37, 126);
- padding:20px 0px;
+ background-color:rgba(30, 37, 126, 0.8);
+ padding:20px 0px 45px;
 }
 #login-container .no-member-container h1{
     width:100%;
@@ -8,16 +11,22 @@
     color:#ffffff;
     font-size: 24px;
 }
+#login-container .no-member-container center{
+  line-height: 40px;
+}
 #login-container .no-member-container span{
     background:#ffffff;
     padding: 10px 20px;
+    border-radius: 4px;
 }
 #login-container .no-member-container span a{
   color:#139deb;
   text-decoration:none;
 }
 
-
+.animation-hatch .clock-date, .animation-hatch .clock-hours, .animation-hatch .clock-minutes, .animation-hatch .clock-seconds, .animation-hatch .clock-ampm{
+  font-size:16px;
+}
 
 .nav.navbar-nav-custom > li > a,
 .navbar-default .navbar-nav > li > a,
