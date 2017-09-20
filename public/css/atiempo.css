@@ -1,18 +1,18 @@
-#login-container .no-member-conatainer{
+#login-container .no-member-container{
  background-color:rgb(30, 37, 126);
  padding:20px 0px;
 }
-#login-container .no-member-conatainer h1{
+#login-container .no-member-container h1{
     width:100%;
     text-align: center;
     color:#ffffff;
     font-size: 24px;
 }
-#login-container .no-member-conatainer span{
+#login-container .no-member-container span{
     background:#ffffff;
     padding: 10px 20px;
 }
-#login-container .no-member-conatainer span a{
+#login-container .no-member-container span a{
   color:#139deb;
   text-decoration:none;
 }
