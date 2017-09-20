@@ -1,3 +1,24 @@
+#login-container .no-member-conatainer{
+ background-color:rgb(30, 37, 126);
+ padding:20px 0px;
+}
+#login-container .no-member-conatainer h1{
+    width:100%;
+    text-align: center;
+    color:#ffffff;
+    font-size: 24px;
+}
+#login-container .no-member-conatainer span{
+    background:#ffffff;
+    padding: 10px 20px;
+}
+#login-container .no-member-conatainer span a{
+  color:#139deb;
+  text-decoration:none;
+}
+
+
+
 .nav.navbar-nav-custom > li > a,
 .navbar-default .navbar-nav > li > a,
 .nav-tabs > li.active > a,
@@ -607,7 +628,7 @@ fieldset[disabled] .btn-primary.active:focus {
 .sp-text {
     position: absolute;
     width: 70%;
-    margin-left:10px; 
+    margin-left:10px;
     line-height: 16px;
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
@@ -635,7 +656,7 @@ fieldset[disabled] .btn-primary.active:focus {
 
 /*** Modificacion sidebar ******/
 @media screen and (min-width: 992px){
-    
+
     .sidebar-partial #sidebar:hover + #main-container, .sidebar-visible-lg #main-container {
         margin-left: 230px;
     }
@@ -800,5 +821,5 @@ table.dataTable thead .sorting_desc:after {
       font-weight: bold;
       font-size: 12px;
       letter-spacing: 2px;
-   }     
+   }
 }

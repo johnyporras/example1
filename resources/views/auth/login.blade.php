@@ -22,7 +22,7 @@
                 </div>
             </div>
         @endif
-                
+
         <div class="form-group {{ $errors->has('user') ? ' has-error' : '' }}">
             <div class="col-xs-12">
                 <div class="input-group">
@@ -64,7 +64,12 @@
             </div>
         </div>
 
-    {!! Form::close() !!}           
+    {!! Form::close() !!}
+</div>
+<div class="no-member-container">
+<h1>Aun no estas afiliado?</h1>
+<center><span><a href="http://www.corporacionatiempo.com/beta/tienda">Adquiere tu productos</a></span></center>
+
 </div>
 @endsection
 
