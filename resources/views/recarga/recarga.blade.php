@@ -6,7 +6,9 @@
 <!--<script>Mercadopago.setPublishableKey("TEST-aae00c59-e71b-4ffb-ae6c-010859b6713d");</script>-->
 <script>Mercadopago.setPublishableKey("TEST-150ab2b6-bd3f-444b-ace5-952efb10d132");</script>
 
-
+<style>
+th.dt-center, td.dt-center { text-align: center; }
+</style>
 @include('recarga.pagospedientes');
   
   

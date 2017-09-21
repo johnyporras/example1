@@ -1,6 +1,7 @@
 <?php 
 namespace App\Http\Controllers;
 use Paypalpayment;
+use App\Models\AcPago;
 use Illuminate\Http\Request;
 class PaypalPaymentController extends Controller {
 
@@ -149,6 +150,22 @@ class PaypalPaymentController extends Controller {
             $estado = $payment->state;
             if($estado=="approved")
             {
+                $response["pagoexitoso"]= true; 
+                $pagos = explode("|",$request->idpago);
+               
+                $cantPagos=count($pagos);
+                for($i=1;$i<$cantPagos;$i++)
+                {
+                   // dd($pagos[$i]);
+                    $oPago= AcPago::findOrFail($pagos[$i]);
+                    $oPago->estatuspago = "2";
+                    $oPago->observacion = "Pago realizado con exito";
+                    $oPago->fechapago = \date("Y-m-d");
+                    $oPago->hora= \date('H:i');
+                    $res = $oPago->save();
+                   // dd($res);
+                }
+                
                 return view("recarga.respuestapago");
             }
             elseif($payment->state==null)

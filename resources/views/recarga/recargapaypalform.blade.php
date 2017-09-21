@@ -7,8 +7,6 @@ th.dt-center, td.dt-center { text-align: center; }
 @include('recarga.pagospedientes');
   
 
-
-
 {!! Form::open(['url' => 'paypal/procesarPago', 'class' => 'form-horizontal', 'id' => 'pay', 'name' => 'procesarpago', 'lang' => 'es', 'method' => 'post']) !!}
     <input type="hidden" name="paymentType" value="Sale"/>
     <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
@@ -36,7 +34,7 @@ th.dt-center, td.dt-center { text-align: center; }
             	{!! Form::select('creditCardType', array('visa' =>'Visa','masterdcard'=>'MasterdCard','amex'=>'American Express'), 'Visa'); !!}
     		
     </div>
-    {!! Form::label('numtar', 'Numero de Tarjeta: ', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('numtar', 'N&uacute;mero de Tarjeta: ', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-3">
               
             	{!! Form::text('creditCardNumber', null, ['class' => 'form-control input-sm', 'required' => 'required','placeholder'=>'Número de Tarjeta']) !!}
@@ -45,7 +43,7 @@ th.dt-center, td.dt-center { text-align: center; }
   </div>
   
    <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
-    {!! Form::label('ddd', 'Mes de Expiracion: ', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('ddd', 'Mes de Expiraci&oacute;n: ', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-3">
               
             	{!! Form::select('expDateMonth',
@@ -62,7 +60,7 @@ th.dt-center, td.dt-center { text-align: center; }
             		  '12'=>'12')) !!}
     		
     </div>
-    {!! Form::label('wewe', 'Anioo de Expiracion: ', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('wewe', 'A&ntilde;o de Expiraci&oacute;n: ', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-3">
               
             	{!! Form::select('expDateYear',
@@ -85,7 +83,7 @@ th.dt-center, td.dt-center { text-align: center; }
   
   
    <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
-    {!! Form::label('lsdl', 'Codigo de Seguridad: ', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('lsdl', 'C&oacute;digo de Seguridad: ', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-3">
              
         {!! Form::text('cvv2Number', null, ['class' => 'form-control input-sm', 'required' => 'required','placeholder' => 'Codigo de seguridad','id'=>'ccv','style'=>'width:100px;']) !!}
@@ -106,25 +104,6 @@ th.dt-center, td.dt-center { text-align: center; }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @endsection
 @section('script')
 <script>
@@ -140,12 +119,17 @@ $('.checkpago').on('click',function(){
 		chec = obj1[1].checked;
 		if(chec)
 		{
-			montotal+= parseFloat(t1.cell( rowIdx, 3 ).data());
+			
+			numero =uf_convertir_monto2(t1.cell( rowIdx, 3 ).data());
+			montotal+= parseFloat(numero);
 			idpagos=idpagos+"|"+t1.cell( rowIdx, 0 ).data();
 		}
 	});	
-	//alert(acuMonto);
-	$("#montopago").html(montotal);
+	//alert(montotal);
+	
+	var string = numeral(montotal).format('$0,0.00');
+	//alert(string);
+	$("#montopago").html(string);
 	$("#monto").val(montotal);
 	$("#idpago").val(idpagos);
 

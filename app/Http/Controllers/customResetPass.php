@@ -34,9 +34,10 @@ class customResetPass extends Controller
     }
     public function validarResp(Request $request)
     {
+        $ouser= new User();
         if($request->respuesta1!="" && $request->respuesta2!="")
         {
-            $ouser= new User();
+            
             $ouser->respuesta_1=$request->respuesta1;
             //dd($ouser->respuesta_1);
             $ouser->respuesta_2=$request->respuesta2;
@@ -47,7 +48,7 @@ class customResetPass extends Controller
             {
                 //dd("aa");
                 
-                return view('auth.passwords.preguntas',compact('user'));
+                return view('auth.passwords.preguntas',compact('user'))->withErrors(['respuestas' => ['Las respuestas son incorrectas']]);
             }
             else
             {
@@ -71,6 +72,13 @@ class customResetPass extends Controller
                     
                 return view('auth.passwords.confirmacion');
             }
+        }
+        else 
+        {
+            //dd($request->id);
+            $ouser->id=$request->id;
+            $user = User::findOrFail($request->id);
+            return view('auth.passwords.preguntas',compact('user'))->withErrors(['email' => ['Debe introducir las respuestas a las preguntas']]);
         }
     }
     

@@ -13,6 +13,8 @@ class ProcesarPagosController extends Controller
     public function index()
     {
         $user = \Auth::user();
+        
+        //dd($user);
         $oAfiliado =AcAfiliado::findOrFail($user->detalles_usuario_id);
         $oPago= new AcPago();
         $oPago->id_cuenta = $oAfiliado->id_cuenta;
@@ -23,13 +25,22 @@ class ProcesarPagosController extends Controller
         if($rsPagos=="0")
         {
             $oPago->fechacorte =date('Y-m-j',strtotime( '+1 month' , strtotime ( $oCuenta->fecha )));
-            $oPago->monto= $oCuenta->producto->costo;
+            if($this->codigoCuenta=="058")
+            {
+                $oPago->monto= $oCuenta->producto->costo;
+            }
+            else
+            {
+                $oPago->monto= $oCuenta->producto->costo2;
+            }
+            
             $oPago->estatuspago= "1";
             $oPago->save();
         }
         else 
         {
             $oPago->estatuspago = "1";
+            $oPago->codigoCuenta=$codigoCuenta;
             $rsPagos = $oPago->getPagos();
            // dd($rsPagos);
         }
@@ -37,11 +48,11 @@ class ProcesarPagosController extends Controller
         
         if($codigoCuenta=="058")
         {
-            return view("recarga.recarga",compact('rsPagos'));
+            return view("recarga.recarga",compact('rsPagos','codigoCuenta'));
         }
         else 
         {
-            return view("recarga.recargapaypalform",compact('rsPagos'));
+            return view("recarga.recargapaypalform",compact('rsPagos','codigoCuenta'));
         }
         
         //return view("recarga.recargapaypalform",compact('rsPagos'));

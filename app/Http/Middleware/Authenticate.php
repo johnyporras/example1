@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+//use Illuminate\Http\Request;
 
 class Authenticate
 {
@@ -18,12 +19,18 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-
+ 
+ 
+        
         if (Auth::guard($guard)->guest()){
            // return $next($request);
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
+                if($request->path()=="/")
+                {
+                    return redirect()->guest('login');
+                }
                 //echo "asd";die();
                 return  $next($request);
            //     return redirect()->guest('login');

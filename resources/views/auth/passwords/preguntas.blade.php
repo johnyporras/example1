@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
+        <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
            <p>{{ $user->pregunta_2 }}</p>
             <div class="col-xs-12">
                 <div class="input-group">
@@ -35,9 +35,14 @@
                     <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
                     <input type="text" class="form-control input-lg" name="respuesta2" placeholder="Respuesta 2" >
                 </div>
-                @if ($errors->has('password'))
+                @if ($errors->has('email'))
                     <span class="help-block">
-                        <strong>{{ $errors->first('password') }}</strong>
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                @endif
+                 @if ($errors->has('respuestas'))
+                    <span class="help-block has-error">
+                        <strong>{{ $errors->first('respuestas') }}</strong>
                     </span>
                 @endif
             </div>

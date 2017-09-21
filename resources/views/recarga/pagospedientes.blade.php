@@ -28,7 +28,11 @@
         <td>{{$item->id}}</td>
         <td id="numfact{{$item->id}}">{{$item->fechacorte}}</td>
         <td id="numcon{{$item->id}}">{{$item->estatus}}</td>
-        <td id="cant{{$item->id}}">{{ number_format ($item->monto ,2 , "," , "." )}}</td>
+        @if($codigoCuenta=='058')
+        	<td id="cant{{$item->id}}">{{ number_format ($item->monto ,2 , "," , "." )}}</td>
+        @else
+        	<td id="cant{{$item->id}}">{{ number_format ($item->monto ,2 , "." , "," )}}</td>
+        @endif
         <td>
         	<input type="checkbox" name="{{$item->id}}" id="{{$item->id}}" data-monto="{{$item->monto}}" class="checkpago">    
         </td>
