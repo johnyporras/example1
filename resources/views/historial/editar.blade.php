@@ -48,7 +48,7 @@
     {{ Form::model($historial, ['route'=> ['historial.update', $historial->id], 'method' =>'PUT', 'files' => true, 'id' => 'historialForm', 'class' => 'form-horizontal', 'role' => 'form']) }}
  
     <!-- incluye formulario -->
-    @include('historial.form1') 
+    @include('historial.form') 
     <!-- incluye  formulario -->
 
     <div class="row">

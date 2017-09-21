@@ -37,25 +37,16 @@ class HomeController extends Controller
      */
     public function generar()
     {
-        for ($i=0; $i < 10; $i++) { 
-            $value1 = rand(66666666,99999999);
-            $value2 = rand(4444444,7777777);
-            $valor = '9'.$value1.$value2;
+        for ($i=0; $i < 15; $i++) { 
+            $value1 = rand(11111,99999);
+            $value2 = rand(11111,99999);
+            $valor = '4005803001'.$value1.$value2;
             $vcript = bcrypt($valor);
             $result[] = $valor;
             $encript[] = '"'.$vcript.'"';
         }
 
-        for ($i=0; $i < 10; $i++) { 
-            $value1 = rand(33333333,55555555);
-            $value2 = rand(1111111,7777777);
-            $valor = '4'.$value1.$value2;
-            $vcript = bcrypt($valor);
-            $result1[] = $valor;
-            $encript1[] = '"'.$vcript.'"';
-        }
-
-        return view('generar', compact('result','encript','result1','encript1'));
+        return view('generar', compact('result','encript'));
     }
 
     // Vista de preferencias del Afiliado

@@ -74,7 +74,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-credit_card"></i></span>
-                        {{ Form::select('pais', $paises, Session::get('terminos.code'), ['class' => 'form-control input-lg', 'placeholder'=>'Seleccione Pais', 'required', 'id' => 'pais','disabled']) }}
+                        {{ Form::select('pais', $paises, Session::get('terminos.code'), ['class' => 'form-control input-lg', 'placeholder'=>'Seleccione Pais', 'required', 'id' => 'pais','readonly']) }}
                     </div>
                     @if ($errors->has('pais'))
                         <span class="help-block">
@@ -110,6 +110,7 @@
             </div>
 
             <div id="contentCard">
+                <h3 id="textPlan" class="text-center"></h3>
                 <img class="img-responsive" src="{{ url('images/tarjeta-acard.png') }}" alt="tarjeta">
                 <p id="textCuenta"></p>
             </div>
@@ -996,6 +997,8 @@ $(document).ready(function() {
             type: "POST",
             url:'{{ url('/pais') }}',
             success: function(data) {
+                // paso valor de la tarjeta Ingresada
+                $('#textPlan').text(data.plan);
                 // paso valor de la tarjeta Ingresada
                 $('#textCuenta').text(data.codigo);
             }

@@ -18,6 +18,7 @@ Route::get('/send', 'EmailController@send');
 
 /** Rutas de Inicio */
 Route::get('/', 'HomeController@index');
+
 Route::get('/home', 'HomeController@index');
 
 // Generar tarjetas de prueba
