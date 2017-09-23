@@ -32,6 +32,16 @@ Route::get('/my-card/{card}', [
     'as'   => 'page.mycard' 
 ]);
 
+/**
+* Ruta para llama Webhooks Woocomerce
+*/
+Route::group(['middleware' => ['verifywoo']], function () {
+    Route::get('/hooks', [
+        'uses' => 'WebHookController@index',
+        'as'   => 'hook.index' 
+    ]);
+});
+
 /** Rutas de Registro  */
 /**--------------------------------------------*/
 
