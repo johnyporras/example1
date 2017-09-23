@@ -1,0 +1,58 @@
+[
+    {
+        "name": "id",
+        "dbType": "increments",
+        "htmlType": "",
+        "validations": "",
+        "searchable": false,
+        "fillable": false,
+        "primary": true,
+        "inForm": false,
+        "inIndex": false
+    }
+    ,
+    {
+        "name": "titulo",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required",
+        "searchable": true
+    }
+    ,
+    {
+        "name": "descripcion",
+        "dbType": "text",
+        "htmlType": "textarea"
+    }
+    ,
+    {
+        "name": "fechainicio",
+        "dbType": "dateTime",
+        "htmlType": "date",
+        "searchable": true
+    }
+    ,
+    {
+        "name": "fechafin",
+        "dbType": "dateTime",
+        "htmlType": "date",
+        "searchable": true
+    }
+    ,
+     {
+        "name": "hora",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required",
+        "searchable": true
+    }
+    ,
+   {
+        "name": "user_id",
+        "dbType": "integer",
+        "htmlType": "hidden",
+        "searchable": false,
+        "inForm": false,
+        "inIndex": false
+    }    
+]

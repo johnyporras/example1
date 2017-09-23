@@ -67,19 +67,17 @@ class HistorialMedicoController extends Controller
 
             $id = Auth::user()->detalles_usuario_id;
             $afiliado = AcAfiliado::findOrFail($id);
-            $listado = HistorialMedico::where('id_afiliado', $id)->get();
-
+            $listado = HistorialMedico::where('id_afiliado', $id)->orderBy('created_at', 'desc')->get();
             return view('historial.historiales', compact('afiliado', 'listado'));
         } else {
             return view('historial.lista');
-        }
-        
+        } 
     }
 
     public function historiales()
     {
 
-        $historiales = HistorialMedico::all();
+        $historiales = HistorialMedico::orderBy('created_at','desc')->get();
 
         return Datatables::of($historiales)
         ->addColumn('action', function ($historial) {
@@ -104,7 +102,7 @@ class HistorialMedicoController extends Controller
      */
     public function create($id)
     {
-        $historial = HistorialMedico::all();
+        $historial = HistorialMedico::orderBy('created_at','desc')->get();
 
         //Retorno la vista
         return view('historial.create', compact('historial', 'id'));
@@ -125,6 +123,7 @@ class HistorialMedicoController extends Controller
             'especialidad'  => 'required',
             'procedimiento' => 'required',
             'tratamiento'   => 'required',
+            'diagnostico'   => 'required',
             'recomendaciones' => 'min:10',
             'observaciones'   => 'min:10'
         ]);
@@ -138,6 +137,7 @@ class HistorialMedicoController extends Controller
             'especialidad'  => $request->especialidad,
             'tratamiento'   => $request->tratamiento,
             'procedimiento' => $request->procedimiento,
+            'diagnostico' => $request->diagnostico,
             'observaciones'   => $request->observaciones,
             'recomendaciones' => $request->recomendaciones  
         ]);
@@ -182,7 +182,7 @@ class HistorialMedicoController extends Controller
         
         $afiliado = AcAfiliado::findOrFail($id);
 
-        $listado = HistorialMedico::where('id_afiliado', $id)->get();
+        $listado = HistorialMedico::where('id_afiliado', $id)->orderBy('created_at','desc')->get();
 
         // Retorno la vista
         return view('historial.show',compact('afiliado', 'listado'));
@@ -233,6 +233,7 @@ class HistorialMedicoController extends Controller
             'especialidad'  => 'required',
             'procedimiento' => 'required',
             'tratamiento'   => 'required',
+            'diagnostico'   => 'required',
             'recomendaciones' => 'min:10',
             'observaciones'   => 'min:10'
         ]);
@@ -245,6 +246,7 @@ class HistorialMedicoController extends Controller
             'especialidad'  => $request->especialidad,
             'tratamiento'   => $request->tratamiento,
             'procedimiento' => $request->procedimiento,
+            'diagnostico'   => $request->diagnostico,
             'observaciones'   => $request->observaciones,
             'recomendaciones' => $request->recomendaciones  
         ]);
@@ -294,7 +296,6 @@ class HistorialMedicoController extends Controller
             'examen' => $filename,
         ]);
         
-        
         toast()->info(' Examen guardado sastifactoriamente', 'Información:');
         return redirect()->route('historial.view', $historial->id);
     }
@@ -308,9 +309,9 @@ class HistorialMedicoController extends Controller
         //Elimino el examen
         $examen->delete();
 
-        toast()->error(' Examen Eliminado Correctamente', 'Alerta:');
+        toast()->error('Examen Eliminado Correctamente', 'Alerta:');
         // Retorno a la lista de solicitudes
-        return redirect()->route('historial.view',$examen->historial->id);
+        return redirect()->route('historial.view', $examen->historial->id);
     }
 
 }

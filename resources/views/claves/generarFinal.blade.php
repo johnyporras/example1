@@ -44,6 +44,8 @@
     
     
     {!! Form::open(['url' => 'claves/procesar', 'class' => 'form-horizontal', 'id' => 'procesar', 'name' => 'procesar', 'lang' => 'es', 'data-parsley-validate' => '']) !!}
+   
+   
     <div class="form-group {{ $errors->has('fecha_cita') || $errors->has('telefono') ? 'has-error' : ''}}">
     {!! Form::label('Estado', 'Estado: ', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-3">

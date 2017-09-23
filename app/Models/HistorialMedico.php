@@ -38,7 +38,8 @@ class HistorialMedico extends Model
         'especialidad', 
         'tratamiento',
         'medico',  
-        'procedimiento',     
+        'procedimiento',
+        'diagnostico',    
         'observaciones',
         'recomendaciones',
         'deleted_at'

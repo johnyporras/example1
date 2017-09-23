@@ -73,7 +73,7 @@ class ClaveController extends Controller{
        */
         $user = \Auth::user();
         $request->fecha_cita = functions::uf_convertirdatetobd($request->fecha_cita);
-        
+        //dd($request->fecha_cita);
         if($user->type == 3){//TIPO PROVEEDOR
             $request = array_add($request, 'codigo_proveedor_creador', $user->proveedor);
         }
@@ -116,7 +116,7 @@ class ClaveController extends Controller{
         $request->estatus_clave=1;
 
         $claves = $this->store($request);
-
+      //  dd("adsa1");
         if(isset($claves)){
             for($i = 0; $i < $request->max; $i++):
 
@@ -604,10 +604,13 @@ class ClaveController extends Controller{
 //                                    'fecha_cita'      => 'required|date',
 //                                    'telefono'        => 'required'
 //                        ]);
-        $ValidarFecha = new ValidarFechaController();
+       // $ValidarFecha = new ValidarFechaController();
         /*if(!($ValidarFecha->validarFecha($request))){
             return redirect('home')->with('message', 'Clave se encuentra fuera de rango de fechas  autorizado.');
         }*/
+        //dd($request->fecha_cita);
+       // $request->fecha_cita = functions::uf_convertirdatetobd($request->fecha_cita);
+        
         $acClave = AcClave::create($request->all());
         return $acClave;
         //return true;

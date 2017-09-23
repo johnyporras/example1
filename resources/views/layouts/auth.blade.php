@@ -46,7 +46,7 @@
     <body>
         <!-- Login Full Background -->
         <!-- For best results use an image with a resolution of 1280x1280 pixels (prefer a blurred image for smaller file size) -->
-        <img src="{{ asset('images/background-auth.jpg') }}" alt="Login Full Background" class="full-bg animation-fadeInQuickInv">
+        <img src="{{ Request::is('login') ? asset('images/background-auth.jpg') : asset('images/Atiempo-Registro.jpg') }}" alt="Login Full Background" class="full-bg animation-fadeInQuickInv">
         <!-- END Login Full Background -->
 
         <!-- Login Container -->

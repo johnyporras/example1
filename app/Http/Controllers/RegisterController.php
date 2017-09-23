@@ -101,10 +101,27 @@ class RegisterController extends Controller
                             Session::set('tarjeta', $tarjeta->id);
                             // Guardo el valor del formulario para comparar
                             $code = substr(Session::get('codigo'), 2, 3);
+                            // tipo de plan dependiendo de codigo
+                            $plan = substr(Session::get('codigo'), 0, 2);
+
+                            // Selecciono producto dependiendo del codigo
+                            if ($plan == 90 || $plan == 40) {
+                                // Producto a-card / a-member
+                                $tplan = ($plan == 90)?'A-CARD':'A-MEMBER';
+                            } else {
+                                // producto a-doctor
+                                $tplan = 'A-DOCTOR';
+                            }
+
                             //realizo un filtro para buscar en la tabla terminos
                             $terminos = Terminos::where('codigo','=', $code)->first();
                             //Guardo session terminos 
-                            Session::set('terminos', ['code' => $terminos->codigo ,'terminos' => $terminos->terminos]);
+                            Session::set('terminos', [
+                                            'code' => $terminos->codigo,
+                                            'terminos' => $terminos->terminos]);
+                            //session con valor del plan
+                            Session::set('plan', $tplan);
+
                             // retorno respuesta
                             return response()->json(['success' => 'Tarjeta Valida']);
                         }
@@ -119,10 +136,26 @@ class RegisterController extends Controller
                         Session::set('tarjeta', $tarjeta->id);
                         // Guardo el valor del formulario para comparar
                         $code = substr(Session::get('codigo'), 2, 3);
-                        //realizo un filtro para buscar en la tabla terminos
-                        $terminos = Terminos::where('codigo','=', $code)->first();
-                        //Guardo session terminos 
-                        Session::set('terminos', ['code' => $terminos->codigo ,'terminos' => $terminos->terminos]);
+                        // tipo de plan dependiendo de codigo
+                        $plan = substr(Session::get('codigo'), 0, 2);
+
+                            // Selecciono producto dependiendo del codigo
+                            if ($plan == 90 || $plan == 40) {
+                                // Producto a-card / a-member
+                                $tplan = ($plan == 90)?'A-CARD':'A-MEMBER';
+                            } else {
+                                // producto a-doctor
+                                $tplan = 'A-DOCTOR';
+                            }
+
+                            //realizo un filtro para buscar en la tabla terminos
+                            $terminos = Terminos::where('codigo','=', $code)->first();
+                            //Guardo session terminos 
+                            Session::set('terminos', [
+                                            'code' => $terminos->codigo,
+                                            'terminos' => $terminos->terminos]);
+                            //session con valor del plan
+                            Session::set('plan', $tplan);
                         // retorno respuesta
                         return response()->json(['success' => 'Tarjeta Valida']);
                     }
@@ -149,7 +182,7 @@ class RegisterController extends Controller
             // Envio codigo de tarjeta seleccionada
             $codigo = chunk_split(Session::get('codigo'),4);
             // Retorno los terminos..
-            return response()->json(['codigo' => $codigo ]);
+            return response()->json(['codigo' => $codigo, 'plan' => Session::get('plan')]);
         }
     }
 

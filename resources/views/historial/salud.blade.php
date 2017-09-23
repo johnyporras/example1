@@ -4,7 +4,7 @@
         <h4 class="sub-header">
             <span><i class="fa fa-user-md fa-fw"></i></span> <span>Información Medica</span>
         </h4>
-
+        
         <table class="tEdit table table-borderless table-striped table-hover table-vcenter">
             <tbody>
                 <tr>

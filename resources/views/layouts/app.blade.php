@@ -187,12 +187,13 @@ if(is_object(Auth::user()))
         <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('plugins/typeahead/typeahead.bundle.js') }}"></script>
         <script src="{{ asset('plugins/bootstrap-treeview/bootstrap-treeview.min.js') }}"></script>
-
+		
         <!-- QUITAR CODIGO APLICAR SOLO EN LAS PAGINAS A UTILIZAR -->
         <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
         <script src="{{ asset('plugins/parsley-js/parsley.min.js') }}"></script>
         <script src="{{ asset('plugins/parsley-js/i18n/es.js') }}"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
         
         <script src="{{ asset('js/plugins.js') }}"></script>
         <script src="{{ asset('js/functions.js') }}"></script>

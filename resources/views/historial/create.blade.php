@@ -43,7 +43,7 @@
     </div> <!-- row -->
 
     <!-- incluye formulario -->
-    @include('historial.form1') 
+    @include('historial.form') 
     <!-- incluye  formulario -->
 
         <div class="row">
@@ -124,7 +124,7 @@ $(document).ready(function() {
             return el.$element.closest('.form-group');
         },
         errorsWrapper: '<span class="help-block">',
-        errorTemplate: '<div class=" col-md-offset-3 col-md-9"></div>',
+        errorTemplate: '<div class=" col-md-offset-4 col-md-8"></div>',
     };
 
     // Genero la validacion del formulario...
@@ -134,6 +134,7 @@ $(document).ready(function() {
     $("#date").datepicker({
         language: "es",
         format: 'yyyy-mm-dd',
+        endDate: '0'
     }).on('changeDate', function (selected) {     
         //valida el campo al cambiar
         $('#date').parsley(parsleyOptions).validate();

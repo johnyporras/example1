@@ -6,12 +6,18 @@
                     <div class="form-group {{ $errors->has('fecha') ? ' has-error' : '' }}">
                         {{ Form::label('fecha', 'Fecha Atención', ['class' => 'col-md-4 control-label']) }}
                         <div class="col-md-8">
-                            <div class="input-group">
-                                {{ Form::text('fecha', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Atención', 'id' => 'date', 'required']) }}
-                                <div class="input-group-addon">
-                                    <span class="fa fa-calendar"></span>
+
+                            @if (Auth::user()->type == 5 || Auth::user()->type == 8)
+                                <div class="input-group">
+                                    {{ Form::text('fecha', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Fecha Atención', 'id' => 'date', 'required']) }}
+                                    <div class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </div>
                                 </div>
-                            </div>
+                            @else
+                                {{ Form::text('fecha', date('Y-m-d'), ['class' => 'form-control', 'required', 'readonly']) }}
+                            @endif
+
                             @if ($errors->has('fecha'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('fecha') }}</strong>
@@ -86,6 +92,22 @@
                                     <strong>{{ $errors->first('tratamiento') }}</strong>
                                 </span>
                             @endif
+                        </div>
+                    </div>
+                    <!-- End .form-group  -->
+                </div>
+
+                <div class="col-xs-12">
+                    <div class="form-group {{ $errors->has('diagnostico') ? ' has-error' : '' }}">
+                        {{ Form::label('diagnostico', 'Diagnostico', ['class' => 'col-md-4 control-label']) }}
+                        <div class="col-md-8">
+                            {{ Form::textArea('diagnostico', null, ['class' => 'form-control', 'placeholder' => 'Ingrese el diagnostico', 'rows' => 4,'minlength' => "10", 'required' ]) }}
+                        
+                        @if ($errors->has('diagnostico'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('diagnostico') }}</strong>
+                            </span>
+                        @endif
                         </div>
                     </div>
                     <!-- End .form-group  -->

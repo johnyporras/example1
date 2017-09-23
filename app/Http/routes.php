@@ -18,6 +18,7 @@ Route::get('/send', 'EmailController@send');
 
 /** Rutas de Inicio */
 Route::get('/', 'HomeController@index');
+
 Route::get('/home', 'HomeController@index');
 
 // Generar tarjetas de prueba
@@ -30,6 +31,16 @@ Route::get('/my-card/{card}', [
     'uses' => 'HomeController@mycard',
     'as'   => 'page.mycard' 
 ]);
+
+/**
+* Ruta para llama Webhooks Woocomerce
+*/
+Route::group(['middleware' => ['verifywoo']], function () {
+    Route::get('/hooks', [
+        'uses' => 'WebHookController@index',
+        'as'   => 'hook.index' 
+    ]);
+});
 
 /** Rutas de Registro  */
 /**--------------------------------------------*/

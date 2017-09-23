@@ -76,6 +76,19 @@ function uf_convertir_monto(ldec_monto)
 	
 }
 
+function uf_convertir_monto2(ldec_monto)
+{
+	var valor=new String(ldec_monto);
+	while(valor.indexOf(',')>0)
+	{//Elimino todos los puntos o separadores de miles
+		valor=valor.replace(",","");
+	}
+	valor=valor.replace(",",".");
+	
+	return valor;
+	
+}
+
   
 
 
