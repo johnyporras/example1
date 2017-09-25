@@ -37,13 +37,13 @@ class HomeController extends Controller
      */
     public function generar()
     {
-        for ($i=0; $i < 15; $i++) { 
+        for ($i=0; $i < 1000; $i++) { 
             $value1 = rand(11111,99999);
             $value2 = rand(11111,99999);
             $valor = '4005803001'.$value1.$value2;
             $vcript = bcrypt($valor);
             $result[] = $valor;
-            $encript[] = '"'.$vcript.'"';
+            $encript[] = $vcript;
         }
 
         return view('generar', compact('result','encript'));

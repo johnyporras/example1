@@ -11,9 +11,13 @@
     <div class="row">
         <div class="col-xs-12">
             <h4>Tarjetas Producto A-MEMBER</h4>
-            <pre>{{ print_r($result) }}</pre>
+            @foreach ($result as $value)
+               {{ $value }}<br>
+            @endforeach 
             <h4>Tarjetas Producto A-MEMBER Encriptadas</h4>
-            <pre>{{ print_r($encript) }}</pre>
+            @foreach ($encript as $value)
+               {{ $value }}<br>
+            @endforeach 
         </div>
     </div>  
 </div>
