@@ -59,18 +59,16 @@ class RegisterController extends Controller
     public function check(Request $request)
     {   
         if($request->ajax()){
-            // Guardo el valor de l formulario para comparar
-            $codigo = $request->tarjeta;
-            //realizo un filtro para buscar en la tabla tarjetas
-            $tarjeta = Tarjeta::get()->filter(function($record) use($codigo) {
-                // Chequea si cel codigo coincide con alguna tarjeta registrada
-                if (Hash::check($codigo, $record->codigo_tarjeta)) {
-                    return $record;
-                }else {
-                    return null;
-                }
-            })->first();
 
+            // Guardo el valor del formulario
+            $codigo = $request->tarjeta;
+            // Guardo el valor del formulario encriptado para comparar
+            $crypt = Tarjeta::cryptCode($codigo);
+
+            //Verifico con la bd
+            $tarjeta = Tarjeta::where('codigo_tarjeta',$crypt)->first();
+             
+            // valido si la tarjeta existe en la bd
             if ($tarjeta !== null) {
                 // Verifica si la tarjeta fue activada o no
                 if ($tarjeta->activada == 'N') {

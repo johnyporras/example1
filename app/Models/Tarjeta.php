@@ -35,4 +35,12 @@ class Tarjeta extends Model
         'activada',
         'deleted_at'
     ];
+
+    public static function cryptCode($codigo)
+    {
+        // encripto valor 
+        $value = hash('sha256',sha1(md5($codigo)));
+        // retorno el valor encriptado
+        return $value;
+    }
 }
