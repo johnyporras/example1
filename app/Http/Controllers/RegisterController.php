@@ -41,7 +41,7 @@ class RegisterController extends Controller
         $estados = AcEstado::orderBy('estado','ASC')->pluck('estado', 'id');
         // Cargo los tamaños
         $tamanos = Tamano::pluck('titulo', 'id');
-        //Preguntas 
+        //Preguntas
         $preguntas1 = DB::table('preguntas')->take(10)->orderBy('id','asc')->pluck('pregunta', 'pregunta');
         $preguntas2 = DB::table('preguntas')->take(10)->orderBy('id','desc')->pluck('pregunta', 'pregunta');
          // Cargo los paises
@@ -57,7 +57,7 @@ class RegisterController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function check(Request $request)
-    {   
+    {
         if($request->ajax()){
 
             // Guardo el valor del formulario
@@ -77,7 +77,7 @@ class RegisterController extends Controller
                     // verifico si existe alguna cuanta con ese codigo...
                     if ($cuenta !== null) {
                         // valido el estatus de la cuenta
-                        // verifico estatus 5 (En Proceso) 
+                        // verifico estatus 5 (En Proceso)
                         if ($cuenta->estatus == 5 ) {
                             // Verifico que tenga algun afiliado
                             if ($cuenta->afiliado !== null) {
@@ -113,7 +113,7 @@ class RegisterController extends Controller
 
                             //realizo un filtro para buscar en la tabla terminos
                             $terminos = Terminos::where('codigo','=', $code)->first();
-                            //Guardo session terminos 
+                            //Guardo session terminos
                             Session::set('terminos', [
                                             'code' => $terminos->codigo,
                                             'terminos' => $terminos->terminos]);
@@ -148,7 +148,7 @@ class RegisterController extends Controller
 
                             //realizo un filtro para buscar en la tabla terminos
                             $terminos = Terminos::where('codigo','=', $code)->first();
-                            //Guardo session terminos 
+                            //Guardo session terminos
                             Session::set('terminos', [
                                             'code' => $terminos->codigo,
                                             'terminos' => $terminos->terminos]);
@@ -162,7 +162,7 @@ class RegisterController extends Controller
                     return response()->json(['error' => 'Tarjeta ya fue activada']);
                 }
             } else {
-                // borro la session codigo                   
+                // borro la session codigo
                 Session::forget('codigo');
                 return response()->json(['error' => 'Tarjeta Invalida']);
             }
@@ -175,7 +175,7 @@ class RegisterController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function checkTerminos(Request $request)
-    {   
+    {
         if($request->ajax()){
             // Envio codigo de tarjeta seleccionada
             $codigo = chunk_split(Session::get('codigo'),4);
@@ -199,7 +199,7 @@ class RegisterController extends Controller
                     // producto a-doctor
                     $producto = 2;
                 }
-                
+
                 try{
                     //Guardo CuentaPlan
                     $cuenta = AcCuenta::create([
@@ -233,11 +233,11 @@ class RegisterController extends Controller
                         // Guardo session de embarazada
                         Session::set('embarazo', $request->embarazada);
                         Session::set('semanas', $request->semanas);
-                    } 
-                
+                    }
+
                     // Guardo la session cuenta
                     Session::set('cuenta', $cuenta);
-                    // borro la session codigo                   
+                    // borro la session codigo
                     Session::forget('codigo');
                     // Retorno mensaje de sastifactorio
                     return response()->json(['success' => 'Cuenta Generada Sastifactorimente']);
@@ -258,7 +258,7 @@ class RegisterController extends Controller
         if ($request->ajax()) {
 
             if (Session::get('cuenta')) {
-                
+
                 // valido para no repetir cedula ni emal en afiliado y en user
                 $emailAf = AcAfiliado::where('email','=', $request->correo)->first();
                 $emailUser = User::where('email','=', $request->correo)->first();
@@ -376,13 +376,13 @@ class RegisterController extends Controller
                                 'email' => $usuario->email,
                                 'confirm_token' => $usuario->confirm_token];
 
-                        // Envio de Correo para confirmar 
+                        // Envio de Correo para confirmar
                         Mail::send('mails.register', ['data' => $data], function($mail) use($data){
                             $mail->subject('Confirma tu cuenta');
                             $mail->to($data['email'], $data['name']);
                         });
 
-                        // borro las sessiones afiliado, tarjeta, cuenta, terminos             
+                        // borro las sessiones afiliado, tarjeta, cuenta, terminos
                         Session::forget('afiliado');
                         Session::forget('tarjeta');
                         Session::forget('cuenta');
@@ -401,7 +401,7 @@ class RegisterController extends Controller
             }else{
                 return response()->json(['error' => 'Afiliado Invalido intente nuevamente']);
             }
-        } 
+        }
     }
 
     public function confirmRegister($email, $confirm_token)
@@ -409,9 +409,9 @@ class RegisterController extends Controller
         $user = User::where('email','=', $email)->where('confirm_token', '=', $confirm_token)->first();
 
         if ($user){
-            
+
            if ($user->active == true){
-               return view('auth.verify')->with('warning', 'Cuenta de usuario ya se encuentra activa'); 
+               return view('auth.verify')->with('warning', 'Cuenta de usuario ya se encuentra activa');
             }
 
             // Actualizo usuario activo
@@ -460,7 +460,7 @@ class RegisterController extends Controller
     public function resendEmail($id)
     {
         //Selecciono El usuario generado de una vez
-        $usuario = User::find($id); 
+        $usuario = User::find($id);
 
         if($usuario !== null){
             //Guardo data para enviar el correo
@@ -468,7 +468,7 @@ class RegisterController extends Controller
                      'email' => $usuario->email,
                      'confirm_token' => $usuario->confirm_token];
 
-            // Envio de Correo para confirmar 
+            // Envio de Correo para confirmar
             Mail::send('mails.register', ['data' => $data], function($mail) use($data){
                 $mail->subject('Confirma tu cuenta');
                 $mail->to($data['email'], $data['name']);
@@ -479,7 +479,7 @@ class RegisterController extends Controller
         }else{
             return back()->with('error', 'Algo va mal... Usuario O Cuenta invalidos por favor comuniquese con el administrador');
         }
-        
+
     }
 
 }

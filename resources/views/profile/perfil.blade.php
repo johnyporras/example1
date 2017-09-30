@@ -2,7 +2,7 @@
     <!-- Customer Info -->
     <div class="col-xs-4">
         <div class="block-section text-right">
-            
+
             @if ($usuario->imagen_perfil == null)
                 <img src="{{ url('images/avatars/avatar.jpg') }}" width="100px" alt="avatar" class="img-thumbnail img-responsive">
             @else
@@ -14,12 +14,13 @@
     <div class="col-xs-8">
         <div class="row">
             <div class="col-xs-12">
-                <p>Pon tu foto. Una en la que salgas muy bien</p>
+                <p>Selecciona una imagen donde podamos ver tu cara claramente.<br>
+                Medidas recomendadas 190x190px o mantener la proporcion de la imagen.</p>
             </div>
             <div class="col-lg-7">
 
                 {{ Form::open(['route'=>'perfil.image', 'files' => true, 'id' => 'imageForm']) }}
-        
+
                 <div class="form-group {{ $errors->has('image') ? ' has-error' : '' }}">
                     {{ Form::file('image', ['id' => 'image', 'required' ]) }}
                     <span class="help-block">
@@ -33,7 +34,7 @@
                 </div>
                 <!-- End .form-group  -->
             </div>
-            {{ Form::close() }}  
+            {{ Form::close() }}
         </div> <!-- .row -->
     </div>
 
@@ -48,9 +49,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Nombre</strong>
                     </td>
-                    <td><span class="xtext" 
+                    <td><span class="xtext"
                             data-type="text"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="nombre"
                             data-value="{{ $perfil->nombre }}"
                             data-title="Ingrese Nombre"
@@ -65,9 +66,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Apellido</strong>
                     </td>
-                    <td><span class="xtext" 
+                    <td><span class="xtext"
                             data-type="text"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="apellido"
                             data-value="{{ $perfil->apellido }}"
                             data-title="Ingrese Apellido"
@@ -96,9 +97,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Fecha Nacimiento</strong>
                     </td>
-                    <td><span class="xdate" 
+                    <td><span class="xdate"
                             data-type="date"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="fecha_nacimiento"
                             data-value="{{ $perfil->fecha_nacimiento->format('Y-m-d') }}"
                             data-title="Ingrese Fecha Nacimiento"
@@ -120,9 +121,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Lugar Nacimiento</strong>
                     </td>
-                    <td><span class="xselect" 
+                    <td><span class="xselect"
                             data-type="select"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="id_estado"
                             data-value="{{ $perfil->id_estado }}"
                             data-title="Ingrese Lugar Nacimiento"
@@ -137,9 +138,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Ciudad</strong>
                     </td>
-                    <td><span class="xtext" 
+                    <td><span class="xtext"
                             data-type="text"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="ciudad"
                             data-value="{{ $perfil->ciudad }}"
                             data-title="Ingrese Ciudad"
@@ -154,9 +155,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Estado Civil</strong>
                     </td>
-                    <td><span class="xcivil" 
+                    <td><span class="xcivil"
                             data-type="select"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="civil"
                             data-value="{{ $perfil->civil }}"
                             data-title="Ingrese Estado Civil"
@@ -171,9 +172,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Nro Hijos</strong>
                     </td>
-                    <td><span class="xhijos" 
+                    <td><span class="xhijos"
                             data-type="number"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="hijos"
                             data-value="{{ $perfil->hijos }}"
                             data-title="Ingrese nro Hijos"
@@ -188,9 +189,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Teléfono</strong>
                     </td>
-                    <td><span class="xphone" 
+                    <td><span class="xphone"
                             data-type="number"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="telefono"
                             data-value="{{ $perfil->telefono }}"
                             data-title="Ingrese Telefono"
@@ -205,9 +206,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Ocupación</strong>
                     </td>
-                    <td><span class="xtext" 
+                    <td><span class="xtext"
                             data-type="text"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="ocupacion"
                             data-value="{{ $perfil->ocupacion or null }}"
                             data-title="Ingrese Ocupación"
@@ -222,9 +223,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Idioma</strong>
                     </td>
-                    <td><span class="xlang" 
+                    <td><span class="xlang"
                             data-type="select"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="idioma"
                             data-value="{{ $perfil->idioma or null }}"
                             data-title="Ingrese Idioma"
@@ -238,16 +239,16 @@
 
             </tbody>
         </table>
-        <!-- END Customer Info -->   
-    </div> 
+        <!-- END Customer Info -->
+    </div>
 
     <div class="clearfix"></div>
-    
+
     <!-- Contactos -->
     <div class="col-md-6">
         <h4 class="sub-header">
-            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
-               data-target="#modalContacto" title="Agregar"> <i class="fa fa-plus"></i></button> 
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal"
+               data-target="#modalContacto" title="Agregar"> <i class="fa fa-plus"></i></button>
             <span>Contacto en caso de Emergencias</span>
         </h4>
 
@@ -270,28 +271,28 @@
             @foreach ($perfil->contactos as $contacto)
                 <tr>
                     <td>
-                        <a href="/perfil/contacto/{{ $contacto->id }}" 
-                            data-original-title="Eliminar" data-toggle="tooltip" 
+                        <a href="/perfil/contacto/{{ $contacto->id }}"
+                            data-original-title="Eliminar" data-toggle="tooltip"
                             class="btn btn-danger btn-xs sweet-danger">
                         <i class="fa fa-trash"> </i></a>
                     </td>
-                    <td><a class="xtexto" href="#" 
+                    <td><a class="xtexto" href="#"
                         data-type="text"
-                        data-pk="{{ $contacto->id }}" 
+                        data-pk="{{ $contacto->id }}"
                         data-name="nombre"
                         data-value="{{ $contacto->nombre }}"
                         data-title="Ingrese Nombre"
                         ></a></td>
-                    <td><a class="xtelefono" href="#" 
+                    <td><a class="xtelefono" href="#"
                         data-type="number"
-                        data-pk="{{ $contacto->id }}" 
+                        data-pk="{{ $contacto->id }}"
                         data-name="telefono"
                         data-value="{{ $contacto->telefono }}"
                         data-title="Ingrese Teléfono"
                         ></a></td>
                     <td><a class="xtexto" href="#"
                         data-type="text"
-                        data-pk="{{ $contacto->id }}" 
+                        data-pk="{{ $contacto->id }}"
                         data-name="parentesco"
                         data-value="{{ $contacto->parentesco }}"
                         data-title="Ingrese Parentesco"
@@ -305,8 +306,8 @@
     <!-- Pasatiempos -->
     <div class="col-md-6">
         <h4 class="sub-header">
-            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
-               data-target="#modalPtiempo" title="Agregar"> <i class="fa fa-plus"></i></button> 
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal"
+               data-target="#modalPtiempo" title="Agregar"> <i class="fa fa-plus"></i></button>
             <span>Pasatiempo</span>
         </h4>
 
@@ -328,21 +329,21 @@
             @foreach ($perfil->motivoSelect(3)->get() as $motivo)
                 <tr>
                     <td>
-                        <a href="/perfil/motivo/{{ $motivo->id }}" 
-                            data-original-title="Eliminar" data-toggle="tooltip" 
+                        <a href="/perfil/motivo/{{ $motivo->id }}"
+                            data-original-title="Eliminar" data-toggle="tooltip"
                             class="btn btn-danger btn-xs sweet-danger">
                         <i class="fa fa-trash"> </i></a>
                     </td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="tipo"
                         data-value="{{ $motivo->tipo }}"
                         data-title="Ingrese Pasatiempo"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="frecuencia"
                         data-value="{{ $motivo->frecuencia }}"
                         data-title="Ingrese Frecuencia"
@@ -352,7 +353,7 @@
             </tbody>
         </table>
     </div>
-    
+
     <!--  El modal para crear contacto -->
     <div class="modal fade" id="modalContacto" tabindex="-1" role="dialog" >
         <div class="modal-dialog">
@@ -425,7 +426,7 @@
                 </div>
                 <div class="modal-body">
                     {{ Form::open(['route'=>'perfil.motivo', 'class' => 'motivoForm form-horizontal']) }}
-                    
+
                         <div class="form-group {{ $errors->has('tipo') ? ' has-error' : '' }}">
                             {{ Form::label('tipo', 'Pasatiempo', ['class' => 'col-md-3 control-label']) }}
                             <div class="col-md-9">
@@ -495,7 +496,7 @@ $(document).ready(function() {
     });
     // para texto editable
     $('.xtext').editable({
-        mode: 'inline', 
+        mode: 'inline',
         toggle: 'manual',
         validate: function(value) {
             if($.trim(value) == '') {
@@ -506,8 +507,8 @@ $(document).ready(function() {
     });
     //Fecha Nacimiento
     $('.xdate').editable({
-        format: 'yyyy-mm-dd',    
-        viewformat: 'dd/mm/yyyy',    
+        format: 'yyyy-mm-dd',
+        viewformat: 'dd/mm/yyyy',
         datepicker: {
             startView: 2,
             language: "es",
@@ -525,7 +526,7 @@ $(document).ready(function() {
         },
         toggle: 'manual',
         mode: 'inline',
-        source: {!! $estados !!}, 
+        source: {!! $estados !!},
         url:'{{ route('perfil.editar') }}',
     });
     // Nro de hijos
@@ -538,13 +539,13 @@ $(document).ready(function() {
               return 'Solo se permiten numeros.';
             }
         },
-        mode: 'inline', 
+        mode: 'inline',
         toggle: 'manual',
         url:'{{ route('perfil.editar') }}',
     });
     //Estado civil
     $('.xcivil').editable({
-        mode: 'inline', 
+        mode: 'inline',
         toggle: 'manual',
         validate: function(value) {
             if($.trim(value) == '') {
@@ -556,7 +557,7 @@ $(document).ready(function() {
             {value: 'CASADO', text: 'CASADO'},
             {value: 'DIVORCIADO', text: 'DIVORCIADO'},
             {value: 'VIUDO', text: 'VIUDO'}
-        ],  
+        ],
         url:'{{ route('perfil.editar') }}',
     });
     //Numero de telefono
@@ -570,13 +571,13 @@ $(document).ready(function() {
                 return 'Ingrese un Numero de Telefono Valido';
             }
         },
-        mode: 'inline', 
+        mode: 'inline',
         toggle: 'manual',
         url:'{{ route('perfil.editar') }}',
     })
     // Idioma
     $('.xlang').editable({
-        mode: 'inline', 
+        mode: 'inline',
         toggle: 'manual',
         validate: function(value) {
             if($.trim(value) == '') {
@@ -586,7 +587,7 @@ $(document).ready(function() {
         source: [
             {value: 'es', text: 'Español'},
             {value: 'en', text: 'Ingles'},
-        ],  
+        ],
         url:'{{ route('perfil.editar') }}',
     });
 

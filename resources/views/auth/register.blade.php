@@ -18,7 +18,7 @@
 @section('content')
 
 <div id="wizard" class="block push-bit">
-    
+
     <ul>
         <li><a href="#step-1">Tarjeta</a></li>
         <li><a href="#step-2">Terminos</a></li>
@@ -37,7 +37,7 @@
             </div>
 
             {!! Form::open(['url' => '/check', 'class' => 'form-horizontal form-bordered form-control-borderless', 'method' => 'get', 'id' => 'checkForm' ]) !!}
-                    
+
             <div class="form-group {{ $errors->has('tarjeta') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
                     <div class="input-group">
@@ -66,15 +66,15 @@
                 <p><i class="fa fa-check"></i> <span class="text">He leído y acepto los términos y condiciones de uso</span>
                 <button type="button" class="close" onclick="$('#rAccept').hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </p>
-            </div> 
+            </div>
 
             {!! Form::open(['url' => '/pais', 'class' => 'form-horizontal form-bordered form-control-borderless', 'method' => 'get', 'id' => 'checkForm' ]) !!}
-                    
+
             <div class="form-group {{ $errors->has('pais') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-credit_card"></i></span>
-                        {{ Form::select('pais', $paises, Session::get('terminos.code'), ['class' => 'form-control input-lg', 'placeholder'=>'Seleccione Pais', 'required', 'id' => 'pais','readonly']) }}
+                        {{ Form::select('pais', $paises, Session::get('terminos.code'), ['class' => 'form-control input-lg', 'placeholder'=>'Seleccione Pais', 'required', 'id' => 'pais','readonly', 'disabled']) }}
                     </div>
                     @if ($errors->has('pais'))
                         <span class="help-block">
@@ -116,7 +116,7 @@
             </div>
 
             {!! Form::open(['url' => '/cuenta', 'class' => 'form-horizontal form-bordered form-control-borderless', 'method' => 'get', 'id' => 'cuentaForm']) !!}
-                    
+
             <div id="cPlan" class="hidden" >
                 <div class="form-group {{ $errors->has('producto') ? ' has-error' : '' }}">
                     <div class="col-xs-12">
@@ -144,7 +144,7 @@
                             </span>
                         @endif
                     </div>
-                </div>  
+                </div>
             </div>
 
             <div id="mascotas" class="hidden">
@@ -296,7 +296,7 @@
             </div>
 
             {!! Form::open(['url' => '/afiliado', 'class' => 'form-horizontal form-bordered form-control-borderless', 'method' => 'get', 'id' => 'afiliadoForm']) !!}
-                    
+
             <div class="form-group {{ $errors->has('cedula') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
                     <div class="input-group">
@@ -366,7 +366,7 @@
                     @endif
                 </div>
             </div>
-            
+
             <div class="form-group {{ $errors->has('fecha') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
                     <div class="input-group">
@@ -445,7 +445,7 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-                        {{ Form::password('password', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Clave', 'id' => 'password', 'minlength' => '6', 'maxlength' => '16', 'required']) }}  
+                        {{ Form::password('password', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Clave', 'id' => 'password', 'minlength' => '6', 'maxlength' => '16', 'required']) }}
                     </div>
                      @if ($errors->has('password'))
                         <span class="help-block">
@@ -460,7 +460,7 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
                         {{ Form::password('password_confirmation', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Confirmar Clave', 'id' => 'password1', 'data-parsley-equalto' => '#password', 'minlength' => '6', 'maxlength' => '16', 'required']) }}
-                            
+
                     </div>
                     @if ($errors->has('password_confirmation'))
                         <span class="help-block">
@@ -476,7 +476,7 @@
                         <span class="input-group-addon"><i class="gi gi-circle_question_mark"></i></span>
                         {{ Form::select('pregunta1', $preguntas1, null, ['class' => 'usuario form-control input-lg', 'placeholder'=>'Seleccione Pregunta', 'required', 'id' => 'pregunta1']) }}
                     </div>
-                    
+
                     @if ($errors->has('pregunta1'))
                         <span class="help-block">
                             <strong>{{ $errors->first('pregunta1') }}</strong>
@@ -531,8 +531,8 @@
                 <div class="col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-                        {{ Form::password('clave', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Clave Teléfonica', 'id' => 'clave', 'minlength' => '4', 'maxlength' => '6', 'pattern' => '[0-9]+', 'required']) }} 
-                        <span class="help-block"> Solo se permiten Números</span> 
+                        {{ Form::password('clave', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Clave Teléfonica', 'id' => 'clave', 'minlength' => '4', 'maxlength' => '6', 'pattern' => '[0-9]+', 'required']) }}
+                        <span class="help-block"> Solo se permiten Números</span>
                     </div>
 
                      @if ($errors->has('clave'))
@@ -548,7 +548,7 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
                         {{ Form::password('clave_confirmation', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Confirmar Clave Telefonica', 'id' => 'clave1', 'data-parsley-equalto' => '#clave', 'minlength' => '4', 'maxlength' => '6', 'required']) }}
-                        <span class="help-block"> Solo se permiten Números</span>   
+                        <span class="help-block"> Solo se permiten Números</span>
                     </div>
                     @if ($errors->has('clave_confirmation'))
                         <span class="help-block">
@@ -565,7 +565,7 @@
             </div>
         {!! Form::close() !!}
         </div>
-    </div> 
+    </div>
 </div>
 
 @endsection
@@ -596,7 +596,7 @@ $(document).ready(function() {
     // Para los terminos
    // $('#contTerminos').hide();
     $('#rAccept').hide();
-    
+
     /** Variable Config parsley **/
     var parsleyOptions = {
         errorClass: 'has-error',
@@ -618,8 +618,8 @@ $(document).ready(function() {
     $('#userForm').parsley(parsleyOptions);
 
     // Inicializo step form
-    $('#wizard').smartWizard({ 
-        selected: 0, 
+    $('#wizard').smartWizard({
+        selected: 0,
         theme: 'default',
         transitionEffect:'fade',
         toolbarSettings: {
@@ -640,13 +640,13 @@ $(document).ready(function() {
     // Verifica si puede pasar al otro step
     $("#wizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection){
         // verifico si va adelante
-        if(stepDirection === 'forward'){      
+        if(stepDirection === 'forward'){
             if(validate == false){
-                return false;    
+                return false;
             }
         }
         //verifico si va atras
-        if(stepDirection === 'backward'){  
+        if(stepDirection === 'backward'){
             validate = true;
             return true;
         }
@@ -656,19 +656,19 @@ $(document).ready(function() {
     // Verifica si puede mostrar el ultimo boton para finalizar
     $("#wizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection) {
         // Enable finish button only on last steps
-        if(stepNumber == 0){ 
+        if(stepNumber == 0){
             if (submitt == false) {
                 validate = false;
             }
         }
-        
-        if(stepNumber == 1){ 
+
+        if(stepNumber == 1){
             if (accept == false) {
                 validate = false;
             }
         }
 
-        if(stepNumber == 2){ 
+        if(stepNumber == 2){
             if (submitted == false) {
                 validate = false;
             }
@@ -717,7 +717,7 @@ $(document).ready(function() {
             $('#semanas').attr('disabled','disabled');
             $('#semanas').removeAttr('required','required');
         }
-    }); 
+    });
 
     /* Para fecha de solicitud*/
     $('#fecha').datepicker({
@@ -725,7 +725,7 @@ $(document).ready(function() {
         format: 'yyyy-mm-dd',
         startView: 2,
         endDate: '-18y'
-    }).on('changeDate', function (selected) {     
+    }).on('changeDate', function (selected) {
         //valida el campo al cambiar
         $('#fecha').parsley(parsleyOptions).validate();
     });
@@ -736,7 +736,7 @@ $(document).ready(function() {
         format: 'yyyy-mm-dd',
         startView: 2,
         endDate: '0'
-    }).on('changeDate', function (selected) {     
+    }).on('changeDate', function (selected) {
         //valida el campo al cambiar
         $('#fmascota').parsley(parsleyOptions).validate();
     });
@@ -760,8 +760,8 @@ $(document).ready(function() {
                 if (data.error) {
                     // Muestro mensaje de error
                     $('#result').show();
-                    $('#result').removeClass('alert-success'); 
-                    $('#result').addClass('alert-warning '); 
+                    $('#result').removeClass('alert-success');
+                    $('#result').addClass('alert-warning ');
                     $('#result .text').text(data.error)
                     validate = false;
                     //console.log(data.error);
@@ -770,16 +770,16 @@ $(document).ready(function() {
                 if(data.id) {
                     // Redirecciono a otra pagina
                     window.location.href = "{{ url('/resend') }}/"+data.id;
-                } 
+                }
                 // Verifica que se puede utilizar la tarjeta
                 if(data.success) {
                     // Desabilito los campos paa evitar errores
                     $('#valid').attr('disabled','disabled');
                     $('#tarjeta').attr('disabled','disabled');
                     // Muestro mensaje de exito
-                    $('#result').show(); 
-                    $('#result').removeClass('alert-warning'); 
-                    $('#result').addClass('alert-success'); 
+                    $('#result').show();
+                    $('#result').removeClass('alert-warning');
+                    $('#result').addClass('alert-success');
                     $('#result .text').text(data.success)
                     // Permito pasar al otro step del registro
                     submitt = true;
@@ -792,7 +792,7 @@ $(document).ready(function() {
                 }
             }
         });
-    }); 
+    });
 
     // Generar Cuenta
     //$('#cuentaForm').on('submit', function (e) {
@@ -812,8 +812,8 @@ $(document).ready(function() {
         var tipo    = $('#tipo').val();
         var edad    = $('#edad').val();
         var fmascota = $('#fmascota').val();
-        var tamano  = $('#tamano').val();    
-         
+        var tamano  = $('#tamano').val();
+
         // Ejecuto la peticion para validar la tarjeta
         $.ajax({
             type: "POST",
@@ -828,15 +828,15 @@ $(document).ready(function() {
                 tipo: tipo,
                 edad: edad,
                 fmascota: fmascota,
-                tamano: tamano 
+                tamano: tamano
             },
             success: function(data) {
                 //Verifico la respuesta del servidor
                 if (data.error) {
                     // Muestro mensaje de error
                     $('#result1').show();
-                    $('#result1').removeClass('alert-success'); 
-                    $('#result1').addClass('alert-danger'); 
+                    $('#result1').removeClass('alert-success');
+                    $('#result1').addClass('alert-danger');
                     $('#result1 .text').text(data.error)
                     validate = false;
                     console.log(data.data);
@@ -849,9 +849,9 @@ $(document).ready(function() {
                     $('#embarazada').attr('disabled','disabled');
                     $('#semanas').attr('disabled','disabled');
                     // Muestro mensaje de exito
-                    $('#result1').show(); 
-                    $('#result1').removeClass('alert-danger'); 
-                    $('#result1').addClass('alert-success'); 
+                    $('#result1').show();
+                    $('#result1').removeClass('alert-danger');
+                    $('#result1').addClass('alert-success');
                     $('#result1 .text').text(data.success);
                     // Permito pasar al otro step del registro
                     validate = true;
@@ -877,8 +877,8 @@ $(document).ready(function() {
         var nacimiento = $('#fecha').val();
         var sexo   = $('#sexo').val();
         var estado = $('#estado').val();
-        var ciudad = $('#ciudad').val();    
-         
+        var ciudad = $('#ciudad').val();
+
         // Ejecuto la peticion para validar la tarjeta
         $.ajax({
             type: "POST",
@@ -901,8 +901,8 @@ $(document).ready(function() {
                 if (data.error) {
                     // Muestro mensaje de error
                     $('#result2').show();
-                    $('#result2').removeClass('alert-success'); 
-                    $('#result2').addClass('alert-danger'); 
+                    $('#result2').removeClass('alert-success');
+                    $('#result2').addClass('alert-danger');
                     $('#result2 .text').text(data.error)
                     validate = false;
                     console.log(data.data);
@@ -910,11 +910,11 @@ $(document).ready(function() {
                     // Desabilito los campos paa evitar errores
                     $('#valid2').attr('disabled','disabled');
                     $('.afiliado').attr('disabled','disabled');
-                  
+
                     // Muestro mensaje de exito
-                    $('#result2').show(); 
-                    $('#result2').removeClass('alert-danger'); 
-                    $('#result2').addClass('alert-success'); 
+                    $('#result2').show();
+                    $('#result2').removeClass('alert-danger');
+                    $('#result2').addClass('alert-success');
                     $('#result2 .text').text(data.success);
                     // Permito pasar al otro step del registro
                     validate = true;
@@ -939,7 +939,7 @@ $(document).ready(function() {
         var respuesta2 = $('#respuesta2').val();
         var password   = $('#password').val();
         var clave      = $('#clave').val();
-  
+
         // Ejecuto la peticion para validar la tarjeta
         $.ajax({
             type: "POST",
@@ -953,7 +953,7 @@ $(document).ready(function() {
                 password: password,
                 clave: clave,
             },
-            beforeSend:function() { 
+            beforeSend:function() {
                $('#valid3').attr('disabled','disabled');
                $('#valid3').html("<i class='fa fa-refresh fa-spin fa-fw'></i> Cargando");
             },
@@ -965,14 +965,14 @@ $(document).ready(function() {
                 }
             },
             success: function(data) {
-                
+
                 if (data.error) {
                     // Muestro mensaje de error
                     $('#result3').show();
-                    $('#result3').removeClass('alert-success'); 
-                    $('#result3').addClass('alert-danger'); 
+                    $('#result3').removeClass('alert-success');
+                    $('#result3').addClass('alert-danger');
                     $('#result3 .text').text(data.error);
-                    console.log(data.data); 
+                    console.log(data.data);
                 } else {
                     // Desabilito los campos paa evitar errores
                     $('.usuario').attr('disabled','disabled');
