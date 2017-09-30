@@ -470,6 +470,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('resclave/valemail','customResetPass@validarEmail');
     Route::post('resclave/valrespuestas','customResetPass@validarResp');
     
+    Route::post('archivos/procesarArchivo','procesarArchivosController@getArchivo');
+    
     
  
     // CONFIRMACION DE CLAVES DE ATENCION ESPECIAL
