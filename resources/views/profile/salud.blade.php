@@ -1,5 +1,5 @@
 <div class="row">
-    
+
     <div class="col-xs-12">
         <h4 class="sub-header">
             <span><i class="fa fa-user-md fa-fw"></i></span> <span>Información Medica</span>
@@ -11,9 +11,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Sexo</strong>
                     </td>
-                    <td><span class="xsexo" 
+                    <td><span class="xsexo"
                             data-type="select"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="sexo"
                             data-value="{{ $perfil->sexo  }}"
                             data-title="Ingrese Sexo"
@@ -28,9 +28,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Altura (CM)</strong>
                     </td>
-                    <td><span class="xaltura" 
+                    <td><span class="xaltura"
                             data-type="number"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="altura"
                             data-value="{{ $perfil->altura }}"
                             data-title="Ingrese Altura"
@@ -45,9 +45,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Peso (KG)</strong>
                     </td>
-                    <td><span class="xpeso" 
+                    <td><span class="xpeso"
                             data-type="number"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="peso"
                             data-value="{{ $perfil->peso }}"
                             data-title="Ingrese Peso"
@@ -71,9 +71,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Grupo Sanguíneo</strong>
                     </td>
-                    <td><span class="xtext" 
+                    <td><span class="xtext"
                             data-type="text"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="grupo_sangre"
                             data-value="{{ $perfil->grupo_sangre }}"
                             data-title="Ingrese Grupo Sanguineo"
@@ -88,9 +88,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>¿Usa Lentes?</strong>
                     </td>
-                    <td><span class="xchoice" 
+                    <td><span class="xchoice"
                             data-type="select"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="lentes"
                             data-value="{{ $perfil->lentes }}"
                             data-title="¿Usa Lentes o Anteojos?"
@@ -105,9 +105,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Condición uso de Lentes</strong>
                     </td>
-                    <td><span class="xtext" 
+                    <td><span class="xtext"
                             data-type="text"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="condicion_lentes"
                             data-value="{{ $perfil->condicion_lentes }}"
                             data-title="Ingrese ´condición uso lentes"
@@ -123,9 +123,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>¿Esta Embarazada?</strong>
                     </td>
-                    <td><span class="xembarazo" 
+                    <td><span class="xembarazo"
                             data-type="select"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="embarazada"
                             data-value="{{ $perfil->embarazada }}"
                             data-title="Ingrese un valor"
@@ -140,9 +140,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Semanas Embarazo</strong>
                     </td>
-                    <td><span class="xsemanas" 
+                    <td><span class="xsemanas"
                             data-type="number"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="tiempo_gestacion"
                             data-value="{{ $perfil->tiempo_gestacion }}"
                             data-title="Ingrese semanas de embarazo"
@@ -157,9 +157,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Ultima Menstruación</strong>
                     </td>
-                    <td><span class="xtext" 
+                    <td><span class="xtext"
                             data-type="text"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="menstruacion"
                             data-value="{{ $perfil->menstruacion }}"
                             data-title="Ingrese ultima menstruación"
@@ -174,9 +174,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Cantidad de Partos</strong>
                     </td>
-                    <td><span class="xnumber" 
+                    <td><span class="xnumber"
                             data-type="number"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="partos"
                             data-value="{{ $perfil->partos }}"
                             data-title="Ingrese Nro Partos"
@@ -191,9 +191,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Cantidad de Cesareas</strong>
                     </td>
-                    <td><span class="xnumber" 
+                    <td><span class="xnumber"
                             data-type="number"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="cesarea"
                             data-value="{{ $perfil->cesarea }}"
                             data-title="Ingrese Cantidad de Cesareas"
@@ -208,9 +208,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Cantidad de Perdidas</strong>
                     </td>
-                    <td><span class="xnumber" 
+                    <td><span class="xnumber"
                             data-type="number"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="perdidas"
                             data-value="{{ $perfil->perdidas }}"
                             data-title="Ingrese Cantidad de Perdidas"
@@ -225,9 +225,9 @@
                     <td class="text-right" style="width: 30%;">
                         <strong>Cantidad de Abortos</strong>
                     </td>
-                    <td><span class="xnumber" 
+                    <td><span class="xnumber"
                             data-type="number"
-                            data-pk="{{ $perfil->id }}" 
+                            data-pk="{{ $perfil->id }}"
                             data-name="abortos"
                             data-value="{{ $perfil->abortos }}"
                             data-title="Ingrese cantidad de Abortos"
@@ -238,11 +238,11 @@
                         </button>
                     </td>
                 </tr>
-                   
+
                @endif
             </tbody>
         </table>
-        <!-- END Customer Info -->   
+        <!-- END Customer Info -->
     </div>
 
     <div class="clearfix"></div>
@@ -256,8 +256,8 @@
     <!-- drogas -->
     <div class="col-md-6">
         <h4 class="sub-header">
-            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
-               data-target="#modalHabitos" title="Agregar"> <i class="fa fa-plus"></i></button> 
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal"
+               data-target="#modalHabitos" title="Agregar"> <i class="fa fa-plus"></i></button>
             <span>Consumo Alcohol, Cafe, Cigarrillos, etc...</span>
         </h4>
 
@@ -280,28 +280,28 @@
             @foreach ($perfil->motivoSelect(1)->get() as $motivo)
                 <tr>
                     <td>
-                        <a href="/perfil/motivo/{{ $motivo->id }}" 
-                            data-original-title="Eliminar" data-toggle="tooltip" 
+                        <a href="/perfil/motivo/{{ $motivo->id }}"
+                            data-original-title="Eliminar" data-toggle="tooltip"
                             class="btn btn-danger btn-xs sweet-danger">
                         <i class="fa fa-trash"> </i></a>
                     </td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="tipo"
                         data-value="{{ $motivo->tipo }}"
                         data-title="Ingrese Sustancia"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="cantidad"
                         data-value="{{ $motivo->cantidad }}"
                         data-title="Ingrese Cantidad"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="frecuencia"
                         data-value="{{ $motivo->frecuencia }}"
                         data-title="Ingrese Frecuencia"
@@ -315,8 +315,8 @@
     <!-- actividad Fisica -->
     <div class="col-md-6">
         <h4 class="sub-header">
-            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
-               data-target="#modalActividad" title="Agregar"> <i class="fa fa-plus"></i></button> 
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal"
+               data-target="#modalActividad" title="Agregar"> <i class="fa fa-plus"></i></button>
             <span>Actividad Fisica</span>
         </h4>
 
@@ -339,28 +339,28 @@
             @foreach ($perfil->motivoSelect(2)->get() as $motivo)
                 <tr>
                     <td>
-                        <a href="/perfil/motivo/{{ $motivo->id }}" 
-                            data-original-title="Eliminar" data-toggle="tooltip" 
+                        <a href="/perfil/motivo/{{ $motivo->id }}"
+                            data-original-title="Eliminar" data-toggle="tooltip"
                             class="btn btn-danger btn-xs sweet-danger">
                         <i class="fa fa-trash"> </i></a>
                     </td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="tipo"
                         data-value="{{ $motivo->tipo }}"
                         data-title="Ingrese Actividad"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="frecuencia"
                         data-value="{{ $motivo->frecuencia }}"
                         data-title="Ingrese Frecuencia"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="textarea"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="comentarios"
                         data-value="{{ $motivo->comentarios }}"
                         data-title="Ingrese comentarios"
@@ -375,8 +375,8 @@
 
     <!-- alimentación -->
     <div class="col-xs-12">
-        <h4 class="sub-header"> 
-            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
+        <h4 class="sub-header">
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal"
                data-target="#modalAlimento" title="Agregar"> <i class="fa fa-plus"></i></button>
             <span>Alimentación</span>
         </h4>
@@ -402,35 +402,35 @@
             @foreach ($perfil->motivoSelect(4)->get() as $motivo)
                 <tr>
                     <td>
-                        <a href="/perfil/motivo/{{ $motivo->id }}" 
-                            data-original-title="Eliminar" data-toggle="tooltip" 
+                        <a href="/perfil/motivo/{{ $motivo->id }}"
+                            data-original-title="Eliminar" data-toggle="tooltip"
                             class="btn btn-danger btn-xs sweet-danger">
                         <i class="fa fa-trash"> </i></a>
                     </td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="tipo"
                         data-value="{{ $motivo->tipo }}"
                         data-title="Ingrese Descripción"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="causa"
                         data-value="{{ $motivo->causa }}"
                         data-title="Ingrese Causa"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="frecuencia"
                         data-value="{{ $motivo->frecuencia }}"
                         data-title="Ingrese Frecuencia"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="textarea"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="comentarios"
                         data-value="{{ $motivo->comentarios }}"
                         data-title="Ingrese Comentarios"
@@ -452,8 +452,8 @@
     <!-- Vacunas -->
     <div class="col-md-6">
         <h4 class="sub-header">
-            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
-               data-target="#modalVacuna" title="Agregar"> <i class="fa fa-plus"></i></button> 
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal"
+               data-target="#modalVacuna" title="Agregar"> <i class="fa fa-plus"></i></button>
             <span>Vacunas</span>
         </h4>
 
@@ -476,28 +476,28 @@
             @foreach ($perfil->motivoSelect(6)->get() as $motivo)
                 <tr>
                     <td>
-                        <a href="/perfil/motivo/{{ $motivo->id }}" 
-                            data-original-title="Eliminar" data-toggle="tooltip" 
+                        <a href="/perfil/motivo/{{ $motivo->id }}"
+                            data-original-title="Eliminar" data-toggle="tooltip"
                             class="btn btn-danger btn-xs sweet-danger">
                         <i class="fa fa-trash"> </i></a>
                     </td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="tipo"
                         data-value="{{ $motivo->tipo }}"
                         data-title="Ingrese Pasatiempo"
                         ></a></td>
-                    <td><a class="xfecha" href="#" 
+                    <td><a class="xfecha" href="#"
                         data-type="date"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="fecha"
                         data-value="{{ $motivo->fecha }}"
                         data-title="Ingrese Fecha"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="textarea"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="comentarios"
                         data-value="{{ $motivo->comentarios }}"
                         data-title="Ingrese comentarios"
@@ -511,8 +511,8 @@
     <!-- Discapacidades -->
     <div class="col-md-6">
         <h4 class="sub-header">
-            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
-               data-target="#modalDiscap" title="Agregar"> <i class="fa fa-plus"></i></button> 
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal"
+               data-target="#modalDiscap" title="Agregar"> <i class="fa fa-plus"></i></button>
             <span>Discapacidades</span>
         </h4>
 
@@ -535,28 +535,28 @@
             @foreach ($perfil->motivoSelect(7)->get() as $motivo)
                 <tr>
                     <td>
-                        <a href="/perfil/motivo/{{ $motivo->id }}" 
-                            data-original-title="Eliminar" data-toggle="tooltip" 
+                        <a href="/perfil/motivo/{{ $motivo->id }}"
+                            data-original-title="Eliminar" data-toggle="tooltip"
                             class="btn btn-danger btn-xs sweet-danger">
                         <i class="fa fa-trash"> </i></a>
                     </td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="tipo"
                         data-value="{{ $motivo->tipo }}"
                         data-title="Ingrese Discapacidad"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="causa"
                         data-value="{{ $motivo->causa }}"
                         data-title="Ingrese Causa"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="textarea"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="comentarios"
                         data-value="{{ $motivo->comentarios }}"
                         data-title="Ingrese comentarios"
@@ -572,8 +572,8 @@
     <!-- Alergias -->
     <div class="col-xs-12">
         <h4 class="sub-header">
-            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
-               data-target="#modalAlergia" title="Agregar"> <i class="fa fa-plus"></i></button> 
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal"
+               data-target="#modalAlergia" title="Agregar"> <i class="fa fa-plus"></i></button>
             <span>Alergias</span>
         </h4>
 
@@ -597,35 +597,35 @@
             @foreach ($perfil->motivoSelect(5)->get() as $motivo)
                 <tr>
                     <td>
-                        <a href="/perfil/motivo/{{ $motivo->id }}" 
-                            data-original-title="Eliminar" data-toggle="tooltip" 
+                        <a href="/perfil/motivo/{{ $motivo->id }}"
+                            data-original-title="Eliminar" data-toggle="tooltip"
                             class="btn btn-danger btn-xs sweet-danger">
                         <i class="fa fa-trash"> </i></a>
                     </td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="tipo"
                         data-value="{{ $motivo->tipo }}"
                         data-title="Ingrese Alergia"
                         ></a></td>
-                    <td><a class="xfecha" href="#" 
+                    <td><a class="xfecha" href="#"
                         data-type="date"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="fecha"
                         data-value="{{ $motivo->fecha }}"
                         data-title="Ingrese Fecha"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="tratamiento"
                         data-value="{{ $motivo->tratamiento }}"
                         data-title="Ingrese Tratamiento"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="textarea"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="comentarios"
                         data-value="{{ $motivo->comentarios }}"
                         data-title="Ingrese comentarios"
@@ -639,8 +639,8 @@
     <!-- Hospitalizaciones -->
     <div class="col-md-6">
         <h4 class="sub-header">
-            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
-               data-target="#modalHospital" title="Agregar"> <i class="fa fa-plus"></i></button> 
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal"
+               data-target="#modalHospital" title="Agregar"> <i class="fa fa-plus"></i></button>
             <span>Hospitalizaciones</span>
         </h4>
 
@@ -664,35 +664,35 @@
             @foreach ($perfil->motivoSelect(8)->get() as $motivo)
                 <tr>
                     <td>
-                        <a href="/perfil/motivo/{{ $motivo->id }}" 
-                            data-original-title="Eliminar" data-toggle="tooltip" 
+                        <a href="/perfil/motivo/{{ $motivo->id }}"
+                            data-original-title="Eliminar" data-toggle="tooltip"
                             class="btn btn-danger btn-xs sweet-danger">
                         <i class="fa fa-trash"> </i></a>
                     </td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="tipo"
                         data-value="{{ $motivo->tipo }}"
                         data-title="Ingrese Lugar"
                         ></a></td>
-                    <td><a class="xfecha" href="#" 
+                    <td><a class="xfecha" href="#"
                         data-type="date"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="fecha"
                         data-value="{{ $motivo->fecha }}"
                         data-title="Ingrese Fecha"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="causa"
                         data-value="{{ $motivo->causa }}"
                         data-title="Ingrese Causa"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="textarea"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="comentarios"
                         data-value="{{ $motivo->comentarios }}"
                         data-title="Ingrese comentarios"
@@ -706,8 +706,8 @@
     <!-- Operaciones -->
     <div class="col-md-6">
         <h4 class="sub-header">
-            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
-               data-target="#modalOperacion" title="Agregar"> <i class="fa fa-plus"></i></button> 
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal"
+               data-target="#modalOperacion" title="Agregar"> <i class="fa fa-plus"></i></button>
             <span>Operaciones</span>
         </h4>
 
@@ -731,35 +731,35 @@
             @foreach ($perfil->motivoSelect(9)->get() as $motivo)
                 <tr>
                     <td>
-                        <a href="/perfil/motivo/{{ $motivo->id }}" 
-                            data-original-title="Eliminar" data-toggle="tooltip" 
+                        <a href="/perfil/motivo/{{ $motivo->id }}"
+                            data-original-title="Eliminar" data-toggle="tooltip"
                             class="btn btn-danger btn-xs sweet-danger">
                         <i class="fa fa-trash"> </i></a>
                     </td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="tipo"
                         data-value="{{ $motivo->tipo }}"
                         data-title="Ingrese Operación"
                         ></a></td>
-                    <td><a class="xfecha" href="#" 
+                    <td><a class="xfecha" href="#"
                         data-type="date"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="fecha"
                         data-value="{{ $motivo->fecha }}"
                         data-title="Ingrese Fecha"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="causa"
                         data-value="{{ $motivo->causa }}"
                         data-title="Ingrese Causa"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="textarea"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="comentarios"
                         data-value="{{ $motivo->comentarios }}"
                         data-title="Ingrese comentarios"
@@ -775,8 +775,8 @@
     <!-- Enfermedades Cronicas -->
     <div class="col-xs-12">
         <h4 class="sub-header">
-            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
-               data-target="#modalEnfermedad" title="Agregar"> <i class="fa fa-plus"></i></button> 
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal"
+               data-target="#modalEnfermedad" title="Agregar"> <i class="fa fa-plus"></i></button>
             <span>Enfermedades Cronicas</span>
         </h4>
 
@@ -802,49 +802,49 @@
             @foreach ($perfil->motivoSelect(10)->get() as $motivo)
                 <tr>
                     <td>
-                        <a href="/perfil/motivo/{{ $motivo->id }}" 
-                            data-original-title="Eliminar" data-toggle="tooltip" 
+                        <a href="/perfil/motivo/{{ $motivo->id }}"
+                            data-original-title="Eliminar" data-toggle="tooltip"
                             class="btn btn-danger btn-xs sweet-danger">
                         <i class="fa fa-trash"> </i></a>
                     </td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="tipo"
                         data-value="{{ $motivo->tipo }}"
                         data-title="Ingrese Enfermedad"
                         ></a></td>
-                    <td><a class="xfecha" href="#" 
+                    <td><a class="xfecha" href="#"
                         data-type="date"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="fecha"
                         data-value="{{ $motivo->fecha }}"
                         data-title="Ingrese Fecha Aparición"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="tratamiento"
                         data-value="{{ $motivo->tratamiento }}"
                         data-title="Ingrese Tratamiento"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="frecuencia"
                         data-value="{{ $motivo->frecuencia }}"
                         data-title="Ingrese Frecuencia de Consulta"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="text"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="profecional"
                         data-value="{{ $motivo->profecional }}"
                         data-title="Ingrese profesional que lo atiende"
                         ></a></td>
-                    <td><a class="xmotivo" href="#" 
+                    <td><a class="xmotivo" href="#"
                         data-type="textarea"
-                        data-pk="{{ $motivo->id }}" 
+                        data-pk="{{ $motivo->id }}"
                         data-name="comentarios"
                         data-value="{{ $motivo->comentarios }}"
                         data-title="Ingrese comentarios"
@@ -866,8 +866,8 @@
     <!-- Medicamentos -->
     <div class="col-xs-12">
         <h4 class="sub-header">
-            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
-               data-target="#modalMedicamento" title="Agregar"> <i class="fa fa-plus"></i></button> 
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal"
+               data-target="#modalMedicamento" title="Agregar"> <i class="fa fa-plus"></i></button>
             <span>Medicamentos</span>
         </h4>
 
@@ -895,79 +895,79 @@
             @foreach ($perfil->medicamentos as $medicamento)
                 <tr>
                     <td>
-                        <a href="/perfil/medicamento/{{ $medicamento->id }}" 
-                            data-original-title="Eliminar" data-toggle="tooltip" 
+                        <a href="/perfil/medicamento/{{ $medicamento->id }}"
+                            data-original-title="Eliminar" data-toggle="tooltip"
                             class="btn btn-danger btn-xs sweet-danger">
                         <i class="fa fa-trash"> </i></a>
                     </td>
-                    <td><a class="xtipo" href="#" 
+                    <td><a class="xtipo" href="#"
                         data-type="select"
-                        data-pk="{{ $medicamento->id }}" 
+                        data-pk="{{ $medicamento->id }}"
                         data-name="id_tipo_medicamento"
                         data-value="{{ $medicamento->id_tipo_medicamento }}"
                         data-title="Ingrese Tipo Medicamento"
                         ></a></td>
-                    <td><a class="xmedico" href="#" 
+                    <td><a class="xmedico" href="#"
                         data-type="text"
-                        data-pk="{{ $medicamento->id }}" 
+                        data-pk="{{ $medicamento->id }}"
                         data-name="nombre"
                         data-value="{{ $medicamento->nombre }}"
                         data-title="Ingrese Medicamento"
                         ></a></td>
-                    <td><a class="xdosis" href="#" 
+                    <td><a class="xdosis" href="#"
                         data-type="number"
-                        data-pk="{{ $medicamento->id }}" 
+                        data-pk="{{ $medicamento->id }}"
                         data-name="dosis"
                         data-value="{{ $medicamento->dosis }}"
                         data-title="Ingrese Dosis"
                         ></a></td>
-                    <td><a class="xmedico" href="#" 
+                    <td><a class="xmedico" href="#"
                         data-type="text"
-                        data-pk="{{ $medicamento->id }}" 
+                        data-pk="{{ $medicamento->id }}"
                         data-name="frecuencia"
                         data-value="{{ $medicamento->frecuencia }}"
                         data-title="Ingrese Frecuencia"
                         ></a></td>
-                    <td><a class="xmedico" href="#" 
+                    <td><a class="xmedico" href="#"
                         data-type="text"
-                        data-pk="{{ $medicamento->id }}" 
+                        data-pk="{{ $medicamento->id }}"
                         data-name="duracion"
                         data-value="{{ $medicamento->duracion }}"
                         data-title="Ingrese Duración"
                         ></a></td>
-                    <td><a class="xmedico" href="#" 
+                    <td><a class="xmedico" href="#"
                         data-type="text"
-                        data-pk="{{ $medicamento->id }}" 
+                        data-pk="{{ $medicamento->id }}"
                         data-name="diagnostico"
                         data-value="{{ $medicamento->diagnostico }}"
                         data-title="Ingrese Diagnostico"
                         ></a></td>
-                    <td><a class="xmedico" href="#" 
+                    <td><a class="xmedico" href="#"
                         data-type="text"
-                        data-pk="{{ $medicamento->id }}" 
+                        data-pk="{{ $medicamento->id }}"
                         data-name="recetado"
                         data-value="{{ $medicamento->recetado }}"
                         data-title="Ingrese Recetado por"
                         ></a></td>
                     <td class="text-center">
                     @if ($medicamento->file != null)
-                        <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" 
-                            data-target="#modal" 
+                        <button type="button" class="btn btn-warning btn-xs" data-toggle="modal"
+                            data-target="#modal"
                             data-title="{{ $medicamento->file }}"
-                            data-mime="{{ Storage::disk('documento')->mimeType($medicamento->file) }}" 
-                            data-url="{{ route('profile.file', ['file' => $medicamento->file]) }}" 
+                            data-mime="{{ Storage::disk('documento')->mimeType($medicamento->file) }}"
+                            data-url="{{ route('profile.file', ['file' => $medicamento->file]) }}"
                             title="Ver"><i class="fa fa-eye"></i>
                         </button>
-                        <a class="btn btn-info btn-xs" 
-                            href="{{ route('profile.file', ['file' => $medicamento->file]) }}" 
-                            download="{{ $medicamento->file }}" 
+                        <a class="btn btn-info btn-xs"
+                            href="{{ route('profile.file', ['file' => $medicamento->file]) }}"
+                            download="{{ $medicamento->file }}"
                             title="Descargar"><i class="fa fa-download"></i>
                         </a>
                     @else
-                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" 
-                            data-target="#modalUpload" 
+                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal"
+                            data-target="#modalUpload"
                             data-id="{{ $medicamento->id }}"
-                            data-tipo="medicamento"  
+                            data-tipo="medicamento"
                             title="Subir"> <i class="fa fa-upload"></i>
                         </button>
                     @endif
@@ -981,8 +981,8 @@
     <!-- Examenes y estudios -->
     <div class="col-xs-12">
         <h4 class="sub-header">
-            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal" 
-               data-target="#modalEstudio" title="Agregar"> <i class="fa fa-plus"></i></button> 
+            <button type="button" class="btn btn-circle btn-success btn-sm " data-toggle="modal"
+               data-target="#modalEstudio" title="Agregar"> <i class="fa fa-plus"></i></button>
             <span>Examenes / Estudios</span>
         </h4>
 
@@ -1005,44 +1005,44 @@
             @foreach ($perfil->documentos as $documento)
                 <tr>
                     <td>
-                        <a href="/perfil/documento/{{ $documento->id }}" 
-                            data-original-title="Eliminar" data-toggle="tooltip" 
+                        <a href="/perfil/documento/{{ $documento->id }}"
+                            data-original-title="Eliminar" data-toggle="tooltip"
                             class="btn btn-danger btn-xs sweet-danger">
                         <i class="fa fa-trash"> </i></a>
                     </td>
-                    <td><a class="xtype" href="#" 
+                    <td><a class="xtype" href="#"
                         data-type="select"
-                        data-pk="{{ $documento->id }}" 
+                        data-pk="{{ $documento->id }}"
                         data-name="id_tipo_documento"
                         data-value="{{ $documento->id_tipo_documento }}"
                         data-title="Ingrese Tipo"
                         ></a></td>
-                    <td><a class="xdocumento" href="#" 
+                    <td><a class="xdocumento" href="#"
                         data-type="text"
-                        data-pk="{{ $documento->id }}" 
+                        data-pk="{{ $documento->id }}"
                         data-name="detalle"
                         data-value="{{ $documento->detalle }}"
                         data-title="Ingrese Detalle"
                         ></a></td>
                     <td class="text-center">
                     @if ($documento->file != null)
-                        <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" 
-                            data-target="#modal" 
+                        <button type="button" class="btn btn-warning btn-xs" data-toggle="modal"
+                            data-target="#modal"
                             data-title="{{ $documento->file }}"
-                            data-mime="{{ Storage::disk('documento')->mimeType($documento->file) }}" 
-                            data-url="{{ route('profile.file', ['file' => $documento->file]) }}" 
+                            data-mime="{{ Storage::disk('documento')->mimeType($documento->file) }}"
+                            data-url="{{ route('profile.file', ['file' => $documento->file]) }}"
                             title="Ver"><i class="fa fa-eye"></i>
                         </button>
-                        <a class="btn btn-info btn-xs" 
-                            href="{{ route('profile.file', ['file' => $documento->file]) }}" 
-                            download="{{ $documento->file }}" 
+                        <a class="btn btn-info btn-xs"
+                            href="{{ route('profile.file', ['file' => $documento->file]) }}"
+                            download="{{ $documento->file }}"
                             title="Descargar"><i class="fa fa-download"></i>
                         </a>
                     @else
-                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" 
-                            data-target="#modalUpload" 
+                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal"
+                            data-target="#modalUpload"
                             data-id="{{ $documento->id }}"
-                            data-tipo="documento" 
+                            data-tipo="documento"
                             title="Subir"> <i class="fa fa-upload"></i>
                         </button>
                     @endif
@@ -1054,7 +1054,7 @@
     </div>
 
     <!-- ////////////////////////////////////////////////////////////////////// -->
-    
+
     <!-- Modal vacunas -->
     <div class="modal fade" id="modalVacuna" tabindex="-1" role="dialog" >
         <div class="modal-dialog">
@@ -1318,7 +1318,7 @@
                     <h4 class="modal-title">Ingrese Rasgos Alimenticios</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Ingrese todo en relacion con sus contusbres alimenticias. Dietas, Nro de ingestas, problemas alimenticios, intolerancias, etc.. </p>
+                    <p>Ingrese todo en relacion con sus costumbres alimenticias. Dietas, Nro de ingestas, problemas alimenticios, intolerancias, etc.. </p>
                     {{ Form::open(['route'=>'perfil.motivo', 'class' => 'motivoForm form-horizontal']) }}
                         <div class="form-group {{ $errors->has('tipo') ? ' has-error' : '' }}">
                             {{ Form::label('tipo', 'Descripción', ['class' => 'col-md-3 control-label']) }}
@@ -1777,10 +1777,10 @@
                                         <strong>{{ $errors->first('frecuencia') }}</strong>
                                     </span>
                                 @endif
-                            </div> 
+                            </div>
 
                         </div>
-                        
+
                         <div class="col-md-6">
                             <div class="form-group {{ $errors->has('duracion') ? ' has-error' : '' }}">
                                 {{ Form::label('duracion', 'Duración', ['class' => 'control-label']) }}
@@ -1832,11 +1832,11 @@
                             <div class="form-group">
                                 {{ Form::hidden('id_afiliado', $perfil->id) }}
                                 <button type="submit" class="btn btn-sm btn-success" title="Guardar"><span><i class="fa fa-save"></i></span> Guardar</button>
-                            </div> 
+                            </div>
                         </div>
 
                     {{ Form::close() }}
-                    </div>  
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><span><i class="fa fa-close"></i></span> Cerrar</button>
@@ -1855,7 +1855,7 @@
                 </div>
                 <div class="modal-body">
                     {{ Form::open(['route'=>'perfil.documento', 'files' => true, 'class' => 'motivoForm form-horizontal']) }}
-                        
+
                         <div class="form-group {{ $errors->has('id_tipo_documento') ? ' has-error' : '' }}">
                             {{ Form::label('id_tipo_documento', 'Tipo', ['class' => 'col-md-3 control-label']) }}
                             <div class="col-md-9">
@@ -1935,7 +1935,7 @@
                 </div>
                 <div class="modal-body">
                     {{ Form::open(['route'=>'perfil.upload', 'files' => true, 'class' => 'motivoForm form-horizontal']) }}
-                        
+
                         <div class="form-group {{ $errors->has('tipo') ? ' has-error' : '' }}">
                             {{ Form::label('file', 'Informe Medico / Récipe', ['class' => 'col-md-3 control-label']) }}
                             <div class="col-md-9">
@@ -1975,7 +1975,7 @@
 $(document).ready(function() {
     // Sexo
     $('.xsexo').editable({
-        mode: 'inline', 
+        mode: 'inline',
         toggle: 'manual',
         validate: function(value) {
             if($.trim(value) == '') {
@@ -1985,14 +1985,14 @@ $(document).ready(function() {
         source: [
             {value: 'M', text: 'Masculino'},
             {value: 'F', text: 'Femenino'},
-        ],  
+        ],
         url:'{{ route('perfil.editar') }}',
     });
-    
+
     //Fecha Nacimiento
     $('.xfecha').editable({
-        format: 'yyyy-mm-dd',    
-        viewformat: 'dd/mm/yyyy',    
+        format: 'yyyy-mm-dd',
+        viewformat: 'dd/mm/yyyy',
         datepicker: {
             startView: 2,
             language: "es",
@@ -2010,7 +2010,7 @@ $(document).ready(function() {
               return 'Solo se permiten numeros.';
             }
         },
-        mode: 'inline', 
+        mode: 'inline',
         toggle: 'manual',
         url:'{{ route('perfil.editar') }}',
     });
@@ -2027,13 +2027,13 @@ $(document).ready(function() {
               return 'Valor entre 1 y 40 Semanas';
             }
         },
-        mode: 'inline', 
+        mode: 'inline',
         toggle: 'manual',
         url:'{{ route('perfil.editar') }}',
     });
     // Para valor si o no
     $('.xchoice').editable({
-        mode: 'inline', 
+        mode: 'inline',
         toggle: 'manual',
         validate: function(value) {
             if($.trim(value) == '') {
@@ -2043,10 +2043,10 @@ $(document).ready(function() {
         source: [
             {value: 'S', text: 'Si'},
             {value: 'N', text: 'No'},
-        ],  
+        ],
         url:'{{ route('perfil.editar') }}',
     });
-    // Valida el valor de campa 
+    // Valida el valor de campa
     $('.xchoice').on('save', function(e, params) {
         if (params.newValue == 'S'){
             $(".trl").removeClass('hidden');
@@ -2059,7 +2059,7 @@ $(document).ready(function() {
     //------------------------------------------------//
     // Para valor si o no
     $('.xembarazo').editable({
-        mode: 'inline', 
+        mode: 'inline',
         toggle: 'manual',
         validate: function(value) {
             if($.trim(value) == '') {
@@ -2069,10 +2069,10 @@ $(document).ready(function() {
         source: [
             {value: 'S', text: 'Si'},
             {value: 'N', text: 'No'},
-        ],  
+        ],
         url:'{{ route('perfil.editar') }}',
     });
-    // Valida el valor de campa 
+    // Valida el valor de campa
     $('.xembarazo').on('save', function(e, params) {
         if (params.newValue == 'S'){
             $(".trh").removeClass('hidden');
@@ -2093,11 +2093,11 @@ $(document).ready(function() {
               return 'Solo se permiten numeros.';
             }
         },
-        mode: 'inline', 
+        mode: 'inline',
         toggle: 'manual',
         url:'{{ route('perfil.editar') }}',
     });
-    // Valida el valor de campa 
+    // Valida el valor de campa
     $('.xpeso').on('save', function(e, params) {
         $('.calculo').html('<i class="fa fa-spinner fa-pulse fa-fw"></i> cargando');
         var peso = params.newValue;
@@ -2123,11 +2123,11 @@ $(document).ready(function() {
               return 'Solo se permiten numeros.';
             }
         },
-        mode: 'inline', 
+        mode: 'inline',
         toggle: 'manual',
         url:'{{ route('perfil.editar') }}',
     });
-    // Valida el valor de campa 
+    // Valida el valor de campa
     $('.xaltura').on('save', function(e, params) {
         $('.calculo').html('<i class="fa fa-spinner fa-pulse fa-fw"></i> cargando');
         var peso = $('.xpeso').editable('getValue',true);
@@ -2153,7 +2153,7 @@ $(document).ready(function() {
         },
         url:'{{ route('perfil.medicoEditar') }}',
     });
-    
+
     $('.xdosis').editable({
         validate: function(value) {
             if($.trim(value) == '') {
@@ -2172,7 +2172,7 @@ $(document).ready(function() {
                 return 'Valor es requerido.';
             }
         },
-        source: {!! $tipom !!}, 
+        source: {!! $tipom !!},
         url:'{{ route('perfil.medicoEditar') }}',
     });
 
@@ -2193,7 +2193,7 @@ $(document).ready(function() {
                 return 'Valor es requerido.';
             }
         },
-        source: {!! $tipoDoc !!}, 
+        source: {!! $tipoDoc !!},
         url:'{{ route('perfil.documentoEditar') }}',
     });
     /******************************************************************************/
@@ -2204,10 +2204,10 @@ $(document).ready(function() {
         var title = button.data('title'); // Extract info from data-* attributes
         var mime = button.data('mime');
         var url = button.data('url');
-     
+
         var titulo = 'Documento';
 
-        if (mime == 'application/pdf' ) 
+        if (mime == 'application/pdf' )
         {
             var content = '<p><embed width="100%" height="400" src="'+url+'"></embed></p>';
         }else

@@ -18,7 +18,7 @@
         </style>
     </head>
     <body bgcolor="#3b3f40" style="margin: 0; padding: 0;" yahoo="fix">
- 
+
         <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 600px;" class="content">
             <tr>
                 <td align="center" bgcolor="#6dcff6" style="padding: 20px 20px 20px 20px; color: #ffffff; font-family: Arial, sans-serif; font-size: 36px; font-weight: bold;">
@@ -38,7 +38,7 @@
                     <table bgcolor="#6dcff6" border="0" cellspacing="0" cellpadding="0" class="buttonwrapper">
                         <tr>
                             <td align="center" height="50" style=" padding: 0 25px 0 25px; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;" class="button">
-                                <a href="{{ route('register.register') }}" style="color: #ffffff; text-align: center; text-decoration: none;">Click Aqui</a>
+                                <a href="{{ route('register.register') }}" style="color: #ffffff; text-align: center; text-decoration: none;">ACTIVAR</a>
                             </td>
                         </tr>
                     </table>
@@ -46,7 +46,7 @@
             </tr>
             <tr>
                 <td align="center" bgcolor="#dddddd" style="padding: 15px 10px 15px 10px; color: #555555; font-family: Arial, sans-serif; font-size: 12px; line-height: 18px;">
-                    <p><b>{{ date('Y') }} Corporacion Atiempo - Todos los derechos reservados</b> <br> 
+                    <p><b>{{ date('Y') }} Corporacion Atiempo - Todos los derechos reservados</b> <br>
                     Desarrollado por <a href="http://brizerconsulting.com/" target="_blank">BrizerConsulting.com</a></p>
                 </td>
             </tr>

@@ -974,7 +974,7 @@ $(document).ready(function() {
                     $('#result3 .text').text(data.error);
                     console.log(data.data);
                 } else {
-                    // Desabilito los campos paa evitar errores
+                    // Deshabilito los campos paa evitar errores
                     $('.usuario').attr('disabled','disabled');
                     $('#valid3').attr('disabled','disabled');
                     $('#valid3').html("<i class='fa fa-refresh fa-spin fa-fw'></i> Cargando");

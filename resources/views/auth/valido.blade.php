@@ -8,18 +8,18 @@
 
         <div class="col-xs-12">
             <div id="result" class="alert alert-success">
-            <p><span class="pull-left pr10 pt5"><i class="fa fa-exclamation-triangle fa-2x"></i></span> <span class="text">Hemos enviado un enlace de confirmación a su Cuenta de correo electrónico</span>
+            <p><span class="pull-left pr10 pt5"><i class="fa fa-exclamation-triangle fa-2x"></i></span> <span class="text">Hemos enviado un enlace de confirmación a su cuenta de correo electrónico</span>
             </p>
             </div>
         </div>
 
         <div class="col-xs-12 text-center mb25">
-            <h4>!Por favor verifique su buzón de correo¡</h4>
+            <h4>¡Por favor verifique su buzón de correo!</h4>
         </div>
 
         <div class="col-xs-12 text-center">
-            <a id="send" href="{{ url('login') }}" class="btn btn-success btn-md btn-block" ><i class="fa fa-sign-in fa-fw"></i> Iniciar Sesión</a> 
-        </div> 
+            <a id="send" href="{{ url('login') }}" class="btn btn-success btn-md btn-block" ><i class="fa fa-sign-in fa-fw"></i> Iniciar Sesión</a>
+        </div>
 
     </div> <!-- .row -->
 </div><!-- .blok -->
