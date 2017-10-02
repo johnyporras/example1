@@ -25,7 +25,7 @@ class ProcesarPagosController extends Controller
         if($rsPagos=="0")
         {
             $oPago->fechacorte =date('Y-m-j',strtotime( '+1 month' , strtotime ( $oCuenta->fecha )));
-            if($this->codigoCuenta=="058")
+            if($codigoCuenta=="058")
             {
                 $oPago->monto= $oCuenta->producto->costo;
             }
@@ -33,9 +33,10 @@ class ProcesarPagosController extends Controller
             {
                 $oPago->monto= $oCuenta->producto->costo2;
             }
-            
+            dd($oPago->monto);
             $oPago->estatuspago= "1";
             $oPago->save();
+            $rsPagos = $oPago->getPagos();
         }
         else 
         {
