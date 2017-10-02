@@ -33,7 +33,7 @@ class ProcesarPagosController extends Controller
             {
                 $oPago->monto= $oCuenta->producto->costo2;
             }
-            dd($oPago->monto);
+           // dd($oPago->monto);
             $oPago->estatuspago= "1";
             $oPago->save();
             $rsPagos = $oPago->getPagos();
