@@ -30,15 +30,15 @@ class WebHookController extends Controller
     public function index(Request $request)
     {
         // Variables momentaneas hasta obtener valor del webhook de woocomerce
-        $var =  ['codigo' => '40058030019021543353',
+        $var =  ['codigoProducto' => '40',
         		'email' => 'rabricenog@gmail.com',
         		'name' => 'Roger Briceno'];
         // convierto en json para emular el archivo  que trae el webhook
         $valor = json_encode($var);
         // decodifico el json enviado por el webhook
         $decode = json_decode($valor);
-        // asigno el valor del codigo raido desde el webhook
-        $codigo = $decode->codigo;
+
+
 
         //realizo un filtro para buscar en la tabla tarjetas
         /*$tarjeta = Tarjeta::get()->filter(function($record) use($codigo) {
@@ -49,19 +49,55 @@ class WebHookController extends Controller
                 return null;
             }
         })->first();*/
-
+        $codigo = $decode->codigoProducto;
         if ($codigo !== null) {
 
         	// Codigo separado de 4 en 4
-        	$code = chunk_split($decode->codigo,4);
+        	//$code = chunk_split($decode->codigoProducto,4);
 
         	// tipo de plan dependiendo de codigo
-            $plan = substr($decode->codigo, 0, 2);
+            $plan = $decode->codigoProducto;
 
             // Selecciono producto dependiendo del codigo
             if ($plan == 90 || $plan == 40) {
                 // Producto a-card / a-member
                 $tplan = ($plan == 90)?'A-CARD':'A-MEMBER';
+                // Genero la tarjeta
+
+                $val = 0;
+                $count = 0;
+                $tarjeta = 1;
+                //Generando una nueva tarjeta que no exista en la base datos
+                while($tarjeta !== null){
+                  $value1 = rand(11111,55555);
+                  $value2 = rand(66666,99999);
+                  if($plan == 40){
+                    echo $codigo = '4005803001'.$value1.$value2;
+                  }else{
+                    $codigo = '9005803001'.$value1.$value2;
+                  }
+
+                  //encripto tarjeta generada
+                  echo $crypt = Tarjeta::cryptCode($codigo);
+                  //valido en la base de datos que no exista
+                  $tarjeta = Tarjeta::where('codigo_tarjeta',$crypt)->first();
+                  if($tarjeta === null){
+                    $val = 1;
+                    //Guardo tarjeta generada en la base de date_default_timezone_set
+                    $Tarjeta = Tarjeta::create([
+                                      'codigo_tarjeta' => $crypt,
+                                      'activada'         => 'N'
+                                  ]);
+                  }else{
+                    $val = 0;
+                  }
+                  echo $count++;
+                }
+
+
+
+
+
             } else {
                 // producto a-doctor
                 $tplan = 'A-DOCTOR';
@@ -75,6 +111,7 @@ class WebHookController extends Controller
                         'codigo' => $codigo,
                     	'plan'   => $tplan];
 
+
             	// Envio de Correo para confirmar
                	Mail::send('mails.activate', ['data' => $data], function($mail) use($data){
                     $mail->subject('Gracias por su Compra');
@@ -82,7 +119,7 @@ class WebHookController extends Controller
                 });
           //  }
             // Success Response
-			return response()->json('success', 200);
+			return response()->json('success '.$count, 200);
         }
     }
 }
