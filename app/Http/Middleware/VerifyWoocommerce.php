@@ -28,5 +28,5 @@ class VerifyWoocommerce
         }
 */
         return $next($request);
-    //}
+    }
 }
