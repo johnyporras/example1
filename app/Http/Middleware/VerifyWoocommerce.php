@@ -17,7 +17,7 @@ class VerifyWoocommerce
      */
     public function handle($request, Closure $next)
     {
-        $signature = Request::header('x-wc-webhook-signature');
+      /*  $signature = Request::header('x-wc-webhook-signature');
 
         $payload = Request::getContent();
 
@@ -26,7 +26,7 @@ class VerifyWoocommerce
         if($signature != $calculated_hmac) {
             return false;
         }
-
+*/
         return $next($request);
-    }
+    //}
 }

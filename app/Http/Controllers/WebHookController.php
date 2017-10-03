@@ -30,10 +30,10 @@ class WebHookController extends Controller
     public function index(Request $request)
     {
         // Variables momentaneas hasta obtener valor del webhook de woocomerce
-        $var =  ['codigo' => '40058030019021543353', 
-        		'email' => 'germansango@gmail.com', 
-        		'name' => 'German Contreras'];
-        // convierto en json para emular el archivo  que trae el webhook		
+        $var =  ['codigo' => '40058030019021543353',
+        		'email' => 'rabricenog@gmail.com',
+        		'name' => 'Roger Briceno'];
+        // convierto en json para emular el archivo  que trae el webhook
         $valor = json_encode($var);
         // decodifico el json enviado por el webhook
         $decode = json_decode($valor);
@@ -41,16 +41,16 @@ class WebHookController extends Controller
         $codigo = $decode->codigo;
 
         //realizo un filtro para buscar en la tabla tarjetas
-        $tarjeta = Tarjeta::get()->filter(function($record) use($codigo) {
+        /*$tarjeta = Tarjeta::get()->filter(function($record) use($codigo) {
             // Chequea si cel codigo coincide con alguna tarjeta registrada
             if (Hash::check($codigo, $record->codigo_tarjeta)) {
                 return $record;
             }else {
                 return null;
             }
-        })->first();
+        })->first();*/
 
-        if ($tarjeta !== null) {
+        if ($codigo !== null) {
 
         	// Codigo separado de 4 en 4
         	$code = chunk_split($decode->codigo,4);
@@ -67,20 +67,20 @@ class WebHookController extends Controller
                 $tplan = 'A-DOCTOR';
             }
             // Verifica si la tarjeta fue activada o no
-            if ($tarjeta->activada == 'N') {
+            //if ($tarjeta->activada == 'N') {
 
             	//Guardo data para enviar el correo
                 $data = ['name'  => $decode->name,
                         'email'  => $decode->email,
-                        'codigo' => $code,
+                        'codigo' => $codigo,
                     	'plan'   => $tplan];
 
-            	// Envio de Correo para confirmar 
+            	// Envio de Correo para confirmar
                	Mail::send('mails.activate', ['data' => $data], function($mail) use($data){
                     $mail->subject('Gracias por su Compra');
                     $mail->to($data['email'], $data['name']);
                 });
-            }
+          //  }
             // Success Response
 			return response()->json('success', 200);
         }
