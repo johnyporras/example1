@@ -629,7 +629,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/server/php/', function () {
         return view('server.php.index.php');
     });
-    Route::get('register', function()
+    Route::get('a-member/citas', function()
     {
     return view('amember');
   });
