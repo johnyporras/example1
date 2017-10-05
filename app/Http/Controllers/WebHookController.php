@@ -49,7 +49,7 @@ class WebHookController extends Controller
                 return null;
             }
         })->first();*/
-        $codigo = $decode->codigoProducto;
+        $codigo = $decode->codigoProducto; 
         if ($codigo !== null) {
 
         	// Codigo separado de 4 en 4

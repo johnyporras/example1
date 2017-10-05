@@ -629,7 +629,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/server/php/', function () {
         return view('server.php.index.php');
     });
-
+    Route::get('register', function()
+    {
+    return view('amember');
+  });
 });
 //Archivo XML
 Route::get('dataXml', 'GenerateXmlController@getData');
