@@ -334,11 +334,11 @@ class RegisterController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()){
-            //return redirect("auth/register")->withErrors($validator)->withInput();
             return response()->json(['error' => $validator->getMessageBag()->toArray() ]);
         }else{
 
             if(Session::get('afiliado')){
+                
                 // Selecciono el lusuario
                 $user = User::where('user','=', Session::get('afiliado')->email )->first();
                 // Selecciono tipo de usuario dependiento del producto de la cuenta
@@ -395,10 +395,10 @@ class RegisterController extends Controller
                        return response()->json(['error' => '¡Ocurrio un error al generar Usuario!',
                                                 'data' => $e ]);
                     }
-                }else{
+                } else {
                     return response()->json(['error' => 'El usuario ya existe en el sistema']);
                 }
-            }else{
+            } else {
                 return response()->json(['error' => 'Afiliado Invalido intente nuevamente']);
             }
         }

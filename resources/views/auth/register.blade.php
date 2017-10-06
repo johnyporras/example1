@@ -439,7 +439,7 @@
                 </p>
             </div>
 
-            {!! Form::open(['url' => '/valido', 'class' => 'form-horizontal form-bordered form-control-borderless', 'id' => 'userForm']) !!}
+            {!! Form::open(['url' => '/valido', 'class' => 'form-horizontal form-bordered form-control-borderless', 'method' => 'get', 'id' => 'userForm']) !!}
 
             <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
@@ -529,8 +529,9 @@
 
             <div class="form-group {{ $errors->has('clave') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
-                    <div class="input-group">
-                        <span class="input-group-addon" data-toggle="tooltip" data-original-title="Su clave telefonica le servira para acceder a sus servicios via telefonica"><i class="gi gi-earphone"></i></span>
+                    <div class="input-group content-span">
+                        <span class="input-group-addon " ><i class="gi gi-earphone"></i></span>
+                        <span class="text-absolute" data-toggle="tooltip" data-original-title="Su clave telefonica le servira para acceder a sus servicios via telefonica">*</span>
                         
                         {{ Form::password('clave', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Clave Teléfonica', 'id' => 'clave', 'minlength' => '4', 'maxlength' => '6', 'pattern' => '[0-9]+', 'required']) }}
                         <span class="help-block"> Solo se permiten Números</span>
@@ -547,7 +548,8 @@
             <div class="form-group {{ $errors->has('clave_confirmation') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
                     <div class="input-group">
-                        <span class="input-group-addon" data-toggle="tooltip" data-original-title="Su clave telefonica le servira para acceder a sus servicios via telefonica"><i class="gi gi-earphone"></i></span>
+                        <span class="input-group-addon " ><i class="gi gi-earphone"></i></span>
+                        <span class="text-absolute" data-toggle="tooltip" data-original-title="Su clave telefonica le servira para acceder a sus servicios via telefonica">*</span>
                         {{ Form::password('clave_confirmation', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Confirmar Clave Telefonica', 'id' => 'clave1', 'data-parsley-equalto' => '#clave', 'minlength' => '4', 'maxlength' => '6', 'required']) }}
                         <span class="help-block"> Solo se permiten Números</span>
                     </div>
@@ -988,8 +990,12 @@ $(document).ready(function() {
                     // Muestro mensaje de exito
                     success = true;
                     // Redirecciono a otra pagina
-                    //$('#userForm').submit();
-                    $('#userForm').trigger('submit');
+                    if(success == true){
+                        //$('#userForm').submit();
+                        //$('#userForm').trigger('submit');
+                        window.location.href = "{{ route('register.valido') }}";
+                    }
+                    
                 }
             }
         });

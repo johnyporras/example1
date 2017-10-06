@@ -24,6 +24,20 @@
   text-decoration:none;
 }
 
+/* prueba de signo de interrogacion */
+.content-span{
+  position: relative;
+}
+.text-absolute{
+  position: absolute;
+  top: 16px;
+  left: 30px;
+  color: red;
+  z-index: 10;
+  cursor: pointer;
+}
+
+
 .animation-hatch .clock-date, .animation-hatch .clock-hours, .animation-hatch .clock-minutes, .animation-hatch .clock-seconds, .animation-hatch .clock-ampm{
   font-size:16px;
 }
