@@ -439,7 +439,7 @@
                 </p>
             </div>
 
-            {!! Form::open(['url' => '/registro', 'class' => 'form-horizontal form-bordered form-control-borderless', 'id' => 'userForm']) !!}
+            {!! Form::open(['route'=>'register.valido', 'class' => 'form-horizontal form-bordered form-control-borderless', 'id' => 'userForm']) !!}
 
             <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
@@ -799,8 +799,6 @@ $(document).ready(function() {
     $('#valid1').on('click', function (e) {
         e.preventDefault();
 
-        console.log('hizo el click');
-
         // Guardo el valor de la tarjeta ingresada..
         var plan     = 25;
         var producto = $('#producto').val();
@@ -981,7 +979,7 @@ $(document).ready(function() {
                     // Muestro mensaje de exito
                     success = true;
                     // Redirecciono a otra pagina
-                    window.location.href = "{{ url('/valido') }}";
+                    this.submit();
                 }
             }
         });
