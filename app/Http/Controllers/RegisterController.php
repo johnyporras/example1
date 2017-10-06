@@ -421,14 +421,13 @@ class RegisterController extends Controller
             $afiliado =  AcAfiliado::where('email','=',$email)->first();
             // Guardo codigo de cuanta para comparar con tarjetas
             $codigo = $afiliado->cuenta->codigo_cuenta;
-            // Selecciono tarjeta
-            $tarjeta = Tarjeta::get()->filter(function($record) use($codigo) {
-                if (Hash::check($codigo, $record->codigo_tarjeta)) {
-                    return $record;
-                }else {
-                    return null;
-                }
-            })->first();
+            
+            // Guardo el valor del formulario encriptado para comparar
+            $crypt = Tarjeta::cryptCode($codigo);
+
+            //Verifico con la bd
+            $tarjeta = Tarjeta::where('codigo_tarjeta',$crypt)->first();
+            
             // Modifico estatus de tarjeta a usada
             $tarjeta->activada = 'S';
             $tarjeta->save();

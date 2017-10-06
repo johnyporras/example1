@@ -439,7 +439,7 @@
                 </p>
             </div>
 
-            {!! Form::open(['route'=>'register.valido', 'class' => 'form-horizontal form-bordered form-control-borderless', 'id' => 'userForm']) !!}
+            {!! Form::open(['url' => '/valido', 'class' => 'form-horizontal form-bordered form-control-borderless', 'id' => 'userForm']) !!}
 
             <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
@@ -530,7 +530,8 @@
             <div class="form-group {{ $errors->has('clave') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                        <span class="input-group-addon" data-toggle="tooltip" data-original-title="Su clave telefonica le servira para acceder a sus servicios via telefonica"><i class="gi gi-earphone"></i></span>
+                        
                         {{ Form::password('clave', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Clave Teléfonica', 'id' => 'clave', 'minlength' => '4', 'maxlength' => '6', 'pattern' => '[0-9]+', 'required']) }}
                         <span class="help-block"> Solo se permiten Números</span>
                     </div>
@@ -546,7 +547,7 @@
             <div class="form-group {{ $errors->has('clave_confirmation') ? ' has-error' : '' }}">
                 <div class="col-xs-12">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                        <span class="input-group-addon" data-toggle="tooltip" data-original-title="Su clave telefonica le servira para acceder a sus servicios via telefonica"><i class="gi gi-earphone"></i></span>
                         {{ Form::password('clave_confirmation', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Confirmar Clave Telefonica', 'id' => 'clave1', 'data-parsley-equalto' => '#clave', 'minlength' => '4', 'maxlength' => '6', 'required']) }}
                         <span class="help-block"> Solo se permiten Números</span>
                     </div>
@@ -753,6 +754,16 @@ $(document).ready(function() {
             type: "POST",
             url:'{{ url('/check') }}',
             data: {tarjeta: tarjeta},
+            beforeSend:function() {
+               $('#valid').attr('disabled','disabled');
+               $('#valid').html("<i class='fa fa-refresh fa-spin fa-fw'></i> Cargando");
+            },
+            complete:function() {
+                $('#valid').html('<i class="fa fa-check fa-fw"></i> Verificar');
+                if(success !== true){
+                    $('#valid').removeAttr('disabled');
+                }
+            },
             success: function(data) {
                 // limpio el campo tarjeta
                 $("#tarjeta").val('');
@@ -764,7 +775,6 @@ $(document).ready(function() {
                     $('#result').addClass('alert-warning ');
                     $('#result .text').text(data.error)
                     validate = false;
-                    //console.log(data.error);
                 }
                 // Verifica si existe cuenta generada en estatus pendiente
                 if(data.id) {
@@ -784,7 +794,6 @@ $(document).ready(function() {
                     // Permito pasar al otro step del registro
                     submitt = true;
                     validate = true;
-                    //console.log(data.success);
                     // paso el siguiente punto
                     setTimeout(function() {
                             $('.sw-btn-next').click();
@@ -837,7 +846,7 @@ $(document).ready(function() {
                     $('#result1').addClass('alert-danger');
                     $('#result1 .text').text(data.error)
                     validate = false;
-                    console.log(data.data);
+                    console.log(data);
                 } else {
                     // Desabilito los campos paa evitar errores
                     $('#valid1').attr('disabled','disabled');
@@ -903,7 +912,7 @@ $(document).ready(function() {
                     $('#result2').addClass('alert-danger');
                     $('#result2 .text').text(data.error)
                     validate = false;
-                    console.log(data.data);
+                    console.log(data);
                 } else {
                     // Desabilito los campos paa evitar errores
                     $('#valid2').attr('disabled','disabled');
@@ -970,7 +979,7 @@ $(document).ready(function() {
                     $('#result3').removeClass('alert-success');
                     $('#result3').addClass('alert-danger');
                     $('#result3 .text').text(data.error);
-                    console.log(data.data);
+                    console.log(data);
                 } else {
                     // Deshabilito los campos paa evitar errores
                     $('.usuario').attr('disabled','disabled');
@@ -979,7 +988,8 @@ $(document).ready(function() {
                     // Muestro mensaje de exito
                     success = true;
                     // Redirecciono a otra pagina
-                    this.submit();
+                    //$('#userForm').submit();
+                    $('#userForm').trigger('submit');
                 }
             }
         });
