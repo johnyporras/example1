@@ -349,12 +349,3 @@
     </div>
     
 </div>
-
-@push('sub-script')
-<script>
-$(document).ready(function() {
-
-    $valor = 'Estoy escribiendo desde codigo'
-});
-</script>
-@endpush

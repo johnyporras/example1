@@ -37,7 +37,6 @@
   cursor: pointer;
 }
 
-
 .animation-hatch .clock-date, .animation-hatch .clock-hours, .animation-hatch .clock-minutes, .animation-hatch .clock-seconds, .animation-hatch .clock-ampm{
   font-size:16px;
 }

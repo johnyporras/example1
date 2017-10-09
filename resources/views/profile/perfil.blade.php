@@ -496,6 +496,7 @@ $(document).ready(function() {
     });
     // para texto editable
     $('.xtext').editable({
+        emptytext: '-----',
         mode: 'inline',
         toggle: 'manual',
         validate: function(value) {
@@ -507,6 +508,7 @@ $(document).ready(function() {
     });
     //Fecha Nacimiento
     $('.xdate').editable({
+        emptytext: '-----',
         format: 'yyyy-mm-dd',
         viewformat: 'dd/mm/yyyy',
         datepicker: {
@@ -524,6 +526,7 @@ $(document).ready(function() {
                 return 'Valor es requerido.';
             }
         },
+        emptytext: '-----',
         toggle: 'manual',
         mode: 'inline',
         source: {!! $estados !!},
@@ -539,12 +542,14 @@ $(document).ready(function() {
               return 'Solo se permiten numeros.';
             }
         },
+        emptytext: '-----',
         mode: 'inline',
         toggle: 'manual',
         url:'{{ route('perfil.editar') }}',
     });
     //Estado civil
     $('.xcivil').editable({
+        emptytext: '-----',
         mode: 'inline',
         toggle: 'manual',
         validate: function(value) {
@@ -571,12 +576,14 @@ $(document).ready(function() {
                 return 'Ingrese un Numero de Telefono Valido';
             }
         },
+        emptytext: '-----',
         mode: 'inline',
         toggle: 'manual',
         url:'{{ route('perfil.editar') }}',
     })
     // Idioma
     $('.xlang').editable({
+        emptytext: '-----',
         mode: 'inline',
         toggle: 'manual',
         validate: function(value) {
@@ -599,6 +606,7 @@ $(document).ready(function() {
                 return 'Valor es Requerido.';
             }
         },
+        emptytext: '-----',
         url:'{{ route('perfil.contactoEditar') }}',
     });
     //Numero de telefono
@@ -612,6 +620,7 @@ $(document).ready(function() {
                 return 'Ingrese un Numero de Telefono Valido';
             }
         },
+        emptytext: '-----',
         url:'{{ route('perfil.contactoEditar') }}',
     })
     /*********************************************************************************/
@@ -621,6 +630,7 @@ $(document).ready(function() {
                 return 'Valor es Requerido.';
             }
         },
+        emptytext: '-----',
         url:'{{ route('perfil.motivoEditar') }}',
     });
 

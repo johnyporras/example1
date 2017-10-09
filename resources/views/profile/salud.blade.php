@@ -492,7 +492,7 @@
                         data-type="date"
                         data-pk="{{ $motivo->id }}"
                         data-name="fecha"
-                        data-value="{{ $motivo->fecha }}"
+                        data-value="{{ $motivo->fecha->format('Y-m-d') }}"
                         data-title="Ingrese Fecha"
                         ></a></td>
                     <td><a class="xmotivo" href="#"
@@ -613,7 +613,7 @@
                         data-type="date"
                         data-pk="{{ $motivo->id }}"
                         data-name="fecha"
-                        data-value="{{ $motivo->fecha }}"
+                        data-value="{{ $motivo->fecha->format('Y-m-d') }}"
                         data-title="Ingrese Fecha"
                         ></a></td>
                     <td><a class="xmotivo" href="#"
@@ -680,7 +680,7 @@
                         data-type="date"
                         data-pk="{{ $motivo->id }}"
                         data-name="fecha"
-                        data-value="{{ $motivo->fecha }}"
+                        data-value="{{ $motivo->fecha->format('Y-m-d') }}"
                         data-title="Ingrese Fecha"
                         ></a></td>
                     <td><a class="xmotivo" href="#"
@@ -747,7 +747,7 @@
                         data-type="date"
                         data-pk="{{ $motivo->id }}"
                         data-name="fecha"
-                        data-value="{{ $motivo->fecha }}"
+                        data-value="{{ $motivo->fecha->format('Y-m-d') }}"
                         data-title="Ingrese Fecha"
                         ></a></td>
                     <td><a class="xmotivo" href="#"
@@ -818,7 +818,7 @@
                         data-type="date"
                         data-pk="{{ $motivo->id }}"
                         data-name="fecha"
-                        data-value="{{ $motivo->fecha }}"
+                        data-value="{{ $motivo->fecha->format('Y-m-d') }}"
                         data-title="Ingrese Fecha Aparición"
                         ></a></td>
                     <td><a class="xmotivo" href="#"
@@ -1975,6 +1975,7 @@
 $(document).ready(function() {
     // Sexo
     $('.xsexo').editable({
+        emptytext: '-----',
         mode: 'inline',
         toggle: 'manual',
         validate: function(value) {
@@ -1991,6 +1992,7 @@ $(document).ready(function() {
 
     //Fecha Nacimiento
     $('.xfecha').editable({
+        emptytext: '-----',
         format: 'yyyy-mm-dd',
         viewformat: 'dd/mm/yyyy',
         datepicker: {
@@ -2010,6 +2012,7 @@ $(document).ready(function() {
               return 'Solo se permiten numeros.';
             }
         },
+        emptytext: '-----',
         mode: 'inline',
         toggle: 'manual',
         url:'{{ route('perfil.editar') }}',
@@ -2027,12 +2030,14 @@ $(document).ready(function() {
               return 'Valor entre 1 y 40 Semanas';
             }
         },
+        emptytext: '-----',
         mode: 'inline',
         toggle: 'manual',
         url:'{{ route('perfil.editar') }}',
     });
     // Para valor si o no
     $('.xchoice').editable({
+        emptytext: '-----',
         mode: 'inline',
         toggle: 'manual',
         validate: function(value) {
@@ -2059,6 +2064,7 @@ $(document).ready(function() {
     //------------------------------------------------//
     // Para valor si o no
     $('.xembarazo').editable({
+        emptytext: '-----',
         mode: 'inline',
         toggle: 'manual',
         validate: function(value) {
@@ -2093,6 +2099,7 @@ $(document).ready(function() {
               return 'Solo se permiten numeros.';
             }
         },
+        emptytext: '-----',
         mode: 'inline',
         toggle: 'manual',
         url:'{{ route('perfil.editar') }}',
@@ -2123,6 +2130,7 @@ $(document).ready(function() {
               return 'Solo se permiten numeros.';
             }
         },
+        emptytext: '-----',
         mode: 'inline',
         toggle: 'manual',
         url:'{{ route('perfil.editar') }}',
@@ -2151,6 +2159,7 @@ $(document).ready(function() {
                 return 'Valor es Requerido.';
             }
         },
+        emptytext: '-----',
         url:'{{ route('perfil.medicoEditar') }}',
     });
 
@@ -2163,6 +2172,7 @@ $(document).ready(function() {
               return 'Solo se permiten numeros.';
             }
         },
+        emptytext: '-----',
         url:'{{ route('perfil.medicoEditar') }}',
     });
 
@@ -2172,6 +2182,7 @@ $(document).ready(function() {
                 return 'Valor es requerido.';
             }
         },
+        emptytext: '-----',
         source: {!! $tipom !!},
         url:'{{ route('perfil.medicoEditar') }}',
     });
@@ -2184,6 +2195,7 @@ $(document).ready(function() {
                 return 'Valor es Requerido.';
             }
         },
+        emptytext: '-----',
         url:'{{ route('perfil.documentoEditar') }}',
     });
 
@@ -2193,6 +2205,7 @@ $(document).ready(function() {
                 return 'Valor es requerido.';
             }
         },
+        emptytext: '-----',
         source: {!! $tipoDoc !!},
         url:'{{ route('perfil.documentoEditar') }}',
     });
