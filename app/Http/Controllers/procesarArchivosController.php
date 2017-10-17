@@ -113,13 +113,15 @@ jW0gBjTqK5O61S6mkLDp2r7KtwxQpU+WG5nex6YdWhH8QFWItbgXgHJryuEXcxBJOK3IbZwOSarLOCo1
         $archivo = str_replace('data:image/png;base64,', '', $archivo);
         $archivo = str_replace(' ', '+',  $archivo);
         $data = base64_decode( $archivo);
-       if($request->tipoarchvo=='avatar')
+        
+        if(isset($request->tipoarchvo) && $request->tipoarchvo=='avatar')
        {
-           $ruta="../storage/app/documento/";
+           $ruta="../public/images/avatars/";
+           
        }
        else 
        {
-           $ruta="../storage/app/avatar/";
+           $ruta="../storage/app/documento/";
        }
        
        file_put_contents($ruta.$request->codexamen.'.png', $data);
