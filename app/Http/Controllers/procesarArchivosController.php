@@ -114,7 +114,7 @@ jW0gBjTqK5O61S6mkLDp2r7KtwxQpU+WG5nex6YdWhH8QFWItbgXgHJryuEXcxBJOK3IbZwOSarLOCo1
         $archivo = str_replace(' ', '+',  $archivo);
         $data = base64_decode( $archivo);
         
-        if(isset($request->tipoarchvo) && $request->tipoarchvo=='avatar')
+        if(isset($request->tipoarchivo) && $request->tipoarchivo=='avatar')
        {
            $ruta="../public/images/avatars/";
            
