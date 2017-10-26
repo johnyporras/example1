@@ -65,7 +65,14 @@
 	  {
 	          var currentDate = new Date($(this).val());
 	          dia = currentDate.getDay();
-	          if((dia==0 || dia==6) && diasactual.indexOf(dia) != -1)
+	          if(currentDate<new Date())
+			{
+				alert("Fecha invalida, la fecha debe ser mayor a la fecha de hoy");
+				$(this).val('');
+				return false;
+			}
+				
+	          if((dia==0 || dia==6))
 	          {
 					alert("Fecha invalida, No puede seleecionar los sabados o domingos para la cita");
 					$(this).val('');
@@ -77,17 +84,12 @@
 	         // alert(diasactual[0]);alert(diasactual[1]);
 	          if(diasactual.indexOf(dia) == -1)
 	          {
-					alert("Fecha invalida, Este día no está disponible para la especialidad");
+					alert("Fecha invalida, Este du00eda no estu00e1 disponible para la especialidad");
 					$(this).val('');
 					return false;
 		      }
 		      
-	          if(currentDate<new Date())
-				{
-					alert("Fecha invalida, la fecha debe ser mayor a la fecha de hoy");
-					$(this).val('');
-					return false;
-				}
+	         
 
 	          
 	          arr=$(this).val().split("/");

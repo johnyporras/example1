@@ -14,9 +14,7 @@ class Citas extends Model
         try
         {
             if($this->validarDiponibilidadHorario())
-            {
-              
-               
+            {    
                 if($this->save())
                 {
                     return true;
@@ -41,7 +39,20 @@ class Citas extends Model
     
     public function validarDiponibilidadHorario()
     {
-        return true;
+        $resp = $this->select("id")
+                     ->where("id_bloque","=",$this->id_bloque)
+                     ->where("id_operador_especialidad","=",$this->id_operador_especialidad)
+                     ->where("fecha","=",$this->fecha)
+                     ->get();
+        
+        if($resp->count()>0)
+        {
+            return false;
+        }
+        else 
+        {
+            return true;
+        }
     }
 }
 
