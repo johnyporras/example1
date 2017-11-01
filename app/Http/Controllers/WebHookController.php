@@ -52,9 +52,9 @@ class WebHookController extends Controller
                             'codigo'   => '0',
                             'fecha'    => $valores['date_created'],
                             'status'   => $valores['status'],
-                            'pais'     => $valores['billing->country'],
+                            'pais'     => $valores['billing']['country'],
                             'moneda'   => $valores['currency'],
-                            'metodo_pago' => $valores['payment_method'],
+                            'metodo_pago' => $valores['payment_method_title'],
                         ]);
                       }
             if($order){
@@ -97,10 +97,10 @@ class WebHookController extends Controller
                     if($tarjeta === null){
                       $val = 1;
                       //store code in db
-                      $Tarjeta = Tarjeta::create([
+                    /*  $Tarjeta = Tarjeta::create([
                                         'codigo_tarjeta' => $crypt,
                                         'activada'         => 'N'
-                                    ]);
+                                    ]);*/
                         $prod->codigo = $codigo;
                         $prod->save();
                     }else{

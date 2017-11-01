@@ -37,11 +37,11 @@ class OrdenesWeb extends Model
         'email',
         'producto',
         'codigo',
-        'fecha_orden',
-        'status_orden',
+        'fecha',
+        'status',
         'pais',
         'moneda',
-        'metodo de pago',
+        'metodo_pago',
         'deleted_at'
     ];
 
