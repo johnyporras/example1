@@ -42,7 +42,7 @@ class WebHookController extends Controller
 
         if($action === "order.created"){
           //create new order in BD
-          foreach($valores->line_items as $prod)
+          foreach($valores->line_items as $prod){
           $order = OrdenesWeb::create([
                             'id_orden' => $valores->number,
                             'nombre'   => $valores->billing->first_name,
@@ -63,7 +63,7 @@ class WebHookController extends Controller
               return response()->json('success', 220);
             }
 
-        }elseif ($action === "action.woocommerce_order_status_completed"){
+        }else if($action === "action.woocommerce_order_status_completed"){
           //Payment completed - update order and send code
           if($request->action ==="woocommerce_order_status_completed"){
             //Get order products
