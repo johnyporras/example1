@@ -38,24 +38,23 @@ class WebHookController extends Controller
       //  $valor = json_encode($var);
         // decodifico el json enviado por el webhook
         $valores = json_decode($request->getContent(),true);
-        dd($valores);
         $action = $request->header('x-wc-webhook-topic');
 
         if($action === "order.created"){
           //create new order in BD
-          foreach($valores->line_items as $prod){
+          foreach($valores['line_items'] as $prod){
           $order = OrdenesWeb::create([
-                            'id_orden' => $valores->number,
-                            'nombre'   => $valores->billing->first_name,
-                            'apellido' => $valores->billing->last_name,
-                            'email'    => $valores->billing->email,
-                            'producto' => $prod->sku,
+                            'id_orden' => $valores['number'],
+                            'nombre'   => $valores['billing']['first_name'],
+                            'apellido' => $valores['billing']['last_name'],
+                            'email'    => $valores['billing']['email'],
+                            'producto' => $prod['sku'],
                             'codigo'   => '0',
-                            'fecha'    => $valores->date_created,
-                            'status'   => $valores->status,
-                            'pais'     => $valores->billing->country,
-                            'moneda'   => $valores->currency,
-                            'metodo_pago' => $valores->payment_method,
+                            'fecha'    => $valores['date_created'],
+                            'status'   => $valores['status'],
+                            'pais'     => $valores['billing->country'],
+                            'moneda'   => $valores['currency'],
+                            'metodo_pago' => $valores['payment_method'],
                         ]);
                       }
             if($order){
@@ -66,9 +65,9 @@ class WebHookController extends Controller
 
         }else if($action === "action.woocommerce_order_status_completed"){
           //Payment completed - update order and send code
-          if($request->action ==="woocommerce_order_status_completed"){
+          if($request['action'] ==="woocommerce_order_status_completed"){
             //Get order products
-            $order = OrdenesWeb::where('id_orden',$request->arg)->get();
+            $order = OrdenesWeb::where('id_orden',$request['arg'])->get();
             foreach($order as $prod){
               // get product by code
               if ($prod->producto == "AT-90" || $prod->producto == "AT-40") {
