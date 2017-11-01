@@ -64,7 +64,7 @@ class WebHookController extends Controller
             $order = OrdenesWeb::where('id_orden',$request['arg'])->get();
             foreach($order as $prod){
               // get product by code
-
+              if($prod->status === "pending"){
               if ($prod->producto == "AT-90" || $prod->producto == "AT-40") {
                   // Product a-card / a-member
                   $tplan = ($prod->producto == "AT-90")?'A-CARD':'A-MEMBER';
@@ -79,7 +79,7 @@ class WebHookController extends Controller
                     $value2 = rand(66666,99999);
                     if($prod->producto == "AT-40"){
                       //validar pais***
-                      echo $codigo = '4005803001'.$value1.$value2;
+                      $codigo = '4005803001'.$value1.$value2;
                     }else{
                       //validar pais***
                       $codigo = '9005803001'.$value1.$value2;
@@ -115,18 +115,16 @@ class WebHookController extends Controller
                       $val = 0;
                     }
                     $count++;
-                    // Verifica si la tarjeta fue activada o no
 
-
-
-                    // Success Response
 
                   }//end while
+                    // Success Response
                   return response()->json('success '.$count, 200);
               } else {
                   // product a-doctor
                   $tplan = 'A-DOCTOR';
               }
+            }//end if validate status product
             }
 
           }
