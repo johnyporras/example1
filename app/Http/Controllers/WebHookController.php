@@ -206,4 +206,3 @@ class WebHookController extends Controller
 			//return response()->json('success '.$count, 200);
         }
     }
-}
