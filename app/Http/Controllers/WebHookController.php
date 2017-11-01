@@ -99,26 +99,26 @@ class WebHookController extends Controller
                         $prod->status = "completed";
                         $prod->save();
 
+                        //Guardo data para enviar el correo
+                        $data = ['name'  => $prod->nombre." ".$prod->apellido,
+                                 'email'  => $prod->email,
+                                 'codigo' => $codigo,
+                                	'plan'   => $tplan];
+
+
+                        // Envio de Correo para confirmar
+                        Mail::send('mails.activate', ['data' => $data], function($mail) use($data){
+                                                    $mail->subject('Gracias por su Compra');
+                                                    $mail->to($data['email'], $data['name']);
+                                                });
                     }else{
                       $val = 0;
                     }
                     $count++;
                     // Verifica si la tarjeta fue activada o no
-                    if ($tarjeta->activada == 'N') {
-
-                    	//Guardo data para enviar el correo
-                        $data = ['name'  => $prod->nombre." ".$prod->apellido,
-                                'email'  => $prod->email,
-                                'codigo' => $codigo,
-                            	'plan'   => $tplan];
 
 
-                    	// Envio de Correo para confirmar
-                       	Mail::send('mails.activate', ['data' => $data], function($mail) use($data){
-                            $mail->subject('Gracias por su Compra');
-                            $mail->to($data['email'], $data['name']);
-                        });
-                    }//end code validation
+
                     // Success Response
 
                   }//end while
