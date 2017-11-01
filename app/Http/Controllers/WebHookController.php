@@ -12,6 +12,7 @@ use App\Models\AcProducto;
 use App\Models\AcPlanesExtranet;
 use App\Models\Pais;
 use App\Models\Tarjeta;
+use App\Models\OrdenesWeb;
 use App\User;
 use Hash;
 use Mail;
@@ -31,12 +32,45 @@ class WebHookController extends Controller
     {
         // Variables momentaneas hasta obtener valor del webhook de woocomerce
         $var =  ['codigoProducto' => '40',
-        		'email' => 'rabricenog@gmail.com',
-        		'name' => 'Roger Briceno'];
+        		'email' => 'vanessaferreira.grupomlk@gmail.com ',
+        		'name' => 'Vanessa Ferrira'];
         // convierto en json para emular el archivo  que trae el webhook
-        $valor = json_encode($var);
+      //  $valor = json_encode($var);
         // decodifico el json enviado por el webhook
-        $decode = json_decode($valor);
+        $valores = Request::getContent();
+        $action = Request::header('x-wc-webhook-topic');
+
+        if($action === "order.created"){
+          //create new order in BD
+          foreach($valores->line_items as $prod)
+          $order = OrdenesWeb::create([
+                            'id_orden' => $valores->number,
+                            'nombre'   => $valores->billing->first_name,
+                            'apellido' => $valores->billing->last_name,
+                            'email'    => $valores->billing->email,
+                            'producto' => $prod->sku,
+                            'codigo'   => '0',
+                            'fecha'    => $valores->date_created,
+                            'status'   => $valores->status,
+                            'pais'     => $valores->billing->country,
+                            'moneda'   => $valores->currency,
+                            'metodo_pago' => $valores->payment_method,
+                        ]);
+                      }
+            if($order){
+              return response()->json('success', 200);
+            }else{
+              return response()->json('success', 220);
+            }
+
+        }elseif ($action === "action.woocommerce_order_status_completed"){
+          //Payment completed - update order and send code
+
+        }else{
+          //Response
+          return response()->json('success', 240);
+
+        }
 
 
 
@@ -48,8 +82,8 @@ class WebHookController extends Controller
             }else {
                 return null;
             }
-        })->first();*/
-        $codigo = $decode->codigoProducto; 
+        })->first();
+        $codigo = $decode->codigoProducto;
         if ($codigo !== null) {
 
         	// Codigo separado de 4 en 4
@@ -117,9 +151,9 @@ class WebHookController extends Controller
                     $mail->subject('Gracias por su Compra');
                     $mail->to($data['email'], $data['name']);
                 });
-          //  }
+          //  }*/
             // Success Response
-			return response()->json('success '.$count, 200);
+			//return response()->json('success '.$count, 200);
         }
     }
 }
