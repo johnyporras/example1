@@ -36,7 +36,7 @@ Route::get('/my-card/{card}', [
 * Ruta para llama Webhooks Woocomerce
 */
 Route::group(['middleware' => ['VerifyWoocommerce']], function () {
-    Route::get('/hooks', [
+    Route::post('/hooks', [
         'uses' => 'WebHookController@index',
         'as'   => 'hook.index'
     ]);
@@ -582,17 +582,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('calendario/mostrar'            , 'CalendarioController@index');
     Route::get('calendario/getcitas'            , 'CalendarioController@leerCitas');
     Route::get('calendario/vereventos'            , 'CalendarioController@leerCitas');
-    
-    
-    
+
+
+
     // Solicitud de citas por video llamadas
-    
+
     Route::get('citas/Solicitud'       , 'procesarCitaController@index');
     Route::post('citas/incluir', [
         'uses' => 'procesarCitaController@incCita',
         'as'   => 'citas.incluir'
     ]);
-    
+
 
     // GESTIONAR CLAVE ODONTOLOGICA dontologica\GenerarController@getProveedores');
     Route::get('clavesOdonto/gestionar'            , 'ClaveOdontologica\GenerarController@buscar');
