@@ -37,8 +37,9 @@ class WebHookController extends Controller
         // convierto en json para emular el archivo  que trae el webhook
       //  $valor = json_encode($var);
         // decodifico el json enviado por el webhook
-        $valores = Request::getContent();
-        $action = Request::header('x-wc-webhook-topic');
+        $valores = json_decode($request->getContent(),true);
+        dd($valores);
+        $action = $request->header('x-wc-webhook-topic');
 
         if($action === "order.created"){
           //create new order in BD
