@@ -70,6 +70,7 @@ class WebHookController extends Controller
             $order = OrdenesWeb::where('id_orden',$request['arg'])->get();
             foreach($order as $prod){
               // get product by code
+              if($prod->status =="pending"){
               if ($prod->producto == "AT-90" || $prod->producto == "AT-40") {
                   // Product a-card / a-member
                   $tplan = ($prod->producto == "AT-90")?'A-CARD':'A-MEMBER';
@@ -102,11 +103,31 @@ class WebHookController extends Controller
                                         'activada'         => 'N'
                                     ]);*/
                         $prod->codigo = $codigo;
+                        $prod->status = "completed";
                         $prod->save();
+
                     }else{
                       $val = 0;
                     }
-                    echo $count++;
+                    $count++;
+                    // Verifica si la tarjeta fue activada o no
+                    if ($tarjeta->activada == 'N') {
+
+                    	//Guardo data para enviar el correo
+                        $data = ['name'  => $prod->nombre." ".$prod->apellido,
+                                'email'  => $prod->email,
+                                'codigo' => $codigo,
+                            	'plan'   => $tplan];
+
+
+                    	// Envio de Correo para confirmar
+                       	Mail::send('mails.activate', ['data' => $data], function($mail) use($data){
+                            $mail->subject('Gracias por su Compra');
+                            $mail->to($data['email'], $data['name']);
+                        });
+                  //  }*/
+                    // Success Response
+        			return response()->json('success '.$count, 200);
                   }
 
               } else {
@@ -121,7 +142,7 @@ class WebHookController extends Controller
           return response()->json('success', 240);
 
         }
-
+      }
 
 
         //realizo un filtro para buscar en la tabla tarjetas
