@@ -91,10 +91,10 @@ class WebHookController extends Controller
                     if($tarjeta === null){
                       $val = 1;
                       //store code in db
-                    /*  $Tarjeta = Tarjeta::create([
+                      $Tarjeta = Tarjeta::create([
                                         'codigo_tarjeta' => $crypt,
                                         'activada'         => 'N'
-                                    ]);*/
+                                    ]);
                         $prod->codigo = $codigo;
                         $prod->status = "completed";
                         $prod->save();
@@ -124,13 +124,15 @@ class WebHookController extends Controller
                   // product a-doctor
                   $tplan = 'A-DOCTOR';
               }
+            }else{
+              return response()->json('success', 200);
             }//end if validate status product
             }
 
           }
         }else{
           //Response
-          return response()->json('success', 240);
+          return response()->json('success', 200);
 
         }//end if/else action
 
