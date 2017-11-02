@@ -82,7 +82,7 @@ class WebHookController extends Controller
                   $val = 0;
                   $count = 0;
                   $tarjeta = 1;
-                  $pais = Pais::where('code',$order->pais);
+                  $pais = Pais::where('code',$prod->pais)->first();
 
                   //creating new code
                   while($tarjeta !== null){
