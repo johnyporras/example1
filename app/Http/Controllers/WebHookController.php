@@ -37,6 +37,7 @@ class WebHookController extends Controller
         if($action === "order.created"){
           //create new order in BD
           foreach($valores['line_items'] as $prod){
+            for($i=0;$i<$prod['quantity'];$i++){
           $order = OrdenesWeb::create([
                             'id_orden' => $valores['number'],
                             'nombre'   => $valores['billing']['first_name'],
@@ -50,6 +51,7 @@ class WebHookController extends Controller
                             'moneda'   => $valores['currency'],
                             'metodo_pago' => $valores['payment_method_title'],
                         ]);
+                      }//end for
                       }//end foreach
             if($order){
               return response()->json('success', 200);
@@ -65,24 +67,35 @@ class WebHookController extends Controller
             foreach($order as $prod){
               // get product by code
               if($prod->status === "pending"){
-              if ($prod->producto == "AT-90" || $prod->producto == "AT-40") {
-                  // Product a-card / a-member
-                  $tplan = ($prod->producto == "AT-90")?'A-CARD':'A-MEMBER';
+              if ($prod->producto == "AT-90" || $prod->producto == "AT-40" || $prod->producto == "AT-20") {
+                  // Product a-card / a-member / a-doctor
+                  if($prod->producto == "AT-90"){
+                    $tplan = 'A-CARD';
+                  }else if($prod->producto == "AT-40"){
+                      $tplan = 'A-MEMBER';
+                  }else{
+                      $tplan = 'A-DOCTOR';
+                  }
+
                   // Genrate card code
 
                   $val = 0;
                   $count = 0;
                   $tarjeta = 1;
+                  $pais = Pais::where('code',$order->pais);
+
                   //creating new code
                   while($tarjeta !== null){
                     $value1 = rand(11111,55555);
                     $value2 = rand(66666,99999);
                     if($prod->producto == "AT-40"){
                       //validar pais***
-                      $codigo = '4005803001'.$value1.$value2;
-                    }else{
+                      $codigo = '40'.$pais->codigo.'03001'.$value1.$value2;
+                    }else if($prod->producto == "AT-90"){
                       //validar pais***
-                      $codigo = '9005803001'.$value1.$value2;
+                      $codigo = '90'.$pais->codigo.'03001'.$value1.$value2;
+                    }else{
+                        $codigo = '20'.$pais->codigo.'03001'.$value1.$value2;
                     }
                     //encript generated code
                     $crypt = Tarjeta::cryptCode($codigo);
@@ -120,9 +133,9 @@ class WebHookController extends Controller
                   }//end while
                     // Success Response
                   return response()->json('success '.$count, 200);
-              } else {
-                  // product a-doctor
-                  $tplan = 'A-DOCTOR';
+              }else {
+                  //product without code
+                  return response()->json('success', 200);
               }
             }else{
               return response()->json('success', 200);
