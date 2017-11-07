@@ -580,7 +580,10 @@ Route::group(['middleware' => ['auth']], function () {
     // Calendario
 
     Route::get('calendario/mostrar'            , 'CalendarioController@index');
+    Route::get('calendario/mostrarcitas'        ,'CalendarioController@citasvideo');
     Route::get('calendario/getcitas'            , 'CalendarioController@leerCitas');
+    Route::get('calendario/getcitas2'            , 'CalendarioController@leerCitas2');
+    Route::get('calendario/getcitastabla'            , 'CalendarioController@leerCitasTabla');
     Route::get('calendario/vereventos'            , 'CalendarioController@leerCitas');
 
 
@@ -592,7 +595,12 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'procesarCitaController@incCita',
         'as'   => 'citas.incluir'
     ]);
+<<<<<<< Updated upstream
 
+=======
+    
+    
+>>>>>>> Stashed changes
 
     // GESTIONAR CLAVE ODONTOLOGICA dontologica\GenerarController@getProveedores');
     Route::get('clavesOdonto/gestionar'            , 'ClaveOdontologica\GenerarController@buscar');
