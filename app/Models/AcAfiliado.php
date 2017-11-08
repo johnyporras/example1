@@ -157,5 +157,21 @@ class AcAfiliado extends Model {
     {
         return $this->hasMany(\App\Models\HistorialMedico::class, 'id_user', 'id');
     }
+    
+    public function leerPorCedula()
+    {
+        $res = $this->select("id")
+                    ->selectRaw("nombre||' '||apellido as nombre")
+                    ->where("cedula","=",$this->cedula)
+                    ->first();
+        if(is_object($res))
+        {
+            return $res;
+        }
+        else 
+        {
+            return false;
+        }
+    }
 
 }

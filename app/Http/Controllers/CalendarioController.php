@@ -107,12 +107,12 @@ class CalendarioController extends Controller
             {
                 foreach ($res as $item)
                 {
-                    $cita=array("id"=>$item->id,"title"=>$item->observaciones,"start"=>$item->fecha,'url'=>'/atiempo/public/calendario/getcitas2?fecha='.$item->fecha);
+                    $cita=array("id"=>$item->id,"hora"=>$item->hora,"afiliado"=>$item->afiliado,"title"=>$item->observaciones,"fecha"=>$item->fecha,'url'=>'/atiempo/public/calendario/getcitas2?fecha='.$item->fecha);
                     array_push($result, $cita);
                 }
             }
         }
-        return json_encode($result);
+        return view("citas.listadocitas",compact("result"));
     }
     
     

@@ -591,16 +591,11 @@ Route::group(['middleware' => ['auth']], function () {
     // Solicitud de citas por video llamadas
 
     Route::get('citas/Solicitud'       , 'procesarCitaController@index');
+    Route::get('citas/getAfiliado'       , 'procesarCitaController@leerAfiliado');
     Route::post('citas/incluir', [
         'uses' => 'procesarCitaController@incCita',
         'as'   => 'citas.incluir'
     ]);
-<<<<<<< Updated upstream
-
-=======
-    
-    
->>>>>>> Stashed changes
 
     // GESTIONAR CLAVE ODONTOLOGICA dontologica\GenerarController@getProveedores');
     Route::get('clavesOdonto/gestionar'            , 'ClaveOdontologica\GenerarController@buscar');

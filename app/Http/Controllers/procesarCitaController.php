@@ -9,7 +9,7 @@ use App\Models\Especialidad;
 use App\Models\Horario;
 use App\Models\Citas;
 use App\Models\AcAfiliado;
-use app\models\operadorEspecialidad;
+use App\Models\operadorEspecialidad;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -17,20 +17,63 @@ class procesarCitaController extends Controller
 {
     public  function index()
     {
+        $user = \Auth::user(); 
         $oEsp = new Especialidad();
         $oHora = new Horario();
         $Horarios = $oHora->leerHorarios();
         $Especialidades = $oEsp->leerEspecialidad();
         if($Especialidades!==false && $Horarios!==false)
         {
-            return view("citas.formcitas",compact('Especialidades','Horarios'));
+            if($user->type!=8)
+            {
+                return view("citas.formcitas",compact('Especialidades','Horarios'));
+            }
+            elseif($user->type==8)
+            {
+                return view("citas.formcitas2",compact('Especialidades','Horarios'));
+            }
         }
         else
-        {
-            return view("citas.formcitas");
-        }
-            
+        { 
+            if($user->type!=8)
+            {
+                return view("citas.formcitas");
+            }
+            elseif($user->type==8)
+            {
+                return view("citas.formcitas2");
+            }
+        }   
     }
+    
+    
+    
+    public function leerAfiliado(Request $request)
+    {
+         if($request->cedula!="")
+         {
+             $oAf = new AcAfiliado();
+             $oAf->cedula=$request->cedula;
+             $rs = $oAf->leerPorCedula();
+             if($rs!="0")
+             {
+                 $response['success']=true;
+                 $response['data']=$rs;
+             }
+             else 
+             {
+                 $response['success']=false;
+             }
+             
+         }
+         else 
+         {
+             $response['success']=false;
+         }
+         return json_encode($response);
+    }
+    
+    
     
     public function incCita(Request $request)
     {
@@ -41,12 +84,15 @@ class procesarCitaController extends Controller
                 $rsAfiliado=AcAfiliado::findOrFail($user->detalles_usuario_id);
                 $idafiliado=$rsAfiliado->id;
             }
-            else 
+            elseif($user->type==8)
             {
                 $idafiliado=$request->afiliado;
+                $rsAfiliado=AcAfiliado::findOrFail($idafiliado);
             }
             if($request->id!="" && $request->fecha!="" && $request->hora!="")
             {
+                
+               // dd(new operadorEspecialidad());
                 $rsDet = operadorEspecialidad::findOrFail($request->id);
                 $oCita->id_operador_especialidad=$request->id;
                 $oCita->fecha=$request->fecha;
@@ -56,6 +102,7 @@ class procesarCitaController extends Controller
                 //dd($oCita->incluir());
                 if($oCita->incluir()===true)
                 {
+                    
                     $data = [
                         'nombre' =>$rsAfiliado->nombre." ".$rsAfiliado->apellido,
                         'email' => $rsAfiliado->emailafiliado,
@@ -86,11 +133,11 @@ class procesarCitaController extends Controller
                     
                     
                     
-                    return  view('citasrespuesta');
+                    return  view('citas.citasrespuesta');
                 }
                 elseif($oCita->incluir()=="nodisp")
                 {
-                    echo  view('citasrespuestanodisp');;
+                    echo  view('citas.citarespuestanodisp');
                 }
             } 
     }
