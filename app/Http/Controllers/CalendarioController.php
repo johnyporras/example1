@@ -40,7 +40,7 @@ class CalendarioController extends Controller
             {
                 foreach ($res as $item)
                 {
-                    $cita=array("id"=>$item->id,"title"=>$item->observaciones,"start"=>$item->fecha,'url'=>'/atiempo/public/claves/consultarDetalle?show='.$item->id);
+                    $cita=array("id"=>$item->id,"title"=>$item->observaciones,"start"=>$item->fecha,'url'=>'/claves/consultarDetalle?show='.$item->id);
                     array_push($result, $cita);    
                 }
             }
@@ -52,7 +52,7 @@ class CalendarioController extends Controller
             {
                 foreach ($rsEventos as $item)
                 {
-                    $cita=array("id"=>$item->id,"title"=>$item->titulo,"start"=>$item->fechainicio,"end"=>$item->fechafin,'url'=>'/atiempo/public/eventos/'.$item->id);
+                    $cita=array("id"=>$item->id,"title"=>$item->titulo,"start"=>$item->fechainicio,"end"=>$item->fechafin,'url'=>'/eventos/'.$item->id);
                     array_push($result, $cita);
                 }
             }
@@ -79,7 +79,7 @@ class CalendarioController extends Controller
             {
                 foreach ($res as $item)
                 {
-                    $cita=array("id"=>$item->id,"title"=>$item->observaciones,"start"=>$item->fecha,'url'=>'/atiempo/public/calendario/getcitastabla?fecha='.$item->fecha);
+                    $cita=array("id"=>$item->id,"title"=>$item->observaciones,"start"=>$item->fecha,'url'=>'/calendario/getcitastabla?fecha='.$item->fecha);
                     array_push($result, $cita);
                 }
             }  
