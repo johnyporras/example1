@@ -532,7 +532,7 @@
                     <div class="input-group content-span">
                         <span class="input-group-addon " ><i class="gi gi-earphone"></i></span>
                         <span class="text-absolute" data-toggle="tooltip" data-original-title="Su clave telefonica le servira para acceder a sus servicios via telefonica">*</span>
-                        
+
                         {{ Form::password('clave', ['class' => 'usuario form-control input-lg', 'placeholder' => 'Clave Teléfonica', 'id' => 'clave', 'minlength' => '4', 'maxlength' => '6', 'pattern' => '[0-9]+', 'required']) }}
                         <span class="help-block"> Solo se permiten Números</span>
                     </div>
@@ -727,7 +727,7 @@ $(document).ready(function() {
         language: "es",
         format: 'yyyy-mm-dd',
         startView: 2,
-        endDate: '-18y'
+        endDate: '0'
     }).on('changeDate', function (selected) {
         //valida el campo al cambiar
         $('#fecha').parsley(parsleyOptions).validate();
@@ -995,7 +995,7 @@ $(document).ready(function() {
                         //$('#userForm').trigger('submit');
                         window.location.href = "{{ route('register.valido') }}";
                     }
-                    
+
                 }
             }
         });
