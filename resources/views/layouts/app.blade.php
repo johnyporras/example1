@@ -187,20 +187,33 @@ if(is_object(Auth::user()))
         <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('plugins/typeahead/typeahead.bundle.js') }}"></script>
         <script src="{{ asset('plugins/bootstrap-treeview/bootstrap-treeview.min.js') }}"></script>
-		
+
         <!-- QUITAR CODIGO APLICAR SOLO EN LAS PAGINAS A UTILIZAR -->
         <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
         <script src="{{ asset('plugins/parsley-js/parsley.min.js') }}"></script>
         <script src="{{ asset('plugins/parsley-js/i18n/es.js') }}"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-        
+
         <script src="{{ asset('js/plugins.js') }}"></script>
         <script src="{{ asset('js/functions.js') }}"></script>
         @stack('scripts')
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/clock.js') }}"></script>
         <!-- QUITAR CODIGO APLICAR SOLO EN LAS PAGINAS A UTILIZAR -->
+        <!--Start of Tawk.to Script-->
+        <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/59bde6af4854b82732ff07e4/default';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+        </script>
+        <!--End of Tawk.to Script-->
         @yield('script')
     </body>
 </html>
