@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\AcAfiliado;
+use App\Models\AcPago;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Lib\functions;
@@ -30,6 +31,32 @@ class AfiliadoController extends Controller
      *
      * @return Response
      */
+    
+    public function pagos($id)
+    {
+        $oAfi = AcAfiliado::findOrFail($id);
+        if($oAfi->id_cuenta!="")
+        {
+            $oPago= new AcPago();
+            $oPago->id_cuenta=$oAfi->id_cuenta;
+            $pagos =$oPago->getPagos();
+            if($pagos!="0")
+            {
+                return view('afiliados.pagos', compact('pagos'));
+            }
+            else 
+            {
+                $pagos="nopagos";
+                return view('afiliados.pagos', compact('pagos'));
+            }
+        }
+        else 
+        {
+            $pagos = "nopagos";
+            return view('afiliados.pagos', compact('pagos'));
+        }
+    }
+    
     public function create()
     {
         return view('afiliados.create');
