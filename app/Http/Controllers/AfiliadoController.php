@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AcAfiliado;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Lib\functions;
 use Session;
 
 class AfiliadoController extends Controller
@@ -21,7 +22,6 @@ class AfiliadoController extends Controller
     public function index()
     {
         $afiliados = AcAfiliado::paginate(15);
-
         return view('afiliados.index', compact('afiliados'));
     }
 
@@ -60,9 +60,28 @@ class AfiliadoController extends Controller
      */
     public function show($id)
     {
-        $afiliado = AcAfiliado::findOrFail($id);
-
+       /* $afiliado = AcAfiliado::findOrFail($id);
+        return view('afiliados.show', compact('afiliado'));*/
+        
+        $oAfiliado= new AcAfiliado();
+        $oAfiliado->id=$id;
+        $res = $oAfiliado->leerDetalle();
+        // dd($res);
+        foreach ($res as $item)
+        {
+            $oAfiliado->id=$item->id;
+            $oAfiliado->nombre=$item->nombre;
+            $oAfiliado->apellido=$item->apellido;
+            $oAfiliado->cedula=$item->cedula;
+            $oAfiliado->fecha_nacimiento=$item->fecha_nacimiento;
+            $oAfiliado->codigo_cuenta=$item->codigo_cuenta;
+            $oAfiliado->fecha=functions::uf_convertirfecmostrar($item->fecha);
+            $oAfiliado->nombreprod=$item->nombreprod;
+        }
+        $afiliado=$oAfiliado;
         return view('afiliados.show', compact('afiliado'));
+       // dd($afiliado);
+        
     }
 
     /**
@@ -74,8 +93,24 @@ class AfiliadoController extends Controller
      */
     public function edit($id)
     {
-        $afiliado = AcAfiliado::findOrFail($id);
-
+        $oAfiliado= new AcAfiliado();
+        $oAfiliado->id=$id;
+        $res = $oAfiliado->leerDetalle();
+       // dd($res);
+        foreach ($res as $item)
+        {
+            $oAfiliado->id=$item->id;
+            $oAfiliado->nombre=$item->nombre;
+            $oAfiliado->apellido=$item->apellido;
+            $oAfiliado->cedula=$item->cedula;
+            $oAfiliado->fecha_nacimiento=$item->fecha_nacimiento;
+            $oAfiliado->codigo_cuenta=$item->codigo_cuenta;
+            $oAfiliado->fecha=functions::uf_convertirfecmostrar($item->fecha);
+            $oAfiliado->nombreprod=$item->nombreprod;
+        }
+        $afiliado=$oAfiliado;
+      //  dd($afiliado);
+        //dd($res->count());
         return view('afiliados.edit', compact('afiliado'));
     }
 
@@ -112,6 +147,23 @@ class AfiliadoController extends Controller
         Session::flash('flash_message', 'Afiliado eliminado!');
 
         return redirect('afiliados');
+    }
+    
+    public function buscar(Request $request)
+    {
+        if($request->palabra!="")
+        {
+            
+            $oAfliado= new AcAfiliado();
+            $oAfliado->palabra = $request->palabra;
+            $afiliados = $oAfliado->leerPorPalabra();
+            return view('afiliados.index', compact('afiliados'));
+        }
+        else 
+        {
+            $afiliados = AcAfiliado::paginate(15);
+            return view('afiliados.index', compact('afiliados'));
+        }
     }
 
 }

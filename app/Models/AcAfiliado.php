@@ -173,5 +173,49 @@ class AcAfiliado extends Model {
             return false;
         }
     }
+    
+    
+    public function leerDetalle()
+    {
+        $res = $this->select("ac_afiliados.id as id","cedula","fecha_nacimiento","email","ac_afiliados.nombre","apellido"
+                            ,"ac_cuenta.codigo_cuenta","ac_cuenta.fecha","ac_producto.nombre as nombreprod")
+                    ->join("ac_cuenta","ac_afiliados.id_cuenta","=","ac_cuenta.id")
+                    ->join("ac_producto","ac_cuenta.id_producto","=","ac_producto.id")
+        ->where("ac_afiliados.id","=",$this->id)
+        ->get();
+        if(is_object($res))
+        {
+            return $res;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public function leerPorPalabra()
+    {
+        $arr = explode(" ",$this->palabra);
+        if(count($arr)>1)
+        {
+            $res = $this->select("*")
+            ->whereRaw("(upper(nombre) like upper('%{$arr[0]}%') and upper(apellido) like upper('%{$arr[1]}%'))")
+            ->paginate(15);
+        }
+        else 
+        {
+            $res = $this->select("*")
+            ->whereRaw("(cedula like '%{$arr[0]}%' or upper(nombre) like upper('%{$arr[0]}%') or upper(apellido) like upper('%{$arr[0]}%'))")
+            ->paginate(15);
+        }
+        if(is_object($res))
+        {
+            return $res;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
 }

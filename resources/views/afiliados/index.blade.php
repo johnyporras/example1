@@ -1,9 +1,23 @@
 @extends('layouts.app')
 @section('title','Afiliados')
 @section('content')
-    <div class="pull-right">
-    <a href="{{ url('afiliados/create') }}" class="btn btn-primary pull-right btn-sm">Agregar Nuevo Afiliado</a>
-    </div>
+   <div class="row">
+   		<div class="col-sm-6">
+   			{!! Form::open([
+                            'method'=>'POST',
+                            'url' => ['afiliado/buscar'],
+                            'style' => 'display:inline'
+                        ]) !!}
+                        	{!! Form::text('palabra', null, ['class' => 'form-control']) !!}
+   		</div>
+   		<div class="col-sm-4">
+   		  {!! Form::submit('Buscar', ['class' => 'btn btn-danger btn-xs']) !!}
+          {!! Form::close() !!}
+         </div>
+   
+   </div>
+   <br>
+   <br>
     <div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
@@ -29,6 +43,12 @@
                         ]) !!}
                             {!! Form::submit('Eliminar', ['class' => 'btn btn-danger btn-xs']) !!}
                         {!! Form::close() !!}
+                    </td>
+                    
+                    <td>
+                        <a href="{{ url('afiliados/' . $item->id . '/pagos') }}">
+                            <button type="submit" class="btn btn-primary btn-xs">Pagos</button>
+                        </a>
                     </td>
                 </tr>
             @endforeach

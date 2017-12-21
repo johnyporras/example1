@@ -2,8 +2,23 @@
 @section('title','Usuarios')
 
 @section('content')
+
+	<div class="row">
+   		<div class="col-sm-6">
+   			{!! Form::open([
+                            'method'=>'POST',
+                            'url' => ['usuarios/buscar'],
+                            'style' => 'display:inline'
+                        ]) !!}
+                        	{!! Form::text('palabra', null, ['class' => 'form-control']) !!}
+   		</div>
+   		<div class="col-sm-4">
+   		  {!! Form::submit('Buscar', ['class' => 'btn btn-danger btn-xs']) !!}
+          {!! Form::close() !!}
+         </div>
+   </div>
     <div class="pull-right">
-    <a href="{{ url('/register') }}" class="btn btn-primary pull-right btn-sm">Agregar Nuevo Usuario</a>
+    <a href="{{ url('usuarios/create') }}" class="btn btn-primary pull-right btn-sm">Agregar Nuevo Usuario</a>
     </div>
     <div class="table">
         <table class="table table-bordered table-striped table-hover">

@@ -9,8 +9,12 @@
         'url' => ['afiliados', $afiliado->id],
         'class' => 'form-horizontal'
     ]) !!}
+    
+    <?php 
+       // var_dump($afiliado->apellido);die();
+    ?>
 
-                <div class="form-group {{ $errors->has('cedula') ? 'has-error' : ''}}">
+            <div class="form-group {{ $errors->has('cedula') ? 'has-error' : ''}}">
                 {!! Form::label('cedula', 'Cedula: ', ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
                     {!! Form::text('cedula', null, ['class' => 'form-control', 'required' => 'required']) !!}
@@ -32,7 +36,7 @@
                 </div>
             </div>
             <div class="form-group {{ $errors->has('fecha_nacimiento') ? 'has-error' : ''}}">
-                {!! Form::label('fecha_nacimiento', 'Fecha Nacimiento: ', ['class' => 'col-sm-3 control-label']) !!}
+                {!! Form::label('fecha_nacimiento', 'Fecha de Nacimiento: ', ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
                     {!! Form::date('fecha_nacimiento', null, ['class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('fecha_nacimiento', '<p class="help-block">:message</p>') !!}
@@ -52,20 +56,8 @@
                     {!! $errors->first('sexo', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-            <div class="form-group {{ $errors->has('val_user') ? 'has-error' : ''}}">
-                {!! Form::label('val_user', 'Val User: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::text('val_user', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                    {!! $errors->first('val_user', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('tipo_afiliado') ? 'has-error' : ''}}">
-                {!! Form::label('tipo_afiliado', 'Tipo Afiliado: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::number('tipo_afiliado', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                    {!! $errors->first('tipo_afiliado', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
+            
+           
             <div class="form-group {{ $errors->has('telefono') ? 'has-error' : ''}}">
                 {!! Form::label('telefono', 'Telefono: ', ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
@@ -73,20 +65,25 @@
                     {!! $errors->first('telefono', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-            <div class="form-group {{ $errors->has('cedula_titular') ? 'has-error' : ''}}">
-                {!! Form::label('cedula_titular', 'Cedula Titular: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::text('cedula_titular', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                    {!! $errors->first('cedula_titular', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-3">
                 {!! Form::submit('Actualizar', ['class' => 'btn btn-primary form-control']) !!}
             </div>
         </div>
     {!! Form::close() !!}
+
+<p>Datos de la Cuenta</p>
+
+<table class="table table-bordered table-striped table-hover">
+<thead>
+ <th>C&oacute;digo de Cuenta</th> <th>Fecha de inicio </th><th>Nombre del Producto</th><th>  </th>
+</thead>
+ <tr>
+                <td>{{ $afiliado->codigo_cuenta }}</td> <td>{{ $afiliado->fecha }} </td><td>{{ $afiliado->nombreprod }}</td><td>  </td>
+  </tr>
+</table>
+
+
 
     @if ($errors->any())
         <ul class="alert alert-danger">

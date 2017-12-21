@@ -2,11 +2,7 @@
 @section('title','Editar Usuario')
 @section('content')
     <hr/>
-    {!! Form::model($usuario, [
-        'method' => 'PATCH',
-        'url' => ['usuarios', $usuario->id],
-        'class' => 'form-horizontal'
-    ]) !!}
+   {!! Form::open(['url' => 'usuarios/store', 'class' => 'form-horizontal','id'=>'form1']) !!}
             <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
                 {!! Form::label('name', 'Nombre: ', ['class' => 'col-sm-2 control-label']) !!}
                 <div class="col-sm-4">
@@ -17,14 +13,14 @@
             <div class="form-group {{ $errors->has('email') ? 'has-error' : ''}}">
                 {!! Form::label('email', 'Email: ', ['class' => 'col-sm-2 control-label']) !!}
                 <div class="col-sm-4">
-                    {!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required','id'=>'email']) !!}
                     {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('type') ? 'has-error' : ''}}">
                 {!! Form::label('type', 'Tipo Perfil: ', ['class' => 'col-sm-2 control-label']) !!}
                 <div class="col-sm-4">
-                    {!! Form::select('type', $perfil, $usuario->type, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::select('type', $perfil, null, ['class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -35,38 +31,21 @@
                     {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-
-       
-   			<div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
+            <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
                 {!! Form::label('clave', 'Clave: ', ['class' => 'col-sm-2 control-label']) !!}
                 <div class="col-sm-4">
-                    {!! Form::password('password', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::text('password', null, ['class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('password', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
                 {!! Form::label('name', 'Verifique la Clave: ', ['class' => 'col-sm-2 control-label']) !!}
                 <div class="col-sm-4">
-                    {!! Form::password('password2', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::text('password2', null, ['class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('password2', '<p class="help-block">:message</p>') !!}
                     
                     {!! Form::hidden('user', null, ['class' => 'form-control','id'=>'user']) !!}
                 </div>
-            </div>   
-            <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
-                {!! Form::label('clave', 'Clave Telef&oacute;nica: ', ['class' => 'col-sm-2 control-label']) !!}
-            <div class="col-sm-4">
-                    {!! Form::number('clave', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                    {!! $errors->first('clave', '<p class="help-block">:message</p>') !!}
-            </div>
-            </div>
-            
-            <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
-                {!! Form::label('clave2', 'Verifique Clave Telef&oacute;nica: ', ['class' => 'col-sm-2 control-label']) !!}
-            <div class="col-sm-4">
-                    {!! Form::number('clave2', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                    {!! $errors->first('clave2', '<p class="help-block">:message</p>') !!}
-            </div>
             </div>
 
         <div class="form-group">
