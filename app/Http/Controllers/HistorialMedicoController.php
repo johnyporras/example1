@@ -26,33 +26,38 @@ class HistorialMedicoController extends Controller
      */
     public function index(Request $request)
     {
-
-        if ($request->has('nombre')) {
-
+        
+        $query = AcAfiliado::query();
+        if ($request->has('nombre'))
+        {
+            //die("ds");
             $nombre = strtoupper($request->nombre);
-            $apellido = strtoupper($request->apellido);
-
-            $query = AcAfiliado::query();
-
             $query = $query->where('nombre', 'LIKE', '%'.$nombre.'%');
-
-            if ($request->has('apellido')) {
-                $query = $query->orwhere('apellido', 'LIKE', '%'.$apellido.'%');
-            }
-            if ($request->has('cedula')) {
-                $query = $query->orwhere('cedula', 'LIKE', '%'.$request->cedula.'%');
-            }
-            if ($request->has('fecha')) {
-                $query = $query->orwhere('fecha_nacimiento', $request->fecha);
-            }
-
-            $afiliados = $query->get();
-                
-            return view('historial.index',compact('afiliados'));
-
         }
         
-        return view('historial.index');
+        if ($request->has('apellido'))
+        {
+            $apellido = strtoupper($request->apellido);
+            $query = $query->where('apellido', 'LIKE', '%'.$apellido.'%');
+        }
+        if ($request->has('cedula'))
+        {
+            $query = $query->where('cedula', 'LIKE', '%'.$request->cedula.'%');
+        }
+        if ($request->has('fecha'))
+        {
+            $query = $query->where('fecha_nacimiento', $request->fecha);
+        }
+
+        $afiliados = $query->get();
+                
+            
+            //var_dump($afiliados);die();
+            return view('historial.index',compact('afiliados'));
+
+        
+        
+        //return view('historial.index');
     }
 
     /**

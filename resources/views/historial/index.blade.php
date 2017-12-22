@@ -34,7 +34,7 @@
     <div class="col-md-3">
         <div class="form-group {{ $errors->has('nombre') ? ' has-error' : '' }}">
             {{ Form::label('nombre', 'Nombre:', ['class' => 'control-label']) }}
-            {{ Form::text('nombre', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Nombre', 'required']) }}
+            {{ Form::text('nombre', null , ['class' => 'form-control', 'placeholder' => 'Ingrese Nombre']) }}
             @if ($errors->has('nombre'))
                 <span class="help-block">
                     <strong>{{ $errors->first('nombre') }}</strong>
@@ -107,6 +107,9 @@
     @endif
 
     @if (isset($afiliados))
+    
+    
+    
         <div class="col-xs-12 mt25 mb25">
             <table class="card table table-hover table-striped table-bordered table-colored nowrap">
                  <thead>
@@ -120,11 +123,14 @@
                 <tbody>
                     @if (count($afiliados) > 0)
                         @foreach ($afiliados as $afiliado)
+                        
+                        
                         <tr class="text-center">
                             <td>{{ $afiliado->nombre }}</td>
                             <td>{{ $afiliado->apellido }}</td>
                             <td>{{ $afiliado->cuenta->codigo_cuenta }}</td>
                             <td><a href="{{ route('historial.show', $afiliado->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-check"></i></a></td>
+                        
                         </tr>
                         @endforeach
                     @else
