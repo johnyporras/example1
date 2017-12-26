@@ -419,6 +419,24 @@ Route::group(['middleware' => ['auth']], function () {
 
     // USUARIOS
     Route::resource('usuarios', 'UserController');
+    
+    Route::post('usuarios/buscar', [
+        'uses' => 'UserController@buscar',
+        'as'   => 'usuarios.buscar'
+    ]);
+    
+    Route::post('usuarios/create', [
+        'uses' => 'UserController@create',
+        'as'   => 'usuarios.create'
+    ]);
+   
+    
+    Route::post('usuarios/store', [
+        'uses' => 'UserController@store',
+        'as'   => 'usuarios.store'
+    ]);
+    
+    
 
     //CONSULTAR CLAVE ODONTOLOGICA
     Route::get('clavesOdonto/consultar'       , 'ClaveOdontologica\ConsultarController@getFilter');
@@ -631,6 +649,19 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('afiliados'  , 'AfiliadoController');
     Route::resource('claves'     , 'ClaveController');
     Route::resource('proveedores', 'ProveedorController');
+    
+    Route::post('afiliado/buscar', [
+        'uses' => 'AfiliadoController@buscar',
+        'as'   => 'afiliado.buscar'
+    ]);
+    
+    Route::get('afiliado/pagos/{id}', [
+        'uses' => 'AfiliadoController@pagos',
+        'as'   => 'afiliado.pagos'
+    ]);
+    
+    
+    
 
     // Consultar Ajax
     Route::post('selectColectivos'    , 'Ajax\SelectController@getColectivos');
