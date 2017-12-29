@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\UserType;
 use App\User;
+use Session;
 
 class UserController extends Controller
 {
@@ -28,7 +29,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $perfiles = UserType::where("afiliado","=",0)->get();
+        $perfil = array_pluck($perfiles,'name','id'); 
+        return view('usuarios.create',compact('usuario','perfil'));
     }
 
     /**
@@ -39,7 +42,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //$this->validate($request, cedula, nombre, apellido, fecha_nacimiento, email, sexo,telefono);
+        
+        //$request->user=$request->email;
+        User::create($request->all());
+        
+        Session::flash('flash_message', 'Afiliado registrado!');
+        
+        return redirect('usuarios');
+        
     }
 
     /**
@@ -64,7 +75,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $usuario = User::findOrFail($id);
-        $perfiles = UserType::get();
+        $perfiles = UserType::where("afiliado","=",0)->get();
         $perfil = array_pluck($perfiles,'name','id');
         return view('usuarios.edit', compact('usuario','perfil'));
     }
@@ -85,6 +96,8 @@ class UserController extends Controller
                                     ]);
 
         $usuario = User::findOrFail($id);
+        
+        $request->password=bcrypt($request->password);
         $usuario->update($request->all());
 
         Session::flash('flash_message', 'Usuario actualizado!');
@@ -101,6 +114,24 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    
+    public function buscar(Request $request)
+    {
+        if($request->palabra!="")
+        {
+            
+            $oUser= new User();
+            $oUser->palabra = $request->palabra;
+            $usuarios = $oUser->leerPorPalabra();
+            return view('usuarios.index', compact('usuarios'));
+        }
+        else
+        {
+            $usuarios = User::paginate(15);
+            return view('usuarios.index', compact('usuarios'));
+        }
     }
     
     
