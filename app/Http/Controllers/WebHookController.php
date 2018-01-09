@@ -127,7 +127,7 @@ class WebHookController extends Controller
                     }else{
                       $val = 0;
                     }
-                    $count++;
+                    //$count++;
 
 
                   }//end while
@@ -141,7 +141,7 @@ class WebHookController extends Controller
               //return response()->json('success', 200);
             }//end if validate status product
           }//end foreach
-            return response()->json('success '.$count, 200);
+            return response()->json('success', 200);
           }
         }else{
           //Response
