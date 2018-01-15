@@ -17,6 +17,8 @@ use App\Models\Tarjeta;
 use App\Models\Terminos;
 use App\Models\Tamano;
 use App\User;
+use App\Models\Pago;
+use App\Models\AcPago;
 use Hash;
 use Mail;
 use Session;
@@ -64,10 +66,12 @@ class RegisterController extends Controller
             $codigo = $request->tarjeta;
             // Guardo el valor del formulario encriptado para comparar
             $crypt = Tarjeta::cryptCode($codigo);
-
+          //  $crypt= "646fd3916bbbe879723ea7553da1409f56ef5edad70c62ef7b5a470446a409a1";
+           
             //Verifico con la bd
             $tarjeta = Tarjeta::where('codigo_tarjeta',$crypt)->first();
              
+           // dd($tarjeta);
             // valido si la tarjeta existe en la bd
             if ($tarjeta !== null) {
                 // Verifica si la tarjeta fue activada o no
@@ -370,17 +374,32 @@ class RegisterController extends Controller
                         // Cambio estatus a pendiente de la cuenta a la espera de confirmación de correo
                         $afiliado = AcAfiliado::find(Session::get('afiliado')->id);
                         $afiliado->cuenta()->update(['estatus' => 2]);
+                        
+                        //dd($afiliado->id_cuenta);
+                        $oPago = new AcPago();
+                        $oPago->id_cuenta=$afiliado->id_cuenta;
+                        $oPago->fechacorte=date("Y-m-d");
+                        $oPago->monto=1;
+                        $oPago->fechapago=date("Y-m-d");
+                        $oPago->codtransaccion="00";
+                        $oPago->modpago="";
+                        $oPago->estatuspago=1;
+                        $oPago->observacion="Primer pago";
+                        $oPago->save();
+                        
+                        
+                        
 
                         //Guardo data para enviar el correo
-                        $data = ['name' => $usuario->name,
+                        $data = [
+                                'name' => $usuario->name,
                                 'email' => $usuario->email,
-                                'confirm_token' => $usuario->confirm_token];
+                                'confirm_token' => $usuario->confirm_token
+                            
+                        ];
 
                         // Envio de Correo para confirmar
-                        Mail::send('mails.register', ['data' => $data], function($mail) use($data){
-                            $mail->subject('Confirma tu cuenta');
-                            $mail->to($data['email'], $data['name']);
-                        });
+                      
 
                         // borro las sessiones afiliado, tarjeta, cuenta, terminos
                         Session::forget('afiliado');
