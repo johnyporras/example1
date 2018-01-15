@@ -386,7 +386,7 @@ class RegisterController extends Controller
                         $oPago->estatuspago=1;
                         $oPago->observacion="Primer pago";
                         $oPago->save();
-                        
+                        //echo 
                         
                         
 
