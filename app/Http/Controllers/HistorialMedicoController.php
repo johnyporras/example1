@@ -10,6 +10,7 @@ use App\Models\AcAfiliado;
 use App\Models\HistorialMedico;
 use App\Models\HistorialExamen;
 use App\User;
+use App\Lib\functions;
 use Carbon\Carbon;
 use DB;
 use File;
@@ -52,7 +53,7 @@ class HistorialMedicoController extends Controller
         $afiliados = $query->get();
                 
             
-            //var_dump($afiliados);die();
+            //var_dump($afiliados->count());die();
             return view('historial.index',compact('afiliados'));
 
         
@@ -68,11 +69,12 @@ class HistorialMedicoController extends Controller
      */
     public function lista()
     {
+        //dd("asdsd");
         if (Auth::user()->type == 5 || Auth::user()->type == 8 ) {
 
             $id = Auth::user()->detalles_usuario_id;
             $afiliado = AcAfiliado::findOrFail($id);
-            $listado = HistorialMedico::where('id_afiliado', $id)->orderBy('created_at', 'desc')->get();
+            $listado = HistorialMedico::where('id_afiliado', $id)->orderBy('fecha', 'desc')->get();
             return view('historial.historiales', compact('afiliado', 'listado'));
         } else {
             return view('historial.lista');
@@ -82,9 +84,12 @@ class HistorialMedicoController extends Controller
     public function historiales()
     {
 
-        $historiales = HistorialMedico::orderBy('created_at','desc')->get();
+        $historiales = HistorialMedico::orderBy('fecha','desc')->get();
 
         return Datatables::of($historiales)
+        ->addColumn('afiliado', function ($historial) {
+            return $historial->afiliado->nombre." ".$historial->afiliado->apellido;
+        })
         ->addColumn('action', function ($historial) {
                 return '
                 <a href="'.route("historial.view",$historial->id).'" title="Ver Detalles" class="btn btn-warning btn-xs"> <i class="fa fa-eye"> </i></a>
@@ -92,10 +97,10 @@ class HistorialMedicoController extends Controller
                 <a href="'.route("historial.destroy",$historial->id).'" title="Eliminar Historial" class="btn btn-danger btn-xs sweet-danger"> <i class="fa fa-trash"> </i></a>';
             })
         ->editColumn('fecha', function ($historial) {
-                return $historial->fecha->format('d/m/Y');
+            return functions::uf_convertirfecmostrar(substr($historial->fecha,0,10));
             })
         ->editColumn('created_at', function ($historial) {
-                return $historial->created_at->format('d/m/Y');
+                return $historial->created_at;
             })
         ->make(true);
     }

@@ -51,12 +51,12 @@
                 <thead>
                     <tr>
                         <th width="20">Id</th>
-                        <th width="50">Fecha Atención</th>
+                        <th width="50">Afiliado</th>
                         <th>Motivo Atención</th>
                         <th>Especialidad</th>
                         <th>Procedimiento</th>
                         <th>Tratamiento</th>
-                        <th>Creado</th>
+                        <th>Fecha de Atención</th>
                         <th width="80">Acciones</th>
                     </tr>
                 </thead>
@@ -98,12 +98,12 @@ $(document).ready(function() {
         },
         columns: [
             {data: 'id'},
-            {data: 'fecha'},
+            {data: 'afiliado'},
             {data: 'motivo' },
             {data: 'especialidad' },
             {data: 'procedimiento' },
             {data: 'tratamiento' },
-            {data: 'created_at'},
+            {data: 'fecha'},
             {data: 'action', orderable: false, searchable: false}
         ],
         initComplete: function () {
