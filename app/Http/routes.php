@@ -323,6 +323,13 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'ProfileController@editar',
         'as'   => 'perfil.editar'
     ]);
+    
+    
+    Route::post('perfil', [
+        'uses' => 'ProfileController@editar2',
+        'as'   => 'perfil.editar2'
+    ]);
+    
 
     Route::post('perfil/image', [
         'uses' => 'ProfileController@image',

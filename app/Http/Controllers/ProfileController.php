@@ -27,36 +27,41 @@ class ProfileController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   
-        $id = Auth::user()->id;
+    { 
+        $oUser = Auth::user();
+        $id = $oUser->id;
         // Cargo data del usuario
         $usuario = User::findOrfail($id);
         // Cargo data del perfil
-        $perfil = AcAfiliado::findOrFail($usuario->detalles_usuario_id);
-        // valores para estados
-        $valores = AcEstado::orderBy('estado', 'ASC')->pluck('estado', 'id');
-        // Tipo medicamentos
-        $tipo = TipoMedicamento::orderBy('descripcion', 'ASC')->pluck('descripcion', 'id');
-        // Tipo documentos
-        $acTipoDoc= AcTipoDocumento::orderBy('descripcion', 'ASC')->pluck('descripcion', 'id');
-        // Estados formato json
-        $estados = User::editableFormat($valores);
-        // tipo de Medicamento formato json
-        $tipom = User::editableFormat($tipo);
-        // Tipo documentos formato json
-        $tipoDoc = User::editableFormat($acTipoDoc);
-         //Preguntas 
         $preguntas1 = DB::table('preguntas')->take(10)->orderBy('id','asc')->pluck('pregunta', 'pregunta');
         $preguntas2 = DB::table('preguntas')->take(10)->orderBy('id','desc')->pluck('pregunta', 'pregunta');
-        // Selecciono las Preferencias del perfil
-        $preferencia = Preferencia::where('codigo', '=',$perfil->cuenta->codigo_cuenta)->first();
-        // Retorno json o valor null
-        $preferencias = ($preferencia != null) ? json_decode($preferencia->datos) : null;
-        // Motivos de perfil
-        $motivos = Motivo::all();
-
-        // Retorno vista
-        return view('profile.index', compact('usuario', 'perfil', 'estados', 'acTipoDoc', 'tipoDoc', 'tipo', 'tipom', 'preguntas1', 'preguntas2', 'motivos', 'preferencias')); 
+        if($oUser->type==5)
+        {
+            $perfil = AcAfiliado::findOrFail($usuario->detalles_usuario_id);
+            // valores para estados
+            $valores = AcEstado::orderBy('estado', 'ASC')->pluck('estado', 'id');
+            // Tipo medicamentos
+            $tipo = TipoMedicamento::orderBy('descripcion', 'ASC')->pluck('descripcion', 'id');
+            // Tipo documentos
+            $acTipoDoc= AcTipoDocumento::orderBy('descripcion', 'ASC')->pluck('descripcion', 'id');
+            // Estados formato json
+            $estados = User::editableFormat($valores);
+            // tipo de Medicamento formato json
+            $tipom = User::editableFormat($tipo);
+            // Tipo documentos formato json
+            $tipoDoc = User::editableFormat($acTipoDoc);
+            $preferencia = Preferencia::where('codigo', '=',$perfil->cuenta->codigo_cuenta)->first();
+            // Retorno json o valor null
+            $preferencias = ($preferencia != null) ? json_decode($preferencia->datos) : null;
+            // Motivos de perfil
+            $motivos = Motivo::all();
+            return view('profile.index', compact('usuario', 'perfil', 'estados', 'acTipoDoc', 'tipoDoc', 'tipo', 'tipom', 'preguntas1', 'preguntas2', 'motivos', 'preferencias'));
+        }
+        else
+        {
+            return view('profile.index2', compact('usuario', 'preguntas1', 'preguntas2'));
+        }
+      
     }
 
     /**
@@ -102,6 +107,24 @@ class ProfileController extends Controller
             } else {
                 return response()->json(['status'=> false ]);
             } 
+        }
+    }
+    
+    
+    
+    public function editar2(Request $request)
+    {
+        if ($request->ajax())
+        {
+            // Seleccion afiliado y actualizo el valor
+            $update = User::findOrFail($request->pk);
+            $update->update([$request->name => $request->value]);
+            
+            if ($update){
+                return response()->json(['status'=> true ]);
+            } else {
+                return response()->json(['status'=> false ]);
+            }
         }
     }
 
