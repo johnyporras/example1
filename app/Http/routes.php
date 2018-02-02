@@ -325,7 +325,7 @@ Route::group(['middleware' => ['auth']], function () {
     ]);
     
     
-    Route::post('perfil', [
+    Route::post('perfil2', [
         'uses' => 'ProfileController@editar2',
         'as'   => 'perfil.editar2'
     ]);
